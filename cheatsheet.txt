@@ -1,0 +1,33 @@
+Joystick controller: (joystick_launch.py)
+ros2 launch robp_launch phidgets_launch.py 
+ros2 launch robp_launch frames_launch.xml
+ros2 run tf2_ros static_transform_publisher --frame-id map --child-frame-id odom
+ros2 run odometry odometry
+ros2 run joystick_teleop teleop
+ros2 run joy joy_node 
+
+Detection: (detection_launch.py)
+ros2 launch robp_launch rs_d435i_launch.py
+ros2 launch robp_launch phidgets_launch.py
+ros2 launch robp_launch frames_launch.xml
+ros2 run tf2_ros static_transform_publisher --frame-id map --child-frame-id odom
+ros2 run odometry odometry
+ros2 run detection detection
+
+LIDAR: (lidar_odom_launch.py)
+ros2 launch robp_launch phidgets_launch.py
+ros2 launch robp_launch frames_launch.xml
+ros2 launch robp_launch lidar_launch.yaml
+ros2 run tf2_ros static_transform_publisher --frame-id map --child-frame-id odom
+ros2 run odometry odometry
+
+Rosbag:
+ros2 bag record -a (all topics)
+ros2 bag play --read-ahead-queue-size 100 -l -r 1.0 --clock 100 --start-paused /home/group3-robot/dd2419_ws/bag/rosbag2_2025_02_03-15_08_16/
+
+Arm: (arm_servo_launch.py)
+ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/hiwonder_arm -v6
+ros2 run arm_controller arm_controller 
+
+Arm camera:
+ros2 launch robp_launch arm_camera_launch

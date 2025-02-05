@@ -1,0 +1,15 @@
+[0.000000] (-) TimerEvent: {}
+[0.000249] (-) JobUnselected: {'identifier': 'arm_servos_pubs_subs'}
+[0.000271] (-) JobUnselected: {'identifier': 'detection'}
+[0.000285] (-) JobUnselected: {'identifier': 'joystick_teleop'}
+[0.000296] (-) JobUnselected: {'identifier': 'odometry'}
+[0.000305] (-) JobUnselected: {'identifier': 'robp_boot_camp_motors'}
+[0.000315] (-) JobUnselected: {'identifier': 'robp_interfaces'}
+[0.000324] (-) JobUnselected: {'identifier': 'robp_launch'}
+[0.000332] (-) JobUnselected: {'identifier': 'robp_phidgets_encoders'}
+[0.000341] (-) JobUnselected: {'identifier': 'robp_phidgets_motors'}
+[0.000350] (-) JobUnselected: {'identifier': 'robp_phidgets_spatial'}
+[0.000358] (-) JobUnselected: {'identifier': 'robp_phidgets_temperature'}
+[0.000367] (-) JobUnselected: {'identifier': 'sllidar_ros2'}
+[0.000376] (-) JobUnselected: {'identifier': 'usb_cam'}
+[0.000629] (-) EventReactorShutdown: {}
