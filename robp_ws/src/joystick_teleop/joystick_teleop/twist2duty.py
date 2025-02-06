@@ -7,14 +7,13 @@ from std_msgs.msg import Float32MultiArray, Header
 from robp_interfaces.msg import DutyCycles
 from geometry_msgs.msg import Twist
 
-
 class F710Teleop(Node):
     def __init__(self):
         super().__init__('f710_teleop')
-        self.subscription = self.create_subscription(Joy, '/joy', self.joy_callback, 10)
-        self.publisher = self.create_publisher(Twist, '/desired_twist', 10)
+        self.subscription = self.create_subscription(Twist, '/desired_twist', 10)
+        self.publisher = self.create_publisher(DutyCycles, '/motor/duty_cycles', 10)
 
-        # Define joystick mappings (adjust based on testing)    
+        # Define joystick mappings (adjust based on testing)
         self.axis_linear = 7  # Left stick up/down
         self.axis_angular = 6  # Left stick left/right
         self.scale_linear = 1.0
