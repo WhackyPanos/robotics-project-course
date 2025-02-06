@@ -17,34 +17,23 @@ class F710Teleop(Node):
         # Define joystick mappings (adjust based on testing)    
         self.axis_linear = 7  # Left stick up/down
         self.axis_angular = 6  # Left stick left/right
-        self.scale_linear = 1.0
-        self.scale_angular = 0.5
+        self.max_linear = 1.0 # maximum linear velocity
+        self.max_angular = 0.5 # maximum angular velocity
 
     def joy_callback(self, msg):
-        # Read joystick values
-        linear = msg.axes[self.axis_linear] * self.scale_linear  # Forward/backward
-        angular = msg.axes[self.axis_angular] * self.scale_angular  # Left/right turn
+        # Print joystick values
+        print(f'Up/down (button {self.axis_linear}): {msg.axes[self.axis_linear]}')
+        print(f'Left/right (button {self.axis_angular}): {msg.axes[self.axis_angular]}')
 
-        # Convert to motor duty cycles
-        left_duty = linear + angular
-        right_duty = linear - angular
-
-        # Normalize values between -1 and 1
-        left_duty = max(min(left_duty, 1.0), -1.0)
-        right_duty = max(min(right_duty, 1.0), -1.0)
-
-        print('left duty ', left_duty)
-        print('right duty ', right_duty)
-
-        # Publish motor commands
-        #duty_msg = Float32MultiArray()
-        #duty_msg.data = [left_duty, right_duty]
+        # Publish twist commands
         msg.header = Header()
         msg.header.stamp = self.get_clock().now().to_msg()
 
-        msg = DutyCycles() # Init
-        msg.duty_cycle_left = left_duty
-        msg.duty_cycle_right = right_duty
+        """
+        msg.linear.x = linear
+        msg.linear.y = 0.0
+        msg.angular.z = angular
+        """
         self.publisher.publish(msg)
 
 def main(args=None):
