@@ -26,17 +26,12 @@ class Twist2Duty(Node):
 
     def twist2duty_callback(self, msg):
         # Convert from cmd_vel to motor duty cycles
-        vx = msg.linear.x
-        vy = msg.linear.y
+        v = msg.linear.x
         w = msg.angular.z 
 
         # if we are using the controller
-        if w == 0:
-            left_duty = vx/self.max_linear
-            right_duty = vx/self.max_linear
-        else:
-            left_duty = w /self.max_angular 
-            right_duty = - w /self.max_angular
+        right_duty = v/self.max_linear + w/self.max_angular
+        left_duty = v/self.max_linear - w/self.max_angular
 
         print('left duty ', left_duty)
         print('right duty ', right_duty)
