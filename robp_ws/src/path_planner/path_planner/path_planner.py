@@ -29,7 +29,7 @@ class path_planner(Node):
                                  self.goal.x - msg.position.x)
             qz = msg.orientation.z
 
-            tf_transformations.euler_from_quaternion([0, 0, qz, 1])
+            [_,_,theta_r] = tf_transformations.euler_from_quaternion([0, 0, qz, 1])
 
             delta_theta = theta_g - theta_r
             if delta_theta >= 0.01:
