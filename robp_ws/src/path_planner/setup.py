@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'path_planner = path_planner.path_planner:main'
+            'path_planner = path_planner.path_planner:main',
+            'point_generator = path_planner.point_generator:main',
         ],
     },
 )

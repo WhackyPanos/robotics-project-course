@@ -13,7 +13,7 @@ from tf_transformations import quaternion_from_euler, euler_from_quaternion
 from geometry_msgs.msg import TransformStamped
 from robp_interfaces.msg import Encoders
 from nav_msgs.msg import Path
-from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import PoseStamped, Pose2D
 
 
 class Odometry(Node):
@@ -26,8 +26,11 @@ class Odometry(Node):
 
         # Initialize the path publisher
         self._path_pub = self.create_publisher(Path, 'path', 100)
+        self._pose_pub = self.create_publisher(Pose2D, '/odom_pose', 10)
+
         # Store the path here
         self._path = Path()
+        self.pose_msg = Pose2D()
 
         # Subscribe to encoder topic and call callback function on each recieved message
         self.create_subscription(
@@ -76,6 +79,13 @@ class Odometry(Node):
 
         self.broadcast_transform(stamp, self._x, self._y, self._yaw)
         self.publish_path(stamp, self._x, self._y, self._yaw)
+
+        # publishing 2D pose
+        self.pose_msg.x = self._x
+        self.pose_msg.y = self._y
+        self.pose_msg.theta = self._yaw
+
+        self._pose_pub.publish(self.pose_msg)
 
     def broadcast_transform(self, stamp, x, y, yaw):
         """Takes a 2D pose and broadcasts it as a ROS transform.
