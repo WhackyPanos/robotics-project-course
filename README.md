@@ -1,2 +1,2 @@
-# robp_group3
-Group 3 Project Course in Robotics and Autonomous Systems
+# Path Planning Branch
+Branch to perform the path execution (and planning later on) of the robot. Path planner package is added and coupled with odometry and joystick_teleop, makes the robot move towards a point
