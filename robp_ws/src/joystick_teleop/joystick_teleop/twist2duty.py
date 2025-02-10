@@ -23,6 +23,7 @@ class Twist2Duty(Node):
         # Robot parameters
         self.wheel_radius = 0.04921  # meters
         self.wheel_base = 0.3125  # meters
+        self.scale = 1.0
 
     def twist2duty_callback(self, msg):
         # Convert from cmd_vel to motor duty cycles
@@ -30,8 +31,8 @@ class Twist2Duty(Node):
         w = msg.angular.z 
 
         # if we are using the controller
-        right_duty = v/self.max_linear + w/self.max_angular
-        left_duty = v/self.max_linear - w/self.max_angular
+        right_duty = (v/self.max_linear + w/self.max_angular)*self.scale
+        left_duty = (v/self.max_linear - w/self.max_angular)*self.scale
 
         print('left duty ', left_duty)
         print('right duty ', right_duty)

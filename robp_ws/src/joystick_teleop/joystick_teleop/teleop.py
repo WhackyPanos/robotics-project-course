@@ -34,11 +34,11 @@ class F710Teleop(Node):
         #vx = sin(theta)*sqrt(msg.axes[self.axis_straight]**2 + msg.axes[self.axis_sideways]**2)*(1/sqrt(2))*self.max_linear
         #vx = cos(theta)*sqrt(msg.axes[self.axis_straight]**2 + msg.axes[self.axis_sideways]**2)*(1/sqrt(2))*self.max_linear
 
-        twist_msg.linear.x = min(max(msg.axes[self.axis_straight] * self.max_linear, -self.max_linear),self.max_linear)
+        twist_msg.linear.x = min(max(msg.axes[self.axis_straight] * self.max_linear, -self.max_linear),self.max_linear)/4
         twist_msg.linear.y = 0.0
 
         if msg.buttons[self.axis_rotate] != 0:
-            twist_msg.angular.z = self.max_angular
+            twist_msg.angular.z = self.max_angular/4
             twist_msg.linear.x = 0.0
             twist_msg.linear.y = 0.0
         else:
