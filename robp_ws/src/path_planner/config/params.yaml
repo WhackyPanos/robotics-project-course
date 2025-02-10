@@ -5,4 +5,4 @@
     border_safety_margin: 0.1
     linear_velocity: 0.01
     angular_velocity: 0.005
-    goal_threshold: 0.1
+    goal_threshold: 0.2

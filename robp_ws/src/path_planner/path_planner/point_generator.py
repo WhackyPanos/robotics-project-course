@@ -27,22 +27,28 @@ class RandomPointGenerator(Node):
         self.height = self.get_parameter('height').value
         self.border_safety_margin = self.get_parameter('border_safety_margin').value
 
+        self.timer = None  # Initialize the timer as None
         self.get_logger().info(f"Point Generator initialized with width={self.width}, height={self.height}, margin={self.border_safety_margin}")
 
     def goal_reached_callback(self, msg):
         if msg.data:
-            x_desired = u(0+self.width*self.border_safety_margin, self.width*(1-self.border_safety_margin))
-            y_desired = u(0+self.height*self.border_safety_margin, self.height*(1-self.border_safety_margin))
+            self.timer = self.create_timer(2, self.publish_new_goal)
+    
+    def publish_new_goal(self):
+        x_desired = u(0+self.width*self.border_safety_margin, self.width*(1-self.border_safety_margin))
+        y_desired = u(0+self.height*self.border_safety_margin, self.height*(1-self.border_safety_margin))
 
-            pub_msg = Point()
-            pub_msg.x = x_desired
-            pub_msg.y = y_desired
-            pub_msg.z = 0
+        pub_msg = Point()
+        pub_msg.x = x_desired
+        pub_msg.y = y_desired
+        pub_msg.z = 0.0
+        self.get_logger().info(f"Publishing new goal: x={x_desired:.2f}, y={y_desired:.2f}")
+        self.publisher.publish(pub_msg)
 
-            self.publisher.publish(pub_msg)
-            
-
-        return
+         # Destroy the timer to ensure it only runs once
+        if self.timer:
+            self.destroy_timer(self.timer)
+            self.timer = None  # Reset the timer reference
     
 def main(args=None):
     rclpy.init(args=args)
