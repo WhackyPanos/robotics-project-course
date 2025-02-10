@@ -26,7 +26,7 @@ class Mapping(Node):
         # Initializes the projection 
         self.proj = LaserProjection() # Converts a LaserScan to a PointCloud2
 
-        self.N = 10 # Evert N:th time 
+        self.N = 100 # Evert N:th time 
         self.counter = 0
 
     def listener_callback(self, msg):
