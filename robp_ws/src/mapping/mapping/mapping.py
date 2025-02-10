@@ -26,7 +26,15 @@ class Mapping(Node):
         # Initializes the projection 
         self.proj = LaserProjection() # Converts a LaserScan to a PointCloud2
 
+        self.N = 10
+        self.counter = 0
+
     def listener_callback(self, msg):
+            self.counter += 1 
+            if self.counter < self.N:
+                return
+            self.counter = 0
+
             to_frame_rel = 'map'
             from_frame_rel = msg.header.frame_id # Lidar link
             time = rclpy.time.Time().from_msg(msg.header.stamp)
