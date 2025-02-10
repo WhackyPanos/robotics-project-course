@@ -3,7 +3,7 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Bool
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Point, PointStamped
 from random import uniform as u
 
 # This node should generate a new random point (within a predefined rectangle) and publish it to the carrot_planner node
@@ -13,8 +13,8 @@ from random import uniform as u
 class RandomPointGenerator(Node):
     def __init__(self):
         super().__init__('point_generator')
-        self.subscription = self.create_subscription(Bool, '/goal/reached', self.goal_reached_callback, 10)
-        self.publisher = self.create_publisher(Point, '/temp_goal', 10)
+        self.subscription = self.create_subscription(Bool, '/goal_reached', self.goal_reached_callback, 10)
+        self.publisher = self.create_publisher(PointStamped, '/temp_goal', 10)
 
         # Declare parameters with default values. If the parameters are set in the launch file, the default values will be overwritten
         # check config folder for params.yaml
@@ -38,10 +38,12 @@ class RandomPointGenerator(Node):
         x_desired = u(0+self.width*self.border_safety_margin, self.width*(1-self.border_safety_margin))
         y_desired = u(0+self.height*self.border_safety_margin, self.height*(1-self.border_safety_margin))
 
-        pub_msg = Point()
-        pub_msg.x = x_desired
-        pub_msg.y = y_desired
-        pub_msg.z = 0.0
+        pub_msg = PointStamped()
+        pub_msg.header.stamp = self.get_clock().now().to_msg()
+        pub_msg.header.frame_id = "map"
+        pub_msg.point.x = x_desired
+        pub_msg.point.y = y_desired
+        pub_msg.point.z = 0.0
         self.get_logger().info(f"Publishing new goal: x={x_desired:.2f}, y={y_desired:.2f}")
         self.publisher.publish(pub_msg)
 

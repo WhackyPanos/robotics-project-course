@@ -21,13 +21,19 @@ def generate_launch_description():
         ),
         Node(
             package='path_planner',
-            executable='carrot_planner',
+            executable='path_planner',
             #name='carrot_planner',
             parameters=['src/path_planner/config/params.yaml']
+        ),
+
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
         ),
 
         # Check later if I'm missing anything
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/joystick_launch.py'))
         ),
-    ]), 
+    ])

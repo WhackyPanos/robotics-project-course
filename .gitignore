@@ -4,4 +4,4 @@
 */log/*
 */bag/*
 *.gif
-
+*/__pycache__/*
