@@ -1,0 +1,1 @@
+/home/group3-robot/robp_group3/arm_ws/src/uros/micro_ros_msgs/msg/Node.msg

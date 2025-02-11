@@ -1,0 +1,1 @@
+/home/group3-robot/robp_group3/build/usb_cam/ament_cmake_core/usb_camConfig.cmake

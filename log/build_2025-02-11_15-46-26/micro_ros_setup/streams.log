@@ -1,0 +1,183 @@
+[0.043s] Invoking command in '/home/group3-robot/robp_group3/build/micro_ros_setup': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/arm_ws/src/micro_ros_setup -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/micro_ros_setup
+[0.117s] -- The C compiler identification is GNU 13.3.0
+[0.176s] -- The CXX compiler identification is GNU 13.3.0
+[0.196s] -- Detecting C compiler ABI info
+[0.297s] -- Detecting C compiler ABI info - done
+[0.311s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.315s] -- Detecting C compile features
+[0.315s] -- Detecting C compile features - done
+[0.325s] -- Detecting CXX compiler ABI info
+[0.505s] -- Detecting CXX compiler ABI info - done
+[0.548s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.549s] -- Detecting CXX compile features
+[0.549s] -- Detecting CXX compile features - done
+[0.555s] -- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.855s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.965s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.042s] -- Found ament_lint_auto: 0.17.1 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[1.212s] -- Configuring done (1.2s)
+[1.223s] -- Generating done (0.0s)
+[1.225s] -- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_setup
+[1.240s] Invoked command in '/home/group3-robot/robp_group3/build/micro_ros_setup' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/arm_ws/src/micro_ros_setup -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/micro_ros_setup
+[1.241s] Invoking command in '/home/group3-robot/robp_group3/build/micro_ros_setup': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/micro_ros_setup -- -j8 -l8
+[2.100s] Invoked command in '/home/group3-robot/robp_group3/build/micro_ros_setup' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/micro_ros_setup -- -j8 -l8
+[2.111s] Invoking command in '/home/group3-robot/robp_group3/build/micro_ros_setup': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/micro_ros_setup
+[2.433s] -- Install configuration: ""
+[2.433s] -- Execute custom install script
+[2.433s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/ament_index/resource_index/package_run_dependencies/micro_ros_setup
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/ament_index/resource_index/parent_prefix_path/micro_ros_setup
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/environment/ament_prefix_path.sh
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/environment/ament_prefix_path.dsv
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/environment/path.sh
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/environment/path.dsv
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/local_setup.bash
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/local_setup.sh
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/local_setup.zsh
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/local_setup.dsv
+[2.434s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/package.dsv
+[2.435s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/ament_index/resource_index/packages/micro_ros_setup
+[2.435s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/cmake/micro_ros_setupConfig.cmake
+[2.435s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/cmake/micro_ros_setupConfig-version.cmake
+[2.440s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/share/micro_ros_setup/package.xml
+[2.457s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/create_ws.sh
+[2.479s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/create_agent_ws.sh
+[2.502s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/create_firmware_ws.sh
+[2.531s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/configure_firmware.sh
+[2.545s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/flash_firmware.sh
+[2.562s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/build_firmware.sh
+[2.586s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/build_agent.sh
+[2.609s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/yaml_filter.py
+[2.622s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/clean_env.sh
+[2.634s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_setup/lib/micro_ros_setup/component
+[2.647s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config
+[2.648s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian
+[2.649s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/dev_uros_packages.repos
+[2.654s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/dev_ros2_packages.txt
+[2.654s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/generic
+[2.654s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/generic/configure.sh
+[2.666s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/generic/flash.sh
+[2.666s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/generic/supported_platforms
+[2.666s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/generic/client_uros_packages.repos
+[2.666s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/generic/client-colcon.meta
+[2.666s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/generic/create.sh
+[2.670s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/raspbian/generic/build.sh
+[2.670s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr
+[2.670s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/dev_uros_packages.repos
+[2.670s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/list_apps.sh
+[2.670s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/dev_ros2_packages.txt
+[2.674s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic
+[2.674s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/configure.sh
+[2.674s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/board.repos
+[2.674s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/flash.sh
+[2.675s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/supported_platforms
+[2.675s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/client_uros_packages.repos
+[2.675s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/client-colcon.meta
+[2.680s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/create.sh
+[2.680s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/package.xml
+[2.680s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/zephyr/generic/build.sh
+[2.680s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/agent_ros2_packages.txt
+[2.680s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos
+[2.680s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407
+[2.681s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407/configure.sh
+[2.681s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407/board.repos
+[2.689s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407/flash.sh
+[2.689s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407/client_uros_packages.repos
+[2.690s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407/client-colcon.meta
+[2.690s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407/create.sh
+[2.690s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407/package.xml
+[2.690s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/olimex-stm32-e407/build.sh
+[2.691s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg
+[2.697s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg/configure.sh
+[2.697s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg/board.repos
+[2.697s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg/flash.sh
+[2.697s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg/client_uros_packages.repos
+[2.697s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg/client-colcon.meta
+[2.697s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg/create.sh
+[2.697s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg/package.xml
+[2.697s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f746zg/build.sh
+[2.703s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi
+[2.703s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi/configure.sh
+[2.703s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi/board.repos
+[2.703s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi/flash.sh
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi/client_uros_packages.repos
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi/client-colcon.meta
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi/create.sh
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi/package.xml
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f767zi/build.sh
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/dev_uros_packages.repos
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/list_apps.sh
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/configure.sh
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/board.repos
+[2.704s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/flash.sh
+[2.705s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/README.md
+[2.705s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/client_uros_packages.repos
+[2.705s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/client-colcon.meta
+[2.706s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/create.sh
+[2.706s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/package.xml
+[2.708s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/esp32/build.sh
+[2.711s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/dev_ros2_packages.txt
+[2.711s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re
+[2.711s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re/configure.sh
+[2.711s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re/board.repos
+[2.711s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re/flash.sh
+[2.716s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re/client_uros_packages.repos
+[2.716s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re/client-colcon.meta
+[2.716s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re/create.sh
+[2.716s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re/package.xml
+[2.717s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446re/build.sh
+[2.717s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21
+[2.717s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21/configure.sh
+[2.717s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21/board.repos
+[2.719s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21/flash.sh
+[2.719s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21/client_uros_packages.repos
+[2.719s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21/client-colcon.meta
+[2.720s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21/create.sh
+[2.720s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21/package.xml
+[2.724s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/crazyflie21/build.sh
+[2.725s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze
+[2.725s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze/configure.sh
+[2.725s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze/board.repos
+[2.725s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze/flash.sh
+[2.725s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze/client_uros_packages.repos
+[2.725s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze/client-colcon.meta
+[2.725s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze/create.sh
+[2.726s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze/package.xml
+[2.726s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/freertos/nucleo_f446ze/build.sh
+[2.726s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/agent_uros_packages.repos
+[2.726s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host
+[2.726s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/dev_uros_packages.repos
+[2.727s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/client_ros2_packages.txt
+[2.729s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/dev_ros2_packages.txt
+[2.729s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/generic
+[2.730s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/generic/flash.sh
+[2.730s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/generic/client_host_packages.repos
+[2.730s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/generic/create.sh
+[2.730s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/generic/package.xml
+[2.730s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/generic/client-host-colcon.meta
+[2.733s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/host/generic/build.sh
+[2.734s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/client_ros2_packages.txt
+[2.734s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android
+[2.734s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/dev_uros_packages.repos
+[2.734s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/dev_ros2_packages.txt
+[2.735s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/generic
+[2.735s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/generic/flash.sh
+[2.735s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/generic/client_uros_packages.repos
+[2.735s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/generic/client-colcon.meta
+[2.735s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/generic/create.sh
+[2.736s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/generic/package.xml
+[2.738s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/android/generic/build.sh
+[2.738s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/client_uros_packages.repos
+[2.739s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/utils.sh
+[2.739s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib
+[2.739s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/dev_uros_packages.repos
+[2.739s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/dev_ros2_packages.txt
+[2.739s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/generic
+[2.739s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/generic/flash.sh
+[2.742s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/generic/client_uros_packages.repos
+[2.743s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/generic/client-colcon.meta
+[2.743s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/generic/create.sh
+[2.743s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/generic/demo_toolchain.cmake
+[2.746s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/generic/package.xml
+[2.746s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_setup/./config/generate_lib/generic/build.sh
+[2.758s] Invoked command in '/home/group3-robot/robp_group3/build/micro_ros_setup' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/micro_ros_setup

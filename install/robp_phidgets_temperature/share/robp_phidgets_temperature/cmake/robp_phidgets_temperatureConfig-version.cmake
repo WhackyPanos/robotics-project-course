@@ -1,0 +1,1 @@
+/home/group3-robot/robp_group3/build/robp_phidgets_temperature/ament_cmake_core/robp_phidgets_temperatureConfig-version.cmake

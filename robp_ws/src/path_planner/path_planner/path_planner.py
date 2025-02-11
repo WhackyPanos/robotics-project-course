@@ -2,6 +2,7 @@
 
 import rclpy
 import math
+import time
 import tf2_ros
 import tf2_geometry_msgs
 from rclpy.node import Node
@@ -31,8 +32,9 @@ class CarrotPlanner(Node):
 
         # Declare parameters with default values. If the parameters are set in the launch file, the default values will be overwritten
         # check config folder for params.yaml
-        self.declare_parameter('linear_velocity', 0.01)
-        self.declare_parameter('angular_velocity', 0.005)
+        # TODO yaml file doesn't import properly
+        self.declare_parameter('linear_velocity', 0.02)
+        self.declare_parameter('angular_velocity', 0.01)
         self.declare_parameter('goal_threshold', 0.1)
 
         # Retrieve parameter values
@@ -75,7 +77,7 @@ class CarrotPlanner(Node):
                 pose_odom.pose.orientation.y = 0.0
                 pose_odom.pose.orientation.z = math.sin(msg.theta / 2) #third component of quaternion, since it's yaw
             except Exception as e:
-                self.get_logger().warn(f"First transform failed: {str(e)}")
+                self.get_logger().warn(f"Pose creation failed: {str(e)}")
 
             try:
                 # Lookup transform from 'map' to 'odom'
@@ -106,7 +108,7 @@ class CarrotPlanner(Node):
                 self.navigate_to_goal(x_map, y_map, theta_map)
 
             except Exception as e:
-                self.get_logger().warn(f"Second transform failed: {str(e)}")
+                self.get_logger().warn(f"Transform failed: {str(e)}")
 
     def navigate_to_goal(self, x, y, theta):
         """ Compute commands to move the robot towards the goal in map frame. """
@@ -131,6 +133,7 @@ class CarrotPlanner(Node):
                 self.goal_reached_publisher.publish(Bool(data=True))
                 self.goal_reached_flag = True
                 self.get_logger().info("Goal reached!")
+        #  time.sleep(0.05) # trying a tiny sleep command to see if it makes it less jerky... nah its worse
 
     
 def main(args=None):

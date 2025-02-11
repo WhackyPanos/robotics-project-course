@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/group3-robot/robp_group3/build/robp_phidgets_motors/librobp_phidgets_motors.so" "TARGETS" "robp_phidgets_motors" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

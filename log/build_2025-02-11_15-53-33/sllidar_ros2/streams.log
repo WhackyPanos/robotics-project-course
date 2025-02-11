@@ -1,0 +1,69 @@
+[0.336s] Invoking command in '/home/group3-robot/robp_group3/build/sllidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/robp_robot/sllidar_ros2 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/sllidar_ros2
+[0.353s] -- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.679s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.689s] -- Found rclcpp: 28.1.6 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.756s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.770s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.789s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.813s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.935s] -- Found rmw_implementation_cmake: 7.3.1 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.936s] -- Found rmw_fastrtps_cpp: 8.4.1 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.130s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.309s] -- Found sensor_msgs: 5.3.5 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[1.412s] -- Found std_srvs: 5.3.5 (/opt/ros/jazzy/share/std_srvs/cmake)
+[1.669s] -- Configuring done (1.3s)
+[1.701s] -- Generating done (0.0s)
+[1.710s] -- Build files have been written to: /home/group3-robot/robp_group3/build/sllidar_ros2
+[1.728s] Invoked command in '/home/group3-robot/robp_group3/build/sllidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/robp_robot/sllidar_ros2 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/sllidar_ros2
+[1.729s] Invoking command in '/home/group3-robot/robp_group3/build/sllidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/sllidar_ros2 -- -j8 -l8
+[1.990s] [ 90%] Built target sllidar_node
+[1.990s] [100%] Built target sllidar_client
+[1.991s] Invoked command in '/home/group3-robot/robp_group3/build/sllidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/sllidar_ros2 -- -j8 -l8
+[1.991s] Invoking command in '/home/group3-robot/robp_group3/build/sllidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/sllidar_ros2
+[2.130s] -- Install configuration: ""
+[2.131s] -- Execute custom install script
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_a1_launch.py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_a2m12_launch .py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_a2m7_launch.py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_a2m8_launch.py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_a3_launch.py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_c1_launch.py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_s1_launch.py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_s1_tcp_launch.py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_s2_launch.py
+[2.131s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_s2e_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_s3_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_t1_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_a1_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_a2m12_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_a2m7_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_a2m8_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_a3_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_c1_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_s1_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_s1_tcp_launch.py
+[2.132s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_s2_launch.py
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_s2e_launch.py
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_s3_launch.py
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_t1_launch.py
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/rviz/sllidar_ros2.rviz
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/lib/sllidar_ros2/sllidar_node
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/lib/sllidar_ros2/sllidar_client
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/ament_index/resource_index/package_run_dependencies/sllidar_ros2
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/ament_index/resource_index/parent_prefix_path/sllidar_ros2
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/environment/ament_prefix_path.sh
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/environment/ament_prefix_path.dsv
+[2.133s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/environment/path.sh
+[2.137s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/environment/path.dsv
+[2.137s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/local_setup.bash
+[2.137s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/local_setup.sh
+[2.137s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/local_setup.zsh
+[2.137s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/local_setup.dsv
+[2.137s] -- Symlinking: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/package.dsv
+[2.137s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/ament_index/resource_index/packages/sllidar_ros2
+[2.137s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/cmake/ament_cmake_export_dependencies-extras.cmake
+[2.137s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/cmake/ament_cmake_export_include_directories-extras.cmake
+[2.138s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/cmake/sllidar_ros2Config.cmake
+[2.138s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/cmake/sllidar_ros2Config-version.cmake
+[2.138s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/sllidar_ros2/share/sllidar_ros2/package.xml
+[2.138s] Invoked command in '/home/group3-robot/robp_group3/build/sllidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/sllidar_ros2
