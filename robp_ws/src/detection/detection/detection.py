@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import math
+import os
 import numpy as np
 
 import rclpy
@@ -72,90 +72,100 @@ class Detection(Node):
 
         colors = colors.astype(np.float32) / 255      
 
-        # # Define thresholds
-        # dthresh = 0.9
-        # desired_color = 0.7
-        # rem_color = 0.5
-
-        # # Filter points farther than 0.9m/below ground and points that don't have strong red or green components
-        # # Distance filter: Keep points closer than 0.9m
-        # close_mask = coords[:, 2] < dthresh
-
-        # # Color filter: Keep red or green points based on a threshold
-        # red_mask = (colors[:, 0] > desired_color) & (colors[:,1] < rem_color) & (colors[:,2] < rem_color)
-        # green_mask = (colors[:, 1] > desired_color) & (colors[:,0] < rem_color) & (colors[:,2] < rem_color)
-        # color_mask = red_mask | green_mask  
-
-        # # Combine masks
-        # filter_mask = close_mask & color_mask
-
-        # # Apply mask
-        # filtered_coords = coords[filter_mask]
-        # filtered_rgb = colors[filter_mask]
-
-        # #print(f'length filtered rgb = {len(filtered_rgb[:,0])} and length filtered coords= {len(filtered_coords[:,0])}')
-
+        box_detected = False
         # Filter points based on distance and height
-        points_mask = (points[:, 2] < 0.9) & (points[:, 1] < 0.095)
-        filtered_points = points[points_mask]
-        filtered_colors = colors[points_mask]
+        box_mask = (points[:, 2] < 1.0) & (points[:, 1] < 0.03 ) & (points[:,1] > 0)
+        box_points = points[box_mask]
+        box_colors = colors[box_mask]
 
 
-        # define fields and points to creare a Pointcloud2 message later on
-        fields = [
-            pc2.PointField(name='x', offset=0, datatype=pc2.PointField.FLOAT32, count=1),  # X-coordinate (float32)
-            pc2.PointField(name='y', offset=4, datatype=pc2.PointField.FLOAT32, count=1),  # Y-coordinate (float32)
-            pc2.PointField(name='z', offset=8, datatype=pc2.PointField.FLOAT32, count=1),  # Z-coordinate (float32)
-            pc2.PointField(name='r', offset=12, datatype=pc2.PointField.UINT8, count=1),   # Red channel (uint8)
-            pc2.PointField(name='g', offset=13, datatype=pc2.PointField.UINT8, count=1),   # Green channel (uint8)
-            pc2.PointField(name='b', offset=14, datatype=pc2.PointField.UINT8, count=1)    # Blue channel (uint8)
-        ]
+        # # define fields and points to creare a Pointcloud2 message later on
+        # fields = [
+        #     pc2.PointField(name='x', offset=0, datatype=pc2.PointField.FLOAT32, count=1),  # X-coordinate (float32)
+        #     pc2.PointField(name='y', offset=4, datatype=pc2.PointField.FLOAT32, count=1),  # Y-coordinate (float32)
+        #     pc2.PointField(name='z', offset=8, datatype=pc2.PointField.FLOAT32, count=1),  # Z-coordinate (float32)
+        #     pc2.PointField(name='r', offset=12, datatype=pc2.PointField.UINT8, count=1),   # Red channel (uint8)
+        #     pc2.PointField(name='g', offset=13, datatype=pc2.PointField.UINT8, count=1),   # Green channel (uint8)
+        #     pc2.PointField(name='b', offset=14, datatype=pc2.PointField.UINT8, count=1)    # Blue channel (uint8)
+        # ]
 
-        # Assuming filtered_coords is the filtered point coordinates and filtered_rgb the RGB values
-        point_dtype = np.dtype([
-                                ('x', np.float32),  # X-coordinate (float32)
-                                ('y', np.float32),  # Y-coordinate (float32)
-                                ('z', np.float32),  # Z-coordinate (float32)
-                                ('r', np.uint8),    # Red channel (uint8)
-                                ('g', np.uint8),    # Green channel (uint8)
-                                ('b', np.uint8)     # Blue channel (uint8)
-                            ])
+        # # Assuming filtered_coords is the filtered point coordinates and filtered_rgb the RGB values
+        # point_dtype = np.dtype([
+        #                         ('x', np.float32),  # X-coordinate (float32)
+        #                         ('y', np.float32),  # Y-coordinate (float32)
+        #                         ('z', np.float32),  # Z-coordinate (float32)
+        #                         ('r', np.uint8),    # Red channel (uint8)
+        #                         ('g', np.uint8),    # Green channel (uint8)
+        #                         ('b', np.uint8)     # Blue channel (uint8)
+        #                     ])
 
-        n = len(filtered_colors[:, 0])  # Number of points
-        ds_points = np.zeros(n, dtype=point_dtype)  # One entry per point
+        # n = len(filtered_colors[:, 0])  # Number of points
+        # ds_points = np.zeros(n, dtype=point_dtype)  # One entry per point
 
-        # Populate the filtered_points array with coordinates and colors
-        for i in range(n):
-            ds_points[i]['x'] = filtered_points[i, 0]  # X-coordinate
-            ds_points[i]['y'] = filtered_points[i, 1]  # Y-coordinate
-            ds_points[i]['z'] = filtered_points[i, 2]  # Z-coordinate
-            ds_points[i]['r'] = int(filtered_colors[i, 0] * 255)  # Red channel (scaled to 0-255)
-            ds_points[i]['g'] = int(filtered_colors[i, 1] * 255)  # Green channel (scaled to 0-255)
-            ds_points[i]['b'] = int(filtered_colors[i, 2] * 255)  # Blue channel (scaled to 0-255)
+        # # Populate the filtered_points array with coordinates and colors
+        # for i in range(n):
+        #     ds_points[i]['x'] = filtered_points[i, 0]  # X-coordinate
+        #     ds_points[i]['y'] = filtered_points[i, 1]  # Y-coordinate
+        #     ds_points[i]['z'] = filtered_points[i, 2]  # Z-coordinate
+        #     ds_points[i]['r'] = int(filtered_colors[i, 0] * 255)  # Red channel (scaled to 0-255)
+        #     ds_points[i]['g'] = int(filtered_colors[i, 1] * 255)  # Green channel (scaled to 0-255)
+        #     ds_points[i]['b'] = int(filtered_colors[i, 2] * 255)  # Blue channel (scaled to 0-255)
 
             # print(f"Detected point {i} at coordinates {filtered_coords[i]}, with color {filtered_rgb[i]}")
 
-        # change header of message
-        filtered_msg_header = msg.header
+        # # change header of message
+        # filtered_msg_header = msg.header
         stamp = msg.header.stamp
         frame = msg.header.frame_id
-        filtered_msg_header.frame_id = "camera_link"
+        # filtered_msg_header.frame_id = "camera_link"
 
-        # create the PointCloud2 message and publish it
-        filtered_msg = pc2.create_cloud(filtered_msg_header, fields, ds_points)
-        self._pub.publish(filtered_msg)
+        # # create the PointCloud2 message and publish it
+        # filtered_msg = pc2.create_cloud(filtered_msg_header, fields, ds_points)
+        # self._pub.publish(filtered_msg)
 
         # Detect objects based on color
-        red_mask = (filtered_colors[:, 0] > 0.8) & (filtered_colors[:, 1] < 0.4) 
-        green_mask = (filtered_colors[:, 0] < 0.1) & (filtered_colors[:, 1] > 0.4)
-        gray_mask = (filtered_colors[:,0] > 0.45) & (filtered_colors[:,0] < 0.55) & \
-                    (filtered_colors[:,1] > 0.45) & (filtered_colors[:,1] < 0.55) & \
-                    (filtered_colors[:,2] > 0.45) & (filtered_colors[:,2] < 0.55)
+        red_mask = (box_colors[:, 0] > 0.8) & (box_colors[:, 1] < 0.4) 
+        green_mask = (box_colors[:, 0] < 0.1) & (box_colors[:, 1] > 0.4)
+        gray_mask = (box_colors[:,0] > 0.3) & (box_colors[:,0] < 0.7) & \
+                    (box_colors[:,1] > 0.3) & (box_colors[:,1] < 0.7) & \
+                    (box_colors[:,2] > 0.3) & (box_colors[:,2] < 0.7)
         
-        if len(filtered_colors[gray_mask]) > 500:
+        # self.get_logger().info(f"Number of gray points: {box_colors[gray_mask].shape}")
+        # if np.any(box_colors):
+        #     self.get_logger().info(f"Min: {np.min(box_colors[:,0]), np.min(box_colors[:,1]), np.min(box_colors[:,2])}")
+        #     self.get_logger().info(f"Max: {np.max(box_colors[:,0]), np.max(box_colors[:,1]), np.max(box_colors[:,2])}")
+        #     self.get_logger().info(f"Mean: {np.mean(box_colors[:,0]), np.mean(box_colors[:,1]), np.mean(box_colors[:,2])}")
+        if np.size(box_points[:,0]) > 250:
             self.get_logger().info("Grey box detected!")
-            print("Number of points", filtered_colors[gray_mask])
-            
+            box_detected = True
+            box_centre = np.mean(box_points, axis=0)           
+            box_point_stamped = PointStamped()
+            box_point_stamped.header.stamp = stamp
+            box_point_stamped.header.frame_id = frame
+            box_point_stamped.point.x, box_point_stamped.point.y, box_point_stamped.point.z = box_centre
+
+            self.broadcast_tf_map(stamp, frame, box_point_stamped, 'box')
+
+
+        object_mask = (points[:, 2] < 1.0) & (points[:, 1] < 0.08 ) & (points[:,1] > 0.03)
+        object_points = points[object_mask]
+        object_colors = colors[object_mask]
+        
+        # self.get_logger().info(f"Number of object points: {object_colors.shape}")
+        # if np.any(object_colors):
+        #     self.get_logger().info(f"Min: {np.min(object_colors[:,0]), np.min(object_colors[:,1]), np.min(object_colors[:,2])}")
+        #     self.get_logger().info(f"Max: {np.max(object_colors[:,0]), np.max(object_colors[:,1]), np.max(object_colors[:,2])}")
+        #     self.get_logger().info(f"Mean: {np.mean(object_colors[:,0]), np.mean(object_colors[:,1]), np.mean(object_colors[:,2])}")
+        if(np.size(object_points[:,0])) > 250 and not box_detected:
+            self.get_logger().info("Object detected!")
+
+            object_centre = np.mean(object_points, axis=0)           
+            object_point_stamped = PointStamped()
+            object_point_stamped.header.stamp = stamp
+            object_point_stamped.header.frame_id = frame
+            object_point_stamped.point.x, object_point_stamped.point.y, object_point_stamped.point.z = object_centre
+
+            self.broadcast_tf_map(stamp, frame, object_point_stamped, 'object')
 
 
         # # Check if red sphere is detected
@@ -221,7 +231,7 @@ class Detection(Node):
         
 
 
-    def broadcast_tf_map(self, stamp, frame, point, color):
+    def broadcast_tf_map(self, stamp, frame, point, classify):
 
         time = rclpy.time.Time().from_msg(stamp)
         # Wait for the transform asynchronously
@@ -247,8 +257,8 @@ class Detection(Node):
 
         t = TransformStamped()
         t.header.stamp = stamp
-        t.header.frame_id = 'map'  # parent frame is the map frame
-        t.child_frame_id = f'object/{color}'  # child frame is the ArUco marker's frame
+        t.header.frame_id = 'map'
+        t.child_frame_id = classify  
 
         # Populate the transform with the transformed position and rotation
         transformed_point_stamped = tf2_geometry_msgs.do_transform_point(point, tf_base_map)
@@ -264,9 +274,23 @@ class Detection(Node):
         # Send the transform to the broadcaster
         self._tf_broadcaster.sendTransform(t)
 
+        self.generate_map(classify, t.transform.translation.x, t.transform.translation.y, t.transform.rotation.x)
+
+    #Generate map file
+    def generate_map(self, classify, x, y, a):
         
+        label = 'B' if 'box' in classify else 'O'  # Determine label
+        
+        log_entry = f"{label}, {x:.2f}, {y:.2f}, {a:.0f}\n"
+        
+        self.file = open("map_file.txt", "a")
+        self.file.write(log_entry)
+        self.get_logger().info(f"Logged: {log_entry.strip()}")
+
 
 def main():
+    if(os.path.exists("map_file.txt")):
+        os.remove("map_file.txt")
     rclpy.init()
     node = Detection()
     try:
