@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import os
+import math
+import string
 import numpy as np
 
 import rclpy
@@ -40,6 +42,8 @@ class Detection(Node):
 
         # Initialize the transform broadcaster
         self._tf_broadcaster = TransformBroadcaster(self)
+
+        self.file = "map_file.txt"
        
 
     def cloud_callback(self, msg: PointCloud2):
@@ -166,70 +170,7 @@ class Detection(Node):
             object_point_stamped.point.x, object_point_stamped.point.y, object_point_stamped.point.z = object_centre
 
             self.broadcast_tf_map(stamp, frame, object_point_stamped, 'object')
-
-
-        # # Check if red sphere is detected
-        # if np.any(red_mask):
-        #     self.get_logger().info("Red sphere detected!")
-            
-        #     red_values = filtered_colors[red_mask, 0]
-
-        #     # Find the maximum red value
-        #     max_red_value = np.max(red_values)
-
-        #     # Find all indices where the red value equals the maximum
-        #     max_red_indices = np.where(red_values == max_red_value)[0]
-
-        #     # If there are multiple points, select the middle one
-        #     if len(max_red_indices) > 1:
-        #         red_pixel_index = max_red_indices[len(max_red_indices) // 2]
-        #     else:
-        #         red_pixel_index = max_red_indices[0]
-            
-        #     # Get the 3D coordinates of this point
-        #     red_points = filtered_points[red_mask]
-        #     red_center = red_points[red_pixel_index]
-
-        #     red_point_stamped = PointStamped()
-        #     red_point_stamped.header.stamp = stamp
-        #     red_point_stamped.header.frame_id = frame
-        #     red_point_stamped.point.x, red_point_stamped.point.y, red_point_stamped.point.z = red_center
-
-        #     self.broadcast_tf_map(stamp, frame, red_point_stamped, 'red')
-
-
-        # # Check if green cube is detected
-        # if np.any(green_mask):
-        #     self.get_logger().info("Green cube detected!")
-
-        #     # Extract green channel of the filtered points
-        #     green_values = filtered_colors[green_mask, 1]
-
-        #     # Find the maximum green value
-        #     max_green_value = np.max(green_values)
-
-        #     # Find all indices where the green value equals the maximum
-        #     max_green_indices = np.where(green_values == max_green_value)[0]
-
-        #     # If there are multiple points, select the middle one
-        #     if len(max_green_indices) > 1:
-        #         green_pixel_index = max_green_indices[len(max_green_indices) // 2]
-        #     else:
-        #         green_pixel_index = max_green_indices[0] 
-            
-        #     # Get the 3D coordinates of this point
-        #     green_points = filtered_points[green_mask]
-        #     green_center = green_points[green_pixel_index]
-
-        #     green_point_stamped = PointStamped()
-        #     green_point_stamped.header.stamp = stamp
-        #     green_point_stamped.header.frame_id = frame
-        #     green_point_stamped.point.x, green_point_stamped.point.y, green_point_stamped.point.z = green_center
-
-        #     self.broadcast_tf_map(stamp, frame, green_point_stamped, 'green')
-
-        
-
+    
 
     def broadcast_tf_map(self, stamp, frame, point, classify):
 
@@ -276,20 +217,87 @@ class Detection(Node):
 
         self.generate_map(classify, t.transform.translation.x, t.transform.translation.y, t.transform.rotation.x)
 
-    #Generate map file
+
     def generate_map(self, classify, x, y, a):
+        """
+        Writes a new log entry only if a similar entry (based on Euclidean distance) does not already exist.
         
-        label = 'B' if 'box' in classify else 'O'  # Determine label
-        
-        log_entry = f"{label}, {x:.2f}, {y:.2f}, {a:.0f}\n"
-        
-        self.file = open("map_file.txt", "a")
-        self.file.write(log_entry)
+        :param classify: The object classification ('box' or 'object')
+        :param x: X-coordinate
+        :param y: Y-coordinate
+        :param a: Angle
+        :param threshold: The minimum Euclidean distance to consider two points as duplicates
+        """
+
+        label = 'B' if 'box' in classify else 'O'
+        new_entry = (label, x, y, a)
+
+        # Check for duplicate entry
+        if label == 'B':
+            threshold = 0.25
+        else:
+            threshold = 0.2
+
+        if self.is_duplicate(new_entry, threshold):
+            return 
+
+        # Append new entry to the file
+        log_entry = f"{label} {x:.2f} {y:.2f} {a:.0f}\n"
+        with open(self.file, "a") as file:
+            file.write(log_entry)
+
         self.get_logger().info(f"Logged: {log_entry.strip()}")
 
 
+    def is_duplicate(self, new_entry, threshold):
+        """
+        Searches for a duplicate entry. If found, it overwrites the line in place.
+        
+        :param new_entry: (label, x, y, a) tuple representing the new entry
+        :param threshold: The minimum distance to consider two points as duplicates
+        :return: True if a match was found and updated, otherwise False
+        """
+        label, new_x, new_y, new_a = new_entry
+
+        if not os.path.exists(self.file):
+            return False  # No file means no duplicates exist
+
+        with open(self.file, "r+") as file:
+            position = 0  # Track file position for seeking
+            for line in file:
+                parts = line.strip().split(" ")
+                if len(parts) < 4:
+                    position += len(line)
+                    continue  # Skip malformed lines
+
+                existing_label, existing_x, existing_y, existing_a = parts[:4]
+                existing_x, existing_y, existing_a = float(existing_x), float(existing_y), float(existing_a)
+
+                if existing_label == label:
+                    distance = math.sqrt((new_x - existing_x) ** 2 + (new_y - existing_y) ** 2)
+
+                    if distance < threshold:
+                        # Compute the averaged values
+                        avg_x = (existing_x + new_x) / 2
+                        avg_y = (existing_y + new_y) / 2
+                        avg_a = round((existing_a + new_a) / 2)
+
+                        updated_entry = f"{label} {avg_x:.2f} {avg_y:.2f} {avg_a}\n"
+
+                        # Seek back to the position and overwrite
+                        file.seek(position)
+                        file.write(updated_entry)
+                        self.get_logger().info(f"Overwrite: {updated_entry.strip()}")
+
+                        return True  # Successfully overwritten
+
+                position += len(line)  # Update file position
+
+        return False  # No duplicate found
+
+
 def main():
-    if(os.path.exists("map_file.txt")):
+    if os.path.exists("map_file.txt"):
         os.remove("map_file.txt")
     rclpy.init()
     node = Detection()
