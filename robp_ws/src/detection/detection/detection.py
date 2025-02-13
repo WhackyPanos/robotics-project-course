@@ -6,6 +6,7 @@ import numpy as np
 
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
 
 from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
@@ -19,20 +20,24 @@ import tf2_geometry_msgs
 from sensor_msgs.msg import PointCloud2, PointField
 import sensor_msgs_py.point_cloud2 as pc2
 from pyclustering.cluster.dbscan import dbscan
-import open3d as o3d
 
 import ctypes
 import struct
-
-
 
 class Detection(Node):
 
     def __init__(self):
         super().__init__('detection')
+
+        # Define QoS profile: Keep only the last message
+        qos_profile = QoSProfile(
+            history=HistoryPolicy.KEEP_LAST,
+            depth=1,  # Buffer size of 1 (latest message only)
+            reliability=ReliabilityPolicy.BEST_EFFORT  # Best effort for sensor data
+        )
         # Subscribe to point cloud topic and call callback function on each received message
         self.create_subscription(
-            PointCloud2, '/camera/camera/depth/color/points', self.cloud_callback, 10)
+            PointCloud2, '/camera/camera/depth/color/points', self.cloud_callback, qos_profile)
 
         # Initialize the publisher
         self._pub = self.create_publisher(
@@ -83,12 +88,14 @@ class Detection(Node):
         #Passthrough filter
         prefilter_mask = (points[:, 2] < 1.0) & (points[:,1] < 0.08) & (points[:,1] > 0)
         prefilter_points = points[prefilter_mask]
-        prefilter_colors = colors[prefilter_mask]
+        prefilter_points = prefilter_points[::20]
+        # prefilter_colors = colors[prefilter_mask]
+
         self._logger.info(f"Prefilter points: {prefilter_points.shape}")
 
         #Perform DBSCAN clustering using PyClustering
-        epsilon = 0.05  # Distance threshold
-        min_samples = 250  # Minimum points to form a cluster
+        epsilon = 0.03  # Distance threshold
+        min_samples = 10  # Minimum points to form a cluster
 
         prefilter_points_list = prefilter_points.tolist()
         if len(prefilter_points_list) >= min_samples:
@@ -105,7 +112,7 @@ class Detection(Node):
                 self._logger.info(f"Processing cluster {cluster_idx} with {len(cluster)} points.")
                 cluster_array = np.array(cluster)
                 cluster_points = prefilter_points[cluster_array]
-                cluster_colors = prefilter_colors[cluster_array]
+                # cluster_colors = prefilter_colors[cluster_array]
 
                 box_mask = cluster_points[:, 1] < 0.03
                 box_points = cluster_points[box_mask]
