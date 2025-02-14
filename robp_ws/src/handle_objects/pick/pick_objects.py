@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-import sys
-sys.path.insert(0, "external_libs/py_trees_lib")
 
 import py_trees
 import rclpy

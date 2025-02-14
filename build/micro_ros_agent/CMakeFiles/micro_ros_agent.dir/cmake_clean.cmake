@@ -1,16 +1,19 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/micro_ros_agent"
-  "CMakeFiles/micro_ros_agent-complete"
-  "micro_ros_agent-prefix/src/micro_ros_agent-stamp/micro_ros_agent-build"
-  "micro_ros_agent-prefix/src/micro_ros_agent-stamp/micro_ros_agent-configure"
-  "micro_ros_agent-prefix/src/micro_ros_agent-stamp/micro_ros_agent-download"
-  "micro_ros_agent-prefix/src/micro_ros_agent-stamp/micro_ros_agent-install"
-  "micro_ros_agent-prefix/src/micro_ros_agent-stamp/micro_ros_agent-mkdir"
-  "micro_ros_agent-prefix/src/micro_ros_agent-stamp/micro_ros_agent-patch"
-  "micro_ros_agent-prefix/src/micro_ros_agent-stamp/micro_ros_agent-update"
+  "CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o"
+  "CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o.d"
+  "CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_manager.cpp.o"
+  "CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_manager.cpp.o.d"
+  "CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_typesupport.cpp.o"
+  "CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_typesupport.cpp.o.d"
+  "CMakeFiles/micro_ros_agent.dir/src/agent/utils/demangle.cpp.o"
+  "CMakeFiles/micro_ros_agent.dir/src/agent/utils/demangle.cpp.o.d"
+  "CMakeFiles/micro_ros_agent.dir/src/main.cpp.o"
+  "CMakeFiles/micro_ros_agent.dir/src/main.cpp.o.d"
+  "micro_ros_agent"
+  "micro_ros_agent.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
-foreach(lang )
+foreach(lang CXX)
   include(CMakeFiles/micro_ros_agent.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()

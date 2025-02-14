@@ -10,6 +10,8 @@
   <!-- Dependencies -->
   <depend>rclpy</depend>
   <depend>py_trees</depend>
+  <depend>py_trees_ros_viewer</depend>
+
   <depend>handle_objects</depend> 
  
   <test_depend>ament_copyright</test_depend>

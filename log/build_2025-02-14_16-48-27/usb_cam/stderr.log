@@ -1,5 +1,0 @@
-gmake[2]: *** [CMakeFiles/usb_cam_node.dir/build.make:76: CMakeFiles/usb_cam_node.dir/src/usb_cam_node.cpp.o] Interrupt
-gmake[1]: *** wait: No child processes.  Stop.
-gmake[1]: *** Waiting for unfinished jobs....
-gmake[1]: *** wait: No child processes.  Stop.
-gmake: *** [Makefile:146: all] Error 2

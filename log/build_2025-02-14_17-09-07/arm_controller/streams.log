@@ -1,0 +1,24 @@
+[1.910s] Invoking command in '/home/group3-robot/robp_group3/build/arm_controller': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/arm_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/arm_controller/build --no-deps symlink_data
+[2.400s] running develop
+[2.695s] running egg_info
+[2.696s] creating arm_controller.egg-info
+[2.725s] writing arm_controller.egg-info/PKG-INFO
+[2.726s] writing dependency_links to arm_controller.egg-info/dependency_links.txt
+[2.726s] writing entry points to arm_controller.egg-info/entry_points.txt
+[2.726s] writing requirements to arm_controller.egg-info/requires.txt
+[2.727s] writing top-level names to arm_controller.egg-info/top_level.txt
+[2.728s] writing manifest file 'arm_controller.egg-info/SOURCES.txt'
+[2.786s] reading manifest file 'arm_controller.egg-info/SOURCES.txt'
+[2.787s] writing manifest file 'arm_controller.egg-info/SOURCES.txt'
+[2.817s] running build_ext
+[2.817s] Creating /home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages/arm-controller.egg-link (link to .)
+[2.818s] Installing arm_controller script to /home/group3-robot/robp_group3/install/arm_controller/lib/arm_controller
+[2.818s] 
+[2.818s] Installed /home/group3-robot/robp_group3/build/arm_controller
+[2.819s] running symlink_data
+[2.822s] creating /home/group3-robot/robp_group3/install/arm_controller/share/ament_index
+[2.822s] creating /home/group3-robot/robp_group3/install/arm_controller/share/ament_index/resource_index
+[2.822s] creating /home/group3-robot/robp_group3/install/arm_controller/share/ament_index/resource_index/packages
+[2.822s] symbolically linking /home/group3-robot/robp_group3/build/arm_controller/resource/arm_controller -> /home/group3-robot/robp_group3/install/arm_controller/share/ament_index/resource_index/packages
+[2.823s] symbolically linking /home/group3-robot/robp_group3/build/arm_controller/package.xml -> /home/group3-robot/robp_group3/install/arm_controller/share/arm_controller
+[2.925s] Invoked command in '/home/group3-robot/robp_group3/build/arm_controller' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/arm_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/arm_controller/build --no-deps symlink_data

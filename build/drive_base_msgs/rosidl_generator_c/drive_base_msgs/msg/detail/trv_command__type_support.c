@@ -6,8 +6,8 @@
 
 #include "rosidl_typesupport_interface/macros.h"
 #include "drive_base_msgs/msg/detail/trv_command__functions.h"
-#include "drive_base_msgs/msg/detail/trv_command__struct.h"
 #include "drive_base_msgs/msg/detail/trv_command__type_support.h"
+#include "drive_base_msgs/msg/detail/trv_command__struct.h"
 
 #ifdef __cplusplus
 extern "C"

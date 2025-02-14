@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/group3-robot/robp_group3/build/micro_ros_agent
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
@@ -84,6 +94,51 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -117,17 +172,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named xrceagent
+# Target rules for targets named uninstall
 
 # Build rule for target.
-xrceagent: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xrceagent
-.PHONY : xrceagent
+uninstall: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 uninstall
+.PHONY : uninstall
 
 # fast build rule for target.
-xrceagent/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/xrceagent.dir/build.make CMakeFiles/xrceagent.dir/build
-.PHONY : xrceagent/fast
+uninstall/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/build
+.PHONY : uninstall/fast
+
+#=============================================================================
+# Target rules for targets named micro_ros_agent_uninstall
+
+# Build rule for target.
+micro_ros_agent_uninstall: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 micro_ros_agent_uninstall
+.PHONY : micro_ros_agent_uninstall
+
+# fast build rule for target.
+micro_ros_agent_uninstall/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent_uninstall.dir/build.make CMakeFiles/micro_ros_agent_uninstall.dir/build
+.PHONY : micro_ros_agent_uninstall/fast
 
 #=============================================================================
 # Target rules for targets named micro_ros_agent
@@ -142,6 +210,126 @@ micro_ros_agent/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/build
 .PHONY : micro_ros_agent/fast
 
+src/agent/Agent.o: src/agent/Agent.cpp.o
+.PHONY : src/agent/Agent.o
+
+# target to build an object file
+src/agent/Agent.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
+.PHONY : src/agent/Agent.cpp.o
+
+src/agent/Agent.i: src/agent/Agent.cpp.i
+.PHONY : src/agent/Agent.i
+
+# target to preprocess a source file
+src/agent/Agent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.i
+.PHONY : src/agent/Agent.cpp.i
+
+src/agent/Agent.s: src/agent/Agent.cpp.s
+.PHONY : src/agent/Agent.s
+
+# target to generate assembly for a file
+src/agent/Agent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.s
+.PHONY : src/agent/Agent.cpp.s
+
+src/agent/graph_manager/graph_manager.o: src/agent/graph_manager/graph_manager.cpp.o
+.PHONY : src/agent/graph_manager/graph_manager.o
+
+# target to build an object file
+src/agent/graph_manager/graph_manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_manager.cpp.o
+.PHONY : src/agent/graph_manager/graph_manager.cpp.o
+
+src/agent/graph_manager/graph_manager.i: src/agent/graph_manager/graph_manager.cpp.i
+.PHONY : src/agent/graph_manager/graph_manager.i
+
+# target to preprocess a source file
+src/agent/graph_manager/graph_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_manager.cpp.i
+.PHONY : src/agent/graph_manager/graph_manager.cpp.i
+
+src/agent/graph_manager/graph_manager.s: src/agent/graph_manager/graph_manager.cpp.s
+.PHONY : src/agent/graph_manager/graph_manager.s
+
+# target to generate assembly for a file
+src/agent/graph_manager/graph_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_manager.cpp.s
+.PHONY : src/agent/graph_manager/graph_manager.cpp.s
+
+src/agent/graph_manager/graph_typesupport.o: src/agent/graph_manager/graph_typesupport.cpp.o
+.PHONY : src/agent/graph_manager/graph_typesupport.o
+
+# target to build an object file
+src/agent/graph_manager/graph_typesupport.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_typesupport.cpp.o
+.PHONY : src/agent/graph_manager/graph_typesupport.cpp.o
+
+src/agent/graph_manager/graph_typesupport.i: src/agent/graph_manager/graph_typesupport.cpp.i
+.PHONY : src/agent/graph_manager/graph_typesupport.i
+
+# target to preprocess a source file
+src/agent/graph_manager/graph_typesupport.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_typesupport.cpp.i
+.PHONY : src/agent/graph_manager/graph_typesupport.cpp.i
+
+src/agent/graph_manager/graph_typesupport.s: src/agent/graph_manager/graph_typesupport.cpp.s
+.PHONY : src/agent/graph_manager/graph_typesupport.s
+
+# target to generate assembly for a file
+src/agent/graph_manager/graph_typesupport.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_typesupport.cpp.s
+.PHONY : src/agent/graph_manager/graph_typesupport.cpp.s
+
+src/agent/utils/demangle.o: src/agent/utils/demangle.cpp.o
+.PHONY : src/agent/utils/demangle.o
+
+# target to build an object file
+src/agent/utils/demangle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/utils/demangle.cpp.o
+.PHONY : src/agent/utils/demangle.cpp.o
+
+src/agent/utils/demangle.i: src/agent/utils/demangle.cpp.i
+.PHONY : src/agent/utils/demangle.i
+
+# target to preprocess a source file
+src/agent/utils/demangle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/utils/demangle.cpp.i
+.PHONY : src/agent/utils/demangle.cpp.i
+
+src/agent/utils/demangle.s: src/agent/utils/demangle.cpp.s
+.PHONY : src/agent/utils/demangle.s
+
+# target to generate assembly for a file
+src/agent/utils/demangle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/agent/utils/demangle.cpp.s
+.PHONY : src/agent/utils/demangle.cpp.s
+
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_agent.dir/build.make CMakeFiles/micro_ros_agent.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -149,9 +337,30 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... test"
+	@echo "... micro_ros_agent_uninstall"
+	@echo "... uninstall"
 	@echo "... micro_ros_agent"
-	@echo "... xrceagent"
+	@echo "... src/agent/Agent.o"
+	@echo "... src/agent/Agent.i"
+	@echo "... src/agent/Agent.s"
+	@echo "... src/agent/graph_manager/graph_manager.o"
+	@echo "... src/agent/graph_manager/graph_manager.i"
+	@echo "... src/agent/graph_manager/graph_manager.s"
+	@echo "... src/agent/graph_manager/graph_typesupport.o"
+	@echo "... src/agent/graph_manager/graph_typesupport.i"
+	@echo "... src/agent/graph_manager/graph_typesupport.s"
+	@echo "... src/agent/utils/demangle.o"
+	@echo "... src/agent/utils/demangle.i"
+	@echo "... src/agent/utils/demangle.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 

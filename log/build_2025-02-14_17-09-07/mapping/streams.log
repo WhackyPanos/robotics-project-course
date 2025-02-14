@@ -1,0 +1,24 @@
+[2.251s] Invoking command in '/home/group3-robot/robp_group3/build/mapping': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/mapping/build --no-deps symlink_data
+[2.809s] running develop
+[3.308s] running egg_info
+[3.308s] creating mapping.egg-info
+[3.386s] writing mapping.egg-info/PKG-INFO
+[3.387s] writing dependency_links to mapping.egg-info/dependency_links.txt
+[3.388s] writing entry points to mapping.egg-info/entry_points.txt
+[3.389s] writing requirements to mapping.egg-info/requires.txt
+[3.389s] writing top-level names to mapping.egg-info/top_level.txt
+[3.395s] writing manifest file 'mapping.egg-info/SOURCES.txt'
+[3.491s] reading manifest file 'mapping.egg-info/SOURCES.txt'
+[3.492s] writing manifest file 'mapping.egg-info/SOURCES.txt'
+[3.570s] running build_ext
+[3.570s] Creating /home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages/mapping.egg-link (link to .)
+[3.571s] Installing mapping script to /home/group3-robot/robp_group3/install/mapping/lib/mapping
+[3.571s] 
+[3.572s] Installed /home/group3-robot/robp_group3/build/mapping
+[3.572s] running symlink_data
+[3.572s] creating /home/group3-robot/robp_group3/install/mapping/share/ament_index
+[3.572s] creating /home/group3-robot/robp_group3/install/mapping/share/ament_index/resource_index
+[3.572s] creating /home/group3-robot/robp_group3/install/mapping/share/ament_index/resource_index/packages
+[3.572s] symbolically linking /home/group3-robot/robp_group3/build/mapping/resource/mapping -> /home/group3-robot/robp_group3/install/mapping/share/ament_index/resource_index/packages
+[3.572s] symbolically linking /home/group3-robot/robp_group3/build/mapping/package.xml -> /home/group3-robot/robp_group3/install/mapping/share/mapping
+[3.817s] Invoked command in '/home/group3-robot/robp_group3/build/mapping' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/mapping/build --no-deps symlink_data
