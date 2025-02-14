@@ -15,15 +15,15 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='path_planner',
-            executable='point_publisher_test', #script name
+            executable='point_generator', #script name
             #name='point_generator', #node name when running, don't think is necessary
-            parameters=['src/path_planner/config/params.yaml']
+            #parameters=['src/path_planner/config/params.yaml']
         ),
         Node(
             package='path_planner',
             executable='path_planner',
             #name='carrot_planner',
-            parameters=['src/path_planner/config/params.yaml']
+            #parameters=['src/path_planner/config/params.yaml']
         ),
 
         Node(
@@ -34,6 +34,6 @@ def generate_launch_description():
 
         # Check later if I'm missing anything
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/joystick_launch.py'))
+            PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/control_launch.py'))
         ),
     ])

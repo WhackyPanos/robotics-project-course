@@ -18,6 +18,8 @@ class CarrotPlanner(Node):
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
 
+        self.rate = self.create_rate(50)
+
        # Initialize the goal position
         self.goal_position = Point()
         self.goal_position.x = 0.0
@@ -34,7 +36,7 @@ class CarrotPlanner(Node):
         # check config folder for params.yaml
         # TODO yaml file doesn't import properly
         self.declare_parameter('linear_velocity', 0.02)
-        self.declare_parameter('angular_velocity', 0.01)
+        self.declare_parameter('angular_velocity', 0.02)
         self.declare_parameter('goal_threshold', 0.1)
 
         # Retrieve parameter values
@@ -112,28 +114,52 @@ class CarrotPlanner(Node):
 
     def navigate_to_goal(self, x, y, theta):
         """ Compute commands to move the robot towards the goal in map frame. """
+        
+        distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
         goal_angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
         angle_difference = goal_angle - theta
         self.get_logger().info('Angle diff: ' + str(angle_difference))
 
         twist_command = Twist()
-
-        if abs(angle_difference) >= 0.3:
-            twist_command.angular.z = self.angular_velocity # this angular velocity is the one from the param.yaml (maximum)
+        if distance_to_goal > self.goal_threshold:
+            twist_command.linear.x = min(self.linear_velocity/2, self.linear_velocity/2 * distance_to_goal)
+            twist_command.linear.y = 0.0
+            twist_command.linear.z = 0.0
+            twist_command.angular.x = 0.0
+            twist_command.angular.y = 0.0
+            twist_command.angular.z = min(self.angular_velocity, self.angular_velocity * angle_difference/20)
+			# publish velocity
             self.cmd_vel_publisher.publish(twist_command)
-
+            self.rate.sleep()
         else:
-            distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
-            if distance_to_goal >= self.goal_threshold:
-                twist_command.linear.x = self.linear_velocity # again, max linear velocity is assumed
-                self.cmd_vel_publisher.publish(twist_command)
-            else:
-                twist_command.linear.x = 0.0
-                self.cmd_vel_publisher.publish(twist_command)
-                self.goal_reached_publisher.publish(Bool(data=True))
-                self.goal_reached_flag = True
-                self.get_logger().info("Goal reached!")
-        #  time.sleep(0.05) # trying a tiny sleep command to see if it makes it less jerky... nah its worse
+            twist_command.linear.x =0.0
+            twist_command.linear.y =0.0
+            twist_command.linear.z =0.0
+            twist_command.angular.x =0.0
+            twist_command.angular.y =0.0
+            twist_command.angular.z =0.0
+            self.goal_reached_publisher.publish(Bool(data=True))
+            self.goal_reached_flag = True
+            self.get_logger().info("Goal reached!")
+            self.cmd_vel_publisher.publish(twist_command)
+            self.rate.sleep()
+
+        # if abs(angle_difference) >= 0.3:
+        #     twist_command.angular.z = self.angular_velocity # this angular velocity is the one from the param.yaml (maximum)
+        #     self.cmd_vel_publisher.publish(twist_command)
+
+        # else:
+        #     distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
+        #     if distance_to_goal >= self.goal_threshold:
+        #         twist_command.linear.x = self.linear_velocity # again, max linear velocity is assumed
+        #         self.cmd_vel_publisher.publish(twist_command)
+        #     else:
+        #         twist_command.linear.x = 0.0
+        #         self.cmd_vel_publisher.publish(twist_command)
+        #         self.goal_reached_publisher.publish(Bool(data=True))
+        #         self.goal_reached_flag = True
+        #         self.get_logger().info("Goal reached!")
+        # #  time.sleep(0.05) # trying a tiny sleep command to see if it makes it less jerky... nah its worse
 
     
 def main(args=None):
