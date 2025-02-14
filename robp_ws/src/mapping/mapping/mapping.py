@@ -8,6 +8,9 @@ from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 from sensor_msgs.msg import LaserScan, PointCloud2
 from laser_geometry import LaserProjection
+from nav_msgs.msg import OccupancyGrid
+from std_msgs.msg import Header
+import numpy as np
 
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
 
