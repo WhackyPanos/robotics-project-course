@@ -1,0 +1,1 @@
+/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_cmake/rosidl_cmake-extras.cmake

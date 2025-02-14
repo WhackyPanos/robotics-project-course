@@ -1,0 +1,14 @@
+package.xml
+setup.cfg
+setup.py
+pick/__init__.py
+pick/pick_objects.py
+pick/pick_planB.py
+pick_objects.egg-info/PKG-INFO
+pick_objects.egg-info/SOURCES.txt
+pick_objects.egg-info/dependency_links.txt
+pick_objects.egg-info/entry_points.txt
+pick_objects.egg-info/requires.txt
+pick_objects.egg-info/top_level.txt
+pick_objects.egg-info/zip-safe
+resource/pick_objects

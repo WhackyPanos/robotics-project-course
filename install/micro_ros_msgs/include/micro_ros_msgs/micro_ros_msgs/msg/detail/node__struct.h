@@ -1,0 +1,1 @@
+/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_c/micro_ros_msgs/msg/detail/node__struct.h

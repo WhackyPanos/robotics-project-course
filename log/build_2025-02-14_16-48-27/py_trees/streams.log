@@ -1,0 +1,33 @@
+[1.892s] Invoking command in '/home/group3-robot/robp_group3/build/py_trees': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/py_trees/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/py_trees/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/py_trees/build --no-deps
+[2.406s] running develop
+[2.806s] running egg_info
+[2.806s] creating py_trees.egg-info
+[2.835s] writing py_trees.egg-info/PKG-INFO
+[2.835s] writing dependency_links to py_trees.egg-info/dependency_links.txt
+[2.836s] writing entry points to py_trees.egg-info/entry_points.txt
+[2.836s] writing requirements to py_trees.egg-info/requires.txt
+[2.836s] writing top-level names to py_trees.egg-info/top_level.txt
+[2.836s] writing manifest file 'py_trees.egg-info/SOURCES.txt'
+[2.893s] reading manifest file 'py_trees.egg-info/SOURCES.txt'
+[2.894s] writing manifest file 'py_trees.egg-info/SOURCES.txt'
+[2.925s] running build_ext
+[2.927s] Creating /home/group3-robot/robp_group3/install/py_trees/lib/python3.12/site-packages/py-trees.egg-link (link to .)
+[2.927s] Installing py-trees-demo-action-behaviour script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.927s] Installing py-trees-demo-behaviour-lifecycle script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.927s] Installing py-trees-demo-blackboard script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.928s] Installing py-trees-demo-blackboard-namespaces script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.929s] Installing py-trees-demo-blackboard-remappings script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.929s] Installing py-trees-demo-context-switching script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.930s] Installing py-trees-demo-display-modes script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.930s] Installing py-trees-demo-dot-graphs script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.931s] Installing py-trees-demo-either-or script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.932s] Installing py-trees-demo-eternal-guard script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.932s] Installing py-trees-demo-logging script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.933s] Installing py-trees-demo-pick-up-where-you-left-off script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.933s] Installing py-trees-demo-selector script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.934s] Installing py-trees-demo-sequence script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.934s] Installing py-trees-demo-tree-stewardship script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.934s] Installing py-trees-render script to /home/group3-robot/robp_group3/install/py_trees/bin
+[2.935s] 
+[2.935s] Installed /home/group3-robot/robp_group3/build/py_trees
+[2.992s] Invoked command in '/home/group3-robot/robp_group3/build/py_trees' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/py_trees/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/py_trees/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/py_trees/build --no-deps

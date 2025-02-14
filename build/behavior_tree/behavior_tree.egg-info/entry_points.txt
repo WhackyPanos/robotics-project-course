@@ -1,0 +1,2 @@
+[console_scripts]
+pick_bt_node = behavior_tree.pick_bt:main

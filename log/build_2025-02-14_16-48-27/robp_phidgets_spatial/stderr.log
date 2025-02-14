@@ -1,0 +1,3 @@
+gmake[2]: *** [CMakeFiles/robp_phidgets_spatial.dir/build.make:76: CMakeFiles/robp_phidgets_spatial.dir/src/spatial.cpp.o] Interrupt
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/robp_phidgets_spatial.dir/all] Interrupt
+gmake: *** [Makefile:146: all] Interrupt

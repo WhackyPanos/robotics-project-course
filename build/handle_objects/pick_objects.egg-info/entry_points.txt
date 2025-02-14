@@ -1,0 +1,4 @@
+[console_scripts]
+lift_node = handle_objects.lift.lift_objects:main
+pick_node = handle_objects.pick.pick_objects:main
+place_node = handle_objects.place.place_objects:main

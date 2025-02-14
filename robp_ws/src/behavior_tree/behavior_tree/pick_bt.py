@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, "external_libs/py_trees_lib")
+
 import rclpy
 import py_trees
 from rclpy.node import Node

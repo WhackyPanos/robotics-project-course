@@ -1,0 +1,17 @@
+[33mCMake Warning:
+  Manually-specified variables were not used by the project:
+
+    AMENT_CMAKE_SYMLINK_INSTALL
+
+[0m
+Cloning into 'xrceagent'...
+HEAD is now at 7362281 Release v2.4.3
+gmake[8]: *** [CMakeFiles/microxrcedds_agent.dir/build.make:76: CMakeFiles/microxrcedds_agent.dir/src/cpp/Agent.cpp.o] Interrupt
+gmake[7]: *** [CMakeFiles/Makefile2:83: CMakeFiles/microxrcedds_agent.dir/all] Interrupt
+gmake[6]: *** [Makefile:136: all] Interrupt
+gmake[5]: *** [CMakeFiles/uagent.dir/build.make:86: uagent-prefix/src/uagent-stamp/uagent-build] Interrupt
+gmake[4]: *** [CMakeFiles/Makefile2:83: CMakeFiles/uagent.dir/all] Interrupt
+gmake[3]: *** [Makefile:91: all] Interrupt
+gmake[2]: *** [CMakeFiles/xrceagent.dir/build.make:86: agent/src/xrceagent-stamp/xrceagent-build] Interrupt
+gmake[1]: *** [CMakeFiles/Makefile2:85: CMakeFiles/xrceagent.dir/all] Interrupt
+gmake: *** [Makefile:91: all] Interrupt

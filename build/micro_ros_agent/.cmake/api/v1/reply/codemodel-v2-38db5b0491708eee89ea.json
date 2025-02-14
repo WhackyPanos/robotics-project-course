@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "uagent_superbuild",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "micro_ros_agent::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-micro_ros_agent-1b19179fc631e8696fe1.json",
+					"name" : "micro_ros_agent",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "xrceagent::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-xrceagent-07d0320774790eaec659.json",
+					"name" : "xrceagent",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/group3-robot/robp_group3/build/micro_ros_agent",
+		"source" : "/home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

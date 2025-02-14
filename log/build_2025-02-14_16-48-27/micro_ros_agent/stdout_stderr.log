@@ -1,0 +1,71 @@
+-- The C compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (1.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_agent
+[33mCMake Warning:
+  Manually-specified variables were not used by the project:
+
+    AMENT_CMAKE_SYMLINK_INSTALL
+
+[0m
+[  6%] [34m[1mCreating directories for 'xrceagent'[0m
+[ 12%] [34m[1mPerforming download step (git clone) for 'xrceagent'[0m
+Cloning into 'xrceagent'...
+HEAD is now at 7362281 Release v2.4.3
+[ 18%] [34m[1mPerforming update step for 'xrceagent'[0m
+[ 25%] [34m[1mNo patch step for 'xrceagent'[0m
+[ 31%] [34m[1mPerforming configure step for 'xrceagent'[0m
+loading initial cache file /home/group3-robot/robp_group3/build/micro_ros_agent/agent/tmp/xrceagent-cache-.cmake
+-- The C compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Configuring done (1.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build
+[ 37%] [34m[1mPerforming build step for 'xrceagent'[0m
+[ 12%] [34m[1mCreating directories for 'uagent'[0m
+[ 25%] [34m[1mNo download step for 'uagent'[0m
+[ 37%] [34m[1mNo update step for 'uagent'[0m
+[ 50%] [34m[1mNo patch step for 'uagent'[0m
+[ 62%] [34m[1mPerforming configure step for 'uagent'[0m
+loading initial cache file /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/uagent-prefix/tmp/uagent-cache-.cmake
+-- Setting build type to 'Release' as none was specified.
+-- Found TinyXML2: /usr/lib/x86_64-linux-gnu/cmake/tinyxml2
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build
+[ 75%] [34m[1mPerforming build step for 'uagent'[0m
+[  2%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/Agent.cpp.o[0m
+gmake[8]: *** [CMakeFiles/microxrcedds_agent.dir/build.make:76: CMakeFiles/microxrcedds_agent.dir/src/cpp/Agent.cpp.o] Interrupt
+gmake[7]: *** [CMakeFiles/Makefile2:83: CMakeFiles/microxrcedds_agent.dir/all] Interrupt
+gmake[6]: *** [Makefile:136: all] Interrupt
+gmake[5]: *** [CMakeFiles/uagent.dir/build.make:86: uagent-prefix/src/uagent-stamp/uagent-build] Interrupt
+gmake[4]: *** [CMakeFiles/Makefile2:83: CMakeFiles/uagent.dir/all] Interrupt
+gmake[3]: *** [Makefile:91: all] Interrupt
+gmake[2]: *** [CMakeFiles/xrceagent.dir/build.make:86: agent/src/xrceagent-stamp/xrceagent-build] Interrupt
+gmake[1]: *** [CMakeFiles/Makefile2:85: CMakeFiles/xrceagent.dir/all] Interrupt
+gmake: *** [Makefile:91: all] Interrupt

@@ -1,0 +1,15 @@
+source;share/py_trees/hook/path.ps1
+source;share/py_trees/hook/path.dsv
+source;share/py_trees/hook/path.sh
+source;share/py_trees/hook/pythonpath.ps1
+source;share/py_trees/hook/pythonpath.dsv
+source;share/py_trees/hook/pythonpath.sh
+source;share/py_trees/hook/pythonscriptspath.ps1
+source;share/py_trees/hook/pythonscriptspath.dsv
+source;share/py_trees/hook/pythonscriptspath.sh
+source;share/py_trees/hook/ament_prefix_path.ps1
+source;share/py_trees/hook/ament_prefix_path.dsv
+source;share/py_trees/hook/ament_prefix_path.sh
+source;../../build/py_trees/share/py_trees/hook/pythonpath_develop.ps1
+source;../../build/py_trees/share/py_trees/hook/pythonpath_develop.dsv
+source;../../build/py_trees/share/py_trees/hook/pythonpath_develop.sh
