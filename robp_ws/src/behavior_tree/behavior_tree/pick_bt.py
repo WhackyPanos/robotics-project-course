@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-
 import rclpy
 import py_trees
 from rclpy.node import Node
-from handle_objects.handle_objects import pick_objects
+#from handle_objects.handle_objects.pick_objects import InitTuckArm
+from handle_objects.pick_objects import InitTuckArm
 
 
 class PickBT(Node):
@@ -12,8 +12,9 @@ class PickBT(Node):
         self.tree = py_trees.trees.BehaviourTree(self.create_tree())
 
     def create_tree(self):
-        root = py_trees.composites.Sequence("Root")
-        pick_action = pick_objects.InitTuckArm()
+        root = py_trees.composites.Sequence("Root", memory= False)
+        pick_action = InitTuckArm()
+        print("AAA")
         root.add_child(pick_action)
         return root
 

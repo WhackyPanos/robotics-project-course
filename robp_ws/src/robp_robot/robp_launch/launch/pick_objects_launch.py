@@ -8,12 +8,6 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     return launch.LaunchDescription([
-        Node(
-            package='micro_ros_agent',
-            executable='micro_ros_agent',
-            arguments=['serial', '--dev', '/dev/hiwonder_arm', '-v6'],
-            output='screen'
-        ),
 
         Node(
             package='behavior_tree',

@@ -9,11 +9,13 @@ def generate_launch_description():
             name='micro_ros_agent',
             output='screen',
             arguments=["serial", "--dev", "/dev/hiwonder_arm", "-v6"]
-        ),
+        )
+    ])
+
+"""
         Node(
             package='arm_controller',
             executable='arm_controller',
             name='arm_controller',
             # output='screen',
-        )
-    ])
+        )"""
