@@ -49,5 +49,13 @@ source install/setup.bash
 ## Additional notes
 Do not forget to build each package after changing setup.py or package.xml. Use the select command.
 
-## pick branch
+# Pick branch
+Open 3 terminal: one for the fastdds command and in the other two run:
+```
+ros2 launch robp_launch arm_servo_launch.py
+```
+```
+ros2 launch robp_launch pick_objects_launch.py
+``
+
 
