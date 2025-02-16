@@ -21,6 +21,9 @@ group3-robot@group3-robot:~/robp_group3$
 ```
 Then run 
 ```
+unset COLCON_PREFIX_PATH
+unset AMENT_PREFIX_PATH
+unset CMAKE_PREFIX_PATH
 source /opt/ros/jazzy/setup.bash
 sudo apt update
 rosdep update
