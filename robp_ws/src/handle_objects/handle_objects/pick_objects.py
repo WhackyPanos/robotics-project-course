@@ -56,7 +56,8 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
             dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
             data_offset=0
         )      
-        angles = [10000] * 6
+        angles = [12000] * 6
+        angles[3] = 20000
         times = [self.init_tuck_arm_time] * 6
         msg.data = angles + times
         print(f"About to publish message")
