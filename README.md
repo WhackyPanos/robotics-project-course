@@ -13,8 +13,38 @@ and insert *robot* as password
 fastdds discovery -i 0 -t 192.168.128.107 -q 42100
 ```
 
+## Issues when building
+If you encounter unforeseen issues when building, go to the root - you should have in the terminal
+
+```
+group3-robot@group3-robot:~/robp_group3$
+```
+Then run 
+```
+source /opt/ros/jazzy/setup.bash
+sudo apt update
+rosdep update
+```
+Then install dependencies in each workspace by doing
+```
+cd arm_ws
+rosdep install --from-paths src --ignore-src -r -y
+```
+```
+cd ..
+cd robp_ws
+rosdep install --from-paths src --ignore-src -r -y
+cd ..
+```
+Remove the instal, build and log folders and build
+```
+rm -rf build install log
+colcon build --symlink-install
+source install/setup.bash
+```
+
 ## Additional notes
-Do not forget to colcon build --symlink-install and source install/setup.bash after changing/creating a new package
+Do not forget to build each package after changing setup.py or package.xml. Use the select command.
 
 ## pick branch
 
