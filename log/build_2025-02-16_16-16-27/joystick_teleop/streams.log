@@ -1,0 +1,18 @@
+[1.354s] Invoking command in '/home/group3-robot/robp_group3/build/joystick_teleop': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/joystick_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/joystick_teleop/build --no-deps symlink_data
+[1.746s] running develop
+[1.908s] running egg_info
+[1.922s] writing joystick_teleop.egg-info/PKG-INFO
+[1.922s] writing dependency_links to joystick_teleop.egg-info/dependency_links.txt
+[1.922s] writing entry points to joystick_teleop.egg-info/entry_points.txt
+[1.922s] writing requirements to joystick_teleop.egg-info/requires.txt
+[1.923s] writing top-level names to joystick_teleop.egg-info/top_level.txt
+[1.954s] reading manifest file 'joystick_teleop.egg-info/SOURCES.txt'
+[1.955s] writing manifest file 'joystick_teleop.egg-info/SOURCES.txt'
+[1.972s] running build_ext
+[1.972s] Creating /home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages/joystick-teleop.egg-link (link to .)
+[1.973s] Installing teleop script to /home/group3-robot/robp_group3/install/joystick_teleop/lib/joystick_teleop
+[1.973s] Installing twist2duty script to /home/group3-robot/robp_group3/install/joystick_teleop/lib/joystick_teleop
+[1.973s] 
+[1.973s] Installed /home/group3-robot/robp_group3/build/joystick_teleop
+[1.973s] running symlink_data
+[2.178s] Invoked command in '/home/group3-robot/robp_group3/build/joystick_teleop' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/joystick_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/joystick_teleop/build --no-deps symlink_data

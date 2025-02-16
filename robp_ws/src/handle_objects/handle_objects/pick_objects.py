@@ -115,6 +115,7 @@ class ObjTuckArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree 
             return py_trees.common.Status.RUNNING  # Keep running while the arm moves
 
         # Publish the tuck command
+        self.get_logger().info("Ticking ObjTuckArm.")
         msg = Int16MultiArray()
         msg.layout = MultiArrayLayout(
             dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],

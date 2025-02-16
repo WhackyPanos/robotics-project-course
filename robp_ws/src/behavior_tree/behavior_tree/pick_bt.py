@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import rclpy
 import py_trees
+import py_trees_ros_viewer
 from rclpy.node import Node
 #from handle_objects.handle_objects.pick_objects import InitTuckArm
 from handle_objects.pick_objects import InitTuckArm, ObjTuckArm

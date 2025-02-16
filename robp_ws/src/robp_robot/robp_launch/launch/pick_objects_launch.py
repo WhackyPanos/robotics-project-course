@@ -9,5 +9,6 @@ def generate_launch_description():
             executable='pick_bt',
             output='screen',   # This ensures output goes to the terminal
             emulate_tty=True   # Ensures that print() statements are immediately flushed
-        )
+        ),
+        
     ])
