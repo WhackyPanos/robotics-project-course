@@ -54,8 +54,7 @@ Open 3 terminal: one for the fastdds command and in the other two run:
 ```
 ros2 launch robp_launch arm_servo_launch.py
 ```
+
 ```
 ros2 launch robp_launch pick_objects_launch.py
-``
-
-
+```
