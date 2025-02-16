@@ -1,18 +1,13 @@
-import launch #from launch import LaunchDescription
+import launch
 from launch_ros.actions import Node
 import os
-from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource, AnyLaunchDescriptionSource
-from ament_index_python.packages import get_package_share_directory
-
 
 def generate_launch_description():
     return launch.LaunchDescription([
-
         Node(
             package='behavior_tree',
-            executable='pick_bt')  #script name
+            executable='pick_bt',
+            output='screen',   # This ensures output goes to the terminal
+            emulate_tty=True   # Ensures that print() statements are immediately flushed
+        )
     ])
-
-
-#ros2 run arm_controller arm_controller 
