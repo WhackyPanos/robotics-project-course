@@ -1,0 +1,21 @@
+[0.621s] Invoking command in '/home/group3-robot/robp_group3/robp_ws/src/handle_objects': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/handle_objects/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/handle_objects build --build-base /home/group3-robot/robp_group3/build/handle_objects/build install --record /home/group3-robot/robp_group3/build/handle_objects/install.log --single-version-externally-managed install_data
+[0.830s] running egg_info
+[0.845s] writing ../../../build/handle_objects/handle_objects.egg-info/PKG-INFO
+[0.845s] writing dependency_links to ../../../build/handle_objects/handle_objects.egg-info/dependency_links.txt
+[0.845s] writing entry points to ../../../build/handle_objects/handle_objects.egg-info/entry_points.txt
+[0.845s] writing requirements to ../../../build/handle_objects/handle_objects.egg-info/requires.txt
+[0.845s] writing top-level names to ../../../build/handle_objects/handle_objects.egg-info/top_level.txt
+[0.874s] reading manifest file '../../../build/handle_objects/handle_objects.egg-info/SOURCES.txt'
+[0.875s] writing manifest file '../../../build/handle_objects/handle_objects.egg-info/SOURCES.txt'
+[0.875s] running build
+[0.875s] running build_py
+[0.875s] running install
+[0.880s] running install_lib
+[0.895s] running install_data
+[0.895s] running install_egg_info
+[0.910s] removing '/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/handle_objects-0.0.0-py3.12.egg-info' (and everything under it)
+[0.910s] Copying ../../../build/handle_objects/handle_objects.egg-info to /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/handle_objects-0.0.0-py3.12.egg-info
+[0.911s] running install_scripts
+[1.011s] Installing pick_objects script to /home/group3-robot/robp_group3/install/handle_objects/lib/handle_objects
+[1.011s] writing list of installed files to '/home/group3-robot/robp_group3/build/handle_objects/install.log'
+[1.033s] Invoked command in '/home/group3-robot/robp_group3/robp_ws/src/handle_objects' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/handle_objects/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/handle_objects build --build-base /home/group3-robot/robp_group3/build/handle_objects/build install --record /home/group3-robot/robp_group3/build/handle_objects/install.log --single-version-externally-managed install_data

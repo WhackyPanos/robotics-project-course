@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pick_bt_node = behavior_tree.pick_bt:main',
+            'pick_bt = behavior_tree.pick_bt:main',
             # add main_bt
 
         ],

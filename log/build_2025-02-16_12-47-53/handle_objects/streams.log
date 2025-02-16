@@ -1,0 +1,31 @@
+[0.792s] Invoking command in '/home/group3-robot/robp_group3/robp_ws/src/handle_objects': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/handle_objects/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/handle_objects build --build-base /home/group3-robot/robp_group3/build/handle_objects/build install --record /home/group3-robot/robp_group3/build/handle_objects/install.log --single-version-externally-managed install_data
+[0.997s] running egg_info
+[0.997s] creating ../../../build/handle_objects/handle_objects.egg-info
+[1.011s] writing ../../../build/handle_objects/handle_objects.egg-info/PKG-INFO
+[1.011s] writing dependency_links to ../../../build/handle_objects/handle_objects.egg-info/dependency_links.txt
+[1.011s] writing entry points to ../../../build/handle_objects/handle_objects.egg-info/entry_points.txt
+[1.011s] writing requirements to ../../../build/handle_objects/handle_objects.egg-info/requires.txt
+[1.012s] writing top-level names to ../../../build/handle_objects/handle_objects.egg-info/top_level.txt
+[1.012s] writing manifest file '../../../build/handle_objects/handle_objects.egg-info/SOURCES.txt'
+[1.040s] reading manifest file '../../../build/handle_objects/handle_objects.egg-info/SOURCES.txt'
+[1.041s] writing manifest file '../../../build/handle_objects/handle_objects.egg-info/SOURCES.txt'
+[1.041s] running build
+[1.041s] running build_py
+[1.041s] creating /home/group3-robot/robp_group3/build/handle_objects/build
+[1.041s] creating /home/group3-robot/robp_group3/build/handle_objects/build/lib
+[1.041s] creating /home/group3-robot/robp_group3/build/handle_objects/build/lib/pick
+[1.042s] copying pick/pick_planB.py -> /home/group3-robot/robp_group3/build/handle_objects/build/lib/pick
+[1.042s] copying pick/__init__.py -> /home/group3-robot/robp_group3/build/handle_objects/build/lib/pick
+[1.042s] copying pick/pick_objects.py -> /home/group3-robot/robp_group3/build/handle_objects/build/lib/pick
+[1.042s] running install
+[1.047s] running install_lib
+[1.061s] creating /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/pick
+[1.061s] copying /home/group3-robot/robp_group3/build/handle_objects/build/lib/pick/pick_planB.py -> /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/pick
+[1.061s] copying /home/group3-robot/robp_group3/build/handle_objects/build/lib/pick/__init__.py -> /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/pick
+[1.061s] copying /home/group3-robot/robp_group3/build/handle_objects/build/lib/pick/pick_objects.py -> /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/pick
+[1.062s] byte-compiling /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/pick/pick_planB.py to pick_planB.cpython-312.pyc
+[1.062s] byte-compiling /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/pick/__init__.py to __init__.cpython-312.pyc
+[1.062s] byte-compiling /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/pick/pick_objects.py to pick_objects.cpython-312.pyc
+[1.063s] running install_data
+[1.063s] error: can't copy 'resource/handle_objects': doesn't exist or not a regular file
+[1.079s] Invoked command in '/home/group3-robot/robp_group3/robp_ws/src/handle_objects' returned '1': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/handle_objects/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/handle_objects build --build-base /home/group3-robot/robp_group3/build/handle_objects/build install --record /home/group3-robot/robp_group3/build/handle_objects/install.log --single-version-externally-managed install_data

@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'pick_objects'
+package_name = 'handle_objects'
 
 setup(
     name=package_name,
@@ -20,9 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         "console_scripts": [
-            "pick_node = handle_objects.pick.pick_objects:main",
-            "lift_node = handle_objects.lift.lift_objects:main",  # Create `lift_objects.py`
-            "place_node = handle_objects.place.place_objects:main",  # Create `place_objects.py`
+            "pick_objects = pick.pick_objects:main"
+            #"lift_node = handle_objects.lift.lift_objects:main",  # Create `lift_objects.py`
+            #"place_node = handle_objects.place.place_objects:main",  # Create `place_objects.py`
         ],
     },
 )

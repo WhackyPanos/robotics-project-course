@@ -16,8 +16,8 @@ def generate_launch_description():
         ),
 
         Node(
-            package='pick_objects',
-            executable='pick_objects')  #script name
+            package='behavior_tree',
+            executable='pick_bt')  #script name
     ])
 
 

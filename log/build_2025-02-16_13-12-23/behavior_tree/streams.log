@@ -1,0 +1,21 @@
+[0.623s] Invoking command in '/home/group3-robot/robp_group3/robp_ws/src/behavior_tree': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/handle_objects:${AMENT_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/behavior_tree/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/behavior_tree build --build-base /home/group3-robot/robp_group3/build/behavior_tree/build install --record /home/group3-robot/robp_group3/build/behavior_tree/install.log --single-version-externally-managed install_data
+[0.827s] running egg_info
+[0.842s] writing ../../../build/behavior_tree/behavior_tree.egg-info/PKG-INFO
+[0.842s] writing dependency_links to ../../../build/behavior_tree/behavior_tree.egg-info/dependency_links.txt
+[0.842s] writing entry points to ../../../build/behavior_tree/behavior_tree.egg-info/entry_points.txt
+[0.842s] writing requirements to ../../../build/behavior_tree/behavior_tree.egg-info/requires.txt
+[0.842s] writing top-level names to ../../../build/behavior_tree/behavior_tree.egg-info/top_level.txt
+[0.871s] reading manifest file '../../../build/behavior_tree/behavior_tree.egg-info/SOURCES.txt'
+[0.871s] writing manifest file '../../../build/behavior_tree/behavior_tree.egg-info/SOURCES.txt'
+[0.871s] running build
+[0.871s] running build_py
+[0.871s] running install
+[0.876s] running install_lib
+[0.891s] running install_data
+[0.891s] running install_egg_info
+[0.906s] removing '/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages/behavior_tree-0.0.0-py3.12.egg-info' (and everything under it)
+[0.906s] Copying ../../../build/behavior_tree/behavior_tree.egg-info to /home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages/behavior_tree-0.0.0-py3.12.egg-info
+[0.907s] running install_scripts
+[1.007s] Installing pick_bt script to /home/group3-robot/robp_group3/install/behavior_tree/lib/behavior_tree
+[1.007s] writing list of installed files to '/home/group3-robot/robp_group3/build/behavior_tree/install.log'
+[1.029s] Invoked command in '/home/group3-robot/robp_group3/robp_ws/src/behavior_tree' returned '0': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/handle_objects:${AMENT_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/behavior_tree/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/behavior_tree build --build-base /home/group3-robot/robp_group3/build/behavior_tree/build install --record /home/group3-robot/robp_group3/build/behavior_tree/install.log --single-version-externally-managed install_data

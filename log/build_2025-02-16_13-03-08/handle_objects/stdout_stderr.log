@@ -1,0 +1,21 @@
+running develop
+running egg_info
+writing ../../../build/handle_objects/handle_objects.egg-info/PKG-INFO
+writing dependency_links to ../../../build/handle_objects/handle_objects.egg-info/dependency_links.txt
+writing entry points to ../../../build/handle_objects/handle_objects.egg-info/entry_points.txt
+writing requirements to ../../../build/handle_objects/handle_objects.egg-info/requires.txt
+writing top-level names to ../../../build/handle_objects/handle_objects.egg-info/top_level.txt
+reading manifest file '../../../build/handle_objects/handle_objects.egg-info/SOURCES.txt'
+writing manifest file '../../../build/handle_objects/handle_objects.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+copying resource/handle_objects -> /home/group3-robot/robp_group3/install/handle_objects/share/ament_index/resource_index/packages
+copying package.xml -> /home/group3-robot/robp_group3/install/handle_objects/share/handle_objects
+running install_egg_info
+Copying ../../../build/handle_objects/handle_objects.egg-info to /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/handle_objects-0.0.0-py3.12.egg-info
+running install_scripts
+Installing pick_objects script to /home/group3-robot/robp_group3/install/handle_objects/lib/handle_objects
+writing list of installed files to '/home/group3-robot/robp_group3/build/handle_objects/install.log'
