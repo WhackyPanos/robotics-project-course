@@ -20,12 +20,12 @@ class CarrotPlanner(Node):
 
         self.rate = self.create_rate(50)
 
-       # Initialize the goal position
+        # Initialize the goal position
         self.goal_position = Point()
         self.goal_position.x = 0.0
         self.goal_position.y = 0.0
         self.goal_reached_flag = True
- 
+
         #self.create_subscription(PoseStamped, '/path', self.odometry_callback, 10)
         self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PointStamped, '/temp_goal', self.goal_callback, 10)
@@ -35,9 +35,9 @@ class CarrotPlanner(Node):
         # Declare parameters with default values. If the parameters are set in the launch file, the default values will be overwritten
         # check config folder for params.yaml
         # TODO yaml file doesn't import properly
-        self.declare_parameter('linear_velocity', 0.02)
-        self.declare_parameter('angular_velocity', 0.02)
-        self.declare_parameter('goal_threshold', 0.1)
+        self.declare_parameter('linear_velocity', 0.2)
+        self.declare_parameter('angular_velocity', 0.5)
+        self.declare_parameter('goal_threshold', 0.05)
 
         # Retrieve parameter values
         self.linear_velocity = self.get_parameter('linear_velocity').value
@@ -77,7 +77,7 @@ class CarrotPlanner(Node):
                 pose_odom.pose.orientation.w = math.cos(msg.theta / 2)
                 pose_odom.pose.orientation.x = 0.0
                 pose_odom.pose.orientation.y = 0.0
-                pose_odom.pose.orientation.z = math.sin(msg.theta / 2) #third component of quaternion, since it's yaw
+                pose_odom.pose.orientation.z = math.sin(msg.theta / 2)
             except Exception as e:
                 self.get_logger().warn(f"Pose creation failed: {str(e)}")
 
@@ -93,7 +93,6 @@ class CarrotPlanner(Node):
                 transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_odom.pose, transform)
             except Exception as e:
                 self.get_logger().warn(f"Lookup failed: {str(e)}")
-                
 
             try:
                 # Extract transformed 2D position and heading
@@ -104,7 +103,7 @@ class CarrotPlanner(Node):
                 theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
 
                 # Log transformed pose
-                self.get_logger().info(f"Transformed Pose in 'map' frame: x={x_map:.2f}, y={y_map:.2f}, theta={theta_map:.2f}")
+                #self.get_logger().info(f"Transformed Pose in 'map' frame: x={x_map:.2f}, y={y_map:.2f}, theta={theta_map:.2f}")
 
                 # Proceed with goal tracking using transformed pose
                 self.navigate_to_goal(x_map, y_map, theta_map)
@@ -119,47 +118,26 @@ class CarrotPlanner(Node):
         goal_angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
         angle_difference = goal_angle - theta
         self.get_logger().info('Angle diff: ' + str(angle_difference))
+        self.get_logger().info('Distance: ' + str(distance_to_goal))
 
         twist_command = Twist()
+        twist_command.linear.y = 0.0
+        twist_command.linear.z = 0.0
+        twist_command.angular.x = 0.0
+        twist_command.angular.y = 0.0
+        
         if distance_to_goal > self.goal_threshold:
-            twist_command.linear.x = min(self.linear_velocity/2, self.linear_velocity/2 * distance_to_goal)
-            twist_command.linear.y = 0.0
-            twist_command.linear.z = 0.0
-            twist_command.angular.x = 0.0
-            twist_command.angular.y = 0.0
-            twist_command.angular.z = min(self.angular_velocity, self.angular_velocity * angle_difference/20)
-			# publish velocity
-            self.cmd_vel_publisher.publish(twist_command)
-            self.rate.sleep()
+            twist_command.linear.x = min(self.linear_velocity, self.linear_velocity * distance_to_goal)
+            twist_command.angular.z = min(self.angular_velocity, self.angular_velocity * angle_difference)
         else:
-            twist_command.linear.x =0.0
-            twist_command.linear.y =0.0
-            twist_command.linear.z =0.0
-            twist_command.angular.x =0.0
-            twist_command.angular.y =0.0
-            twist_command.angular.z =0.0
+            twist_command.linear.x = 0.0
+            twist_command.angular.z = 0.0
             self.goal_reached_publisher.publish(Bool(data=True))
             self.goal_reached_flag = True
             self.get_logger().info("Goal reached!")
-            self.cmd_vel_publisher.publish(twist_command)
-            self.rate.sleep()
 
-        # if abs(angle_difference) >= 0.3:
-        #     twist_command.angular.z = self.angular_velocity # this angular velocity is the one from the param.yaml (maximum)
-        #     self.cmd_vel_publisher.publish(twist_command)
-
-        # else:
-        #     distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
-        #     if distance_to_goal >= self.goal_threshold:
-        #         twist_command.linear.x = self.linear_velocity # again, max linear velocity is assumed
-        #         self.cmd_vel_publisher.publish(twist_command)
-        #     else:
-        #         twist_command.linear.x = 0.0
-        #         self.cmd_vel_publisher.publish(twist_command)
-        #         self.goal_reached_publisher.publish(Bool(data=True))
-        #         self.goal_reached_flag = True
-        #         self.get_logger().info("Goal reached!")
-        # #  time.sleep(0.05) # trying a tiny sleep command to see if it makes it less jerky... nah its worse
+        self.cmd_vel_publisher.publish(twist_command)
+        self.rate.sleep()
 
     
 def main(args=None):
