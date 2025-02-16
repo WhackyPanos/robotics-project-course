@@ -7,19 +7,13 @@
   <maintainer email="franmira2003@gmail.com">fm</maintainer>
   <license>TODO: License declaration</license>
 
-  <!-- ROS Dependencies -->
+ <!-- ROS 2 Dependencies -->
   <depend>rclpy</depend>
+  <depend>py_trees</depend>
+  <depend>py_trees_ros</depend>
+  <depend>py_trees_ros_interfaces</depend>  <!-- Ensures compatibility with py_trees_ros messages -->
   <depend>handle_objects</depend>
 
-  <!-- Python Dependencies -->
-  <exec_depend>py_trees</exec_depend>
-  <exec_depend>py_trees_ros_viewer</exec_depend>
-
-    <!-- Dependencies -->
-   <!-- <depend>rclpy</depend>
-  <depend>py_trees</depend>
-  <depend>py_trees_ros_viewer</depend>
-  <depend>handle_objects</depend> -->
  
  
   <test_depend>ament_copyright</test_depend>
