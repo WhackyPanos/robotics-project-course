@@ -1,2 +1,2 @@
 [console_scripts]
-pick_objects = pick.pick_objects:main
+pick_objects = handle_objects.pick_objects:main

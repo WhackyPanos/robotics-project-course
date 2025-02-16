@@ -3,21 +3,20 @@
 <package format="3">
   <name>handle_objects</name>
   <version>0.0.0</version>
-  <description>Package for handling the picking, lifting and placing actions</description>
-  <maintainer email="franmira2003@gmail.com">fm</maintainer>
-  <license>TODO: License declaration</license>
+  <description>TODO: Package description</description>
+  <maintainer email="domfri@kth.se">group3-robot</maintainer>
+  <license>Apache-2.0</license>
+
+    <!-- Dependencies -->
+  <depend>rclpy</depend>
+  <depend>py_trees</depend>
+  <!--<depend>py_trees_ros_viewer</depend> -->
+  <depend>std_msgs</depend> 
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
   <test_depend>python3-pytest</test_depend>
-
-
-  <depend>rclpy</depend>
-  <depend>py_trees</depend>
-  <depend>py_trees_ros_viewer</depend> 
-  <depend>std_msgs</depend>
-
 
   <export>
     <build_type>ament_python</build_type>

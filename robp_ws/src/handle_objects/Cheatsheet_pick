@@ -1,4 +1,0 @@
-Cheatsheet for pick_objects package
-
-1) "Build and source of course"
-2) rosdep install --from-paths src --ignore-src -r -y

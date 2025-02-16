@@ -1,0 +1,576 @@
+[0.047s] Invoking command in '/home/group3-robot/robp_group3/build/micro_ros_agent': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/install/usb_cam/lib:/home/group3-robot/robp_group3/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/install/robp_interfaces/lib:/home/group3-robot/robp_group3/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/install/drive_base_msgs/lib:/home/group3-robot/robp_group3/robp_ws/install/usb_cam/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib:/home/group3-robot/dd2419_ws/install/usb_cam/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_motors/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_agent/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/libphidget22/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PYTHONPATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/odometry:/home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/path_planner:/home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/mapping:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/joystick_teleop:/home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/detection:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_controller:/home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/odometry:/home/group3-robot/robp_group3/robp_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/path_planner:/home/group3-robot/robp_group3/robp_ws/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/mapping:/home/group3-robot/robp_group3/robp_ws/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/detection:/home/group3-robot/robp_group3/robp_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/robp_launch:/home/group3-robot/dd2419_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/odometry:/home/group3-robot/dd2419_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/joystick_teleop:/home/group3-robot/dd2419_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/detection:/home/group3-robot/dd2419_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_controller:/home/group3-robot/dd2419_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/cmake /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/micro_ros_agent
+[2.457s] -- The C compiler identification is GNU 13.3.0
+[2.457s] -- Detecting C compiler ABI info
+[2.457s] -- Detecting C compiler ABI info - done
+[2.457s] -- Check for working C compiler: /usr/bin/cc - skipped
+[2.457s] -- Detecting C compile features
+[2.457s] -- Detecting C compile features - done
+[2.457s] -- The CXX compiler identification is GNU 13.3.0
+[2.457s] -- Detecting CXX compiler ABI info
+[2.457s] -- Detecting CXX compiler ABI info - done
+[2.458s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.458s] -- Detecting CXX compile features
+[2.458s] -- Detecting CXX compile features - done
+[2.458s] -- Configuring done (1.2s)
+[2.458s] -- Generating done (0.0s)
+[2.458s] -- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_agent
+[2.458s] [33mCMake Warning:
+[2.458s]   Manually-specified variables were not used by the project:
+[2.458s] 
+[2.458s]     AMENT_CMAKE_SYMLINK_INSTALL
+[2.458s] 
+[2.459s] [0m
+[2.464s] Invoked command in '/home/group3-robot/robp_group3/build/micro_ros_agent' returned '0': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/install/usb_cam/lib:/home/group3-robot/robp_group3/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/install/robp_interfaces/lib:/home/group3-robot/robp_group3/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/install/drive_base_msgs/lib:/home/group3-robot/robp_group3/robp_ws/install/usb_cam/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib:/home/group3-robot/dd2419_ws/install/usb_cam/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_motors/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_agent/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/libphidget22/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PYTHONPATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/odometry:/home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/path_planner:/home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/mapping:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/joystick_teleop:/home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/detection:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_controller:/home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/odometry:/home/group3-robot/robp_group3/robp_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/path_planner:/home/group3-robot/robp_group3/robp_ws/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/mapping:/home/group3-robot/robp_group3/robp_ws/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/detection:/home/group3-robot/robp_group3/robp_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/robp_launch:/home/group3-robot/dd2419_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/odometry:/home/group3-robot/dd2419_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/joystick_teleop:/home/group3-robot/dd2419_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/detection:/home/group3-robot/dd2419_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_controller:/home/group3-robot/dd2419_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/cmake /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/micro_ros_agent
+[2.464s] Invoking command in '/home/group3-robot/robp_group3/build/micro_ros_agent': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/install/usb_cam/lib:/home/group3-robot/robp_group3/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/install/robp_interfaces/lib:/home/group3-robot/robp_group3/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/install/drive_base_msgs/lib:/home/group3-robot/robp_group3/robp_ws/install/usb_cam/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib:/home/group3-robot/dd2419_ws/install/usb_cam/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_motors/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_agent/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/libphidget22/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PYTHONPATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/odometry:/home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/path_planner:/home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/mapping:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/joystick_teleop:/home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/detection:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_controller:/home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/odometry:/home/group3-robot/robp_group3/robp_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/path_planner:/home/group3-robot/robp_group3/robp_ws/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/mapping:/home/group3-robot/robp_group3/robp_ws/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/detection:/home/group3-robot/robp_group3/robp_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/robp_launch:/home/group3-robot/dd2419_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/odometry:/home/group3-robot/dd2419_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/joystick_teleop:/home/group3-robot/dd2419_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/detection:/home/group3-robot/dd2419_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_controller:/home/group3-robot/dd2419_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/cmake --build /home/group3-robot/robp_group3/build/micro_ros_agent -- -j8 -l8
+[2.596s] [  6%] [34m[1mCreating directories for 'xrceagent'[0m
+[2.665s] [ 12%] [34m[1mPerforming download step (git clone) for 'xrceagent'[0m
+[2.718s] Cloning into 'xrceagent'...
+[4.257s] HEAD is now at 7362281 Release v2.4.3
+[4.435s] [ 18%] [34m[1mPerforming update step for 'xrceagent'[0m
+[4.526s] [ 25%] [34m[1mNo patch step for 'xrceagent'[0m
+[4.574s] [ 31%] [34m[1mPerforming configure step for 'xrceagent'[0m
+[4.589s] loading initial cache file /home/group3-robot/robp_group3/build/micro_ros_agent/agent/tmp/xrceagent-cache-.cmake
+[4.749s] -- The C compiler identification is GNU 13.3.0
+[4.788s] -- Detecting C compiler ABI info
+[4.983s] -- Detecting C compiler ABI info - done
+[4.996s] -- Check for working C compiler: /usr/bin/cc - skipped
+[4.997s] -- Detecting C compile features
+[5.000s] -- Detecting C compile features - done
+[5.175s] -- The CXX compiler identification is GNU 13.3.0
+[5.212s] -- Detecting CXX compiler ABI info
+[5.517s] -- Detecting CXX compiler ABI info - done
+[5.545s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[5.553s] -- Detecting CXX compile features
+[5.553s] -- Detecting CXX compile features - done
+[5.612s] -- Configuring done (1.0s)
+[5.616s] -- Generating done (0.0s)
+[5.617s] -- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build
+[5.665s] [ 37%] [34m[1mPerforming build step for 'xrceagent'[0m
+[5.769s] [  6%] [34m[1mCreating directories for 'spdlog'[0m
+[5.847s] [ 12%] [34m[1mPerforming download step (git clone) for 'spdlog'[0m
+[5.890s] Cloning into 'spdlog'...
+[9.834s] HEAD is now at eb322062 Bump version to 1.9.2
+[9.900s] [ 18%] [34m[1mPerforming update step for 'spdlog'[0m
+[9.934s] [ 25%] [34m[1mNo patch step for 'spdlog'[0m
+[9.968s] [ 31%] [34m[1mPerforming configure step for 'spdlog'[0m
+[9.980s] loading initial cache file /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/spdlog/tmp/spdlog-cache-.cmake
+[10.070s] -- The CXX compiler identification is GNU 13.3.0
+[10.094s] -- Detecting CXX compiler ABI info
+[10.232s] -- Detecting CXX compiler ABI info - done
+[10.245s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[10.245s] -- Detecting CXX compile features
+[10.246s] -- Detecting CXX compile features - done
+[10.246s] -- Build spdlog: 1.9.2
+[10.250s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[10.381s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[10.382s] -- Found Threads: TRUE  
+[10.383s] -- Build type: Release
+[10.383s] -- Generating example(s)
+[10.384s] -- Generating install
+[10.397s] -- Configuring done (0.4s)
+[10.404s] -- Generating done (0.0s)
+[10.406s] -- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/spdlog/src/spdlog-build
+[10.433s] [ 37%] [34m[1mPerforming build step for 'spdlog'[0m
+[10.491s] [ 10%] [32mBuilding CXX object CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o[0m
+[10.491s] [ 20%] [32mBuilding CXX object CMakeFiles/spdlog.dir/src/spdlog.cpp.o[0m
+[10.502s] [ 30%] [32mBuilding CXX object CMakeFiles/spdlog.dir/src/file_sinks.cpp.o[0m
+[10.504s] [ 40%] [32mBuilding CXX object CMakeFiles/spdlog.dir/src/color_sinks.cpp.o[0m
+[10.507s] [ 50%] [32mBuilding CXX object CMakeFiles/spdlog.dir/src/async.cpp.o[0m
+[10.510s] [ 60%] [32mBuilding CXX object CMakeFiles/spdlog.dir/src/cfg.cpp.o[0m
+[10.522s] [ 70%] [32mBuilding CXX object CMakeFiles/spdlog.dir/src/fmt.cpp.o[0m
+[17.798s] [ 80%] [32m[1mLinking CXX static library libspdlog.a[0m
+[17.852s] [ 80%] Built target spdlog
+[17.868s] [ 90%] [32mBuilding CXX object example/CMakeFiles/example.dir/example.cpp.o[0m
+[21.174s] [100%] [32m[1mLinking CXX executable example[0m
+[21.238s] [100%] Built target example
+[21.259s] [ 43%] [34m[1mPerforming install step for 'spdlog'[0m
+[21.302s] [ 80%] Built target spdlog
+[21.324s] [100%] Built target example
+[21.339s] [36mInstall the project...[0m
+[21.348s] -- Install configuration: "Release"
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/async_logger-inl.h
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/pattern_formatter-inl.h
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog-inl.h
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/formatter.h
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details
+[21.348s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/periodic_worker.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/registry-inl.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/fmt_helper.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/file_helper-inl.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/thread_pool-inl.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/circular_q.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/synchronous_factory.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer-inl.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/os-inl.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/windows_include.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/periodic_worker-inl.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/tcp_client-windows.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/os.h
+[21.349s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/log_msg_buffer.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/file_helper.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/tcp_client.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/registry.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/null_mutex.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/log_msg.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/log_msg_buffer-inl.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/log_msg-inl.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/thread_pool.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/console_globals.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/mpmc_blocking_q.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/logger.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common-inl.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/cfg
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/cfg/env.h
+[21.350s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/cfg/argv.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/cfg/helpers.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/cfg/helpers-inl.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fwd.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/null_sink.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/systemd_sink.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/ansicolor_sink-inl.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/sink.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/daily_file_sink.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/basic_file_sink.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/stdout_color_sinks.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/dist_sink.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/dup_filter_sink.h
+[21.351s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/rotating_file_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/ansicolor_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/ringbuffer_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/rotating_file_sink-inl.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/android_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/mongo_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/hourly_file_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/stdout_color_sinks-inl.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/ostream_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/tcp_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/stdout_sinks.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/syslog_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/msvc_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/base_sink-inl.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/wincolor_sink.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/wincolor_sink-inl.h
+[21.352s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/basic_file_sink-inl.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/win_eventlog_sink.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/stdout_sinks-inl.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/sink-inl.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/qt_sinks.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/base_sink.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/logger-inl.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bin_to_hex.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/compile.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/xchar.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/chrono.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/ostr.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/fmt.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/pattern_formatter.h
+[21.353s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
+[21.354s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/async.h
+[21.354s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/async_logger.h
+[21.354s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/stopwatch.h
+[21.354s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/lib/libspdlog.a
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled/
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//printf.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//format-inl.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//color.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//core.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//compile.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//xchar.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//chrono.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//os.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//format.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//ostream.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//locale.h
+[21.355s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//ranges.h
+[21.356s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled//args.h
+[21.356s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/lib/pkgconfig/spdlog.pc
+[21.356s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/lib/cmake/spdlog/spdlogConfigTargets.cmake
+[21.356s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/lib/cmake/spdlog/spdlogConfigTargets-release.cmake
+[21.356s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/lib/cmake/spdlog/spdlogConfig.cmake
+[21.356s] -- Installing: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/lib/cmake/spdlog/spdlogConfigVersion.cmake
+[21.370s] [ 50%] [34m[1mCompleted 'spdlog'[0m
+[21.401s] [ 50%] Built target spdlog
+[21.420s] [ 56%] [34m[1mCreating directories for 'uagent'[0m
+[21.447s] [ 62%] [34m[1mNo download step for 'uagent'[0m
+[21.466s] [ 68%] [34m[1mNo update step for 'uagent'[0m
+[21.485s] [ 75%] [34m[1mNo patch step for 'uagent'[0m
+[21.507s] [ 81%] [34m[1mPerforming configure step for 'uagent'[0m
+[21.516s] loading initial cache file /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/uagent-prefix/tmp/uagent-cache-.cmake
+[21.522s] -- Setting build type to 'Release' as none was specified.
+[21.528s] -- Found TinyXML2: /usr/lib/x86_64-linux-gnu/cmake/tinyxml2
+[21.569s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[21.571s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[21.641s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[21.642s] -- Found Threads: TRUE  
+[21.647s] -- Configuring done (0.1s)
+[21.657s] -- Generating done (0.0s)
+[21.658s] -- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build
+[21.672s] [ 87%] [34m[1mPerforming build step for 'uagent'[0m
+[21.716s] [ 11%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/AgentInstance.cpp.o[0m
+[21.716s] [ 11%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/Root.cpp.o[0m
+[21.716s] [ 11%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/processor/Processor.cpp.o[0m
+[21.716s] [ 11%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/Agent.cpp.o[0m
+[21.716s] [ 11%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/client/ProxyClient.cpp.o[0m
+[21.716s] [ 14%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/participant/Participant.cpp.o[0m
+[21.716s] [ 16%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/topic/Topic.cpp.o[0m
+[21.716s] [ 19%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/publisher/Publisher.cpp.o[0m
+[22.958s] [ 21%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/subscriber/Subscriber.cpp.o[0m
+[22.982s] [ 23%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/datawriter/DataWriter.cpp.o[0m
+[22.988s] [ 26%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/datareader/DataReader.cpp.o[0m
+[24.232s] [ 28%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/requester/Requester.cpp.o[0m
+[26.095s] [ 30%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/replier/Replier.cpp.o[0m
+[27.024s] [ 33%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/object/XRCEObject.cpp.o[0m
+[27.299s] [ 35%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/types/XRCETypes.cpp.o[0m
+[27.647s] [ 38%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/types/MessageHeader.cpp.o[0m
+[28.311s] [ 40%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/types/SubMessageHeader.cpp.o[0m
+[28.358s] [ 42%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/message/InputMessage.cpp.o[0m
+[28.661s] [ 45%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o[0m
+[28.950s] [ 47%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/utils/ArgumentParser.cpp.o[0m
+[29.450s] [ 50%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/Server.cpp.o[0m
+[30.528s] [ 52%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/stream_framing/StreamFramingProtocol.cpp.o[0m
+[30.778s] [ 54%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/custom/CustomAgent.cpp.o[0m
+[30.809s] [ 57%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/udp/UDPv4AgentLinux.cpp.o[0m
+[31.617s] [ 59%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/udp/UDPv6AgentLinux.cpp.o[0m
+[32.178s] [ 61%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/tcp/TCPv4AgentLinux.cpp.o[0m
+[32.419s] [ 64%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/tcp/TCPv6AgentLinux.cpp.o[0m
+[33.728s] [ 66%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/SerialAgentLinux.cpp.o[0m
+[35.328s] [ 69%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/TermiosAgentLinux.cpp.o[0m
+[35.534s] [ 71%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/MultiSerialAgentLinux.cpp.o[0m
+[35.722s] [ 73%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/MultiTermiosAgentLinux.cpp.o[0m
+[36.337s] [ 76%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/PseudoTerminalAgentLinux.cpp.o[0m
+[36.641s] [ 78%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/can/CanAgentLinux.cpp.o[0m
+[37.766s] [ 80%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/discovery/DiscoveryServerLinux.cpp.o[0m
+[37.778s] [ 83%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/discovery/DiscoveryServer.cpp.o[0m
+[37.845s] [ 85%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/types/TopicPubSubType.cpp.o[0m
+[38.644s] [ 88%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/xmlobjects/xmlobjects.cpp.o[0m
+[39.271s] [ 90%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fast/FastEntities.cpp.o[0m
+[39.663s] [ 92%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fast/FastMiddleware.cpp.o[0m
+[40.020s] [ 95%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fastdds/FastDDSEntities.cpp.o[0m
+[40.201s] [ 97%] [32mBuilding CXX object CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fastdds/FastDDSMiddleware.cpp.o[0m
+[46.458s] [100%] [32m[1mLinking CXX shared library libmicroxrcedds_agent.so[0m
+[46.661s] [100%] Built target microxrcedds_agent
+[46.689s] [34m[1mNo install step for 'uagent'[0m
+[46.713s] [34m[1mCompleted 'uagent'[0m
+[46.742s] Built target uagent
+[46.767s] [ 43%] [34m[1mPerforming install step for 'xrceagent'[0m
+[46.851s] [100%] Built target microxrcedds_agent
+[46.866s] [36mInstall the project...[0m
+[46.873s] -- Install configuration: "Release"
+[46.873s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/libmicroxrcedds_agent.so.2.4.3
+[46.875s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/libmicroxrcedds_agent.so.2.4
+[46.875s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/micro_ros_agent/lib/libmicroxrcedds_agent.so.2.4.3" to ""
+[46.876s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/libmicroxrcedds_agent.so
+[46.876s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent
+[46.876s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/processor
+[46.876s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/processor/Processor.hpp
+[46.876s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/object
+[46.876s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/object/XRCEObject.hpp
+[46.876s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware
+[46.877s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/Middleware.hpp
+[46.877s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/utils
+[46.877s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/utils/Callbacks.hpp
+[46.877s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fast
+[46.877s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastMiddleware.hpp
+[46.877s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastEntities.hpp
+[46.877s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds
+[46.877s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSEntities.hpp
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSMiddleware.hpp
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/ced
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/ced/CedEntities.hpp
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/ced/CedMiddleware.hpp
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/publisher
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/publisher/Publisher.hpp
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/client
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/client/ProxyClient.hpp
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/client/session
+[46.878s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/client/session/stream
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/client/session/stream/OutputStream.hpp
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/client/session/stream/InputStream.hpp
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/client/session/Session.hpp
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/client/session/SessionInfo.hpp
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/SharedMutexPriority.hpp
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/ArgumentParser.hpp
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Conversion.hpp
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Functions.hpp
+[46.879s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/SharedMutex.hpp
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Color.hpp
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/TokenBucket.hpp
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Time.hpp
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/SeqNum.hpp
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/Scheduler.hpp
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/PacketScheduler.hpp
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/Packet.hpp
+[46.880s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/OutputMessage.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/InputMessage.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/MessageHeader.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/Optional.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/SubMessageHeader.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/TopicPubSubType.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Root.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/visibility.hpp
+[46.881s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/logger
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/logger/Logger.hpp
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/requester
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/requester/Requester.hpp
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/custom
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/custom/CustomAgent.hpp
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/stream_framing
+[46.882s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/stream_framing/StreamFramingProtocol.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/CustomEndPoint.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/SerialEndPoint.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv6EndPoint.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv4EndPoint.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/MultiSerialEndPoint.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/CanEndPoint.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/SessionManager.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/can
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/can/CanAgentLinux.hpp
+[46.883s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/p2p
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/p2p/AgentDiscovererLinux.hpp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/p2p/AgentDiscoverer.hpp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv6AgentWindows.hpp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv6AgentLinux.hpp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv4AgentWindows.hpp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv4AgentLinux.hpp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPServerBase.hpp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPConnection.hpp
+[46.884s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/util
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/util/InterfaceLinux.hpp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/util/InterfaceWindows.hpp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv4AgentWindows.hpp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv6AgentLinux.hpp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv6AgentWindows.hpp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv4AgentLinux.hpp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerLinux.hpp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerWindows.hpp
+[46.885s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServer.hpp
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/TransportRc.hpp
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/Server.hpp
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiTermiosAgentLinux.hpp
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiSerialAgentLinux.hpp
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/baud_rate_table_linux.h
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/SerialAgentLinux.hpp
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/TermiosAgentLinux.hpp
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/PseudoTerminalAgentLinux.hpp
+[46.886s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/topic
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/topic/Topic.hpp
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/reader
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/reader/Reader.hpp
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/replier
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/replier/Replier.hpp
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/p2p
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/p2p/InternalClient.hpp
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/p2p/InternalClientManager.hpp
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/subscriber
+[46.887s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/subscriber/Subscriber.hpp
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/datareader
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/datareader/DataReader.hpp
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/datawriter
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/datawriter/DataWriter.hpp
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/participant
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/participant/Participant.hpp
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/cmake/microxrcedds_agentTargets.cmake
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/cmake/microxrcedds_agentTargets-release.cmake
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/LICENSE
+[46.888s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/cmake/microxrcedds_agentConfig.cmake
+[46.889s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/cmake/microxrcedds_agentConfigVersion.cmake
+[46.889s] -- Up-to-date: /home/group3-robot/robp_group3/install/micro_ros_agent
+[46.889s] -- Up-to-date: /home/group3-robot/robp_group3/install/micro_ros_agent/include
+[46.889s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog
+[46.889s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/async_logger-inl.h
+[46.889s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/pattern_formatter-inl.h
+[46.889s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/tweakme.h
+[46.889s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/spdlog-inl.h
+[46.889s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/version.h
+[46.889s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/formatter.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/periodic_worker.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/registry-inl.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/fmt_helper.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/file_helper-inl.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/thread_pool-inl.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/circular_q.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/backtracer-inl.h
+[46.890s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/os-inl.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/windows_include.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/periodic_worker-inl.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/tcp_client-windows.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/backtracer.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/os.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/file_helper.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/tcp_client.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/registry.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/null_mutex.h
+[46.891s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/log_msg.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/log_msg_buffer-inl.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/log_msg-inl.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/thread_pool.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/console_globals.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/mpmc_blocking_q.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/logger.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/common-inl.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/cfg
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/cfg/env.h
+[46.892s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/cfg/argv.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/cfg/helpers.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/cfg/helpers-inl.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fwd.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/spdlog.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/null_sink.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/systemd_sink.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/ansicolor_sink-inl.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/sink.h
+[46.893s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/daily_file_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/basic_file_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/stdout_color_sinks.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/dist_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/dup_filter_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/rotating_file_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/ansicolor_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/ringbuffer_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/rotating_file_sink-inl.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/android_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/mongo_sink.h
+[46.894s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/hourly_file_sink.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/stdout_color_sinks-inl.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/ostream_sink.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/tcp_sink.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/syslog_sink.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/msvc_sink.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/base_sink-inl.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/wincolor_sink.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/wincolor_sink-inl.h
+[46.895s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/basic_file_sink-inl.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/win_eventlog_sink.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks-inl.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/sink-inl.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/qt_sinks.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/base_sink.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/logger-inl.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/printf.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/format-inl.h
+[46.896s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/color.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/compile.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/xchar.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/chrono.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/os.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/locale.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/ranges.h
+[46.897s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/args.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/compile.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/xchar.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/chrono.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/ostr.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/fmt.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/pattern_formatter.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/common.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/async.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/async_logger.h
+[46.898s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/stopwatch.h
+[46.899s] -- Up-to-date: /home/group3-robot/robp_group3/install/micro_ros_agent/lib
+[46.899s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/pkgconfig
+[46.899s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/pkgconfig/spdlog.pc
+[46.899s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/libspdlog.a
+[46.899s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake
+[46.899s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake/spdlog
+[46.899s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake/spdlog/spdlogConfigVersion.cmake
+[46.899s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake/spdlog/spdlogConfig.cmake
+[46.899s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake/spdlog/spdlogConfigTargets-release.cmake
+[46.900s] -- Installing: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake/spdlog/spdlogConfigTargets.cmake
+[46.914s] [ 50%] [34m[1mCompleted 'xrceagent'[0m
+[46.941s] [ 50%] Built target xrceagent
+[46.959s] [ 56%] [34m[1mCreating directories for 'micro_ros_agent'[0m
+[46.986s] [ 62%] [34m[1mNo download step for 'micro_ros_agent'[0m
+[47.011s] [ 68%] [34m[1mNo update step for 'micro_ros_agent'[0m
+[47.036s] [ 75%] [34m[1mNo patch step for 'micro_ros_agent'[0m
+[47.057s] [ 81%] [34m[1mPerforming configure step for 'micro_ros_agent'[0m
+[47.064s] loading initial cache file /home/group3-robot/robp_group3/build/micro_ros_agent/micro_ros_agent-prefix/tmp/micro_ros_agent-cache-.cmake
+[47.068s] -- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[47.197s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[47.263s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[47.327s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[47.338s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[47.438s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[47.439s] -- Found Threads: TRUE  
+[47.444s] -- Found rosidl_cmake: 4.6.5 (/opt/ros/jazzy/share/rosidl_cmake/cmake)
+[47.445s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[47.454s] -- Found fastrtps_cmake_module: 3.6.1 (/opt/ros/jazzy/share/fastrtps_cmake_module/cmake)
+[47.455s] -- Found rmw_dds_common: 3.1.0 (/opt/ros/jazzy/share/rmw_dds_common/cmake)
+[47.476s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[47.485s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[47.491s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[47.503s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[47.515s] -- Found rmw_fastrtps_shared_cpp: 8.4.1 (/opt/ros/jazzy/share/rmw_fastrtps_shared_cpp/cmake)
+[47.537s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[47.539s] -- Found ament_lint_auto: 0.17.1 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[47.540s] -- Found ament_cmake_gtest: 2.5.3 (/opt/ros/jazzy/share/ament_cmake_gtest/cmake)
+[47.541s] -- Found micro_ros_msgs: 5.0.2 (/home/group3-robot/robp_group3/install/micro_ros_msgs/share/micro_ros_msgs/cmake)
+[47.628s] -- Configuring done (0.6s)
+[47.635s] -- Generating done (0.0s)
+[47.638s] -- Build files have been written to: /home/group3-robot/robp_group3/build/micro_ros_agent
+[47.655s] [ 87%] [34m[1mPerforming build step for 'micro_ros_agent'[0m
+[47.689s] [ 16%] [32mBuilding CXX object CMakeFiles/micro_ros_agent.dir/src/main.cpp.o[0m
+[47.692s] [ 66%] [32mBuilding CXX object CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_manager.cpp.o[0m
+[47.692s] [ 66%] [32mBuilding CXX object CMakeFiles/micro_ros_agent.dir/src/agent/utils/demangle.cpp.o[0m
+[47.692s] [ 66%] [32mBuilding CXX object CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o[0m
+[47.692s] [ 83%] [32mBuilding CXX object CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_typesupport.cpp.o[0m
+[50.756s] [100%] [32m[1mLinking CXX executable micro_ros_agent[0m
+[51.016s] [100%] Built target micro_ros_agent
+[51.037s] [34m[1mNo install step for 'micro_ros_agent'[0m
+[51.059s] [34m[1mCompleted 'micro_ros_agent'[0m
+[51.088s] Built target micro_ros_agent
+[51.097s] Invoked command in '/home/group3-robot/robp_group3/build/micro_ros_agent' returned '0': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/install/usb_cam/lib:/home/group3-robot/robp_group3/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/install/robp_interfaces/lib:/home/group3-robot/robp_group3/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/install/drive_base_msgs/lib:/home/group3-robot/robp_group3/robp_ws/install/usb_cam/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib:/home/group3-robot/dd2419_ws/install/usb_cam/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_motors/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_agent/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/libphidget22/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PYTHONPATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/odometry:/home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/path_planner:/home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/mapping:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/joystick_teleop:/home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/detection:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_controller:/home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/odometry:/home/group3-robot/robp_group3/robp_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/path_planner:/home/group3-robot/robp_group3/robp_ws/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/mapping:/home/group3-robot/robp_group3/robp_ws/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/detection:/home/group3-robot/robp_group3/robp_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/robp_launch:/home/group3-robot/dd2419_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/odometry:/home/group3-robot/dd2419_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/joystick_teleop:/home/group3-robot/dd2419_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/detection:/home/group3-robot/dd2419_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_controller:/home/group3-robot/dd2419_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/cmake --build /home/group3-robot/robp_group3/build/micro_ros_agent -- -j8 -l8
+[51.097s] Invoking command in '/home/group3-robot/robp_group3/build/micro_ros_agent': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/install/usb_cam/lib:/home/group3-robot/robp_group3/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/install/robp_interfaces/lib:/home/group3-robot/robp_group3/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/install/drive_base_msgs/lib:/home/group3-robot/robp_group3/robp_ws/install/usb_cam/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib:/home/group3-robot/dd2419_ws/install/usb_cam/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_motors/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_agent/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/libphidget22/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PYTHONPATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/odometry:/home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/path_planner:/home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/mapping:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/joystick_teleop:/home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/detection:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_controller:/home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/odometry:/home/group3-robot/robp_group3/robp_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/path_planner:/home/group3-robot/robp_group3/robp_ws/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/mapping:/home/group3-robot/robp_group3/robp_ws/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/detection:/home/group3-robot/robp_group3/robp_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/robp_launch:/home/group3-robot/dd2419_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/odometry:/home/group3-robot/dd2419_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/joystick_teleop:/home/group3-robot/dd2419_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/detection:/home/group3-robot/dd2419_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_controller:/home/group3-robot/dd2419_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/cmake --install /home/group3-robot/robp_group3/build/micro_ros_agent
+[51.104s] -- Install configuration: ""
+[51.104s] -- Execute custom install script
+[51.104s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/ament_index/resource_index/package_run_dependencies/micro_ros_agent
+[51.112s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/ament_index/resource_index/parent_prefix_path/micro_ros_agent
+[51.119s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/environment/ament_prefix_path.sh
+[51.126s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/environment/ament_prefix_path.dsv
+[51.133s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/environment/path.sh
+[51.139s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/environment/path.dsv
+[51.145s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/local_setup.bash
+[51.152s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/local_setup.sh
+[51.159s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/local_setup.zsh
+[51.166s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/local_setup.dsv
+[51.173s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/package.dsv
+[51.180s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/ament_index/resource_index/packages/micro_ros_agent
+[51.186s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/cmake/ament_cmake_export_dependencies-extras.cmake
+[51.194s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/cmake/micro_ros_agentConfig.cmake
+[51.201s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/cmake/micro_ros_agentConfig-version.cmake
+[51.207s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/package.xml
+[51.213s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/lib/micro_ros_agent/micro_ros_agent
+[51.220s] -- Symlinking: /home/group3-robot/robp_group3/install/micro_ros_agent/share/micro_ros_agent/launch/micro_ros_agent_launch.py
+[51.228s] Invoked command in '/home/group3-robot/robp_group3/build/micro_ros_agent' returned '0': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/install/usb_cam/lib:/home/group3-robot/robp_group3/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/install/robp_interfaces/lib:/home/group3-robot/robp_group3/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/install/drive_base_msgs/lib:/home/group3-robot/robp_group3/robp_ws/install/usb_cam/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_motors/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/lib:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib:/home/group3-robot/dd2419_ws/install/usb_cam/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_temperature/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_spatial/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_motors/lib:/home/group3-robot/dd2419_ws/install/robp_phidgets_encoders/lib:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_agent/lib:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/libphidget22/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PYTHONPATH=/home/group3-robot/robp_group3/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/odometry:/home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/path_planner:/home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/mapping:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/joystick_teleop:/home/group3-robot/robp_group3/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/detection:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/arm_controller:/home/group3-robot/robp_group3/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/odometry:/home/group3-robot/robp_group3/robp_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/path_planner:/home/group3-robot/robp_group3/robp_ws/install/path_planner/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/mapping:/home/group3-robot/robp_group3/robp_ws/install/mapping/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/handle_objects/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/detection:/home/group3-robot/robp_group3/robp_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/robp_ws/build/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/home/group3-robot/robp_group3/arm_ws/install/drive_base_msgs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/robp_launch:/home/group3-robot/dd2419_ws/install/robp_launch/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/odometry:/home/group3-robot/dd2419_ws/install/odometry/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/install/robp_interfaces/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/joystick_teleop:/home/group3-robot/dd2419_ws/install/joystick_teleop/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/detection:/home/group3-robot/dd2419_ws/install/detection/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs/lib/python3.12/site-packages:/home/group3-robot/dd2419_ws/build/arm_controller:/home/group3-robot/dd2419_ws/install/arm_controller/lib/python3.12/site-packages:/home/group3-robot/esp32_microros_ws/install/micro_ros_msgs/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/cmake --install /home/group3-robot/robp_group3/build/micro_ros_agent

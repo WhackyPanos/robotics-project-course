@@ -1,0 +1,22 @@
+running develop
+running egg_info
+creating handle_objects.egg-info
+writing handle_objects.egg-info/PKG-INFO
+writing dependency_links to handle_objects.egg-info/dependency_links.txt
+writing entry points to handle_objects.egg-info/entry_points.txt
+writing requirements to handle_objects.egg-info/requires.txt
+writing top-level names to handle_objects.egg-info/top_level.txt
+writing manifest file 'handle_objects.egg-info/SOURCES.txt'
+reading manifest file 'handle_objects.egg-info/SOURCES.txt'
+writing manifest file 'handle_objects.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/handle-objects.egg-link (link to .)
+Installing pick_objects script to /home/group3-robot/robp_group3/install/handle_objects/lib/handle_objects
+
+Installed /home/group3-robot/robp_group3/build/handle_objects
+running symlink_data
+creating /home/group3-robot/robp_group3/install/handle_objects/share/ament_index
+creating /home/group3-robot/robp_group3/install/handle_objects/share/ament_index/resource_index
+creating /home/group3-robot/robp_group3/install/handle_objects/share/ament_index/resource_index/packages
+symbolically linking /home/group3-robot/robp_group3/build/handle_objects/resource/handle_objects -> /home/group3-robot/robp_group3/install/handle_objects/share/ament_index/resource_index/packages
+symbolically linking /home/group3-robot/robp_group3/build/handle_objects/package.xml -> /home/group3-robot/robp_group3/install/handle_objects/share/handle_objects

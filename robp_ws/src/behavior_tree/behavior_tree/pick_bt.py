@@ -3,7 +3,7 @@
 import rclpy
 import py_trees
 from rclpy.node import Node
-from handle_objects.pick.pick_objects import InitTuckArm, ObjTuckArm, Pick
+from handle_objects.handle_objects import pick_objects
 
 
 class PickBT(Node):
@@ -13,7 +13,7 @@ class PickBT(Node):
 
     def create_tree(self):
         root = py_trees.composites.Sequence("Root")
-        pick_action = InitTuckArm()
+        pick_action = pick_objects.InitTuckArm()
         root.add_child(pick_action)
         return root
 
