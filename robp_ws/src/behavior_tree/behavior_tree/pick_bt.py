@@ -14,7 +14,7 @@ class PickBT(Node):
         root = self.create_root()
 
         # Create and initialize the behavior tree
-        self.tree = py_trees_ros.trees.BehaviourTree(root=root, unicode_tree_debug=True)
+        self.tree = py_trees_ros.trees.BehaviourTree(root=root, unicode_tree_debug=False)
 
     def create_root(self):    
         # Create the root as a Sequence node (default memory=False is fine here)
@@ -22,11 +22,13 @@ class PickBT(Node):
 
         # Initialize behaviors and pass ROS node to them
         #init_tuck_action = InitTuckArm()
-        obj_tuck_action = ObjTuckArm()
+        obj_tuck_bhv = ObjTuckArm()
+        init_tuck_bhv = InitTuckArm()
         
         # Add behaviors to the root
         #root.add_child(init_tuck_action)
-        root.add_child(obj_tuck_action)
+        root.add_children([obj_tuck_bhv, init_tuck_bhv])
+        #root.add_child(obj_tuck_bhv)
         
         return root
 
@@ -40,7 +42,7 @@ def main(args=None):
     node.tree.setup(timeout=10.0, node=node)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=1000)
+    node.tree.tick_tock(period_ms=100)
     print("DD")
 
     # Spin the node to keep it alive
