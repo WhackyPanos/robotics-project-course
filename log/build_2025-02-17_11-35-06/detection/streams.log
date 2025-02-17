@@ -1,0 +1,17 @@
+[3.649s] Invoking command in '/home/group3-robot/robp_group3/build/detection': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/detection/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/detection/build --no-deps symlink_data
+[4.149s] running develop
+[4.718s] running egg_info
+[4.797s] writing detection.egg-info/PKG-INFO
+[4.797s] writing dependency_links to detection.egg-info/dependency_links.txt
+[4.797s] writing entry points to detection.egg-info/entry_points.txt
+[4.797s] writing requirements to detection.egg-info/requires.txt
+[4.797s] writing top-level names to detection.egg-info/top_level.txt
+[4.975s] reading manifest file 'detection.egg-info/SOURCES.txt'
+[4.975s] writing manifest file 'detection.egg-info/SOURCES.txt'
+[5.067s] running build_ext
+[5.067s] Creating /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection.egg-link (link to .)
+[5.077s] Installing detection script to /home/group3-robot/robp_group3/install/detection/lib/detection
+[5.077s] 
+[5.077s] Installed /home/group3-robot/robp_group3/build/detection
+[5.077s] running symlink_data
+[5.648s] Invoked command in '/home/group3-robot/robp_group3/build/detection' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/detection/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/detection/build --no-deps symlink_data

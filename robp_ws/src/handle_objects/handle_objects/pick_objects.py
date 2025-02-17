@@ -35,8 +35,9 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
           status is not RUNNING thereafter."""
         print("Initializing ObjTuckArm behavior.")
         self.arm_moving = False
-        #self.timer = self.node.create_timer(self.init_tuck_arm_time*2, self.finish_tuck_arm)
+        self.timer = self.node.create_timer(self.init_tuck_arm_time*2, self.finish_tuck_arm)
 
+        
     def finish_tuck_arm(self):
         """ Callback to mark arm movement as complete after delay. """
         print("Arm tucking finished.")
@@ -50,21 +51,21 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
         if self.arm_moving:
             return py_trees.common.Status.RUNNING  # Keep running while the arm moves
 
-        # Publish the tuck command
-        msg = Int16MultiArray()
-        msg.layout = MultiArrayLayout(
-            dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
-            data_offset=0
-        )      
-        angles = [12000] * 6
-        angles[3] = 20000
-        times = [self.init_tuck_arm_time] * 6
-        msg.data = angles + times
-        print(f"About to publish message")
-        self.ota_publisher_.publish(msg)
-        print("Publishing tuck arm command.")
-
-        return py_trees.common.Status.SUCCESS
+        else:
+            # Publish the tuck command
+            msg = Int16MultiArray()
+            msg.layout = MultiArrayLayout(
+                dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
+                data_offset=0
+            )      
+            angles = [12000] * 6
+            angles[3] = 20000
+            times = [self.init_tuck_arm_time] * 6
+            msg.data = angles + times
+            print(f"About to publish message")
+            self.ota_publisher_.publish(msg)
+            print("Publishing tuck arm command.")
+            return py_trees.common.Status.SUCCESS
 
 
 

@@ -1,0 +1,17 @@
+[1.324s] Invoking command in '/home/group3-robot/robp_group3/build/behavior_tree': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/handle_objects:${AMENT_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/behavior_tree/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/handle_objects:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/behavior_tree/build --no-deps symlink_data
+[1.786s] running develop
+[2.066s] running egg_info
+[2.092s] writing behavior_tree.egg-info/PKG-INFO
+[2.092s] writing dependency_links to behavior_tree.egg-info/dependency_links.txt
+[2.093s] writing entry points to behavior_tree.egg-info/entry_points.txt
+[2.093s] writing requirements to behavior_tree.egg-info/requires.txt
+[2.093s] writing top-level names to behavior_tree.egg-info/top_level.txt
+[2.147s] reading manifest file 'behavior_tree.egg-info/SOURCES.txt'
+[2.147s] writing manifest file 'behavior_tree.egg-info/SOURCES.txt'
+[2.178s] running build_ext
+[2.180s] Creating /home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages/behavior-tree.egg-link (link to .)
+[2.180s] Installing pick_bt script to /home/group3-robot/robp_group3/install/behavior_tree/lib/behavior_tree
+[2.180s] 
+[2.180s] Installed /home/group3-robot/robp_group3/build/behavior_tree
+[2.180s] running symlink_data
+[2.252s] Invoked command in '/home/group3-robot/robp_group3/build/behavior_tree' returned '0': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/handle_objects:${AMENT_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/behavior_tree/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/behavior_tree/lib/python3.12/site-packages:/home/group3-robot/robp_group3/build/handle_objects:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/behavior_tree/build --no-deps symlink_data
