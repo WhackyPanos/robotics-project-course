@@ -1,0 +1,17 @@
+[1.061s] Invoking command in '/home/group3-robot/robp_group3/build/odometry': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/robp_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/group3-robot/robp_group3/install/robp_interfaces:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/group3-robot/robp_group3/install/robp_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/group3-robot/robp_group3/build/odometry/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/odometry/build --no-deps symlink_data
+[1.370s] running develop
+[1.526s] running egg_info
+[1.541s] writing odometry.egg-info/PKG-INFO
+[1.542s] writing dependency_links to odometry.egg-info/dependency_links.txt
+[1.542s] writing entry points to odometry.egg-info/entry_points.txt
+[1.542s] writing requirements to odometry.egg-info/requires.txt
+[1.542s] writing top-level names to odometry.egg-info/top_level.txt
+[1.572s] reading manifest file 'odometry.egg-info/SOURCES.txt'
+[1.573s] writing manifest file 'odometry.egg-info/SOURCES.txt'
+[1.590s] running build_ext
+[1.590s] Creating /home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages/odometry.egg-link (link to .)
+[1.591s] Installing odometry script to /home/group3-robot/robp_group3/install/odometry/lib/odometry
+[1.591s] 
+[1.591s] Installed /home/group3-robot/robp_group3/build/odometry
+[1.591s] running symlink_data
+[1.618s] Invoked command in '/home/group3-robot/robp_group3/build/odometry' returned '0': AMENT_PREFIX_PATH=/home/group3-robot/robp_group3/install/robp_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/group3-robot/robp_group3/install/robp_interfaces:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/group3-robot/robp_group3/install/robp_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/group3-robot/robp_group3/build/odometry/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/odometry/lib/python3.12/site-packages:/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/odometry/build --no-deps symlink_data

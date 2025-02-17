@@ -34,8 +34,9 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
         """ When is this called? The first time your behaviour is ticked and anytime the
           status is not RUNNING thereafter."""
         print("Initializing ObjTuckArm behavior.")
-        self.arm_moving = False
-        self.timer = self.node.create_timer(self.init_tuck_arm_time*2, self.finish_tuck_arm)
+        if self.arm_moving:
+            self.arm_moving = False
+            self.timer = self.node.create_timer(self.init_tuck_arm_time*2, self.finish_tuck_arm)
 
         
     def finish_tuck_arm(self):
@@ -60,6 +61,7 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
             )      
             angles = [12000] * 6
             angles[3] = 20000
+            angles[2] = 6000
             times = [self.init_tuck_arm_time] * 6
             msg.data = angles + times
             print(f"About to publish message")
