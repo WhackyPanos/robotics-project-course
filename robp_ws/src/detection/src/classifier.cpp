@@ -36,7 +36,13 @@ void Classifier::cluster_callback(const sensor_msgs::msg::PointCloud2::SharedPtr
     
     std::string classification = "Unknown"; // Default classification
 
-    // Filter based on height values to distinguish box vs objects
+    OBBData obb;
+    obb = computeOBB(cloud);
+    std::cout << "OBB Dimensions: " << obb.width << " x " << obb.height << " x " << obb.depth << std::endl;
+    std::cout << "OBB Position: (" << obb.position.x << ", " << obb.position.y << ", " << obb.position.z << ")\n";
+    std::cout << "OBB Rotation Matrix:\n" << obb.rotation << std::endl;
+
+    // Filter based on height values
     pcl::PassThrough<pcl::PointXYZRGB> pass;
     pass.setInputCloud(cloud);
     pass.setFilterFieldName("y");
@@ -44,7 +50,7 @@ void Classifier::cluster_callback(const sensor_msgs::msg::PointCloud2::SharedPtr
     pass.filter(*box_filtered);
     RCLCPP_INFO(this->get_logger(), "Box filtering: %zu", box_filtered->size());
 
-    if (box_filtered->size() > 50) 
+    if (box_filtered->size() > 200) 
     {
         classification = "Box";
     }
@@ -59,26 +65,23 @@ void Classifier::cluster_callback(const sensor_msgs::msg::PointCloud2::SharedPtr
         }
         else
         {
-            pass.setFilterLimits(0.06, 0.075);  //3.5-4cm
-            pass.filter(*sphere_filtered);
-            RCLCPP_INFO(this->get_logger(), "Sphere filtering: %zu", sphere_filtered->size());
-            if(sphere_filtered->size()>0)
-            {
+            // pass.setFilterLimits(0.06, 0.08);  //2-4cm
+            // pass.filter(*sphere_filtered);
+            // RCLCPP_INFO(this->get_logger(), "Sphere filtering: %zu", sphere_filtered->size());
+            float size_diff = std::max({obb.width, obb.height, obb.depth}) - std::min({obb.width, obb.height, obb.depth});
+            bool is_near_cube = (size_diff < 0.05 * std::max({obb.width, obb.height, obb.depth}));
+
+            double avg_curvature = computeCurvature(cloud);
+            std::cout << "Average Curvature: " << avg_curvature << std::endl;
+
+            // Distinguish between cube and sphere
+            if (is_near_cube && avg_curvature < 0.1) {
+                classification = "Cube";
+            } else if (!is_near_cube || avg_curvature > 0.1) {
                 classification = "Sphere";
-            }
-            else
-            {   
-                pass.setFilterLimits(0.07, 0.08);  //2-3cm
-                pass.filter(*cube_filtered);
-                RCLCPP_INFO(this->get_logger(), "Cube filtering: %zu", cube_filtered->size());
-                if(cube_filtered->size()>0)
-                {
-                    classification = "Cube";
-                }
             }
         }
     }
-
 
     // Log and publish the classification result
     std_msgs::msg::String classification_msg;
@@ -92,28 +95,35 @@ void Classifier::cluster_callback(const sensor_msgs::msg::PointCloud2::SharedPtr
     
     if(classification != "Unknown")
     {
-        // Compute the centroid
-        Eigen::Vector4f centroid;
-        pcl::compute3DCentroid(*cloud, centroid);
+        geometry_msgs::msg::PoseStamped pose;
+        pose.header.stamp = msg->header.stamp;
+        pose.header.frame_id = msg->header.frame_id;
 
-        geometry_msgs::msg::PointStamped point;
-        point.header.stamp = msg->header.stamp;
-        point.header.frame_id = msg->header.frame_id;
-        point.point.x = centroid[0];
-        point.point.y = centroid[1];
-        point.point.z = centroid[2];
+        // Set the position of the OBB (center)
+        pose.pose.position.x = obb.position.x;
+        pose.pose.position.y = obb.position.y;
+        pose.pose.position.z = obb.position.z;
+
+        // Convert the Eigen rotation matrix (3x3) to a quaternion
+        Eigen::Quaternionf quat(obb.rotation);  // Eigen provides the conversion directly
+
+        // Set the orientation using the quaternion
+        pose.pose.orientation.x = quat.x();
+        pose.pose.orientation.y = quat.y();
+        pose.pose.orientation.z = quat.z();
+        pose.pose.orientation.w = quat.w();
 
         // Broadcast TF
         std::string label = classification;
         rclcpp::Duration timeout = rclcpp::Duration::from_seconds(1.0);
         tf_buffer_->waitForTransform("map", msg->header.frame_id, msg->header.stamp, timeout, 
-                                    std::bind(&Classifier::tf_callback, this, std::placeholders::_1, point, msg->header.stamp, label));
+                                    std::bind(&Classifier::tf_callback, this, std::placeholders::_1, pose, msg->header.stamp, label));
     }
     
 }
 
 void Classifier::tf_callback(const tf2_ros::TransformStampedFuture &tf_future, 
-                             const geometry_msgs::msg::PointStamped &point,
+                             const geometry_msgs::msg::PoseStamped &pose,
                              const rclcpp::Time &stamp,
                              const std::string &label)
 {
@@ -121,9 +131,9 @@ void Classifier::tf_callback(const tf2_ros::TransformStampedFuture &tf_future,
         // Extract the transform
         auto tf_base_map = tf_future.get();
 
-        // Transform the point
-        geometry_msgs::msg::PointStamped transformed_point;
-        tf2::doTransform(point, transformed_point, tf_base_map);
+        // Transform the pose
+        geometry_msgs::msg::PoseStamped transformed_pose;
+        tf2::doTransform(pose, transformed_pose, tf_base_map);
 
         // Create a transform message
         geometry_msgs::msg::TransformStamped transform_msg;
@@ -131,15 +141,15 @@ void Classifier::tf_callback(const tf2_ros::TransformStampedFuture &tf_future,
         transform_msg.header.frame_id = "map";
         transform_msg.child_frame_id = label;
 
-        // Populate transform message with the transformed point
-        transform_msg.transform.translation.x = transformed_point.point.x;
-        transform_msg.transform.translation.y = transformed_point.point.y;
-        transform_msg.transform.translation.z = transformed_point.point.z;
+        // Populate transform message with the transformed pose
+        transform_msg.transform.translation.x = transformed_pose.pose.position.x;
+        transform_msg.transform.translation.y = transformed_pose.pose.position.y;
+        transform_msg.transform.translation.z = transformed_pose.pose.position.z;
 
-        transform_msg.transform.rotation.x = 0.0;
-        transform_msg.transform.rotation.y = 0.0;
-        transform_msg.transform.rotation.z = 0.0;
-        transform_msg.transform.rotation.w = 1.0;
+        transform_msg.transform.rotation.x = transformed_pose.pose.orientation.x;
+        transform_msg.transform.rotation.y = transformed_pose.pose.orientation.y;
+        transform_msg.transform.rotation.z = transformed_pose.pose.orientation.z;
+        transform_msg.transform.rotation.w = transformed_pose.pose.orientation.w;
 
         // Broadcast the transform
         tf_broadcaster_->sendTransform(transform_msg);
@@ -147,4 +157,51 @@ void Classifier::tf_callback(const tf2_ros::TransformStampedFuture &tf_future,
     catch (const tf2::TransformException &ex) {
         RCLCPP_ERROR(this->get_logger(), "Transform failed: %s", ex.what());
     }
+}
+
+OBBData Classifier::computeOBB(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud)
+{   
+    pcl::MomentOfInertiaEstimation<pcl::PointXYZRGB> feature_extractor;
+    feature_extractor.setInputCloud(cloud);
+    feature_extractor.compute();
+
+    pcl::PointXYZRGB min_point_OBB, max_point_OBB, position_OBB;
+    Eigen::Matrix3f rotational_matrix_OBB;
+    feature_extractor.getOBB(min_point_OBB, max_point_OBB, position_OBB, rotational_matrix_OBB);
+
+    OBBData obb;
+    obb.width = max_point_OBB.x - min_point_OBB.x;
+    obb.height = max_point_OBB.y - min_point_OBB.y;
+    obb.depth = max_point_OBB.z - min_point_OBB.z;
+    obb.position = position_OBB;
+    obb.rotation = rotational_matrix_OBB;
+
+    return obb;
+}
+
+double Classifier::computeCurvature(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud)
+{
+    pcl::NormalEstimation<pcl::PointXYZRGB, pcl::Normal> normal_estimator;
+    pcl::PointCloud<pcl::Normal>::Ptr normals(new pcl::PointCloud<pcl::Normal>);
+    pcl::search::KdTree<pcl::PointXYZRGB>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZRGB>);
+
+    normal_estimator.setSearchMethod(tree);
+    normal_estimator.setInputCloud(cloud);
+    normal_estimator.setKSearch(10);
+    normal_estimator.compute(*normals);
+
+    pcl::PrincipalCurvaturesEstimation<pcl::PointXYZRGB, pcl::Normal, pcl::PrincipalCurvatures> curvature_estimator;
+    pcl::PointCloud<pcl::PrincipalCurvatures>::Ptr curvatures(new pcl::PointCloud<pcl::PrincipalCurvatures>);
+
+    curvature_estimator.setInputCloud(cloud);
+    curvature_estimator.setInputNormals(normals);
+    curvature_estimator.setSearchMethod(tree);
+    curvature_estimator.setKSearch(10);
+    curvature_estimator.compute(*curvatures);
+
+    double avg_curvature = 0.0;
+    for (const auto& pc : curvatures->points) {
+        avg_curvature += (pc.principal_curvature_x + pc.principal_curvature_y + pc.principal_curvature_z) / 3.0;
+    }
+    return avg_curvature / curvatures->size();
 }
