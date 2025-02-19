@@ -27,7 +27,7 @@ class PickBT(Node):
         
         # Add behaviors to the root
         #root.add_child(init_tuck_action)
-        root.add_children([obj_tuck_bhv, init_tuck_bhv])
+        root.add_children([obj_tuck_bhv])
         #root.add_child(obj_tuck_bhv)
         
         return root
@@ -42,7 +42,7 @@ def main(args=None):
     node.tree.setup(timeout=10.0, node=node)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=100)
+    node.tree.tick_tock(period_ms=500)
     print("DD")
 
     # Spin the node to keep it alive
