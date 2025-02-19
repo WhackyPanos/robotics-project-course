@@ -7,10 +7,7 @@
   <maintainer email="robot@todo.todo">robot</maintainer>
   <license>MIT</license>
 
-  <depend>python3-numpy</depend>
-  <depend>rclpy</depend>
   <depend>sensor_msgs</depend>
-  <depend>sensor_msgs_py</depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
@@ -25,7 +22,6 @@
   <depend>tf2_eigen</depend>
 
   <export>
-    <build_type>ament_python</build_type>
     <build_type>ament_cmake</build_type>
   </export>
 </package>
