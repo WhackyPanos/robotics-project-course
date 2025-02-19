@@ -2,10 +2,11 @@
 
 import rclpy
 import math
+import time
 import tf2_ros
 import tf2_geometry_msgs
 from rclpy.node import Node
-from geometry_msgs.msg import Point, Twist, PoseStamped, TransformStamped, PointStamped
+from geometry_msgs.msg import Point, Twist, PoseStamped, TransformStamped, PointStamped, LaserScan
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Pose2D
 
@@ -17,28 +18,42 @@ class CarrotPlanner(Node):
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
 
-       # Initialize the goal position
+        self.rate = self.create_rate(50)
+
+        # Initialize the goal position
         self.goal_position = Point()
         self.goal_position.x = 0.0
         self.goal_position.y = 0.0
         self.goal_reached_flag = True
- 
+
+        self.vel_cmd = Twist()
+        self.vel_cmd.linear.y = 0.0
+        self.vel_cmd.linear.z = 0.0
+        self.vel_cmd.angular.x = 0.0
+        self.vel_cmd.angular.y = 0.0
+
+        self.avoiding_obstacle = False
+
         #self.create_subscription(PoseStamped, '/path', self.odometry_callback, 10)
         self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PointStamped, '/temp_goal', self.goal_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/goal_reached', 10)
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.create_subscription(LaserScan, '/scan', self.lidar_callback, 10)
 
         # Declare parameters with default values. If the parameters are set in the launch file, the default values will be overwritten
         # check config folder for params.yaml
-        self.declare_parameter('linear_velocity', 0.01)
-        self.declare_parameter('angular_velocity', 0.005)
-        self.declare_parameter('goal_threshold', 0.1)
+        # TODO yaml file doesn't import properly
+        self.declare_parameter('linear_velocity', 0.2)
+        self.declare_parameter('angular_velocity', 0.5)
+        self.declare_parameter('goal_threshold', 0.05)
+        self.declare_parameter('obstacle_threshold', 0.8)
 
         # Retrieve parameter values
         self.linear_velocity = self.get_parameter('linear_velocity').value
         self.angular_velocity = self.get_parameter('angular_velocity').value
         self.goal_threshold = self.get_parameter('goal_threshold').value
+        self.obstacle_threshold = self.get_parameter('obstacle_threshold').value
 
         # Initial message to trigger the first point generation
         self.timer = self.create_timer(4, self.publish_initial_goal)
@@ -59,6 +74,17 @@ class CarrotPlanner(Node):
         self.goal_reached_flag = False
         self.get_logger().info(f"New goal received: x={msg.point.x:.2f}, y={msg.point.y:.2f}")
 
+    def laser_callback(self, msg: LaserScan):
+        self.laser_data = msg.ranges
+        self.curr_line = None
+        self.mline = None
+        front = self.laser_data[0] # TODO should maybe be -10:10
+        for d in front:
+            if d < self.obstacle_threshold and not self.avoiding_obstacle:
+                self.obstacle_found = True
+                self.stop()
+                break
+
     def odometry_callback(self, msg: Pose2D):
         """ Transform the odometry pose from 'odom' to 'map' and control robot movement. """
         if not self.goal_reached_flag:
@@ -73,7 +99,7 @@ class CarrotPlanner(Node):
                 pose_odom.pose.orientation.w = math.cos(msg.theta / 2)
                 pose_odom.pose.orientation.x = 0.0
                 pose_odom.pose.orientation.y = 0.0
-                pose_odom.pose.orientation.z = math.sin(msg.theta / 2) #third component of quaternion, since it's yaw
+                pose_odom.pose.orientation.z = math.sin(msg.theta / 2)
             except Exception as e:
                 self.get_logger().warn(f"Pose creation failed: {str(e)}")
 
@@ -89,7 +115,6 @@ class CarrotPlanner(Node):
                 transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_odom.pose, transform)
             except Exception as e:
                 self.get_logger().warn(f"Lookup failed: {str(e)}")
-                
 
             try:
                 # Extract transformed 2D position and heading
@@ -100,7 +125,7 @@ class CarrotPlanner(Node):
                 theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
 
                 # Log transformed pose
-                self.get_logger().info(f"Transformed Pose in 'map' frame: x={x_map:.2f}, y={y_map:.2f}, theta={theta_map:.2f}")
+                #self.get_logger().info(f"Transformed Pose in 'map' frame: x={x_map:.2f}, y={y_map:.2f}, theta={theta_map:.2f}")
 
                 # Proceed with goal tracking using transformed pose
                 self.navigate_to_goal(x_map, y_map, theta_map)
@@ -110,29 +135,66 @@ class CarrotPlanner(Node):
 
     def navigate_to_goal(self, x, y, theta):
         """ Compute commands to move the robot towards the goal in map frame. """
+        
+        distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
         goal_angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
         angle_difference = goal_angle - theta
         self.get_logger().info('Angle diff: ' + str(angle_difference))
+        self.get_logger().info('Distance: ' + str(distance_to_goal))
+        
+        if self.obstacle_found:
+            self.stop()
+            self.bug()
+            return
 
-        twist_command = Twist()
-
-        if abs(angle_difference) >= 0.3:
-            twist_command.angular.z = self.angular_velocity # this angular velocity is the one from the param.yaml (maximum)
-            self.cmd_vel_publisher.publish(twist_command)
-
+        if distance_to_goal > self.goal_threshold:
+            self.vel_cmd.linear.x = min(self.linear_velocity, self.linear_velocity * distance_to_goal)
+            self.vel_cmd.angular.z = min(self.angular_velocity, self.angular_velocity * angle_difference)
         else:
-            distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
-            if distance_to_goal >= self.goal_threshold:
-                twist_command.linear.x = self.linear_velocity # again, max linear velocity is assumed
-                self.cmd_vel_publisher.publish(twist_command)
-            else:
-                twist_command.linear.x = 0.0
-                self.cmd_vel_publisher.publish(twist_command)
-                self.goal_reached_publisher.publish(Bool(data=True))
-                self.goal_reached_flag = True
-                self.get_logger().info("Goal reached!")
+            self.stop()
+            self.goal_reached_publisher.publish(Bool(data=True))
+            self.goal_reached_flag = True
+            self.get_logger().info("Goal reached!")
+            return
 
-    
+        self.cmd_vel_publisher.publish(self.vel_cmd)
+        self.rate.sleep()
+
+    def bug(self):
+        """ Implement the bug algorithm to avoid obstacles. """
+        self.avoiding_obstacle = True
+        self.get_logger().info('Obstacle found!')
+
+        min_laser = min(self.laser_data)
+        LEFT90 = 90 #TODO or LEFT90 = 270 not sure yet
+        
+        while abs(self.laser_data[LEFT90] - min_laser) > 0.05:
+            self.vel_cmd.angular.z = -0.1
+            self.cmd_vel_publisher.publish(self.vel_cmd)
+            rclpy.spin_once(self)
+        
+        while abs(self.curr_line - self.mline) >0.1:
+            self.vel_cmd.linear.x = 0.1
+            
+            if self.laser_data[LEFT90] < self.obstacle_threshold - 0.2:
+                self.vel_cmd.angular.z = -0.1
+            elif self.laser_data[LEFT90] > self.obstacle_threshold + 0.2:
+                self.vel_cmd.angular.z = 0.3
+            else:
+                self.vel_cmd.angular.z = 0.0
+            
+            self.cmd_vel_publisher.publish(self.vel_cmd)
+            rclpy.spin_once(self)
+        
+        self.avoiding_obstacle = False
+        self.get_logger().info('Obstacle avoided!')
+        self.stop()
+            
+    def stop(self):
+        self.vel_cmd.linear.x = 0.0
+        self.vel_cmd.angular.z = 0.0
+        self.cmd_vel_publisher.publish(self.vel_cmd)
+
 def main(args=None):
     rclpy.init(args=args)
     node = CarrotPlanner()

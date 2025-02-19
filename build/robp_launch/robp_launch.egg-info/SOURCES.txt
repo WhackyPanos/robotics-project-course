@@ -3,6 +3,8 @@ setup.cfg
 setup.py
 launch/arm_camera_launch.yaml
 launch/arm_servo_launch.py
+launch/boot_camp_part1_launch.xml
+launch/control_launch.py
 launch/detection_launch.py
 launch/frames_launch.xml
 launch/joystick_launch.py

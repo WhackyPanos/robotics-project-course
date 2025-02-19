@@ -6,7 +6,8 @@ import time
 import tf2_ros
 import tf2_geometry_msgs
 from rclpy.node import Node
-from geometry_msgs.msg import Point, Twist, PoseStamped, TransformStamped, PointStamped, LaserScan
+from geometry_msgs.msg import Point, Twist, PoseStamped, TransformStamped, PointStamped
+from sensor_msgs.msg import LaserScan
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Pose2D
 
@@ -33,19 +34,20 @@ class CarrotPlanner(Node):
         self.vel_cmd.angular.y = 0.0
 
         self.avoiding_obstacle = False
+        self.obstacle_found = False
 
         #self.create_subscription(PoseStamped, '/path', self.odometry_callback, 10)
         self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PointStamped, '/temp_goal', self.goal_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/goal_reached', 10)
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
-        self.create_subscription(LaserScan, '/scan', self.lidar_callback, 10)
+        self.create_subscription(LaserScan, '/scan', self.laser_callback, 10)
 
         # Declare parameters with default values. If the parameters are set in the launch file, the default values will be overwritten
         # check config folder for params.yaml
         # TODO yaml file doesn't import properly
-        self.declare_parameter('linear_velocity', 0.2)
-        self.declare_parameter('angular_velocity', 0.5)
+        self.declare_parameter('linear_velocity', 0.1)
+        self.declare_parameter('angular_velocity', 0.2)
         self.declare_parameter('goal_threshold', 0.05)
         self.declare_parameter('obstacle_threshold', 0.8)
 
@@ -138,9 +140,20 @@ class CarrotPlanner(Node):
         
         distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
         goal_angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
-        angle_difference = goal_angle - theta
+        # Check if the goal is behind
+        robot_forward_x = math.cos(theta)
+        robot_forward_y = math.sin(theta)
+        to_goal_x = self.goal_position.x - x
+        to_goal_y = self.goal_position.y - y
+        dot_product = (robot_forward_x * to_goal_x) + (robot_forward_y * to_goal_y)
+
+        angle_tolerance = 0.1  # Angle threshold for facing the goal (adjust as needed)
+
+        #angle_difference = goal_angle - theta
+        angle_difference = (goal_angle - theta + math.pi) % (2 * math.pi) - math.pi
         self.get_logger().info('Angle diff: ' + str(angle_difference))
         self.get_logger().info('Distance: ' + str(distance_to_goal))
+        self.get_logger().info('My angle: ' + str(theta))
         
         if self.obstacle_found:
             self.stop()
@@ -148,8 +161,17 @@ class CarrotPlanner(Node):
             return
 
         if distance_to_goal > self.goal_threshold:
-            self.vel_cmd.linear.x = min(self.linear_velocity, self.linear_velocity * distance_to_goal)
-            self.vel_cmd.angular.z = min(self.angular_velocity, self.angular_velocity * angle_difference)
+
+            if dot_product < 0:  # If the goal is behind, rotate in place
+                self.vel_cmd.linear.x = 0.0  # Don't move forward yet
+                self.vel_cmd.angular.z = self.angular_velocity if angle_difference > 0 else -1.0  # Rotate in place
+            else:
+                if abs(angle_difference) > angle_tolerance:  
+                    self.vel_cmd.linear.x = 0.0  # Stop forward motion while turning
+                    self.vel_cmd.angular.z = self.angular_velocity if angle_difference > 0 else -1.0  # Rotate towards the goal
+                else:
+                    self.vel_cmd.linear.x = min(self.linear_velocity, self.linear_velocity * distance_to_goal * 5)
+                    self.vel_cmd.angular.z = 0.0  # Move forward when facing the goal
         else:
             self.stop()
             self.goal_reached_publisher.publish(Bool(data=True))
@@ -163,6 +185,7 @@ class CarrotPlanner(Node):
     def bug(self):
         """ Implement the bug algorithm to avoid obstacles. """
         self.avoiding_obstacle = True
+        self.get_logger().info('Obstacle found!')
 
         min_laser = min(self.laser_data)
         LEFT90 = 90 #TODO or LEFT90 = 270 not sure yet
@@ -186,6 +209,7 @@ class CarrotPlanner(Node):
             rclpy.spin_once(self)
         
         self.avoiding_obstacle = False
+        self.get_logger().info('Obstacle avoided!')
         self.stop()
             
     def stop(self):

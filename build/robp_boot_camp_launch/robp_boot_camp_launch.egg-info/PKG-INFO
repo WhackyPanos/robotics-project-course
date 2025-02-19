@@ -1,13 +1,7 @@
-Metadata-Version: 2.2
-Name: robp_boot_camp_launch
+Metadata-Version: 2.1
+Name: robp-boot-camp-launch
 Version: 1.0.0
 Summary: robp_boot_camp_lauch
 Maintainer: Daniel Duberg
 Maintainer-email: dduberg@kth.se
 License: MIT
-Requires-Dist: setuptools
-Dynamic: license
-Dynamic: maintainer
-Dynamic: maintainer-email
-Dynamic: requires-dist
-Dynamic: summary

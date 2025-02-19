@@ -3,78 +3,6 @@
 
 CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/src/agent/Agent.cpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/Agent.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/config.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/logger/Logger.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/message/InputMessage.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/message/OutputMessage.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/message/Packet.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/Middleware.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastEntities.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastMiddleware.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSEntities.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSMiddleware.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/utils/Callbacks.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/processor/Processor.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/scheduler/PacketScheduler.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/scheduler/Scheduler.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/Server.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/SessionManager.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/TransportRc.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/can/CanAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServer.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/CanEndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv4EndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv6EndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/MultiSerialEndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/SerialEndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiSerialAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiTermiosAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/PseudoTerminalAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/SerialAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/TermiosAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/baud_rate_table_linux.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/stream_framing/StreamFramingProtocol.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPConnection.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPServerBase.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv4AgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv6AgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv4AgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv6AgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/MessageHeader.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/Optional.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/SubMessageHeader.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/TopicPubSubType.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/utils/ArgumentParser.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/utils/Color.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/utils/Functions.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/utils/SharedMutexPriority.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/visibility.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/Agent.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_manager.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_typesupport.hpp
@@ -95,6 +23,56 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/graph.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/node.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/logger/Logger.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/InputMessage.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/OutputMessage.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/Packet.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/Middleware.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastEntities.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastMiddleware.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSEntities.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSMiddleware.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/utils/Callbacks.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/processor/Processor.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/PacketScheduler.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/Scheduler.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/Server.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/SessionManager.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/TransportRc.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/can/CanAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServer.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/CanEndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv4EndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv6EndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/MultiSerialEndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/SerialEndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiSerialAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiTermiosAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/PseudoTerminalAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/SerialAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/TermiosAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/baud_rate_table_linux.h
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/stream_framing/StreamFramingProtocol.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPConnection.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPServerBase.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv4AgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv6AgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv4AgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv6AgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/MessageHeader.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/Optional.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/SubMessageHeader.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/TopicPubSubType.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/ArgumentParser.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Color.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Functions.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/SharedMutexPriority.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/visibility.hpp
  /opt/ros/jazzy/include/fastcdr/fastcdr/Cdr.h
  /opt/ros/jazzy/include/fastcdr/fastcdr/CdrEncoding.hpp
  /opt/ros/jazzy/include/fastcdr/fastcdr/CdrSizeCalculator.hpp
@@ -607,12 +585,16 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
  /usr/include/c++/13/unordered_map
  /usr/include/c++/13/utility
  /usr/include/c++/13/vector
+ /usr/include/c++/13/version
  /usr/include/ctype.h
  /usr/include/endian.h
  /usr/include/errno.h
  /usr/include/fcntl.h
  /usr/include/features-time64.h
  /usr/include/features.h
+ /usr/include/fmt/core.h
+ /usr/include/fmt/format.h
+ /usr/include/fmt/ostream.h
  /usr/include/libintl.h
  /usr/include/linux/close_range.h
  /usr/include/linux/errno.h
@@ -628,6 +610,26 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
  /usr/include/pthread.h
  /usr/include/sched.h
  /usr/include/signal.h
+ /usr/include/spdlog/common.h
+ /usr/include/spdlog/details/backtracer.h
+ /usr/include/spdlog/details/circular_q.h
+ /usr/include/spdlog/details/console_globals.h
+ /usr/include/spdlog/details/log_msg.h
+ /usr/include/spdlog/details/log_msg_buffer.h
+ /usr/include/spdlog/details/null_mutex.h
+ /usr/include/spdlog/details/periodic_worker.h
+ /usr/include/spdlog/details/registry.h
+ /usr/include/spdlog/details/synchronous_factory.h
+ /usr/include/spdlog/fmt/bin_to_hex.h
+ /usr/include/spdlog/fmt/fmt.h
+ /usr/include/spdlog/fmt/ostr.h
+ /usr/include/spdlog/formatter.h
+ /usr/include/spdlog/logger.h
+ /usr/include/spdlog/sinks/sink.h
+ /usr/include/spdlog/sinks/stdout_sinks.h
+ /usr/include/spdlog/spdlog.h
+ /usr/include/spdlog/tweakme.h
+ /usr/include/spdlog/version.h
  /usr/include/stdc-predef.h
  /usr/include/stdint.h
  /usr/include/stdio.h
@@ -800,8 +802,6 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
 
 CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_manager.cpp.o
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/src/agent/graph_manager/graph_manager.cpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/Optional.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_manager.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_typesupport.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/utils/demangle.hpp
@@ -821,6 +821,8 @@ CMakeFiles/micro_ros_agent.dir/src/agent/graph_manager/graph_manager.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/graph.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/node.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/Optional.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp
  /opt/ros/jazzy/include/fastcdr/fastcdr/Cdr.h
  /opt/ros/jazzy/include/fastcdr/fastcdr/CdrEncoding.hpp
  /opt/ros/jazzy/include/fastcdr/fastcdr/CdrSizeCalculator.hpp
@@ -2254,78 +2256,6 @@ CMakeFiles/micro_ros_agent.dir/src/agent/utils/demangle.cpp.o
 
 CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/src/main.cpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/Agent.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/config.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/logger/Logger.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/message/InputMessage.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/message/OutputMessage.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/message/Packet.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/Middleware.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastEntities.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastMiddleware.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSEntities.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSMiddleware.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/middleware/utils/Callbacks.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/processor/Processor.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/scheduler/PacketScheduler.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/scheduler/Scheduler.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/Server.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/SessionManager.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/TransportRc.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/can/CanAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServer.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/CanEndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv4EndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv6EndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/MultiSerialEndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/endpoint/SerialEndPoint.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiSerialAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiTermiosAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/PseudoTerminalAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/SerialAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/TermiosAgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/serial/baud_rate_table_linux.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/stream_framing/StreamFramingProtocol.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPConnection.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPServerBase.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv4AgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv6AgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv4AgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv6AgentLinux.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/MessageHeader.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/Optional.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/SubMessageHeader.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/TopicPubSubType.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/utils/ArgumentParser.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/utils/Color.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/utils/Functions.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/utils/SharedMutexPriority.hpp
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/uxr/agent/visibility.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/Agent.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_manager.hpp
  /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_typesupport.hpp
@@ -2346,6 +2276,56 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/graph.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/node.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/logger/Logger.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/InputMessage.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/OutputMessage.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/Packet.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/Middleware.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastEntities.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastMiddleware.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSEntities.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSMiddleware.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/utils/Callbacks.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/processor/Processor.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/PacketScheduler.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/Scheduler.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/Server.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/SessionManager.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/TransportRc.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/can/CanAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServer.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/CanEndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv4EndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv6EndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/MultiSerialEndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/SerialEndPoint.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiSerialAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiTermiosAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/PseudoTerminalAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/SerialAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/TermiosAgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/baud_rate_table_linux.h
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/stream_framing/StreamFramingProtocol.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPConnection.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPServerBase.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv4AgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv6AgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv4AgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv6AgentLinux.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/MessageHeader.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/Optional.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/SubMessageHeader.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/TopicPubSubType.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/ArgumentParser.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Color.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Functions.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/SharedMutexPriority.hpp
+ /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/visibility.hpp
  /opt/ros/jazzy/include/fastcdr/fastcdr/Cdr.h
  /opt/ros/jazzy/include/fastcdr/fastcdr/CdrEncoding.hpp
  /opt/ros/jazzy/include/fastcdr/fastcdr/CdrSizeCalculator.hpp
@@ -2858,12 +2838,16 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
  /usr/include/c++/13/unordered_map
  /usr/include/c++/13/utility
  /usr/include/c++/13/vector
+ /usr/include/c++/13/version
  /usr/include/ctype.h
  /usr/include/endian.h
  /usr/include/errno.h
  /usr/include/fcntl.h
  /usr/include/features-time64.h
  /usr/include/features.h
+ /usr/include/fmt/core.h
+ /usr/include/fmt/format.h
+ /usr/include/fmt/ostream.h
  /usr/include/libintl.h
  /usr/include/linux/close_range.h
  /usr/include/linux/errno.h
@@ -2879,6 +2863,26 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
  /usr/include/pthread.h
  /usr/include/sched.h
  /usr/include/signal.h
+ /usr/include/spdlog/common.h
+ /usr/include/spdlog/details/backtracer.h
+ /usr/include/spdlog/details/circular_q.h
+ /usr/include/spdlog/details/console_globals.h
+ /usr/include/spdlog/details/log_msg.h
+ /usr/include/spdlog/details/log_msg_buffer.h
+ /usr/include/spdlog/details/null_mutex.h
+ /usr/include/spdlog/details/periodic_worker.h
+ /usr/include/spdlog/details/registry.h
+ /usr/include/spdlog/details/synchronous_factory.h
+ /usr/include/spdlog/fmt/bin_to_hex.h
+ /usr/include/spdlog/fmt/fmt.h
+ /usr/include/spdlog/fmt/ostr.h
+ /usr/include/spdlog/formatter.h
+ /usr/include/spdlog/logger.h
+ /usr/include/spdlog/sinks/sink.h
+ /usr/include/spdlog/sinks/stdout_sinks.h
+ /usr/include/spdlog/spdlog.h
+ /usr/include/spdlog/tweakme.h
+ /usr/include/spdlog/version.h
  /usr/include/stdc-predef.h
  /usr/include/stdint.h
  /usr/include/stdio.h
