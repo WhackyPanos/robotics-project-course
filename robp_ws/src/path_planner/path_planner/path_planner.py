@@ -32,6 +32,10 @@ class CarrotPlanner(Node):
         self.vel_cmd.linear.z = 0.0
         self.vel_cmd.angular.x = 0.0
         self.vel_cmd.angular.y = 0.0
+        
+        self.x_map = 0.0
+        self.y_map = 0.0
+        self.theta_map = 0.0
 
         self.avoiding_obstacle = False
         self.obstacle_found = False
@@ -49,7 +53,7 @@ class CarrotPlanner(Node):
         self.declare_parameter('linear_velocity', 0.1)
         self.declare_parameter('angular_velocity', 0.2)
         self.declare_parameter('goal_threshold', 0.05)
-        self.declare_parameter('obstacle_threshold', 0.8)
+        self.declare_parameter('obstacle_threshold', 0.2)
 
         # Retrieve parameter values
         self.linear_velocity = self.get_parameter('linear_velocity').value
@@ -75,14 +79,17 @@ class CarrotPlanner(Node):
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
         self.get_logger().info(f"New goal received: x={msg.point.x:.2f}, y={msg.point.y:.2f}")
+        self.mline = (self.goal_position.y - self.y_map)/(self.goal_position.x - self.x_map) if (self.goal_position.x - self.x_map) !=0 else float('inf')
 
     def laser_callback(self, msg: LaserScan):
         self.laser_data = msg.ranges
         self.curr_line = None
         self.mline = None
-        front = self.laser_data[0] # TODO should maybe be -10:10
+        front = self.laser_data[170:190]
+        # self.get_logger().info(str(front))
         for d in front:
             if d < self.obstacle_threshold and not self.avoiding_obstacle:
+                self.get_logger().info("Obstacle found!")
                 self.obstacle_found = True
                 self.stop()
                 break
@@ -120,24 +127,25 @@ class CarrotPlanner(Node):
 
             try:
                 # Extract transformed 2D position and heading
-                x_map = transformed_pose.position.x
-                y_map = transformed_pose.position.y
+                self.x_map = transformed_pose.position.x
+                self.y_map = transformed_pose.position.y
                 qz = transformed_pose.orientation.z
                 qw = transformed_pose.orientation.w
-                theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
+                self.theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
 
                 # Log transformed pose
                 #self.get_logger().info(f"Transformed Pose in 'map' frame: x={x_map:.2f}, y={y_map:.2f}, theta={theta_map:.2f}")
 
                 # Proceed with goal tracking using transformed pose
-                self.navigate_to_goal(x_map, y_map, theta_map)
+                self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
 
             except Exception as e:
                 self.get_logger().warn(f"Transform failed: {str(e)}")
 
     def navigate_to_goal(self, x, y, theta):
         """ Compute commands to move the robot towards the goal in map frame. """
-        
+        """ Parameters """
+        angle_tolerance = 0.1  # Angle threshold for facing the goal (adjust as needed)
         distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
         goal_angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
         # Check if the goal is behind
@@ -145,15 +153,15 @@ class CarrotPlanner(Node):
         robot_forward_y = math.sin(theta)
         to_goal_x = self.goal_position.x - x
         to_goal_y = self.goal_position.y - y
+        
+        self.curr_line = (y)/(x) if x != 0 else float('inf')
+
         dot_product = (robot_forward_x * to_goal_x) + (robot_forward_y * to_goal_y)
 
-        angle_tolerance = 0.1  # Angle threshold for facing the goal (adjust as needed)
-
-        #angle_difference = goal_angle - theta
         angle_difference = (goal_angle - theta + math.pi) % (2 * math.pi) - math.pi
-        self.get_logger().info('Angle diff: ' + str(angle_difference))
-        self.get_logger().info('Distance: ' + str(distance_to_goal))
-        self.get_logger().info('My angle: ' + str(theta))
+        # self.get_logger().info('Angle diff: ' + str(angle_difference))
+        # self.get_logger().info('Distance: ' + str(distance_to_goal))
+        # self.get_logger().info('My angle: ' + str(theta))
         
         if self.obstacle_found:
             self.stop()
@@ -184,6 +192,11 @@ class CarrotPlanner(Node):
 
     def bug(self):
         """ Implement the bug algorithm to avoid obstacles. """
+
+        """ Parameters """
+        maintained_distance = 0.2
+        dist_from_mline = 0.1
+
         self.avoiding_obstacle = True
         self.get_logger().info('Obstacle found!')
 
@@ -194,13 +207,14 @@ class CarrotPlanner(Node):
             self.vel_cmd.angular.z = -0.1
             self.cmd_vel_publisher.publish(self.vel_cmd)
             rclpy.spin_once(self)
+        self.stop()
         
-        while abs(self.curr_line - self.mline) >0.1:
+        while abs(self.curr_line - self.mline) > dist_from_mline:
             self.vel_cmd.linear.x = 0.1
             
-            if self.laser_data[LEFT90] < self.obstacle_threshold - 0.2:
+            if self.laser_data[LEFT90] < self.obstacle_threshold - maintained_distance:
                 self.vel_cmd.angular.z = -0.1
-            elif self.laser_data[LEFT90] > self.obstacle_threshold + 0.2:
+            elif self.laser_data[LEFT90] > self.obstacle_threshold + maintained_distance:
                 self.vel_cmd.angular.z = 0.3
             else:
                 self.vel_cmd.angular.z = 0.0

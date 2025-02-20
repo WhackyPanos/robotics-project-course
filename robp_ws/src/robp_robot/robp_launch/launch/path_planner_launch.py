@@ -36,4 +36,8 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/control_launch.py'))
         ),
+
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/lidar_launch.yaml'))
+        ),
     ])
