@@ -9,6 +9,7 @@ from rclpy.node import Node
 from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension
 from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
+from ik_solver import IKNode
 
 
 class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
