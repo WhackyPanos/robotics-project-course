@@ -3,6 +3,9 @@ import rclpy
 from rclpy.node import Node
 import PyKDL as kdl
 from math import pi
+import numpy as np
+from math import cos, sin
+
 
 class IKNode(Node):
     def __init__(self):
@@ -12,10 +15,10 @@ class IKNode(Node):
         # we need to go from base link to base plate and then
         # base plate -> 1st "blue" servo -> green servo ->ID3 servo 
         # Dimensions in meters
-        a, b, c, d, e, f, g = 0.01 * 7.4, 0.01 * 1.5, 0.01 * 11.5, 0.01 * 4.45, 0.01 * 21.3, 0.01 * 5.3, 0.01 * 9.5
-        self.base_height = a             # Height of the base link
-        self.link_lengths = [b, c - b, e - c , f]  # Lengths for the moving segments
-        self.gripper_offset = g          # Distance from wrist to gripper center
+        self.a, self.b, self.c, self.d, self.e, self.f, self.g = 0.01 * 7.4, 0.01 * 1.5, 0.01 * 11.5, 0.01 * 4.45, 0.01 * 21.3, 0.01 * 5.3, 0.01 * 9.5
+        self.base_height = self.a             # Height of the base link
+        self.link_lengths = [self.b, self.c - self.b, self.e - self.c , self.f]  # Lengths for the moving segments
+        self.gripper_offset = self.g          # Distance from wrist to gripper center
 
         # ---- Create KDL Chain ----
         self.chain = kdl.Chain()
@@ -92,6 +95,157 @@ class IKNode(Node):
         frame = kdl.Frame(kdl.Rotation.Identity(), translation)
         self.chain.addSegment(kdl.Segment(name + "_segment", joint, frame))
 
+    def solve_fk(self, joint_angles):
+        """
+        Compute forward kinematics to determine the end-effector position.
+        :param joint_angles: A list of joint angles (length must match the number of joints).
+        :return: The end-effector position (x, y, z) and orientation (as a rotation matrix).
+        """
+        if len(joint_angles) != self.chain.getNrOfJoints():
+            self.get_logger().error(f"Incorrect number of joint angles provided. Gave {len(joint_angles)}, should be {self.chain.getNrOfJoints()}")
+            return None
+
+        joint_positions = kdl.JntArray(len(joint_angles))
+        for i, angle in enumerate(joint_angles):
+            joint_positions[i] = angle
+
+        end_frame = kdl.Frame()
+        end_frame = kdl.Frame(kdl.Rotation.Identity(), kdl.Vector(0, 0, self.link_lengths[1]))
+        result = self.fk_solver.JntToCart(joint_positions, end_frame)
+
+        if result >= 0:
+            pos = end_frame.p  # Position
+            rot = end_frame.M  # Rotation matrix
+            self.get_logger().info(f"FK Solution: Position = ({pos.x()*100}, {pos.y()*100}, {pos.z()*100}) cm")
+            return pos, rot
+        else:
+            self.get_logger().error("FK Solver failed!")
+            return None
+        
+
+
+    def J(self, lisT):
+        J = np.zeros((6, 7)) #initiate jacobian matrix
+        #auxiliary vectors to extract desired z_i-1 & p_i-1 
+        z0 = np.array([0, 0, 1])      
+        p0 = np.array([0, 0, 0, 1])
+
+        for i in range(7):
+            #compute z_i-1
+            if i==0: 
+                z= z0
+            else:
+                z = np.matmul(lisT[i-1][:3,:3], z0)
+            #compute p_i-1
+            p = np.matmul(lisT[i-1], p0)[:3]    
+            #compute pe
+            pe = np.matmul(lisT[6], p0)[:3]
+            Jp = np.cross(z, pe-p)
+            Jo = z
+            J[:, i] = np.concatenate((Jp, Jo))
+        return J
+
+
+    def T(self,alpha, d,a,theta):
+        Rot_theta = np.array([[cos(theta), -sin(theta), 0, 0],
+                            [sin(theta), cos(theta) , 0, 0],
+                            [0,0,1,0],
+                            [0,0,0,1]])
+        
+        Rot_alpha = np.array([[1,0,0,0],
+                            [0, cos(alpha), -sin(alpha) , 0],
+                            [0, sin(alpha), cos(alpha)  , 0],
+                            [0,0,0,1]])
+        
+        Trans_d = np.array([[1,0,0,0],
+                        [0,1,0,0],
+                        [0,0,1,d],
+                        [0,0,0,1]])
+        
+        Trans_a = np.array([[1,0,0,a],
+                        [0,1,0,0],
+                        [0,0,1,0],
+                        [0,0,0,1]])
+        
+        T = np.matmul(np.matmul(Rot_theta,Trans_d), np.matmul(Rot_alpha,Trans_a))
+        return T
+    
+    def transforms(self,q):
+    
+        # Initiate constants
+        h1 = 0.311
+        h2 = 0.078
+        L = 0.4
+        M = 0.39
+
+        parametersDH = np.array([[np.pi/2, self.a + self.b, 0, q[0]], # was h1 before
+                                [-np.pi/2, 0, 0, q[1]],
+                                [-np.pi/2, L, 0,q[2] ],
+                                [np.pi/2, 0, 0, q[3]],
+                                [np.pi/2, M, 0, q[4]],
+                                [-np.pi/2, 0, 0, q[5]],
+                                [ 0, h2, 0, q[6]]])
+
+        multipT=np.identity(4) 
+        lisT=[] # initiate list with the necessary transforms
+
+        for i in range(7):
+            alpha = parametersDH[i, 0]
+            d = parametersDH[i, 1]
+            a = parametersDH[i, 2]
+            theta = parametersDH[i, 3]
+            t = self.T(alpha, d,a,theta)
+            multipT = np.matmul(multipT,t)
+            lisT.append(np.array(multipT))  
+
+        return multipT, lisT
+
+
+    def poseError(self,Rd,T,x,y,z):
+
+        Rd = np.array(Rd)
+        Re = T [:3, :3]
+        actualX = T[:3, 3]
+        
+        # apply formulas from the book -> extract vectors from Rd & Re to perform cross product
+        n_e = Re[:, 0] 
+        s_e = Re[:, 1] 
+        a_e = Re[:, 2]  
+        n_d = Rd[:, 0]
+        s_d = Rd[:, 1]
+        a_d = Rd[:, 2]
+
+        e_xPos = np.array([x - actualX[0], y - actualX[1], z - actualX[2]])
+        e_xOri = 0.5 * (np.cross(n_e, n_d)+ np.cross(s_e, s_d)+ np.cross(a_e, a_d))
+
+        e_X = np.concatenate((e_xPos, e_xOri)) 
+
+        return e_X
+    
+    def solve_ik_mine(self,point, R, joint_positions):
+
+        x = point[0]
+        y = point[1]
+        z = point[2]
+        q = joint_positions #it must contain 7 elements
+
+        q = np.array(joint_positions)
+
+        epsilon = 10**-3 # tolerance threshold 
+        e_X = 1 #initiate error to start loop
+    
+        # loop to numerically compute q
+        while np.linalg.norm(e_X) > epsilon:
+            finalT, lisT = self.transforms(q)
+            j = self.J(lisT)  # Compute the Jacobian in the base frame
+            e_X = self.poseError(R, finalT, x, y, z)
+            #print(np.linalg.norm(e_X))
+            inv_J = np.linalg.pinv(j) 
+            e_q = np.matmul(inv_J, e_X)
+            q += e_q
+
+        return q
+
     def solve_ik(self, target_pose):
         """
         Solve inverse kinematics for a given end-effector target pose.
@@ -129,32 +283,6 @@ class IKNode(Node):
             self.get_logger().error(f"Result = {result}")
 
 
-    def solve_fk(self, joint_angles):
-        """
-        Compute forward kinematics to determine the end-effector position.
-        :param joint_angles: A list of joint angles (length must match the number of joints).
-        :return: The end-effector position (x, y, z) and orientation (as a rotation matrix).
-        """
-        if len(joint_angles) != self.chain.getNrOfJoints():
-            self.get_logger().error(f"Incorrect number of joint angles provided. Gave {len(joint_angles)}, should be {self.chain.getNrOfJoints()}")
-            return None
-
-        joint_positions = kdl.JntArray(len(joint_angles))
-        for i, angle in enumerate(joint_angles):
-            joint_positions[i] = angle
-
-        end_frame = kdl.Frame()
-        end_frame = kdl.Frame(kdl.Rotation.Identity(), kdl.Vector(0, 0, self.link_lengths[1]))
-        result = self.fk_solver.JntToCart(joint_positions, end_frame)
-
-        if result >= 0:
-            pos = end_frame.p  # Position
-            rot = end_frame.M  # Rotation matrix
-            self.get_logger().info(f"FK Solution: Position = ({pos.x()*100}, {pos.y()*100}, {pos.z()*100}) cm")
-            return pos, rot
-        else:
-            self.get_logger().error("FK Solver failed!")
-            return None
 
 
 
