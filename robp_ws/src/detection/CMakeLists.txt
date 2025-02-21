@@ -18,6 +18,7 @@ find_package(pcl_ros REQUIRED)
 find_package(pcl_conversions REQUIRED)
 find_package(tf2_eigen REQUIRED)
 find_package(PCL REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 # Create the executables
 include_directories(include)
@@ -46,6 +47,8 @@ ament_target_dependencies(classifier_node
   pcl_conversions
   pcl_ros
 )
+
+ament_target_dependencies(classifier_node rclcpp std_msgs sensor_msgs tf2_ros visualization_msgs)
 
 # Install the node
 install(TARGETS
