@@ -37,33 +37,43 @@ class Map_file(Node):
 
     def map_callback(self, msg: String):
         data = msg.data.split()
-        classify, new_x, new_y, new_a = data[0], float(data[1]), float(data[2]), float(data[3])
+        classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 360
         new_label = self.classifications.get(classify, '3')
         new_votes = [0, 0, 0, 0] 
         classes = ['B', '1', '2', '3']
 
         for idx, (label, x, y, a, votes) in enumerate(self.map):
             distance = np.sqrt((x-new_x)**2+(y-new_y)**2)
-            threshold = 0.2 if 'B' in (new_label, label) else 0.1
+            threshold = 20 if 'B' in (new_label, label) else 10
             if distance < threshold:
                 votes[classes.index(new_label)] += 1
                 max_index = np.argmax(votes)
                 self.map[idx] = (classes[max_index], 
-                                 round((x + new_x) / 2, 2),
-                                 round((y + new_y) / 2, 2),
-                                 round((a + new_a) / 2, 0),
+                                 int(round((x + new_x) / 2, 0)),
+                                 int(round((y + new_y) / 2, 0)),
+                                 int(round((a + new_a) / 2, 0)),
                                  votes)
                 self.update_file()
                 return
             
         new_votes[classes.index(new_label)] += 1
-        self.map.append((new_label, new_x, new_y, new_a, new_votes))
+        self.map.append((new_label, int(round(new_x, 0)), int(round(new_y, 0)), int(round(new_a, 0)), new_votes))
         self.update_file()
 
     def update_file(self):
         with open(self.file, 'w') as file:
             for label, x, y, a, _ in self.map:
-                file.write(f"{label} {x:.2f} {y:.2f} {a:.0f}\n")
+                lenx = len(str(abs(x))) 
+                leny = len(str(abs(y))) 
+                self.get_logger().info(f"lenx: {lenx}, x: {x}")
+                space1 = 8 - lenx
+                space2 = 8 - leny
+                if x < 0:
+                    space1 -= 1
+                if y < 0:
+                    space2 -= 1
+                file.write(f"{label}       {x}{' '*space1}{y}{' '*space2}{a}\n")
+
 
 
 def main():
