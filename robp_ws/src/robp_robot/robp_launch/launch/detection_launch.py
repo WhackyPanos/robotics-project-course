@@ -40,5 +40,9 @@ def generate_launch_description():
             package='detection',
             executable='classifier_node',
             output='screen'
+        ),
+         Node(
+            package='map_file',
+            executable='map_file'
         )
     ])

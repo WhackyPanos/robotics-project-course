@@ -1,5 +1,6 @@
 #include "classifier.hpp"
 #include <tf2_ros/create_timer_ros.h>
+#include <sstream>
 
 using std::placeholders::_1;
 
@@ -56,7 +57,7 @@ void Classifier::cluster_callback(const sensor_msgs::msg::PointCloud2::SharedPtr
     }
     else 
     {
-        pass.setFilterLimits(0.045, 0.055);  //4.5-5.5cm
+        pass.setFilterLimits(0.045, 0.05);  //5-5.5cm
         pass.filter(*animal_filtered);
         RCLCPP_INFO(this->get_logger(), "Animal filtering: %zu", animal_filtered->size());
         if(animal_filtered->size()>0)
@@ -83,12 +84,12 @@ void Classifier::cluster_callback(const sensor_msgs::msg::PointCloud2::SharedPtr
         }
     }
 
-    // Log and publish the classification result
-    std_msgs::msg::String classification_msg;
-    classification_msg.data = classification;
+    // // Log and publish the classification result
+    // std_msgs::msg::String classification_msg;
+    // classification_msg.data = classification;
 
-    // Publish the classification result
-    publisher_->publish(classification_msg);
+    // // Publish the classification result
+    // publisher_->publish(classification_msg);
 
     RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
 
@@ -150,6 +151,41 @@ void Classifier::tf_callback(const tf2_ros::TransformStampedFuture &tf_future,
         transform_msg.transform.rotation.y = transformed_pose.pose.orientation.y;
         transform_msg.transform.rotation.z = transformed_pose.pose.orientation.z;
         transform_msg.transform.rotation.w = transformed_pose.pose.orientation.w;
+
+        std_msgs::msg::String detection_msg;
+        std::ostringstream ss;
+
+        // Format position to two decimal places
+        ss << label << " " 
+           << std::fixed << std::setprecision(2)
+           << transformed_pose.pose.position.x << " " 
+           << transformed_pose.pose.position.y;
+
+        // Extract yaw angle from quaternion (always, not just for boxes)
+        tf2::Quaternion q(
+            transformed_pose.pose.orientation.x,
+            transformed_pose.pose.orientation.y,
+            transformed_pose.pose.orientation.z,
+            transformed_pose.pose.orientation.w
+        );
+        tf2::Matrix3x3 m(q);
+        double roll, pitch, yaw;
+        m.getRPY(roll, pitch, yaw);  // Extract yaw
+
+        // Convert radians to degrees
+        yaw = yaw * (180.0 / M_PI);
+
+        if(label != "Box")
+        {
+            yaw = 0;
+        }
+
+        // Append yaw value to message
+        ss << " " << std::fixed << std::setprecision(2) << yaw;
+        
+        // Publish the message
+        detection_msg.data = ss.str();
+        publisher_->publish(detection_msg);
 
         // Broadcast the transform
         tf_broadcaster_->sendTransform(transform_msg);
