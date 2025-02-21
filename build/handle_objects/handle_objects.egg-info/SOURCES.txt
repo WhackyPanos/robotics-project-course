@@ -2,6 +2,7 @@ package.xml
 setup.cfg
 setup.py
 handle_objects/__init__.py
+handle_objects/ik_solver.py
 handle_objects/pick_objects.py
 handle_objects.egg-info/PKG-INFO
 handle_objects.egg-info/SOURCES.txt

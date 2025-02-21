@@ -1,1 +1,1 @@
-py_trees:py_trees_ros:rclpy:std_msgs
+PyKDL:py_trees:py_trees_ros:python3-pykdl:rclpy:std_msgs

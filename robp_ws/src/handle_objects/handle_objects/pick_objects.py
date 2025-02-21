@@ -9,7 +9,9 @@ from rclpy.node import Node
 from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension
 from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
-from ik_solver import IKNode
+#from ik_solver import IKNode
+from handle_objects.ik_solver import IKNode
+import PyKDL as kdl
 
 
 class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
@@ -47,6 +49,7 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
             self.desired_servo_angles = [12000] * 6
             self.desired_servo_angles[0] = 2600 # gripper is different
             # obj tuck arm angles
+            self.desired_servo_angles[5] = 8000  # servo 6 
             self.desired_servo_angles[4] = 6000  # servo 5
             self.desired_servo_angles[3] = 20000   # servo 4
             self.desired_servo_angles[2] = 8000 # servo 3
@@ -119,23 +122,28 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
 
 
  # -----------------------------------------------------------------------------------------------------------------------
-
-class Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
+class Pick(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
     def __init__(self, name="Pick"):
-        py_trees.behaviour.Behaviour.__init__(self, name)
-        Node.__init__(self, "pick_node")  # ROS 2 node initialization
+        super().__init__(name=name)
+        #py_trees.behaviour.Behaviour.__init__(self, name)
+        #Node.__init__(self, "pick_node")  # ROS 2 node initialization
+        self.ik_solver = IKNode()
 
-
-    def setup(self):
-         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
+    def setup(self, **kwargs):
+        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
            a parallel checking for a valid policy configuration after children have been added or removed"""
+        #self.target_srv = self.create_service(AddTwoInts, 'add_two_ints', self.add_two_ints_callback) #service to get target pose
 
     def initialise(self):
          """ When is this called? The first time your behaviour is ticked and anytime the
           status is not RUNNING thereafter."""
+         target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(0.15, 0, 0.4))  # Example target position
+         self.ik_solver.solve_ik(target_pose)
+         
          
     def update(self):
             """ Behavior Tree execution step. Called whenever the node is ticked """
+            return py_trees.common.Status.RUNNING
 
     def terminate(self, new_status: py_trees.common.Status):
         """

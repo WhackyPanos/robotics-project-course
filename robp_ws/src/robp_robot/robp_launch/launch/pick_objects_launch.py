@@ -10,5 +10,13 @@ def generate_launch_description():
             output='screen',   # This ensures output goes to the terminal
             emulate_tty=True   # Ensures that print() statements are immediately flushed
         ),
-        
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
+        ),
+        Node(
+            package='odometry',
+            executable='odometry'
+        ),
     ])

@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
+#import numpy as np
 import PyKDL as kdl
 
 class IKNode(Node):
     def __init__(self):
         super().__init__('ik_node')
 
-        # ---- Define Robot Structure (Modify These for Your Robot) ----
-        self.link_lengths = [0.1, 0.2, 0.2, 0.1, 0.05]  # Lengths of the 5 arm links (excluding gripper)
-        self.base_height = 0.1  # Height of the base link
-        self.gripper_offset = 0.05  # Distance from wrist to gripper center
+        # ---- Define Robot Structure ----
+        # we need to go from base link to base plate and then
+        # base plate -> 1st "blue" servo -> green servo ->ID3 servo joint -> gripper rotation joint
+        a,b,c,d,e,f,g = 0.01*7.4, 0.01*1.5, 0.01*11.5, 0.01*4.45, 0.01*21.3, 0.01*5.3, 0.01*9.5
+        self.base_height = a  # Height of the base link
+        self.link_lengths = [b, c-b, e-c-d, f]  # Lengths of the 5 arm links (excluding gripper)
+        self.gripper_offset = g  # Distance from wrist to gripper center
 
         # ---- Create KDL Chain ----
         self.chain = kdl.Chain()
@@ -23,27 +27,37 @@ class IKNode(Node):
         self.ik_solver = kdl.ChainIkSolverPos_LMA(self.chain)  # Levenberg-Marquardt IK Solver
 
         # ---- Test IK with a Target Position ----
-        target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(0.3, 0.2, 0.4))  # Example target position
-        self.solve_ik(target_pose)
+        target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(0.15, 0, 0.4))  # Example target position
+        #self.solve_ik(target_pose)
 
     def create_arm_chain(self):
         """
         Create the kinematic chain based on the robot arm structure.
+        
+        In this segment, we add a fixed segment from the base to the first moving joint.
         """
-        # Base to first joint (height offset)
+        # Create a frame with no rotation and a translation along the Z-axis (base height)
         frame_base = kdl.Frame(kdl.Rotation.Identity(), kdl.Vector(0, 0, self.base_height))
-        self.chain.addSegment(kdl.Segment(kdl.Joint(kdl.Joint), frame_base))
+        
+        # Create a fixed joint.
+        # "base_joint" is the joint name.
+        # kdl.Joint.None indicates that this joint is fixed (i.e., it has no degrees of freedom).
+        fixed_joint = kdl.Joint("base_joint", kdl.Joint.None)
+        
+        # Create a segment with a name, the fixed joint, and the transformation frame.
+        self.chain.addSegment(kdl.Segment("base_to_first_joint", fixed_joint, frame_base))
+
 
         # Joint 1: Rotates around Z-axis (base rotation)
         self.add_joint(kdl.Joint.RotZ, kdl.Vector(0, 0, 0))
 
-        # Joint 2: Rotates around Y-axis (shoulder)
+        # Joint 2: Rotates around Y-axis (shoulder) (1st BLUE SERVO)
         self.add_joint(kdl.Joint.RotY, kdl.Vector(0, 0, self.link_lengths[0]))
 
-        # Joint 3: Rotates around Y-axis (elbow)
+        # Joint 3: Rotates around Y-axis (elbow) (GREEN SERVO)
         self.add_joint(kdl.Joint.RotY, kdl.Vector(self.link_lengths[1], 0, 0))
 
-        # Joint 4: Rotates around Y-axis (wrist pitch)
+        # Joint 4: Rotates around Y-axis (wrist pitch) (ID3 SERVO)
         self.add_joint(kdl.Joint.RotY, kdl.Vector(self.link_lengths[2], 0, 0))
 
         # Joint 5: Rotates around Z-axis (wrist rotation)

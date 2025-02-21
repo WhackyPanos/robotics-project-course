@@ -1,0 +1,39 @@
+[0.035s] Invoking command in '/home/group3-robot/robp_group3/build/robp_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/robp_interfaces -- -j8 -l8
+[0.925s] [  2%] Built target robp_interfaces__rosidl_generator_type_description
+[0.926s] [  2%] Built target ament_cmake_python_symlink_robp_interfaces
+[0.926s] [  4%] Built target robp_interfaces__cpp
+[0.926s] [  6%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__description.c.o[0m
+[0.926s] [ 11%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o[0m
+[0.926s] [ 11%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o[0m
+[0.927s] [ 13%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.o[0m
+[0.927s] [ 15%] [32m[1mLinking C shared library librobp_interfaces__rosidl_generator_c.so[0m
+[0.927s] [ 22%] Built target robp_interfaces__rosidl_generator_c
+[0.927s] [ 25%] [32m[1mLinking C shared library librobp_interfaces__rosidl_typesupport_introspection_c.so[0m
+[0.927s] [ 27%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_cpp.so[0m
+[0.927s] [ 29%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_fastrtps_c.so[0m
+[0.927s] [ 31%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_introspection_cpp.so[0m
+[0.927s] [ 34%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_fastrtps_cpp.so[0m
+[0.927s] [ 36%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_c.so[0m
+[0.927s] [ 43%] Built target robp_interfaces__rosidl_typesupport_introspection_c
+[0.927s] running egg_info
+[0.927s] [ 52%] Built target robp_interfaces__rosidl_typesupport_c
+[0.927s] [ 56%] Built target robp_interfaces__rosidl_typesupport_cpp
+[0.927s] writing robp_interfaces.egg-info/PKG-INFO
+[0.927s] writing dependency_links to robp_interfaces.egg-info/dependency_links.txt
+[0.927s] writing top-level names to robp_interfaces.egg-info/top_level.txt
+[0.927s] [ 63%] Built target robp_interfaces__rosidl_typesupport_fastrtps_cpp
+[0.927s] [ 70%] Built target robp_interfaces__rosidl_typesupport_fastrtps_c
+[0.927s] [ 77%] Built target robp_interfaces__rosidl_typesupport_introspection_cpp
+[0.927s] [ 77%] Built target robp_interfaces
+[0.928s] reading manifest file 'robp_interfaces.egg-info/SOURCES.txt'
+[0.928s] writing manifest file 'robp_interfaces.egg-info/SOURCES.txt'
+[0.928s] [ 79%] Built target robp_interfaces__py
+[0.928s] [ 79%] Built target ament_cmake_python_build_robp_interfaces_egg
+[0.928s] [ 81%] [32m[1mLinking C shared library librobp_interfaces__rosidl_generator_py.so[0m
+[0.928s] [ 86%] Built target robp_interfaces__rosidl_generator_py
+[0.928s] [ 88%] [32m[1mLinking C shared module rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_c.so[0m
+[0.928s] [ 90%] [32m[1mLinking C shared module rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_introspection_c.so[0m
+[0.928s] [ 93%] [32m[1mLinking C shared module rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so[0m
+[0.928s] [ 95%] Built target robp_interfaces_s__rosidl_typesupport_introspection_c
+[0.928s] [ 97%] Built target robp_interfaces_s__rosidl_typesupport_c
+[0.928s] [100%] Built target robp_interfaces_s__rosidl_typesupport_fastrtps_c

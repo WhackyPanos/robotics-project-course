@@ -1,0 +1,1 @@
+Invoking command in '/home/group3-robot/robp_group3/build/robp_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/robp_interfaces -- -j8 -l8

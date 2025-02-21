@@ -4,7 +4,7 @@ import py_trees
 import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
-from handle_objects.pick_objects import InitTuckArm, ObjTuckArm
+from handle_objects.pick_objects import InitTuckArm, ObjTuckArm, Pick
 
 class PickBT(Node):
     def __init__(self) -> None:
@@ -23,11 +23,12 @@ class PickBT(Node):
         # Initialize behaviors and pass ROS node to them
         #init_tuck_action = InitTuckArm()
         obj_tuck_bhv = ObjTuckArm()
+        pick_obj = Pick()
         init_tuck_bhv = InitTuckArm()
         
         # Add behaviors to the root
         #root.add_child(init_tuck_action)
-        root.add_children([obj_tuck_bhv])
+        root.add_children([obj_tuck_bhv, pick_obj])
         #root.add_child(obj_tuck_bhv)
         
         return root

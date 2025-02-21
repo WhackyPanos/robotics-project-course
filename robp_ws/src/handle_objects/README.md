@@ -10,3 +10,4 @@ py-trees-tree-viewer
 ros2 launch robp_launch pick_objects_launch.py
 ```
 Check https://github.com/migsdigs/Hiwonder_xArm_ESP32 for more info regarding the arm
+For the IK package, check http://docs.ros.org/en/diamondback/api/kdl/html/python/

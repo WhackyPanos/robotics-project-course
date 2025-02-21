@@ -12,7 +12,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools', 'PyKDL'],
     zip_safe=True,
     maintainer='group3-robot',
     maintainer_email='domfri@kth.se',
@@ -21,7 +21,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "pick_objects = handle_objects.pick_objects:main"
+            "pick_objects = handle_objects.pick_objects:main",
+            "ik_solver = handle_objects.ik_solver:main"
         ],
     },
 )

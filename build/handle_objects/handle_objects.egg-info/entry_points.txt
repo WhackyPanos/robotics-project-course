@@ -1,2 +1,3 @@
 [console_scripts]
+ik_solver = handle_objects.ik_solver:main
 pick_objects = handle_objects.pick_objects:main
