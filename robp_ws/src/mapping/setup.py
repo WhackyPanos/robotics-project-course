@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
         'mapping = mapping.mapping:main',
+        'occupancy_grid = mapping.occupancy_grid:main',
         ],
     },
 )
