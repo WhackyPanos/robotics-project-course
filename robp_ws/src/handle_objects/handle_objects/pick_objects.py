@@ -4,14 +4,13 @@ import py_trees
 import py_trees_ros
 import rclpy
 import time
-#from rclpy.action import ActionClient
 from rclpy.node import Node
 from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension
 from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
-#from ik_solver import IKNode
 from handle_objects.ik_solver import IKNode
 import PyKDL as kdl
+from handle_objects.srv import box_pose, object_pose
 
 
 class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
@@ -121,7 +120,85 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
 
 
  # -----------------------------------------------------------------------------------------------------------------------
-class Pick(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
+class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
+    def __init__(self, name="Detect Object"):
+        super().__init__(name=name)
+        #py_trees.behaviour.Behaviour.__init__(self, name)
+        #Node.__init__(self, "pick_node")  # ROS 2 node initialization
+        self.ik_solver = IKNode()
+
+    def setup(self, **kwargs):
+        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
+           a parallel checking for a valid policy configuration after children have been added or removed"""
+        self.node = kwargs['node']
+        self.dopac_available = False # dopac = detected object position in the arm camera (frame)
+        self.response = None
+
+        # clients that requests the position in the main camera frame (probably from map file)
+        self.dopac_client = self.node.create_client(
+            service_type = object_pose,
+            service_name = '/detected_object_pose/arm_camera')
+        
+        
+    def initialise(self):
+        """ When is this called? The first time your behaviour is ticked and anytime the
+          status is not RUNNING thereafter."""    
+    
+        while not self.dopac_client.wait_for_service(timeout_sec=2.0):
+            self.get_logger().info('service not available, waiting for detected object position ...')
+        
+        # initializing requests
+        self.dopac_request = object_pose.Request()
+
+        # sending requests
+        self.dopac_client.send_obj_position_request()
+         
+
+    def send_dopac_request(self): 
+        self.dopac_request.wantObjectPose = True  
+        self.dopac_client.call_async(self.dopac_request).add_done_callback(self.dopac_response_callback)
+
+
+    def dopac_response_callback(self, future):
+        """ Callback for the response from the arm camera service. """
+        try:
+            self.response = future.result()
+            self.get_logger().info(f"Arm camera pose response: {self.response.object_pose}")
+            # Do your computations or further processing here based on the response from the arm camera
+            self.dopac_available = True  # Mark that now available
+        except Exception as e:
+            self.get_logger().error(f"Failed to get response from arm camera service: {e}")
+            self.dopac_available = None
+
+
+         
+    def update(self):
+            """ Behavior Tree execution step. Called whenever the node is ticked """
+            #self.ik_solver.solve_ik()
+            if not self.dopac_available:
+                return py_trees.common.Status.RUNNING
+            elif self.dopac_available:
+                
+                target_pose = 1; #TODO
+                self.ik_solver.solve_ik()
+
+                # TODO
+                return py_trees.common.Status.RUNNING
+            
+            elif self.dopac_available is None:
+                return py_trees.common.FAILURE
+
+    def terminate(self, new_status: py_trees.common.Status):
+        """
+        Minimal termination implementation.
+        When is this called? Whenever your behaviour switches to a non-running state.
+            - SUCCESS || FAILURE : your behaviour's work cycle has finished
+            - INVALID : a higher priority branch has interrupted, or shutting down
+        """
+
+ # -----------------------------------------------------------------------------------------------------------------------
+
+class Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Pick"):
         super().__init__(name=name)
         #py_trees.behaviour.Behaviour.__init__(self, name)
@@ -131,18 +208,78 @@ class Pick(py_trees.behaviour.Behaviour): # this class is a py_tree node and a r
     def setup(self, **kwargs):
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
            a parallel checking for a valid policy configuration after children have been added or removed"""
-        #self.target_srv = self.create_service(AddTwoInts, 'add_two_ints', self.add_two_ints_callback) #service to get target pose
+        self.node = kwargs['node']
+        self.dopac_available = False # dopac = detected object position in the arm camera (frame)
+        self.dopmc_available = False # dopmc = detected object position in the main camera (frame)
 
-    def initialise(self):
-         """ When is this called? The first time your behaviour is ticked and anytime the
-          status is not RUNNING thereafter."""
+        # clients that requests the position in the main camera frame (probably from map file)
+        self.dopmc_client = self.node.create_client(
+            service_type = object_pose,
+            service_name = '/detected_object_pose/main_camera')
+        self.dopac_client = self.node.create_client(
+            service_type = object_pose,
+            service_name = '/detected_object_pose/arm_camera')
+        self.dopac_publisher = self.node.create_publisher(
+            
+        )
         
-         #self.ik_solver.solve_ik()
+        
+    def initialise(self):
+        """ When is this called? The first time your behaviour is ticked and anytime the
+          status is not RUNNING thereafter."""    
+    
+        while not self.dopmc_client.wait_for_service(timeout_sec=2.0) or not self.dopac_client.wait_for_service(timeout_sec=2.0):
+            self.get_logger().info('service not available, waiting for detected object position ...')
+        
+        # initializing requests
+        self.arm_request = object_pose.Request()
+        self.main_request = object_pose.Request()
+
+        # sending requests
+        self.dopmc_client.send_obj_position_request()
+        self.dopac_client.send_obj_position_request()
          
+    def send_dopmc_request(self): 
+        self.main_request.wantObjectPose = True
+        self.dopmc_client.call_async(self.main_request).add_done_callback(self.dopmc_response_callback)
+
+    def send_dopac_request(self): 
+        self.arm_request.wantObjectPose = True  
+        self.dopac_client.call_async(self.arm_request).add_done_callback(self.dopac_response_callback)
+
+    def dopmc_response_callback(self, future):
+        """ Callback for the response from the main camera service. """
+        try:
+            response = future.result()
+            self.get_logger().info(f"Main camera pose response: {response.object_pose}")
+            # Do your computations or further processing here based on the response from the main camera
+            self.dopmc_available = True  # Mark that  now available
+        except Exception as e:
+            self.get_logger().error(f"Failed to get response from main camera service: {e}")
+
+    def dopac_response_callback(self, future):
+        """ Callback for the response from the arm camera service. """
+        try:
+            response = future.result()
+            self.get_logger().info(f"Arm camera pose response: {response.object_pose}")
+            # Do your computations or further processing here based on the response from the arm camera
+            self.dopac_available = True  # Mark that now available
+        except Exception as e:
+            self.get_logger().error(f"Failed to get response from arm camera service: {e}")
+
+
          
     def update(self):
             """ Behavior Tree execution step. Called whenever the node is ticked """
-            return py_trees.common.Status.RUNNING
+            #self.ik_solver.solve_ik()
+            if not self.dopac_available or not self.dopmc_available:
+                return py_trees.common.Status.RUNNING
+            else:
+                target_pose = 1; #TODO
+                self.ik_solver.solve_ik()
+
+                # TODO
+                return py_trees.common.Status.SUCCESS
 
     def terminate(self, new_status: py_trees.common.Status):
         """
