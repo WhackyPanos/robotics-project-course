@@ -28,7 +28,7 @@ class PickBT(Node):
         
         # Add behaviors to the root
         #root.add_child(init_tuck_action)
-        root.add_children([obj_tuck_bhv, pick_obj])
+        root.add_children([pick_obj])
         #root.add_child(obj_tuck_bhv)
         
         return root

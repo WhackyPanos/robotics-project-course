@@ -49,7 +49,6 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
             self.desired_servo_angles = [12000] * 6
             self.desired_servo_angles[0] = 2600 # gripper is different
             # obj tuck arm angles
-            self.desired_servo_angles[5] = 8000  # servo 6 
             self.desired_servo_angles[4] = 6000  # servo 5
             self.desired_servo_angles[3] = 20000   # servo 4
             self.desired_servo_angles[2] = 8000 # servo 3
@@ -137,8 +136,8 @@ class Pick(py_trees.behaviour.Behaviour): # this class is a py_tree node and a r
     def initialise(self):
          """ When is this called? The first time your behaviour is ticked and anytime the
           status is not RUNNING thereafter."""
-         target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(0.15, 0, 0.4))  # Example target position
-         self.ik_solver.solve_ik(target_pose)
+        
+         #self.ik_solver.solve_ik()
          
          
     def update(self):
