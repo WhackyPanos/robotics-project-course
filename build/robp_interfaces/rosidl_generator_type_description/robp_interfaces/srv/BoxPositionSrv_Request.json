@@ -1,0 +1,26 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "robp_interfaces/srv/BoxPositionSrv_Request",
+      "fields": [
+        {
+          "name": "want_box_pose",
+          "type": {
+            "type_id": 15,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "robp_interfaces/srv/BoxPositionSrv_Request",
+      "hash_string": "RIHS01_fd76c1f9d741ddb5119f28fb21437b01d65fcbd7f26794c7995ebe0219ce0b1f"
+    }
+  ]
+}

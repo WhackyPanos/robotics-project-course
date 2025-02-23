@@ -76,6 +76,26 @@ CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail
 CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__struct.hpp
 CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__traits.hpp
 CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__type_support.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/object_position.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__builder.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__struct.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__traits.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__type_support.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/box_position.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__builder.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__struct.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__traits.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__type_support.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/object_position_srv.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__builder.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__struct.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__traits.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/box_position_srv.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__builder.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__struct.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__traits.hpp
+CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.hpp
 CMakeFiles/robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
 
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/lib/rosidl_generator_cpp/rosidl_generator_cpp
@@ -99,6 +119,10 @@ rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/r
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/rosidl_generator_cpp/resource/srv__type_support.hpp.em
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: rosidl_adapter/robp_interfaces/msg/DutyCycles.idl
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: rosidl_adapter/robp_interfaces/msg/Encoders.idl
+rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl
+rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: rosidl_adapter/robp_interfaces/msg/BoxPosition.idl
+rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: rosidl_adapter/robp_interfaces/srv/ObjectPositionSrv.idl
+rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/std_msgs/msg/Byte.idl
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/std_msgs/msg/ByteMultiArray.idl
@@ -131,6 +155,7 @@ rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/s
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/std_msgs/msg/UInt8MultiArray.idl
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl
 rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl
+rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
 	/usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_cpp__arguments.json
 
@@ -161,10 +186,75 @@ rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__traits.hpp: rosidl_gen
 rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__type_support.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__type_support.hpp
 
+rosidl_generator_cpp/robp_interfaces/msg/object_position.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/object_position.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__builder.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__builder.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__struct.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__struct.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__traits.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__traits.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__type_support.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__type_support.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/box_position.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/box_position.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__builder.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__builder.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__struct.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__struct.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__traits.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__traits.hpp
+
+rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__type_support.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__type_support.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/object_position_srv.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/object_position_srv.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__builder.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__builder.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__struct.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__struct.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__traits.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__traits.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/box_position_srv.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/box_position_srv.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__builder.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__builder.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__struct.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__struct.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__traits.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__traits.hpp
+
+rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.hpp
+
 rosidl_generator_cpp/robp_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robp_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
 
 robp_interfaces__cpp: CMakeFiles/robp_interfaces__cpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/box_position.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__builder.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__struct.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__traits.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/box_position__type_support.hpp
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/duty_cycles__builder.hpp
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/duty_cycles__struct.hpp
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/duty_cycles__traits.hpp
@@ -173,9 +263,24 @@ robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__struct.hpp
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__traits.hpp
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/encoders__type_support.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__builder.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__struct.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__traits.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/detail/object_position__type_support.hpp
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/duty_cycles.hpp
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/encoders.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/object_position.hpp
 robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/box_position_srv.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__builder.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__struct.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__traits.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__builder.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__struct.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__traits.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.hpp
+robp_interfaces__cpp: rosidl_generator_cpp/robp_interfaces/srv/object_position_srv.hpp
 robp_interfaces__cpp: CMakeFiles/robp_interfaces__cpp.dir/build.make
 .PHONY : robp_interfaces__cpp
 

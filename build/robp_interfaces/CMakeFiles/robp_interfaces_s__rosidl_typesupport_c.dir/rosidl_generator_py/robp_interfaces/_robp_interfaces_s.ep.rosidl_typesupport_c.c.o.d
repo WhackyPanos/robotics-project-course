@@ -237,4 +237,17 @@ CMakeFiles/robp_interfaces_s__rosidl_typesupport_c.dir/rosidl_generator_py/robp_
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__functions.h \
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.h \
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__struct.h \
- /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.h
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/object_position__struct.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/box_position__struct.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__struct.h \
+ /opt/ros/jazzy/include/service_msgs/service_msgs/msg/detail/service_event_info__struct.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__struct.h \
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.h

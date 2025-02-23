@@ -1,16 +1,113 @@
 #!/usr/bin/env python
 
 import py_trees
-import py_trees_ros
 import rclpy
-import time
 from rclpy.node import Node
 from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension
 from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from handle_objects.ik_solver import IKNode
 import PyKDL as kdl
-from handle_objects.srv import box_pose, object_pose
+from robp_interfaces.msg import BoxPosition, ObjectPosition
+from robp_interfaces.srv import BoxPositionSrv, ObjectPositionSrv
+from tf2_ros import TransformException
+from tf2_ros.buffer import Buffer
+from tf2_ros.transform_listener import TransformListener
+
+class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
+    def __init__(self, name="Move2Pick"):
+        super().__init__(name=name)
+
+        self.ik_solver = IKNode()
+        # Initialize the transform broadcaster, buffer and listener
+        self.to_frame_rel = 'arm_base_link'
+        self.from_frame_rel = 'map'
+
+        # Initialize the transform buffer and listener
+        self.tf_buffer = Buffer()
+        self.tf_listener = TransformListener(self.tf_buffer, self)
+
+        # temporary snippet to publish object position in map frame
+        self.pub = self.node.create_publisher(ObjectPosition, '/detected_object_pose/main_camera', 10)
+        msg = ObjectPosition()
+        msg.x = 0.2
+        msg.y = 0
+        msg.object_type = 'S'
+        self.pub.publish(msg)
+
+
+
+    def setup(self, **kwargs):
+        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
+           a parallel checking for a valid policy configuration after children have been added or removed"""
+        self.node = kwargs['node']
+        self.dopmc_available = False # dopac = detected object position in the arm camera (frame)
+        self.ready2move= False
+        self.X, self.Y, self.target = None, None, None
+        self.thresholds = [10**-4,10**-3,10**-2]
+
+        # clients that requests the position in the main camera frame (probably from map file)
+        self.dopmc_subscriber = self.node.create_subscription(
+            ObjectPosition,
+            '/detected_object_pose/main_camera',
+            self.dopmc_callback)
+        
+    def dopmc_callback(self,msg):
+        if self.ready2move:
+            self.X = msg.x
+            self.Y = msg.y
+            obj = msg.object_type
+
+            # get transform from map frame to frame of the arm base
+            time = rclpy.time.Time() #retrieve most recent transform ig
+            try:
+                t = self.node.tf_buffer.lookup_transform(
+                    self.to_frame_rel,
+                    self.from_frame_rel,
+                    time)
+            except TransformException as ex:
+                self.get_logger().info(
+                    f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
+                return
+            # do transformation
+            x = t.transform.translation.x
+            y = t.transform.translation.x
+            z = t.transform.translation.x
+
+            qx = t.transform.rotation.x
+            qy = t.transform.rotation.y
+            qz = t.transform.rotation.z
+            qw = t.transform.rotation.w
+            
+            # define target with kdl instance
+            self.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({x,y,z}) in arm_base')
+            #self.target = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
+
+        
+    def initialise(self):
+        """ When is this called? The first time your behaviour is ticked and anytime the
+          status is not RUNNING thereafter."""  
+        self.ready2move= True  
+
+         
+    def update(self):
+            """ Behavior Tree execution step. Called whenever the node is ticked """
+            #solve_ik(self, target_pose, provided_initial_guess, eps=5e-3, maxiter=100000)
+            #if self.x is not None and self.y is not None:
+                #for i, x in enumerate(self.thresholds):
+                    #self.ik_solver.solve_ik()
+
+
+
+    def terminate(self, new_status: py_trees.common.Status):
+        """
+        Minimal termination implementation.
+        When is this called? Whenever your behaviour switches to a non-running state.
+            - SUCCESS || FAILURE : your behaviour's work cycle has finished
+            - INVALID : a higher priority branch has interrupted, or shutting down
+        """
+
+ # -----------------------------------------------------------------------------------------------------------------------
 
 
 class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
@@ -119,87 +216,12 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
 
 
 
+
+
  # -----------------------------------------------------------------------------------------------------------------------
+
 class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Detect Object"):
-        super().__init__(name=name)
-        #py_trees.behaviour.Behaviour.__init__(self, name)
-        #Node.__init__(self, "pick_node")  # ROS 2 node initialization
-        self.ik_solver = IKNode()
-
-    def setup(self, **kwargs):
-        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
-           a parallel checking for a valid policy configuration after children have been added or removed"""
-        self.node = kwargs['node']
-        self.dopac_available = False # dopac = detected object position in the arm camera (frame)
-        self.response = None
-
-        # clients that requests the position in the main camera frame (probably from map file)
-        self.dopac_client = self.node.create_client(
-            service_type = object_pose,
-            service_name = '/detected_object_pose/arm_camera')
-        
-        
-    def initialise(self):
-        """ When is this called? The first time your behaviour is ticked and anytime the
-          status is not RUNNING thereafter."""    
-    
-        while not self.dopac_client.wait_for_service(timeout_sec=2.0):
-            self.get_logger().info('service not available, waiting for detected object position ...')
-        
-        # initializing requests
-        self.dopac_request = object_pose.Request()
-
-        # sending requests
-        self.dopac_client.send_obj_position_request()
-         
-
-    def send_dopac_request(self): 
-        self.dopac_request.wantObjectPose = True  
-        self.dopac_client.call_async(self.dopac_request).add_done_callback(self.dopac_response_callback)
-
-
-    def dopac_response_callback(self, future):
-        """ Callback for the response from the arm camera service. """
-        try:
-            self.response = future.result()
-            self.get_logger().info(f"Arm camera pose response: {self.response.object_pose}")
-            # Do your computations or further processing here based on the response from the arm camera
-            self.dopac_available = True  # Mark that now available
-        except Exception as e:
-            self.get_logger().error(f"Failed to get response from arm camera service: {e}")
-            self.dopac_available = None
-
-
-         
-    def update(self):
-            """ Behavior Tree execution step. Called whenever the node is ticked """
-            #self.ik_solver.solve_ik()
-            if not self.dopac_available:
-                return py_trees.common.Status.RUNNING
-            elif self.dopac_available:
-                
-                target_pose = 1; #TODO
-                self.ik_solver.solve_ik()
-
-                # TODO
-                return py_trees.common.Status.RUNNING
-            
-            elif self.dopac_available is None:
-                return py_trees.common.FAILURE
-
-    def terminate(self, new_status: py_trees.common.Status):
-        """
-        Minimal termination implementation.
-        When is this called? Whenever your behaviour switches to a non-running state.
-            - SUCCESS || FAILURE : your behaviour's work cycle has finished
-            - INVALID : a higher priority branch has interrupted, or shutting down
-        """
-
- # -----------------------------------------------------------------------------------------------------------------------
-
-class Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
-    def __init__(self, name="Pick"):
         super().__init__(name=name)
         #py_trees.behaviour.Behaviour.__init__(self, name)
         #Node.__init__(self, "pick_node")  # ROS 2 node initialization
@@ -214,10 +236,10 @@ class Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node a
 
         # clients that requests the position in the main camera frame (probably from map file)
         self.dopmc_client = self.node.create_client(
-            service_type = object_pose,
+            service_type = ObjectPositionSrv,
             service_name = '/detected_object_pose/main_camera')
         self.dopac_client = self.node.create_client(
-            service_type = object_pose,
+            service_type = ObjectPositionSrv,
             service_name = '/detected_object_pose/arm_camera')
         self.dopac_publisher = self.node.create_publisher(
             
@@ -232,8 +254,8 @@ class Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node a
             self.get_logger().info('service not available, waiting for detected object position ...')
         
         # initializing requests
-        self.arm_request = object_pose.Request()
-        self.main_request = object_pose.Request()
+        self.arm_request = ObjectPositionSrv.Request()
+        self.main_request = ObjectPositionSrv.Request()
 
         # sending requests
         self.dopmc_client.send_obj_position_request()
@@ -272,14 +294,18 @@ class Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node a
     def update(self):
             """ Behavior Tree execution step. Called whenever the node is ticked """
             #self.ik_solver.solve_ik()
-            if not self.dopac_available or not self.dopmc_available:
+            if not self.dopac_available:
                 return py_trees.common.Status.RUNNING
-            else:
+            elif self.dopac_available:
+                
                 target_pose = 1; #TODO
                 self.ik_solver.solve_ik()
 
                 # TODO
-                return py_trees.common.Status.SUCCESS
+                return py_trees.common.Status.RUNNING
+            
+            elif self.dopac_available is None:
+                return py_trees.common.FAILURE
 
     def terminate(self, new_status: py_trees.common.Status):
         """

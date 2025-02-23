@@ -1,0 +1,55 @@
+[0.041s] Invoking command in '/home/group3-robot/robp_group3/build/robp_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/robp_interfaces -- -j8 -l8
+[0.779s] -- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.780s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.780s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[0.780s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.780s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.780s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[0.780s] -- Found std_msgs: 5.3.5 (/opt/ros/jazzy/share/std_msgs/cmake)
+[0.780s] -- Configuring incomplete, errors occurred!
+[0.780s] [31mCMake Error at /opt/ros/jazzy/share/rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake:57 (message):
+[0.780s]   execute_process(/usr/bin/python3 -m rosidl_adapter --package-name
+[0.780s]   robp_interfaces --arguments-file
+[0.780s]   /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter__arguments__robp_interfaces.json
+[0.780s]   --output-dir
+[0.780s]   /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces
+[0.780s]   --output-file
+[0.781s]   /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces.idls)
+[0.781s]   returned error code 1:
+[0.781s] 
+[0.781s]   Error processing 'string ObjectType' of 'robp_interfaces/ObjectPosition':
+[0.781s]   ''ObjectType' is an invalid field name.  It should have the pattern
+[0.781s]   '^(?!.*__)(?!.*_$)[a-z][a-z0-9_]*$''
+[0.781s] 
+[0.781s]   Traceback (most recent call last):
+[0.781s] 
+[0.781s]     File "<frozen runpy>", line 198, in _run_module_as_main
+[0.781s]     File "<frozen runpy>", line 88, in _run_code
+[0.781s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/__main__.py", line 19, in <module>
+[0.781s]       sys.exit(main())
+[0.781s]                ^^^^^^
+[0.781s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/main.py", line 53, in main
+[0.781s]       abs_idl_file = convert_to_idl(
+[0.781s]                      ^^^^^^^^^^^^^^^
+[0.781s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/__init__.py", line 19, in convert_to_idl
+[0.782s]       return convert_msg_to_idl(
+[0.782s]              ^^^^^^^^^^^^^^^^^^^
+[0.782s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/msg/__init__.py", line 28, in convert_msg_to_idl
+[0.782s]       msg = parse_message_string(package_name, input_file.stem, content)
+[0.782s]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[0.782s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 520, in parse_message_string
+[0.782s]       fields.append(Field(
+[0.782s]                     ^^^^^^
+[0.782s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 355, in __init__
+[0.782s]       raise NameError(
+[0.782s] 
+[0.782s]   NameError: 'ObjectType' is an invalid field name.  It should have the
+[0.782s]   pattern '^(?!.*__)(?!.*_$)[a-z][a-z0-9_]*$'
+[0.782s] 
+[0.782s] Call Stack (most recent call first):
+[0.782s]   /opt/ros/jazzy/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:132 (rosidl_adapt_interfaces)
+[0.782s]   CMakeLists.txt:25 (rosidl_generate_interfaces)
+[0.783s] 
+[0.783s] [0m
+[0.783s] gmake: *** [Makefile:1085: cmake_check_build_system] Error 1
+[0.786s] Invoked command in '/home/group3-robot/robp_group3/build/robp_interfaces' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/robp_interfaces -- -j8 -l8

@@ -97,16 +97,80 @@ CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_int
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/msg/_encoders_s.c -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.s
 
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/flags.make
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o: rosidl_generator_py/robp_interfaces/msg/_object_position_s.c
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o -MF CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o.d -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o -c /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c > CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.i
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.s
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/flags.make
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o: rosidl_generator_py/robp_interfaces/msg/_box_position_s.c
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o -MF CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o.d -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o -c /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c > CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.i
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.s
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/flags.make
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o: rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o -MF CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o.d -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o -c /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c > CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.i
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.s
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/flags.make
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o: rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o -MF CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o.d -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o -c /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c > CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.i
+
+CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c -o CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.s
+
 # Object files for target robp_interfaces__rosidl_generator_py
 robp_interfaces__rosidl_generator_py_OBJECTS = \
 "CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.c.o" \
-"CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.o"
+"CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.o" \
+"CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o" \
+"CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o" \
+"CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o" \
+"CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o"
 
 # External object files for target robp_interfaces__rosidl_generator_py
 robp_interfaces__rosidl_generator_py_EXTERNAL_OBJECTS =
 
 librobp_interfaces__rosidl_generator_py.so: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.c.o
 librobp_interfaces__rosidl_generator_py.so: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.o
+librobp_interfaces__rosidl_generator_py.so: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o
+librobp_interfaces__rosidl_generator_py.so: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o
+librobp_interfaces__rosidl_generator_py.so: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o
+librobp_interfaces__rosidl_generator_py.so: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o
 librobp_interfaces__rosidl_generator_py.so: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make
 librobp_interfaces__rosidl_generator_py.so: librobp_interfaces__rosidl_typesupport_c.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_fastrtps_c.so
@@ -115,29 +179,37 @@ librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libstd_msgs__rosi
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_introspection_cpp.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_cpp.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_py.so
-librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_c.so
-librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_introspection_c.so
-librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_cpp.so
-librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_introspection_cpp.so
-librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_cpp.so
-librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_py.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_c.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_cpp.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_introspection_c.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_introspection_cpp.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_cpp.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_generator_py.so
 librobp_interfaces__rosidl_generator_py.so: librobp_interfaces__rosidl_generator_c.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_c.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_c.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/librosidl_typesupport_fastrtps_c.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_introspection_c.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_cpp.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/librosidl_typesupport_fastrtps_cpp.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libfastcdr.so.2.2.5
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/librmw.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/librosidl_dynamic_typesupport.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_introspection_cpp.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/librosidl_typesupport_introspection_cpp.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/librosidl_typesupport_introspection_c.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_cpp.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_py.so
 librobp_interfaces__rosidl_generator_py.so: /usr/lib/x86_64-linux-gnu/libpython3.12.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_c.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_c.so
+librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_generator_c.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_c.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/librosidl_runtime_c.so
 librobp_interfaces__rosidl_generator_py.so: /opt/ros/jazzy/lib/librcutils.so
 librobp_interfaces__rosidl_generator_py.so: CMakeFiles/robp_interfaces__rosidl_generator_py.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C shared library librobp_interfaces__rosidl_generator_py.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C shared library librobp_interfaces__rosidl_generator_py.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/robp_interfaces__rosidl_generator_py.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

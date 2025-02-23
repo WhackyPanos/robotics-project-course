@@ -25,16 +25,8 @@ class IKNode(Node):
         self.create_arm_chain()
 
         # ---- Create Solvers ----
-        self.fk_solver = kdl.ChainFkSolverPos_recursive(self.chain)
-        self.ik_vel_solver = kdl.ChainIkSolverVel_pinv(self.chain)
 
-        self.ik_solver = kdl.ChainIkSolverPos_LMA(self.chain, eps=5e-3, maxiter=100000) # Levenberg-Marquardt IK Solver
-        # self.ik_solver = kdl.ChainIkSolverPos_NR(
-        #     self.chain,
-        #     self.fk_solver,
-        #     self.ik_vel_solver,
-        #     maxiter=1000,
-        #     eps=0.5)
+
 
         # --- Example FK
         #self.solve_fk([0,20*pi/180, 20*pi/180])
@@ -127,7 +119,7 @@ class IKNode(Node):
             return None
         
     
-    def solve_ik(self, target_pose):
+    def solve_ik(self, target_pose, provided_initial_guess, eps=5e-3, maxiter=100000):
         """
         Solve inverse kinematics for a given end-effector target pose.
         
@@ -142,13 +134,15 @@ class IKNode(Node):
           3. Call the IK solver (CartToJnt) with the initial guess, target pose, and output array.
           4. Report the solution if successful, or log an error otherwise.
         """
-        # Determine the number of joints (should be 6 in this case)
+        # create solver
+        self.ik_solver = kdl.ChainIkSolverPos_LMA(self.chain, eps, maxiter) # Levenberg-Marquardt IK Solver
+
+        # Determine the number of joints 
         num_joints = self.chain.getNrOfJoints()
         joint_positions = kdl.JntArray(num_joints)
         initial_guess = kdl.JntArray(num_joints)  # You can set a custom guess here if desired
-        initial_guess[0] = 0  # Joint 1
-        initial_guess[1] = (90 - 5) * pi / 180  # Joint 2
-        initial_guess[2] = (20 - 5) * pi / 180  # Joint 3
+        for i,angle in enumerate(provided_initial_guess):
+            initial_guess[i] = angle
 
         self.get_logger().info(f"For the {num_joints} joitns, the following initial configuration is: {joint_positions}")
         self.get_logger().info(f"Links lengths {self.link_lengths}")

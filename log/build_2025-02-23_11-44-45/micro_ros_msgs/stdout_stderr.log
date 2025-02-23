@@ -1,0 +1,23 @@
+[  1%] Built target micro_ros_msgs__rosidl_generator_type_description
+[  1%] Built target ament_cmake_python_symlink_micro_ros_msgs
+[  3%] Built target micro_ros_msgs__cpp
+[ 24%] Built target micro_ros_msgs__rosidl_generator_c
+[ 42%] Built target micro_ros_msgs__rosidl_typesupport_cpp
+[ 42%] Built target micro_ros_msgs__rosidl_typesupport_fastrtps_cpp
+[ 61%] Built target micro_ros_msgs__rosidl_typesupport_introspection_c
+[ 61%] Built target micro_ros_msgs__rosidl_typesupport_introspection_cpp
+[ 70%] Built target micro_ros_msgs__rosidl_typesupport_c
+[ 79%] Built target micro_ros_msgs__rosidl_typesupport_fastrtps_c
+[ 79%] Built target micro_ros_msgs
+[ 81%] Built target micro_ros_msgs__py
+[ 88%] Built target micro_ros_msgs__rosidl_generator_py
+[ 92%] Built target micro_ros_msgs_s__rosidl_typesupport_fastrtps_c
+[ 96%] Built target micro_ros_msgs_s__rosidl_typesupport_introspection_c
+[100%] Built target micro_ros_msgs_s__rosidl_typesupport_c
+running egg_info
+writing micro_ros_msgs.egg-info/PKG-INFO
+writing dependency_links to micro_ros_msgs.egg-info/dependency_links.txt
+writing top-level names to micro_ros_msgs.egg-info/top_level.txt
+reading manifest file 'micro_ros_msgs.egg-info/SOURCES.txt'
+writing manifest file 'micro_ros_msgs.egg-info/SOURCES.txt'
+[100%] Built target ament_cmake_python_build_micro_ros_msgs_egg

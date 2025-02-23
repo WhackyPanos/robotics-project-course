@@ -418,6 +418,78 @@ robp_interfaces__py/fast:
 	$(MAKE) $(MAKESILENT) -f /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py.dir/build.make /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py.dir/build
 .PHONY : robp_interfaces__py/fast
 
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.o: rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.o
+
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.i: rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.i
+
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.s: rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.s
+
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.o: rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.o
+
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.i: rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.i
+
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.s: rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.s
+
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.o: rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.o
+
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.i: rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.i
+
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.s: rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.s
+
 rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.o: rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o
 .PHONY : rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.o
 
@@ -562,6 +634,222 @@ rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.s
 .PHONY : rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.s
 
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.o: rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o
+
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.i: rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.i
+
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.s: rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.s
+
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.o: rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.o
+
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.i: rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.i
+
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.s: rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.s
+
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.o: rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.o
+
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.i: rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.i
+
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.s: rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.s
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.o: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.o
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.i: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.i
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.s: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.s
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.o: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.o
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.i: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.i
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.s: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.s
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.o: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.i: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i
+
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.s: rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.o: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.o
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.i: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.i
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.s: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.s
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.o: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.o
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.i: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.i
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.s: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.s
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.o: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.o
+
+# target to build an object file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.i: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i
+
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.s: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s
+.PHONY : rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s
+
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.o: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.c.o
 .PHONY : rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.o
 
@@ -634,6 +922,30 @@ rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_int
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces_s__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.c.s
 .PHONY : rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.c.s
 
+rosidl_generator_py/robp_interfaces/msg/_box_position_s.o: rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_box_position_s.o
+
+# target to build an object file
+rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o
+
+rosidl_generator_py/robp_interfaces/msg/_box_position_s.i: rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.i
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_box_position_s.i
+
+# target to preprocess a source file
+rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.i
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.i
+
+rosidl_generator_py/robp_interfaces/msg/_box_position_s.s: rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.s
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_box_position_s.s
+
+# target to generate assembly for a file
+rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.s
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.s
+
 rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.o: rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.c.o
 .PHONY : rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.o
 
@@ -681,6 +993,102 @@ rosidl_generator_py/robp_interfaces/msg/_encoders_s.s: rosidl_generator_py/robp_
 rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.s
 .PHONY : rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.s
+
+rosidl_generator_py/robp_interfaces/msg/_object_position_s.o: rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_object_position_s.o
+
+# target to build an object file
+rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o
+
+rosidl_generator_py/robp_interfaces/msg/_object_position_s.i: rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.i
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_object_position_s.i
+
+# target to preprocess a source file
+rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.i
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.i
+
+rosidl_generator_py/robp_interfaces/msg/_object_position_s.s: rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.s
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_object_position_s.s
+
+# target to generate assembly for a file
+rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.s
+.PHONY : rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.s
+
+rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.o: rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.o
+
+# target to build an object file
+rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o
+
+rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.i: rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.i
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.i
+
+# target to preprocess a source file
+rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.i
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.i
+
+rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.s: rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.s
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.s
+
+# target to generate assembly for a file
+rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.s
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.s
+
+rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.o: rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.o
+
+# target to build an object file
+rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o
+
+rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.i: rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.i
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.i
+
+# target to preprocess a source file
+rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.i
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.i
+
+rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.s: rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.s
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.s
+
+# target to generate assembly for a file
+rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.s
+.PHONY : rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.s
+
+rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.o: rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.o
+
+rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.i: rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.i
+
+rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.s: rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.s
 
 rosidl_typesupport_c/robp_interfaces/msg/duty_cycles__type_support.o: rosidl_typesupport_c/robp_interfaces/msg/duty_cycles__type_support.cpp.o
 .PHONY : rosidl_typesupport_c/robp_interfaces/msg/duty_cycles__type_support.o
@@ -730,6 +1138,102 @@ rosidl_typesupport_c/robp_interfaces/msg/encoders__type_support.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/encoders__type_support.cpp.s
 .PHONY : rosidl_typesupport_c/robp_interfaces/msg/encoders__type_support.cpp.s
 
+rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.o: rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.o
+
+rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.i: rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.i
+
+rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.s: rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.s
+
+rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.o: rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.o
+
+rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.i: rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.i
+
+rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.s: rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.s
+
+rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.o: rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.o
+
+rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.i: rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.i
+
+rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.s: rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.s
+
+rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.o: rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.o
+
+rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.i: rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.i
+
+rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.s: rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.s
+
 rosidl_typesupport_cpp/robp_interfaces/msg/duty_cycles__type_support.o: rosidl_typesupport_cpp/robp_interfaces/msg/duty_cycles__type_support.cpp.o
 .PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/duty_cycles__type_support.o
 
@@ -777,6 +1281,102 @@ rosidl_typesupport_cpp/robp_interfaces/msg/encoders__type_support.s: rosidl_type
 rosidl_typesupport_cpp/robp_interfaces/msg/encoders__type_support.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/encoders__type_support.cpp.s
 .PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/encoders__type_support.cpp.s
+
+rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.o: rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.o
+
+rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.i: rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.i
+
+rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.s: rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.s
+
+rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.o: rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.o
+
+rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.i: rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.i
+
+rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.s: rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.s
+
+rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.o: rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.o
+
+rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.i: rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.i
+
+rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.s: rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.s
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.o: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.o
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.i: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.i
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.s: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.s
 
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.o: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp.o
 .PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.o
@@ -826,6 +1426,102 @@ rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp.s
 .PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp.s
 
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.o: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.i: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.i
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.s: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.s
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.o: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.o
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.i: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.i
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.s: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.s
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.o: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.o
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.i: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.i
+
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.s: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.s
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.o: rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.o
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.i: rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.i
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.s: rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.s
+
 rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/duty_cycles__type_support.o: rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/duty_cycles__type_support.cpp.o
 .PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/duty_cycles__type_support.o
 
@@ -873,6 +1569,102 @@ rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/encoders
 rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/encoders__type_support.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/encoders__type_support.cpp.s
 .PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/encoders__type_support.cpp.s
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.o: rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.o
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.i: rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.i
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.s: rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.s
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.o: rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.o
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.i: rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.i
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.s: rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.s
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.o: rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.o
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.i: rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.i
+
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.s: rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.s
+
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.o: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o
+
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.i: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.i
+
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.s: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.s
 
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.o: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o
 .PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.o
@@ -922,6 +1714,102 @@ rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_sup
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c.s
 .PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c.s
 
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.o: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o
+
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.i: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.i
+
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.s: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.s
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.o: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.i: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.s: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.o: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.i: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.s: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.o: rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.o
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.i: rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.i
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.s: rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.s
+
 rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/duty_cycles__type_support.o: rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/duty_cycles__type_support.cpp.o
 .PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/duty_cycles__type_support.o
 
@@ -970,6 +1858,78 @@ rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/encoders__type_s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/encoders__type_support.cpp.s
 .PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/encoders__type_support.cpp.s
 
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.o: rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.o
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.i: rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.i
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.s: rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.s
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.o: rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.o
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.i: rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.i
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.s: rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.s
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.o: rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.o
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.i: rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.i
+
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.s: rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1002,6 +1962,15 @@ help:
 	@echo "... robp_interfaces_s__rosidl_typesupport_c"
 	@echo "... robp_interfaces_s__rosidl_typesupport_fastrtps_c"
 	@echo "... robp_interfaces_s__rosidl_typesupport_introspection_c"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.o"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.i"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.s"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.o"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.i"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.s"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.o"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.i"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.s"
 	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.o"
 	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.i"
 	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.s"
@@ -1020,6 +1989,33 @@ help:
 	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.o"
 	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.i"
 	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.s"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.o"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.i"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.s"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.o"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.i"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.s"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.o"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.i"
+	@echo "... rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.s"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.o"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.i"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.s"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.o"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.i"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.s"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.o"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.i"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.s"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.o"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.i"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.s"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.o"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.i"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.s"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.o"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.i"
+	@echo "... rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.s"
 	@echo "... rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.o"
 	@echo "... rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.i"
 	@echo "... rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.s"
@@ -1029,48 +2025,132 @@ help:
 	@echo "... rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.o"
 	@echo "... rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.i"
 	@echo "... rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.s"
+	@echo "... rosidl_generator_py/robp_interfaces/msg/_box_position_s.o"
+	@echo "... rosidl_generator_py/robp_interfaces/msg/_box_position_s.i"
+	@echo "... rosidl_generator_py/robp_interfaces/msg/_box_position_s.s"
 	@echo "... rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.o"
 	@echo "... rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.i"
 	@echo "... rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.s"
 	@echo "... rosidl_generator_py/robp_interfaces/msg/_encoders_s.o"
 	@echo "... rosidl_generator_py/robp_interfaces/msg/_encoders_s.i"
 	@echo "... rosidl_generator_py/robp_interfaces/msg/_encoders_s.s"
+	@echo "... rosidl_generator_py/robp_interfaces/msg/_object_position_s.o"
+	@echo "... rosidl_generator_py/robp_interfaces/msg/_object_position_s.i"
+	@echo "... rosidl_generator_py/robp_interfaces/msg/_object_position_s.s"
+	@echo "... rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.o"
+	@echo "... rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.i"
+	@echo "... rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.s"
+	@echo "... rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.o"
+	@echo "... rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.i"
+	@echo "... rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.s"
+	@echo "... rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.o"
+	@echo "... rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.i"
+	@echo "... rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.s"
 	@echo "... rosidl_typesupport_c/robp_interfaces/msg/duty_cycles__type_support.o"
 	@echo "... rosidl_typesupport_c/robp_interfaces/msg/duty_cycles__type_support.i"
 	@echo "... rosidl_typesupport_c/robp_interfaces/msg/duty_cycles__type_support.s"
 	@echo "... rosidl_typesupport_c/robp_interfaces/msg/encoders__type_support.o"
 	@echo "... rosidl_typesupport_c/robp_interfaces/msg/encoders__type_support.i"
 	@echo "... rosidl_typesupport_c/robp_interfaces/msg/encoders__type_support.s"
+	@echo "... rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.o"
+	@echo "... rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.i"
+	@echo "... rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.s"
+	@echo "... rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.o"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.i"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.s"
 	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/duty_cycles__type_support.o"
 	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/duty_cycles__type_support.i"
 	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/duty_cycles__type_support.s"
 	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/encoders__type_support.o"
 	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/encoders__type_support.i"
 	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/encoders__type_support.s"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.o"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.i"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.s"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.o"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.i"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.s"
 	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.o"
 	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.i"
 	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.s"
 	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.o"
 	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.i"
 	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.s"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.o"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.i"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.s"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.o"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.i"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.s"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.o"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.i"
+	@echo "... rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.s"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.o"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.i"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.s"
 	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/duty_cycles__type_support.o"
 	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/duty_cycles__type_support.i"
 	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/duty_cycles__type_support.s"
 	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/encoders__type_support.o"
 	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/encoders__type_support.i"
 	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/encoders__type_support.s"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.o"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.i"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.s"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.o"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.i"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.s"
 	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.o"
 	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.i"
 	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.s"
 	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.o"
 	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.i"
 	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.s"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.o"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.i"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.s"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.o"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.i"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.s"
 	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/duty_cycles__type_support.o"
 	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/duty_cycles__type_support.i"
 	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/duty_cycles__type_support.s"
 	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/encoders__type_support.o"
 	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/encoders__type_support.i"
 	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/encoders__type_support.s"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.o"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.i"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.s"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.s"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.o"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.i"
+	@echo "... rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.s"
 .PHONY : help
 
 
