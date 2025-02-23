@@ -1,0 +1,293 @@
+[0.951s] Invoking command in '/home/group3-robot/robp_group3/build/drive_base_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/install/robp_launch:/home/group3-robot/robp_group3/install/odometry:/home/group3-robot/robp_group3/install/path_planner:/home/group3-robot/robp_group3/install/mapping:/home/group3-robot/robp_group3/install/joystick_teleop:/home/group3-robot/robp_group3/install/behavior_tree:/home/group3-robot/robp_group3/install/handle_objects:/home/group3-robot/robp_group3/install/detection:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/arm_ws/src/uros/drive_base/drive_base_msgs -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/drive_base_msgs
+[1.068s] -- The C compiler identification is GNU 13.3.0
+[1.172s] -- The CXX compiler identification is GNU 13.3.0
+[1.203s] -- Detecting C compiler ABI info
+[1.332s] -- Detecting C compiler ABI info - done
+[1.352s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.352s] -- Detecting C compile features
+[1.352s] -- Detecting C compile features - done
+[1.363s] -- Detecting CXX compiler ABI info
+[1.589s] -- Detecting CXX compiler ABI info - done
+[1.617s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.617s] -- Detecting CXX compile features
+[1.624s] -- Detecting CXX compile features - done
+[1.630s] -- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[2.029s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[2.146s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[2.226s] -- Found std_msgs: 5.3.5 (/opt/ros/jazzy/share/std_msgs/cmake)
+[2.295s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[2.319s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[2.347s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.379s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.432s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[2.464s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[3.565s] -- Found ament_cmake_cppcheck: 0.17.1 (/opt/ros/jazzy/share/ament_cmake_cppcheck/cmake)
+[3.569s] -- Found ament_cmake_cpplint: 0.17.1 (/opt/ros/jazzy/share/ament_cmake_cpplint/cmake)
+[3.575s] -- Found ament_cmake_uncrustify: 0.17.1 (/opt/ros/jazzy/share/ament_cmake_uncrustify/cmake)
+[3.581s] -- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+[5.202s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[5.859s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[5.874s] -- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+[6.187s] -- Found PythonExtra: /usr/bin/python3  
+[7.162s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+[7.355s] -- Found ament_cmake_flake8: 0.17.1 (/opt/ros/jazzy/share/ament_cmake_flake8/cmake)
+[7.365s] -- Found ament_cmake_pep257: 0.17.1 (/opt/ros/jazzy/share/ament_cmake_pep257/cmake)
+[7.403s] -- Configuring done (6.4s)
+[7.506s] -- Generating done (0.1s)
+[7.524s] -- Build files have been written to: /home/group3-robot/robp_group3/build/drive_base_msgs
+[7.545s] Invoked command in '/home/group3-robot/robp_group3/build/drive_base_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/install/robp_launch:/home/group3-robot/robp_group3/install/odometry:/home/group3-robot/robp_group3/install/path_planner:/home/group3-robot/robp_group3/install/mapping:/home/group3-robot/robp_group3/install/joystick_teleop:/home/group3-robot/robp_group3/install/behavior_tree:/home/group3-robot/robp_group3/install/handle_objects:/home/group3-robot/robp_group3/install/detection:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/arm_ws/src/uros/drive_base/drive_base_msgs -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/drive_base_msgs
+[7.546s] Invoking command in '/home/group3-robot/robp_group3/build/drive_base_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/install/robp_launch:/home/group3-robot/robp_group3/install/odometry:/home/group3-robot/robp_group3/install/path_planner:/home/group3-robot/robp_group3/install/mapping:/home/group3-robot/robp_group3/install/joystick_teleop:/home/group3-robot/robp_group3/install/behavior_tree:/home/group3-robot/robp_group3/install/handle_objects:/home/group3-robot/robp_group3/install/detection:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/drive_base_msgs -- -j8 -l8
+[7.719s] [  1%] [34m[1mGenerating type hashes for ROS interfaces[0m
+[7.753s] [  1%] Built target ament_cmake_python_symlink_drive_base_msgs
+[8.845s] running egg_info
+[8.849s] creating drive_base_msgs.egg-info
+[9.022s] writing drive_base_msgs.egg-info/PKG-INFO
+[9.022s] writing dependency_links to drive_base_msgs.egg-info/dependency_links.txt
+[9.023s] writing top-level names to drive_base_msgs.egg-info/top_level.txt
+[9.023s] writing manifest file 'drive_base_msgs.egg-info/SOURCES.txt'
+[9.615s] reading manifest file 'drive_base_msgs.egg-info/SOURCES.txt'
+[9.615s] writing manifest file 'drive_base_msgs.egg-info/SOURCES.txt'
+[9.690s] [  1%] Built target drive_base_msgs__rosidl_generator_type_description
+[9.744s] [  3%] [34m[1mGenerating C code for ROS interfaces[0m
+[9.810s] [  4%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[9.917s] [  4%] Built target ament_cmake_python_build_drive_base_msgs_egg
+[12.557s] [  6%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/command_header__description.c.o[0m
+[12.560s] [  7%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/command_header__functions.c.o[0m
+[12.567s] [  9%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/base_info__functions.c.o[0m
+[12.585s] [ 10%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/command_header__type_support.c.o[0m
+[12.589s] [ 12%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/base_info__description.c.o[0m
+[12.591s] [ 14%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/base_info__type_support.c.o[0m
+[12.598s] [ 15%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/command_status__description.c.o[0m
+[12.688s] [ 17%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/command_status__type_support.c.o[0m
+[12.691s] [ 18%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/command_status__functions.c.o[0m
+[12.755s] [ 20%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/trv_command__description.c.o[0m
+[12.767s] [ 21%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/trv_command__functions.c.o[0m
+[12.809s] [ 23%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base_msgs/msg/detail/trv_command__type_support.c.o[0m
+[12.987s] [ 25%] [32m[1mLinking C shared library libdrive_base_msgs__rosidl_generator_c.so[0m
+[13.125s] [ 25%] Built target drive_base_msgs__rosidl_generator_c
+[13.164s] [ 26%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[13.170s] [ 28%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[13.181s] [ 29%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[13.637s] [ 29%] Built target drive_base_msgs__cpp
+[13.663s] [ 31%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[13.664s] [ 32%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[13.701s] [ 34%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[15.679s] [ 35%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/drive_base_msgs/msg/detail/dds_fastrtps/base_info__type_support.cpp.o[0m
+[15.686s] [ 37%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/drive_base_msgs/msg/detail/dds_fastrtps/command_header__type_support.cpp.o[0m
+[15.698s] [ 39%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/drive_base_msgs/msg/detail/dds_fastrtps/command_status__type_support.cpp.o[0m
+[16.061s] [ 40%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/drive_base_msgs/msg/detail/command_header__type_support.cpp.o[0m
+[16.673s] [ 42%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/drive_base_msgs/msg/detail/command_header__type_support.c.o[0m
+[16.794s] [ 43%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/drive_base_msgs/msg/detail/base_info__type_support.c.o[0m
+[16.900s] [ 45%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/drive_base_msgs/msg/detail/command_status__type_support.c.o[0m
+[16.921s] [ 46%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/drive_base_msgs/msg/command_header__type_support.cpp.o[0m
+[17.086s] [ 48%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/drive_base_msgs/msg/detail/trv_command__type_support.c.o[0m
+[17.115s] [ 50%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/drive_base_msgs/msg/command_header__type_support.cpp.o[0m
+[17.175s] [ 51%] [32m[1mLinking C shared library libdrive_base_msgs__rosidl_typesupport_introspection_c.so[0m
+[17.253s] [ 53%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/drive_base_msgs/msg/base_info__type_support.cpp.o[0m
+[17.258s] [ 53%] Built target drive_base_msgs__rosidl_typesupport_introspection_c
+[17.297s] [ 54%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/drive_base_msgs/msg/detail/dds_fastrtps/trv_command__type_support.cpp.o[0m
+[17.433s] [ 56%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/drive_base_msgs/msg/command_status__type_support.cpp.o[0m
+[17.534s] [ 57%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/drive_base_msgs/msg/detail/base_info__type_support.cpp.o[0m
+[17.554s] [ 59%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/drive_base_msgs/msg/trv_command__type_support.cpp.o[0m
+[17.569s] [ 60%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/drive_base_msgs/msg/base_info__type_support.cpp.o[0m
+[17.683s] [ 62%] [32m[1mLinking CXX shared library libdrive_base_msgs__rosidl_typesupport_c.so[0m
+[17.705s] [ 64%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/drive_base_msgs/msg/detail/command_header__type_support_c.cpp.o[0m
+[17.726s] [ 65%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/drive_base_msgs/msg/detail/base_info__type_support_c.cpp.o[0m
+[17.788s] [ 67%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/drive_base_msgs/msg/detail/command_status__type_support.cpp.o[0m
+[17.794s] [ 67%] Built target drive_base_msgs__rosidl_typesupport_c
+[17.828s] [ 68%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/drive_base_msgs/msg/detail/command_status__type_support_c.cpp.o[0m
+[17.859s] [ 70%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/drive_base_msgs/msg/detail/trv_command__type_support.cpp.o[0m
+[18.138s] [ 71%] [32m[1mLinking CXX shared library libdrive_base_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[18.271s] [ 71%] Built target drive_base_msgs__rosidl_typesupport_fastrtps_cpp
+[18.297s] [ 73%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/drive_base_msgs/msg/command_status__type_support.cpp.o[0m
+[18.308s] [ 75%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/drive_base_msgs/msg/trv_command__type_support.cpp.o[0m
+[18.419s] [ 76%] [32mBuilding CXX object CMakeFiles/drive_base_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/drive_base_msgs/msg/detail/trv_command__type_support_c.cpp.o[0m
+[18.479s] [ 78%] [32m[1mLinking CXX shared library libdrive_base_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[18.667s] [ 78%] Built target drive_base_msgs__rosidl_typesupport_introspection_cpp
+[19.242s] [ 79%] [32m[1mLinking CXX shared library libdrive_base_msgs__rosidl_typesupport_fastrtps_c.so[0m
+[19.249s] [ 81%] [32m[1mLinking CXX shared library libdrive_base_msgs__rosidl_typesupport_cpp.so[0m
+[19.343s] [ 81%] Built target drive_base_msgs__rosidl_typesupport_cpp
+[19.364s] [ 81%] Built target drive_base_msgs__rosidl_typesupport_fastrtps_c
+[19.389s] [ 81%] Built target drive_base_msgs
+[19.415s] [ 82%] [34m[1mGenerating Python code for ROS interfaces[0m
+[21.451s] [ 82%] Built target drive_base_msgs__py
+[21.487s] [ 84%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_py.dir/rosidl_generator_py/drive_base_msgs/msg/_command_status_s.c.o[0m
+[21.487s] [ 85%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_py.dir/rosidl_generator_py/drive_base_msgs/msg/_base_info_s.c.o[0m
+[21.489s] [ 87%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_py.dir/rosidl_generator_py/drive_base_msgs/msg/_trv_command_s.c.o[0m
+[21.492s] [ 89%] [32mBuilding C object CMakeFiles/drive_base_msgs__rosidl_generator_py.dir/rosidl_generator_py/drive_base_msgs/msg/_command_header_s.c.o[0m
+[21.784s] [ 90%] [32m[1mLinking C shared library libdrive_base_msgs__rosidl_generator_py.so[0m
+[21.839s] [ 90%] Built target drive_base_msgs__rosidl_generator_py
+[21.884s] [ 92%] [32mBuilding C object CMakeFiles/drive_base_msgs_s__rosidl_typesupport_c.dir/rosidl_generator_py/drive_base_msgs/_drive_base_msgs_s.ep.rosidl_typesupport_c.c.o[0m
+[21.903s] [ 93%] [32mBuilding C object CMakeFiles/drive_base_msgs_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator_py/drive_base_msgs/_drive_base_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[21.904s] [ 95%] [32mBuilding C object CMakeFiles/drive_base_msgs_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/drive_base_msgs/_drive_base_msgs_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[22.035s] [ 96%] [32m[1mLinking C shared module rosidl_generator_py/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_c.so[0m
+[22.088s] [ 98%] [32m[1mLinking C shared module rosidl_generator_py/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_introspection_c.so[0m
+[22.107s] [ 98%] Built target drive_base_msgs_s__rosidl_typesupport_c
+[22.121s] [100%] [32m[1mLinking C shared module rosidl_generator_py/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_fastrtps_c.so[0m
+[22.132s] [100%] Built target drive_base_msgs_s__rosidl_typesupport_introspection_c
+[22.157s] [100%] Built target drive_base_msgs_s__rosidl_typesupport_fastrtps_c
+[22.173s] Invoked command in '/home/group3-robot/robp_group3/build/drive_base_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/install/robp_launch:/home/group3-robot/robp_group3/install/odometry:/home/group3-robot/robp_group3/install/path_planner:/home/group3-robot/robp_group3/install/mapping:/home/group3-robot/robp_group3/install/joystick_teleop:/home/group3-robot/robp_group3/install/behavior_tree:/home/group3-robot/robp_group3/install/handle_objects:/home/group3-robot/robp_group3/install/detection:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/drive_base_msgs -- -j8 -l8
+[22.177s] Invoking command in '/home/group3-robot/robp_group3/build/drive_base_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/install/robp_launch:/home/group3-robot/robp_group3/install/odometry:/home/group3-robot/robp_group3/install/path_planner:/home/group3-robot/robp_group3/install/mapping:/home/group3-robot/robp_group3/install/joystick_teleop:/home/group3-robot/robp_group3/install/behavior_tree:/home/group3-robot/robp_group3/install/handle_objects:/home/group3-robot/robp_group3/install/detection:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/drive_base_msgs
+[22.189s] -- Install configuration: ""
+[22.190s] -- Execute custom install script
+[22.190s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/ament_index/resource_index/rosidl_interfaces/drive_base_msgs
+[22.199s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/CommandHeader.json
+[22.207s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/BaseInfo.json
+[22.216s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/CommandStatus.json
+[22.224s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/TRVCommand.json
+[22.232s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/base_info.h
+[22.240s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/command_header.h
+[22.250s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/command_status.h
+[22.262s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__functions.h
+[22.273s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__struct.h
+[22.285s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__type_support.h
+[22.299s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__functions.h
+[22.310s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__struct.h
+[22.321s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__type_support.h
+[22.331s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__functions.h
+[22.343s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__struct.h
+[22.354s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__type_support.h
+[22.371s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__functions.h
+[22.386s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__struct.h
+[22.401s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__type_support.h
+[22.413s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/rosidl_generator_c__visibility_control.h
+[22.428s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/trv_command.h
+[22.444s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/environment/library_path.sh
+[22.456s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/environment/library_path.dsv
+[22.469s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__rosidl_typesupport_fastrtps_c.h
+[22.481s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__rosidl_typesupport_fastrtps_c.h
+[22.492s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__rosidl_typesupport_fastrtps_c.h
+[22.507s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__rosidl_typesupport_fastrtps_c.h
+[22.521s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[22.533s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/base_info.hpp
+[22.543s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/command_header.hpp
+[22.555s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/command_status.hpp
+[22.566s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__builder.hpp
+[22.585s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__struct.hpp
+[22.589s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__traits.hpp
+[22.600s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__type_support.hpp
+[22.617s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__builder.hpp
+[22.633s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__struct.hpp
+[22.649s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__traits.hpp
+[22.667s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__type_support.hpp
+[22.701s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__builder.hpp
+[22.717s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__struct.hpp
+[22.727s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__traits.hpp
+[22.738s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__type_support.hpp
+[22.748s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__builder.hpp
+[22.758s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__struct.hpp
+[22.769s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__traits.hpp
+[22.789s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__type_support.hpp
+[22.813s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+[22.829s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/trv_command.hpp
+[22.840s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__rosidl_typesupport_fastrtps_cpp.hpp
+[22.854s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__rosidl_typesupport_fastrtps_cpp.hpp
+[22.873s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__rosidl_typesupport_fastrtps_cpp.hpp
+[22.899s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__rosidl_typesupport_fastrtps_cpp.hpp
+[22.923s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[22.943s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__rosidl_typesupport_introspection_c.h
+[22.957s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__rosidl_typesupport_introspection_c.h
+[22.969s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__rosidl_typesupport_introspection_c.h
+[22.984s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__rosidl_typesupport_introspection_c.h
+[23.001s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[23.013s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/base_info__rosidl_typesupport_introspection_cpp.hpp
+[23.024s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_header__rosidl_typesupport_introspection_cpp.hpp
+[23.035s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/command_status__rosidl_typesupport_introspection_cpp.hpp
+[23.046s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/include/drive_base_msgs/drive_base_msgs/msg/detail/trv_command__rosidl_typesupport_introspection_cpp.hpp
+[23.059s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/environment/pythonpath.sh
+[23.080s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/environment/pythonpath.dsv
+[23.110s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs-0.0.0-py3.12.egg-info/PKG-INFO
+[23.122s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs-0.0.0-py3.12.egg-info/SOURCES.txt
+[23.133s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs-0.0.0-py3.12.egg-info/dependency_links.txt
+[23.145s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs-0.0.0-py3.12.egg-info/top_level.txt
+[23.159s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/__init__.py
+[23.172s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/_drive_base_msgs_s.ep.rosidl_typesupport_c.c
+[23.187s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/_drive_base_msgs_s.ep.rosidl_typesupport_fastrtps_c.c
+[23.211s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/_drive_base_msgs_s.ep.rosidl_typesupport_introspection_c.c
+[23.219s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_c.so
+[23.233s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_fastrtps_c.so
+[23.245s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_introspection_c.so
+[23.259s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/__init__.py
+[23.280s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_base_info.py
+[23.290s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_base_info_s.c
+[23.314s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_command_header.py
+[23.336s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_command_header_s.c
+[23.364s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_command_status.py
+[23.382s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_command_status_s.c
+[23.398s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_trv_command.py
+[23.422s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_trv_command_s.c
+[23.446s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_fastrtps_c.so
+[23.451s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_introspection_c.so
+[23.451s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/drive_base_msgs_s__rosidl_typesupport_c.so
+[23.451s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/CommandHeader.idl
+[23.477s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/BaseInfo.idl
+[23.501s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/CommandStatus.idl
+[23.523s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/TRVCommand.idl
+[23.545s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/CommandHeader.msg
+[23.561s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/BaseInfo.msg
+[23.582s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/CommandStatus.msg
+[23.603s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/msg/TRVCommand.msg
+[23.635s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/ament_index/resource_index/package_run_dependencies/drive_base_msgs
+[23.667s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/ament_index/resource_index/parent_prefix_path/drive_base_msgs
+[23.690s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/environment/ament_prefix_path.sh
+[23.717s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/environment/ament_prefix_path.dsv
+[23.746s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/environment/path.sh
+[23.764s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/environment/path.dsv
+[23.787s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/local_setup.bash
+[23.804s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/local_setup.sh
+[23.837s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/local_setup.zsh
+[23.863s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/local_setup.dsv
+[23.886s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/package.dsv
+[23.915s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/ament_index/resource_index/packages/drive_base_msgs
+[23.933s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/rosidl_cmake-extras.cmake
+[23.960s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/ament_cmake_export_dependencies-extras.cmake
+[23.969s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/ament_cmake_export_include_directories-extras.cmake
+[23.988s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/ament_cmake_export_libraries-extras.cmake
+[24.014s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/ament_cmake_export_targets-extras.cmake
+[24.048s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[24.076s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[24.104s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgsConfig.cmake
+[24.123s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgsConfig-version.cmake
+[24.149s] -- Symlinking: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/package.xml
+[24.178s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_generator_c.so
+[24.178s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_generator_c.so" to ""
+[24.178s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_fastrtps_c.so
+[24.178s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_fastrtps_c.so" to ""
+[24.179s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_fastrtps_cpp.so
+[24.179s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""
+[24.179s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_introspection_c.so
+[24.179s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_introspection_c.so" to ""
+[24.179s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_c.so
+[24.179s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_c.so" to ""
+[24.179s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_introspection_cpp.so
+[24.179s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_introspection_cpp.so" to ""
+[24.179s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_cpp.so
+[24.179s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_typesupport_cpp.so" to ""
+[24.350s] Listing '/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs'...
+[24.350s] Compiling '/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/__init__.py'...
+[24.350s] Listing '/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg'...
+[24.350s] Compiling '/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/__init__.py'...
+[24.350s] Compiling '/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_base_info.py'...
+[24.350s] Compiling '/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_command_header.py'...
+[24.350s] Compiling '/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_command_status.py'...
+[24.350s] Compiling '/home/group3-robot/robp_group3/install/drive_base_msgs/lib/python3.12/site-packages/drive_base_msgs/msg/_trv_command.py'...
+[24.364s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_generator_py.so
+[24.365s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/drive_base_msgs/lib/libdrive_base_msgs__rosidl_generator_py.so" to ""
+[24.366s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_generator_cExport.cmake
+[24.366s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_generator_cExport-noconfig.cmake
+[24.374s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_typesupport_fastrtps_cExport.cmake
+[24.374s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[24.374s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_generator_cppExport.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_typesupport_fastrtps_cppExport.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgs__rosidl_typesupport_introspection_cExport.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgs__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgs__rosidl_typesupport_cExport.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgs__rosidl_typesupport_cExport-noconfig.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgs__rosidl_typesupport_introspection_cppExport.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgs__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgs__rosidl_typesupport_cppExport.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/drive_base_msgs__rosidl_typesupport_cppExport-noconfig.cmake
+[24.375s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_generator_pyExport.cmake
+[24.376s] -- Installing: /home/group3-robot/robp_group3/install/drive_base_msgs/share/drive_base_msgs/cmake/export_drive_base_msgs__rosidl_generator_pyExport-noconfig.cmake
+[24.386s] Invoked command in '/home/group3-robot/robp_group3/build/drive_base_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/install/robp_launch:/home/group3-robot/robp_group3/install/odometry:/home/group3-robot/robp_group3/install/path_planner:/home/group3-robot/robp_group3/install/mapping:/home/group3-robot/robp_group3/install/joystick_teleop:/home/group3-robot/robp_group3/install/behavior_tree:/home/group3-robot/robp_group3/install/handle_objects:/home/group3-robot/robp_group3/install/detection:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/install/arm_controller:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/drive_base_msgs

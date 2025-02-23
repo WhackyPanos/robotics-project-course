@@ -1,1 +1,7 @@
-/home/group3-robot/robp_group3/build/robp_launch/launch/frames_launch.xml
+<?xml version="1.0"?>
+<launch>
+	<node name="base_to_imu" pkg="tf2_ros" exec="static_transform_publisher" args="--x 0.00107 --y 0 --z 0.02361  --frame-id base_link --child-frame-id imu_link" />
+	<node name="base_to_rs_d435i" pkg="tf2_ros" exec="static_transform_publisher" args="--x 0.08987 --y 0.0175 --z 0.10456  --frame-id base_link --child-frame-id camera_link" />
+	<node name="base_to_sllidar_ros2" pkg="tf2_ros" exec="static_transform_publisher" args="--x 0.0 --y 0.0825 --z 0.15456  --frame-id base_link --child-frame-id lidar_link" />
+	<node name ="base_to_arm_base" pkg="tf2_ros" exec="static_transform_publisher" args="--x 0.0 --y -0.05 --z 0.086  --frame-id base_link --child-frame-id arm_base_link" />
+</launch>

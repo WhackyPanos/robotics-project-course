@@ -1,1 +1,21 @@
-/home/group3-robot/robp_group3/build/robp_launch/launch/arm_servo_launch.py
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='micro_ros_agent',
+            executable='micro_ros_agent',
+            name='micro_ros_agent',
+            output='screen',
+            arguments=["serial", "--dev", "/dev/hiwonder_arm", "-v6"]
+        )
+    ])
+
+"""
+        Node(
+            package='arm_controller',
+            executable='arm_controller',
+            name='arm_controller',
+            # output='screen',
+        )"""

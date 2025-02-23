@@ -1,0 +1,24 @@
+[1.943s] Invoking command in '/home/group3-robot/robp_group3/build/detection': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/detection/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/detection/build --no-deps symlink_data
+[2.603s] running develop
+[2.740s] running egg_info
+[2.740s] creating detection.egg-info
+[2.768s] writing detection.egg-info/PKG-INFO
+[2.769s] writing dependency_links to detection.egg-info/dependency_links.txt
+[2.769s] writing entry points to detection.egg-info/entry_points.txt
+[2.769s] writing requirements to detection.egg-info/requires.txt
+[2.769s] writing top-level names to detection.egg-info/top_level.txt
+[2.769s] writing manifest file 'detection.egg-info/SOURCES.txt'
+[2.827s] reading manifest file 'detection.egg-info/SOURCES.txt'
+[2.828s] writing manifest file 'detection.egg-info/SOURCES.txt'
+[2.859s] running build_ext
+[2.859s] Creating /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection.egg-link (link to .)
+[2.859s] Installing detection script to /home/group3-robot/robp_group3/install/detection/lib/detection
+[2.860s] 
+[2.860s] Installed /home/group3-robot/robp_group3/build/detection
+[2.860s] running symlink_data
+[2.860s] creating /home/group3-robot/robp_group3/install/detection/share/ament_index
+[2.860s] creating /home/group3-robot/robp_group3/install/detection/share/ament_index/resource_index
+[2.860s] creating /home/group3-robot/robp_group3/install/detection/share/ament_index/resource_index/packages
+[2.863s] symbolically linking /home/group3-robot/robp_group3/build/detection/resource/detection -> /home/group3-robot/robp_group3/install/detection/share/ament_index/resource_index/packages
+[2.863s] symbolically linking /home/group3-robot/robp_group3/build/detection/package.xml -> /home/group3-robot/robp_group3/install/detection/share/detection
+[2.972s] Invoked command in '/home/group3-robot/robp_group3/build/detection' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/detection/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/detection/build --no-deps symlink_data

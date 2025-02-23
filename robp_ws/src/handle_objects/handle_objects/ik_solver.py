@@ -25,16 +25,13 @@ class IKNode(Node):
         self.create_arm_chain()
 
         # ---- Create Solvers ----
-
-
-
         # --- Example FK
         #self.solve_fk([0,20*pi/180, 20*pi/180])
-        self.solve_fk([0.0, 0.6147484289969556, -0.16042951294421512])
+        #self.solve_fk([0.0, 0.6147484289969556, -0.16042951294421512])
 
         # ---- Example IK Call (uncomment to test) ----
-        target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
-        self.solve_ik(target_pose)
+        #target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
+        #self.solve_ik(target_pose)
 
 
     def create_arm_chain(self):

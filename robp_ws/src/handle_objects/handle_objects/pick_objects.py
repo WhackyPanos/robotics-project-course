@@ -23,19 +23,6 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         self.to_frame_rel = 'arm_base_link'
         self.from_frame_rel = 'map'
 
-        # Initialize the transform buffer and listener
-        self.tf_buffer = Buffer()
-        self.tf_listener = TransformListener(self.tf_buffer, self)
-
-        # temporary snippet to publish object position in map frame
-        self.pub = self.node.create_publisher(ObjectPosition, '/detected_object_pose/main_camera', 10)
-        msg = ObjectPosition()
-        msg.x = 0.2
-        msg.y = 0
-        msg.object_type = 'S'
-        self.pub.publish(msg)
-
-
 
     def setup(self, **kwargs):
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
@@ -43,14 +30,24 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         self.node = kwargs['node']
         self.dopmc_available = False # dopac = detected object position in the arm camera (frame)
         self.ready2move= False
-        self.X, self.Y, self.target = None, None, None
+        self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
         self.thresholds = [10**-4,10**-3,10**-2]
 
-        # clients that requests the position in the main camera frame (probably from map file)
+        # -- transformation stuff initialization
+        # Initialize the transform buffer and listener
+        self.tf_buffer = Buffer()
+        self.tf_listener = TransformListener(self.tf_buffer, self.node)
+
+        # temporary snippet to publish object position in map frame
         self.dopmc_subscriber = self.node.create_subscription(
             ObjectPosition,
             '/detected_object_pose/main_camera',
-            self.dopmc_callback)
+            self.dopmc_callback,
+            10)
+        
+        self.pub = self.node.create_publisher(ObjectPosition, '/detected_object_pose/main_camera', 10)
+
+
         
     def dopmc_callback(self,msg):
         if self.ready2move:
@@ -61,18 +58,18 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             # get transform from map frame to frame of the arm base
             time = rclpy.time.Time() #retrieve most recent transform ig
             try:
-                t = self.node.tf_buffer.lookup_transform(
+                t = self.tf_buffer.lookup_transform(
                     self.to_frame_rel,
                     self.from_frame_rel,
                     time)
             except TransformException as ex:
-                self.get_logger().info(
+                self.node.get_logger().info(
                     f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
                 return
             # do transformation
-            x = t.transform.translation.x
-            y = t.transform.translation.x
-            z = t.transform.translation.x
+            self.x = t.transform.translation.x
+            self.y = t.transform.translation.x
+            self.z = t.transform.translation.x
 
             qx = t.transform.rotation.x
             qy = t.transform.rotation.y
@@ -80,7 +77,7 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             qw = t.transform.rotation.w
             
             # define target with kdl instance
-            self.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({x,y,z}) in arm_base')
+            self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
             #self.target = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
 
         
@@ -88,6 +85,11 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         """ When is this called? The first time your behaviour is ticked and anytime the
           status is not RUNNING thereafter."""  
         self.ready2move= True  
+        msg = ObjectPosition()
+        msg.x = 0.2
+        msg.y = 0.0
+        msg.object_type = 'S'
+        self.pub.publish(msg)
 
          
     def update(self):
@@ -96,7 +98,8 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             #if self.x is not None and self.y is not None:
                 #for i, x in enumerate(self.thresholds):
                     #self.ik_solver.solve_ik()
-
+            self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
+            return py_trees.common.Status.RUNNING
 
 
     def terminate(self, new_status: py_trees.common.Status):
@@ -121,7 +124,7 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
            a parallel checking for a valid policy configuration after children have been added or removed"""
             print("Setting up ObjTuckArm node.")
             self.node = kwargs['node']
-
+            self.arm_started = False
             qos_profile = QoSProfile(
                 reliability=ReliabilityPolicy.RELIABLE,  # Ensures message delivery
                 durability=DurabilityPolicy.VOLATILE,    # No history saved for late subscribers
@@ -154,7 +157,7 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
 
     def servo_angles_callback(self, msg):
         current_angles = msg.position
-        if self.arm_started:
+        if self.arm_started and self.arm_moving:
             self.arm_tucked = True
             self.arm_moving = False
             for i in range(1, len(current_angles)) :
@@ -178,28 +181,37 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
     def initialise(self):
         self.arm_moving = False
         self.arm_tucked = False
-        self.arm_started = False
+        self.timer = self.node.create_timer(3, self.timer_callback)
         
+    def timer_callback(self):
+        self.arm_started = True
+        self.timer.cancel()
+        print(f"delay completed")
          
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
 
-        if not self.arm_moving and not self.arm_tucked:
+        print(f"started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
+
+        if not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
+            return py_trees.common.Status.RUNNING
+        
+        elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
             self.publish_msg()
             print("Publishing INITIAL tuck arm command.")
-            self.arm_started = True
             self.arm_moving = True
             return py_trees.common.Status.RUNNING  # Keep running while the arm moves
+        
+        elif self.arm_started and self.arm_moving and not self.arm_tucked:
+            #self.publish_msg()
+            print("Arm moving.")
+            return py_trees.common.Status.RUNNING # Keep running while the arm moves
         
         elif self.arm_tucked:
             print("Arm is in a good position")
             self.arm_started,self.arm_tucked, self.arm_moving= False, False, False
             return py_trees.common.Status.SUCCESS
 
-        elif not self.arm_tucked and self.arm_moving and self.arm_started:
-            #self.publish_msg()
-            print("Arm moving.")
-            return py_trees.common.Status.RUNNING
         else:
              print("ERROR")
              
@@ -299,7 +311,7 @@ class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tre
             elif self.dopac_available:
                 
                 target_pose = 1; #TODO
-                self.ik_solver.solve_ik()
+                #self.ik_solver.solve_ik()
 
                 # TODO
                 return py_trees.common.Status.RUNNING

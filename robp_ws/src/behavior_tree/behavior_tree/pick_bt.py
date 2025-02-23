@@ -23,15 +23,15 @@ class PickBT(Node):
         # Initialize behaviors and pass ROS node to them
 
         #init_tuck_action = InitTuckArm()
-        #obj_tuck_bhv = ObjTuckArm()
+        obj_tuck_bhv = ObjTuckArm()
         #pick_obj = Pick()
         #init_tuck_bhv = InitTuckArm()
         move_to_pick = Move2Pick()
         
         # Add behaviors to the root
         #root.add_child(init_tuck_action)
-        root.add_children([move_to_pick])
-        #root.add_child(obj_tuck_bhv)
+        #root.add_children([move_to_pick])
+        root.add_child(move_to_pick)
         
         return root
 
@@ -45,12 +45,10 @@ def main(args=None):
     node.tree.setup(timeout=10.0, node=node)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=500)
-    print("DD")
+    node.tree.tick_tock(period_ms=1000)
 
     # Spin the node to keep it alive
     rclpy.spin(node)
-    print("EE")
 
     # Shutdown the node
     rclpy.shutdown()
