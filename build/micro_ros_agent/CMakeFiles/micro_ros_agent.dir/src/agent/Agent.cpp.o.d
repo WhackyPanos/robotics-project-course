@@ -246,11 +246,10 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o: \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/null_mutex.h \
  /usr/include/c++/13/atomic \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/fmt.h \
- /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h \
- /usr/include/c++/13/cstring /usr/include/string.h /usr/include/strings.h \
+ /usr/include/fmt/core.h /usr/include/c++/13/cstring \
+ /usr/include/string.h /usr/include/strings.h \
  /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
- /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h \
- /usr/include/c++/13/cmath /usr/include/math.h \
+ /usr/include/fmt/format.h /usr/include/c++/13/cmath /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -271,8 +270,7 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o: \
  /usr/include/c++/13/tr1/modified_bessel_func.tcc \
  /usr/include/c++/13/tr1/poly_hermite.tcc \
  /usr/include/c++/13/tr1/poly_laguerre.tcc \
- /usr/include/c++/13/tr1/riemann_zeta.tcc \
- /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h \
+ /usr/include/c++/13/tr1/riemann_zeta.tcc /usr/include/fmt/core.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/registry.h \
  /usr/include/c++/13/mutex /usr/include/c++/13/bits/std_mutex.h \
  /usr/include/c++/13/bits/unique_lock.h \
@@ -285,8 +283,7 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o: \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/version.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/ostr.h \
- /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h \
- /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h \
+ /usr/include/fmt/ostream.h /usr/include/fmt/format.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/console_globals.h \

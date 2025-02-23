@@ -13,7 +13,10 @@ from robp_interfaces.srv import BoxPositionSrv, ObjectPositionSrv
 from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
-
+import tf2_geometry_msgs
+from geometry_msgs.msg import PoseStamped, Pose
+from math import pi
+import numpy as np 
 class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Move2Pick"):
         super().__init__(name=name)
@@ -22,6 +25,14 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         # Initialize the transform broadcaster, buffer and listener
         self.to_frame_rel = 'arm_base_link'
         self.from_frame_rel = 'map'
+
+        self.arm_moving = False
+        self.arm_tucked = False
+
+        # current angles and servo angles limits 
+        self.current_angles = None
+        self.lb_angles = [0.0,0.0,30.0,30.0,60.0,0.0]
+        self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
 
 
     def setup(self, **kwargs):
@@ -33,7 +44,6 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
         self.thresholds = [10**-4,10**-3,10**-2]
 
-        # -- transformation stuff initialization
         # Initialize the transform buffer and listener
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self.node)
@@ -47,8 +57,58 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         
         self.pub = self.node.create_publisher(ObjectPosition, '/detected_object_pose/main_camera', 10)
 
-
+        # initialize servo publisher and servo sensor subscriber to send commands to arm
+        self.ota_publisher_ = self.node.create_publisher(
+                msg_type = Int16MultiArray,
+                topic = '/multi_servo_cmd_sub',
+                qos_profile = 10) # ota = object_tuck_arm
+            
+        self.servo_angles_subscriber_ = self.node.create_subscription(
+                JointState,
+                '/servo_pos_publisher',
+                self.servo_angles_callback,
+                10
+            )  
+        self.obj_tuck_arm_time = 2000 # in ms   
         
+        
+    def initialise(self):
+        """ When is this called? The first time your behaviour is ticked and anytime the
+          status is not RUNNING thereafter."""  
+        self.ready2move= True  
+        msg = ObjectPosition()
+        msg.x = 0.14
+        msg.y = -0.05
+        msg.object_type = 'S'
+        self.pub.publish(msg)
+
+         
+    def update(self):
+            """ Behavior Tree execution step. Called whenever the node is ticked """
+            #solve_ik(self, target_pose, provided_initial_guess, eps=5e-3, maxiter=100000)
+            self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
+
+            # compute target and perform inverse kinematics
+            if self.x is not None and self.y is not None and self.z is not None and not self.arm_moving:
+                target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
+                for i, thresh in enumerate(self.thresholds):
+                    result, angles = self.ik_solver.solve_ik(
+                        target_pose=target_pose,
+                        provided_initial_guess = [0,80*pi/180,80*pi/180,0,0],
+                        eps= thresh,
+                        maxiter=100000)
+                    if result >= 0:
+                        # publish corrected angles in the servo_pos topic
+                        self.node.get_logger().info(f"IK Solution: {angles}")
+                        self.publish_angles(angles)
+                        self.arm_moving = True
+                        return py_trees.common.Status.SUCCESS
+                    else:
+                        print(f"IK Solver failed for {thresh}, trying bigger error threshold!")
+                return py_trees.common.Status.FAILURE
+            else:
+                return py_trees.common.Status.RUNNING  
+
     def dopmc_callback(self,msg):
         if self.ready2move:
             self.X = msg.x
@@ -66,42 +126,79 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
                 self.node.get_logger().info(
                     f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
                 return
+            
             # do transformation
-            self.x = t.transform.translation.x
-            self.y = t.transform.translation.x
-            self.z = t.transform.translation.x
-
+            self.x = t.transform.translation.x + self.X
+            self.y = t.transform.translation.y
+            self.z = t.transform.translation.z
+            
+            """
+            pose_map_frame = PoseStamped()
+            pose_map_frame.header.stamp = t.header.stamp
+            pose_map_frame.header.frame_id = "map"
+            pose_map_frame.pose.position.x =0.0
+            pose_map_frame.pose.position.y = 0.0
+            pose_map_frame.pose.position.z = 0.0
+            pose_map_frame.pose.orientation.x =0.0
+            pose_map_frame.pose.orientation.y = 0.0
+            pose_map_frame.pose.orientation.z = 0.0
+            pose_map_frame.pose.orientation.w = 0.0            
+            transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_map_frame, t)
+            self.x = transformed_pose.pose.position.x
+            self.y = transformed_pose.pose.position.y
+            self.z = transformed_pose.pose.position.z
+            
             qx = t.transform.rotation.x
             qy = t.transform.rotation.y
             qz = t.transform.rotation.z
             qw = t.transform.rotation.w
-            
+            """
             # define target with kdl instance
             self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
             #self.target = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
 
+    def servo_angles_callback(self, msg):
+        self.current_angles = msg.position
+ 
+                        
+    def publish_angles(self, ik_angles):
+        # retrieve current angles (supposedly arm is stretched) and compute corrected angles to publish
+        init_angles = np.multiply(0.01,np.array(self.current_angles)) #, np.array(0.01*[1,1,-1,1,-1,1]))
+        desired_angles = self.wrap_angle((180/pi)*np.array(ik_angles[::-1]), "degrees")
+        res_angles = self.wrap_angle(init_angles + self.wrap_angle(np.multiply(desired_angles, [1,1,-1,1,-1,1]), "degrees"), "degrees")
+        pub_angles = self.check_limits(res_angles, self.lb_angles, self.ub_angles)
+
+        self.node.get_logger().info(f"Current angles are {init_angles}") 
+        self.node.get_logger().info(f"IK angles are {desired_angles}")
+        self.node.get_logger().info(f"Resulted angles are {res_angles}")
+        self.node.get_logger().info(f"Angles to publish are {pub_angles}")
+
+        msg = Int16MultiArray()
+        msg.layout = MultiArrayLayout(
+            dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
+            data_offset=0
+        )      
+        times = [self.obj_tuck_arm_time] * 6
+        msg.data = [int(angle*100) for angle in pub_angles] + times
         
-    def initialise(self):
-        """ When is this called? The first time your behaviour is ticked and anytime the
-          status is not RUNNING thereafter."""  
-        self.ready2move= True  
-        msg = ObjectPosition()
-        msg.x = 0.2
-        msg.y = 0.0
-        msg.object_type = 'S'
-        self.pub.publish(msg)
+        self.ota_publisher_.publish(msg)
 
-         
-    def update(self):
-            """ Behavior Tree execution step. Called whenever the node is ticked """
-            #solve_ik(self, target_pose, provided_initial_guess, eps=5e-3, maxiter=100000)
-            #if self.x is not None and self.y is not None:
-                #for i, x in enumerate(self.thresholds):
-                    #self.ik_solver.solve_ik()
-            self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
-            return py_trees.common.Status.RUNNING
+    def wrap_angle(self, angles, units:str):
+        if units == "radians":
+            return [angle % (2 * pi) for angle in angles]
+        else:
+            return [angle % (360) for angle in angles]
+        
+    def check_limits(self, angles, lb, ub):
+        final_angles = angles
+        for i,x in enumerate(angles):
+            if x<lb[i]:
+                final_angles[i] = lb[i]+1
+            elif x>ub[i]:
+                final_angles[i] = ub[i]-1
+        return final_angles
 
-
+        
     def terminate(self, new_status: py_trees.common.Status):
         """
         Minimal termination implementation.
@@ -145,12 +242,13 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
             self.obj_tuck_arm_time = 2000 # in ms            
              
             # init tuck arm angles
-            self.desired_servo_angles = [12000] * 6
+            #self.desired_servo_angles = [45, 230, 80.5232360099144, 201.20685353937313, 68.846193182243155, 139.65382600499612]
             self.desired_servo_angles[0] = 2600 # gripper is different
+            self.desired_servo_angles[5] = 6000 # gripper is different
             # obj tuck arm angles
-            self.desired_servo_angles[4] = 6000  # servo 5
-            self.desired_servo_angles[3] = 20000   # servo 4
-            self.desired_servo_angles[2] = 8000 # servo 3
+            #self.desired_servo_angles[4] = 6000  # servo 5
+            #self.desired_servo_angles[3] = 20000   # servo 4
+            #self.desired_servo_angles[2] = 8000 # servo 3
             self.angle_threshold = 100 #1 degree  
 
 

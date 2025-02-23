@@ -1,0 +1,25 @@
+[1.493s] Invoking command in '/home/group3-robot/robp_group3/build/path_planner': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/path_planner/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/path_planner/build --no-deps symlink_data
+[2.026s] running develop
+[2.444s] running egg_info
+[2.444s] creating path_planner.egg-info
+[2.506s] writing path_planner.egg-info/PKG-INFO
+[2.506s] writing dependency_links to path_planner.egg-info/dependency_links.txt
+[2.507s] writing entry points to path_planner.egg-info/entry_points.txt
+[2.507s] writing requirements to path_planner.egg-info/requires.txt
+[2.507s] writing top-level names to path_planner.egg-info/top_level.txt
+[2.508s] writing manifest file 'path_planner.egg-info/SOURCES.txt'
+[2.612s] reading manifest file 'path_planner.egg-info/SOURCES.txt'
+[2.616s] writing manifest file 'path_planner.egg-info/SOURCES.txt'
+[2.643s] running build_ext
+[2.643s] Creating /home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages/path-planner.egg-link (link to .)
+[2.644s] Installing path_planner script to /home/group3-robot/robp_group3/install/path_planner/lib/path_planner
+[2.644s] Installing point_generator script to /home/group3-robot/robp_group3/install/path_planner/lib/path_planner
+[2.644s] 
+[2.645s] Installed /home/group3-robot/robp_group3/build/path_planner
+[2.645s] running symlink_data
+[2.645s] creating /home/group3-robot/robp_group3/install/path_planner/share/ament_index
+[2.647s] creating /home/group3-robot/robp_group3/install/path_planner/share/ament_index/resource_index
+[2.647s] creating /home/group3-robot/robp_group3/install/path_planner/share/ament_index/resource_index/packages
+[2.648s] symbolically linking /home/group3-robot/robp_group3/build/path_planner/resource/path_planner -> /home/group3-robot/robp_group3/install/path_planner/share/ament_index/resource_index/packages
+[2.648s] symbolically linking /home/group3-robot/robp_group3/build/path_planner/package.xml -> /home/group3-robot/robp_group3/install/path_planner/share/path_planner
+[2.801s] Invoked command in '/home/group3-robot/robp_group3/build/path_planner' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/path_planner/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/path_planner/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/path_planner/build --no-deps symlink_data

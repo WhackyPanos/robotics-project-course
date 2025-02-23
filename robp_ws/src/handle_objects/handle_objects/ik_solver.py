@@ -26,8 +26,18 @@ class IKNode(Node):
 
         # ---- Create Solvers ----
         # --- Example FK
-        #self.solve_fk([0,20*pi/180, 20*pi/180])
+        self.fk_solver = kdl.ChainFkSolverPos_recursive(self.chain) 
+        #self.solve_fk([0.34302397440126586, 1.0547689084840541, 1.4089493890372988, 0.6764331390453682, -2.7985465101362204, 3.141069037127051])
+
+        """
+                    self.desired_servo_angles = [12000] * 6
+            self.desired_servo_angles[0] = 2600 # gripper is different
+            # obj tuck arm angles
+            self.desired_servo_angles[4] = 6000  # servo 5
+            self.desired_servo_angles[3] = 20000   # servo 4
+            self.desired_servo_angles[2] = 8000 # servo 3
         #self.solve_fk([0.0, 0.6147484289969556, -0.16042951294421512])
+        """
 
         # ---- Example IK Call (uncomment to test) ----
         #target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
@@ -55,7 +65,7 @@ class IKNode(Node):
         # Create and add the fixed segment with a name, fixed_joint, and frame_base
         self.chain.addSegment(kdl.Segment("base_to_first_joint", fixed_joint, frame_base))
 
-        # --- Moving Joints ---
+        # --- Moving Joints --- self.link_lengths = [self.b, self.c - self.b, self.e - self.c , self.f]
         # Joint 1: Base rotation (around Z-axis)
         self.add_joint("joint1", kdl.Joint.RotZ, kdl.Vector(0, 0, self.link_lengths[0]))
         # Joint 2: 1st "blue" servo (rotates around Y-axis)
@@ -63,11 +73,11 @@ class IKNode(Node):
         # Joint 3: green servo (rotates around Y-axis)
         self.add_joint("joint3", kdl.Joint.RotY, kdl.Vector(0, 0, self.link_lengths[2]))
         # Joint 4: ID3 servo  (rotates around Y-axis)
-        #self.add_joint("joint4", kdl.Joint.RotY, kdl.Vector(0, 0, self.link_lengths[3]))
+        self.add_joint("joint4", kdl.Joint.RotY, kdl.Vector(0, 0, self.link_lengths[3]))
         # Joint 5: Wrist rotation (rotates around Z-axis)
-        #self.add_joint("joint5", kdl.Joint.RotZ, kdl.Vector( 0, 0, self.link_lengths[3]))
+        self.add_joint("joint5", kdl.Joint.RotZ, kdl.Vector( 0, 0, self.gripper_offset))
         # Joint 6: Gripper closing/opening (rotates around X-axis)
-        #self.add_joint("joint6", kdl.Joint.RotX, kdl.Vector(0, 0, self.gripper_offset))
+        self.add_joint("joint6", kdl.Joint.RotX, kdl.Vector(0, 0, 0))
 
     def add_joint(self, name, joint_type, translation):
         """
@@ -132,7 +142,12 @@ class IKNode(Node):
           4. Report the solution if successful, or log an error otherwise.
         """
         # create solver
-        self.ik_solver = kdl.ChainIkSolverPos_LMA(self.chain, eps, maxiter) # Levenberg-Marquardt IK Solver
+        self.ik_solver = kdl.ChainIkSolverPos_LMA(
+            chain = self.chain,
+            eps = eps,
+            maxiter = maxiter,
+            ) # Levenberg-Marquardt IK Solver
+
 
         # Determine the number of joints 
         num_joints = self.chain.getNrOfJoints()
@@ -141,21 +156,20 @@ class IKNode(Node):
         for i,angle in enumerate(provided_initial_guess):
             initial_guess[i] = angle
 
-        self.get_logger().info(f"For the {num_joints} joitns, the following initial configuration is: {joint_positions}")
-        self.get_logger().info(f"Links lengths {self.link_lengths}")
-        self.get_logger().info(f"Initial guess {initial_guess}")
+        #self.get_logger().info(f"For the {num_joints} joitns, the following initial configuration is: {joint_positions}")
+        #self.get_logger().info(f"Links lengths {self.link_lengths}")
+        #self.get_logger().info(f"Initial guess {initial_guess}")
 
         result = self.ik_solver.CartToJnt(initial_guess, target_pose, joint_positions)
 
         if result >= 0:
             angles = [joint_positions[i] for i in range(num_joints)]
-            self.get_logger().info(f"IK Solution: {angles}")
+            #self.get_logger().info(f"IK Solution: {angles}")
         else:
             angles = None
-            self.get_logger().error("IK Solver failed!")
-            self.get_logger().error(f"Result = {result}")
-        
-        return angles
+            #self.get_logger().error("IK Solver failed!")
+            #self.get_logger().error(f"Result = {result}")
+        return result, angles
 
 
 
