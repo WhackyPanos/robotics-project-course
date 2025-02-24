@@ -1,21 +1,17 @@
-from launch import LaunchDescription
 from launch_ros.actions import Node
+import launch
 
 def generate_launch_description():
-    return LaunchDescription([
-        Node(
+
+    return launch.LaunchDescription([
+         Node(
             package='micro_ros_agent',
             executable='micro_ros_agent',
             name='micro_ros_agent',
             output='screen',
             arguments=["serial", "--dev", "/dev/hiwonder_arm", "-v6"]
         )
+
     ])
 
-"""
-        Node(
-            package='arm_controller',
-            executable='arm_controller',
-            name='arm_controller',
-            # output='screen',
-        )"""
+

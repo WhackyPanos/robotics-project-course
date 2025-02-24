@@ -3,10 +3,15 @@
   "output_dir": "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_type_description/robp_interfaces",
   "idl_tuples": [
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/DutyCycles.idl",
-    "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/Encoders.idl"
+    "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/Encoders.idl",
+    "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/ObjectPosition.idl",
+    "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/BoxPosition.idl",
+    "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:srv/ObjectPositionSrv.idl",
+    "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:srv/BoxPositionSrv.idl"
   ],
   "include_paths": [
     "std_msgs:/opt/ros/jazzy/share/std_msgs",
-    "builtin_interfaces:/opt/ros/jazzy/share/builtin_interfaces"
+    "builtin_interfaces:/opt/ros/jazzy/share/builtin_interfaces",
+    "service_msgs:/opt/ros/jazzy/share/service_msgs"
   ]
 }

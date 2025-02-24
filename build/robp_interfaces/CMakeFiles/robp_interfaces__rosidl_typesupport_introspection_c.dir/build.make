@@ -79,6 +79,10 @@ rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosid
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: /opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/srv__type_support.c.em
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: rosidl_adapter/robp_interfaces/msg/DutyCycles.idl
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: rosidl_adapter/robp_interfaces/msg/Encoders.idl
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: rosidl_adapter/robp_interfaces/msg/BoxPosition.idl
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: rosidl_adapter/robp_interfaces/srv/ObjectPositionSrv.idl
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: /opt/ros/jazzy/share/std_msgs/msg/Byte.idl
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: /opt/ros/jazzy/share/std_msgs/msg/ByteMultiArray.idl
@@ -111,17 +115,42 @@ rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosid
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: /opt/ros/jazzy/share/std_msgs/msg/UInt8MultiArray.idl
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: /opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: /opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C introspection for ROS interfaces"
 	/usr/bin/python3 /opt/ros/jazzy/lib/rosidl_typesupport_introspection_c/rosidl_typesupport_introspection_c --generator-arguments-file /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c__arguments.json
 
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__rosidl_typesupport_introspection_c.h: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__rosidl_typesupport_introspection_c.h
 
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__rosidl_typesupport_introspection_c.h: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__rosidl_typesupport_introspection_c.h
+
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__rosidl_typesupport_introspection_c.h: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__rosidl_typesupport_introspection_c.h
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_introspection_c.h: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_introspection_c.h
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_introspection_c.h: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_introspection_c.h
+
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c
 
 rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c
+
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c
+
+rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c
+
+rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c
 
 CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/flags.make
 CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c
@@ -151,27 +180,93 @@ CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesu
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c.s
 
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/flags.make
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o -MF CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o.d -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o -c /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c > CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.i
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.s
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/flags.make
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o -MF CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o.d -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o -c /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c > CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.i
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.s
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/flags.make
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o -MF CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o.d -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o -c /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c > CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.i
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.s
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/flags.make
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o -MF CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o.d -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o -c /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c > CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.i
+
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c -o CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s
+
 # Object files for target robp_interfaces__rosidl_typesupport_introspection_c
 robp_interfaces__rosidl_typesupport_introspection_c_OBJECTS = \
 "CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o" \
-"CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c.o"
+"CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c.o" \
+"CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o" \
+"CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o" \
+"CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o" \
+"CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o"
 
 # External object files for target robp_interfaces__rosidl_typesupport_introspection_c
 robp_interfaces__rosidl_typesupport_introspection_c_EXTERNAL_OBJECTS =
 
 librobp_interfaces__rosidl_typesupport_introspection_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o
 librobp_interfaces__rosidl_typesupport_introspection_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c.o
+librobp_interfaces__rosidl_typesupport_introspection_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o
+librobp_interfaces__rosidl_typesupport_introspection_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o
+librobp_interfaces__rosidl_typesupport_introspection_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o
+librobp_interfaces__rosidl_typesupport_introspection_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o
 librobp_interfaces__rosidl_typesupport_introspection_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/build.make
 librobp_interfaces__rosidl_typesupport_introspection_c.so: librobp_interfaces__rosidl_generator_c.so
 librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_introspection_c.so
+librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_introspection_c.so
+librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
 librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_introspection_c.so
 librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/librosidl_typesupport_introspection_c.so
-librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
+librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_generator_c.so
 librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_c.so
 librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/librosidl_runtime_c.so
 librobp_interfaces__rosidl_typesupport_introspection_c.so: /opt/ros/jazzy/lib/librcutils.so
 librobp_interfaces__rosidl_typesupport_introspection_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C shared library librobp_interfaces__rosidl_typesupport_introspection_c.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C shared library librobp_interfaces__rosidl_typesupport_introspection_c.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -182,10 +277,18 @@ CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/clean
 
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__rosidl_typesupport_introspection_c.h
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c
 CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
 CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c
 CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__rosidl_typesupport_introspection_c.h
 CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__rosidl_typesupport_introspection_c.h
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_introspection_c.h
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_introspection_c.h
+CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend: rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c
 	cd /home/group3-robot/robp_group3/build/robp_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/depend
 

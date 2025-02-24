@@ -1,0 +1,17 @@
+[1.143s] Invoking command in '/home/group3-robot/robp_group3/build/mapping': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/mapping/build --no-deps symlink_data
+[1.572s] running develop
+[1.814s] running egg_info
+[1.842s] writing mapping.egg-info/PKG-INFO
+[1.843s] writing dependency_links to mapping.egg-info/dependency_links.txt
+[1.843s] writing entry points to mapping.egg-info/entry_points.txt
+[1.843s] writing requirements to mapping.egg-info/requires.txt
+[1.843s] writing top-level names to mapping.egg-info/top_level.txt
+[1.898s] reading manifest file 'mapping.egg-info/SOURCES.txt'
+[1.899s] writing manifest file 'mapping.egg-info/SOURCES.txt'
+[1.916s] running build_ext
+[1.916s] Creating /home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages/mapping.egg-link (link to .)
+[1.917s] Installing mapping script to /home/group3-robot/robp_group3/install/mapping/lib/mapping
+[1.917s] 
+[1.917s] Installed /home/group3-robot/robp_group3/build/mapping
+[1.917s] running symlink_data
+[2.146s] Invoked command in '/home/group3-robot/robp_group3/build/mapping' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/mapping/build --no-deps symlink_data

@@ -1,0 +1,1 @@
+/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__rosidl_typesupport_introspection_cpp.hpp

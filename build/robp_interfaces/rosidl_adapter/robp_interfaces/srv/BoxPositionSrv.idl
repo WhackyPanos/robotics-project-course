@@ -1,0 +1,23 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from robp_interfaces/srv/BoxPositionSrv.srv
+// generated code does not contain a copyright notice
+
+
+module robp_interfaces {
+  module srv {
+    @verbatim (language="comment", text=
+      "Request")
+    struct BoxPositionSrv_Request {
+      boolean want_box_pose;
+    };
+    @verbatim (language="comment", text=
+      "Response")
+    struct BoxPositionSrv_Response {
+      float x;
+
+      float y;
+
+      float orientation;
+    };
+  };
+};

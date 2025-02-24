@@ -1,7 +1,11 @@
 file(REMOVE_RECURSE
   "CMakeFiles/robp_interfaces__rosidl_generator_type_description"
+  "rosidl_generator_type_description/robp_interfaces/msg/BoxPosition.json"
   "rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json"
   "rosidl_generator_type_description/robp_interfaces/msg/Encoders.json"
+  "rosidl_generator_type_description/robp_interfaces/msg/ObjectPosition.json"
+  "rosidl_generator_type_description/robp_interfaces/srv/BoxPositionSrv.json"
+  "rosidl_generator_type_description/robp_interfaces/srv/ObjectPositionSrv.json"
 )
 
 # Per-language clean rules from dependency scanning.
