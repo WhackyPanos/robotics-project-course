@@ -68,32 +68,25 @@ include CMakeFiles/robp_interfaces__rosidl_generator_type_description.dir/progre
 
 CMakeFiles/robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json
 CMakeFiles/robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/msg/Encoders.json
-<<<<<<< HEAD
 CMakeFiles/robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/msg/ObjectPosition.json
 CMakeFiles/robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/msg/BoxPosition.json
 CMakeFiles/robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/srv/ObjectPositionSrv.json
 CMakeFiles/robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/srv/BoxPositionSrv.json
-=======
->>>>>>> path-planner
 
 rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json: /opt/ros/jazzy/lib/rosidl_generator_type_description/rosidl_generator_type_description
 rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json: /opt/ros/jazzy/lib/python3.12/site-packages/rosidl_generator_type_description/__init__.py
 rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json: rosidl_adapter/robp_interfaces/msg/DutyCycles.idl
 rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json: rosidl_adapter/robp_interfaces/msg/Encoders.idl
-<<<<<<< HEAD
 rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json: rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl
 rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json: rosidl_adapter/robp_interfaces/msg/BoxPosition.idl
 rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json: rosidl_adapter/robp_interfaces/srv/ObjectPositionSrv.idl
 rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json: rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl
-=======
->>>>>>> path-planner
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating type hashes for ROS interfaces"
 	/usr/bin/python3 /opt/ros/jazzy/lib/rosidl_generator_type_description/rosidl_generator_type_description --generator-arguments-file /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_type_description__arguments.json
 
 rosidl_generator_type_description/robp_interfaces/msg/Encoders.json: rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_type_description/robp_interfaces/msg/Encoders.json
 
-<<<<<<< HEAD
 rosidl_generator_type_description/robp_interfaces/msg/ObjectPosition.json: rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_type_description/robp_interfaces/msg/ObjectPosition.json
 
@@ -113,11 +106,6 @@ robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_descri
 robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/msg/ObjectPosition.json
 robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/srv/BoxPositionSrv.json
 robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/srv/ObjectPositionSrv.json
-=======
-robp_interfaces__rosidl_generator_type_description: CMakeFiles/robp_interfaces__rosidl_generator_type_description
-robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/msg/DutyCycles.json
-robp_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robp_interfaces/msg/Encoders.json
->>>>>>> path-planner
 robp_interfaces__rosidl_generator_type_description: CMakeFiles/robp_interfaces__rosidl_generator_type_description.dir/build.make
 .PHONY : robp_interfaces__rosidl_generator_type_description
 

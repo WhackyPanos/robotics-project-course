@@ -290,7 +290,6 @@ _register_msg_type__msg__encoders(PyObject * pymodule)
   return 0;
 }
 
-<<<<<<< HEAD
 // already included above
 // #include <stdbool.h>
 // already included above
@@ -1473,8 +1472,6 @@ _register_srv_type__srv__box_position_srv(PyObject * pymodule)
   return 0;
 }
 
-=======
->>>>>>> path-planner
 PyMODINIT_FUNC
 PyInit_robp_interfaces_s__rosidl_typesupport_c(void)
 {
@@ -1497,7 +1494,6 @@ PyInit_robp_interfaces_s__rosidl_typesupport_c(void)
     return NULL;
   }
 
-<<<<<<< HEAD
   err = _register_msg_type__msg__object_position(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
@@ -1558,7 +1554,5 @@ PyInit_robp_interfaces_s__rosidl_typesupport_c(void)
     return NULL;
   }
 
-=======
->>>>>>> path-planner
   return pymodule;
 }

@@ -73,12 +73,6 @@ CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
-<<<<<<< HEAD
- /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/time__functions.h \
- /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/rosidl_generator_c__visibility_control.h \
- /home/group3-robot/robp_group3/build/drive_base_msgs/rosidl_generator_c/drive_base_msgs/msg/detail/command_header__functions.h
-=======
  /home/group3-robot/robp_group3/build/drive_base_msgs/rosidl_generator_c/drive_base_msgs/msg/detail/command_header__functions.h \
  /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/time__functions.h \
  /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/rosidl_generator_c__visibility_control.h
->>>>>>> path-planner

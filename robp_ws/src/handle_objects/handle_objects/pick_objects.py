@@ -17,6 +17,7 @@ import tf2_geometry_msgs
 from geometry_msgs.msg import PoseStamped, Pose
 from math import pi
 import numpy as np 
+
 class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Move2Pick"):
         super().__init__(name=name)
@@ -180,6 +181,7 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         )      
         times = [self.obj_tuck_arm_time] * 6
         msg.data = [int(angle*100) for angle in pub_angles] + times
+        msg.data[0] = 2600 #keep gripper open
         
         self.ota_publisher_.publish(msg)
 
@@ -243,8 +245,9 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
              
             # init tuck arm angles
             #self.desired_servo_angles = [45, 230, 80.5232360099144, 201.20685353937313, 68.846193182243155, 139.65382600499612]
+            self.desired_servo_angles = [12000]*6
             self.desired_servo_angles[0] = 2600 # gripper is different
-            self.desired_servo_angles[5] = 6000 # gripper is different
+            #self.desired_servo_angles[5] = 6000 # gripper is different
             # obj tuck arm angles
             #self.desired_servo_angles[4] = 6000  # servo 5
             #self.desired_servo_angles[3] = 20000   # servo 4

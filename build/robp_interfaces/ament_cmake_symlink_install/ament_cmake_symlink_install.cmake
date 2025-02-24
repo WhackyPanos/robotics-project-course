@@ -319,7 +319,6 @@ ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/ro
 # install(FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_type_description/robp_interfaces/msg/Encoders.json" "DESTINATION" "share/robp_interfaces/msg")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_type_description/robp_interfaces/msg/Encoders.json" "DESTINATION" "share/robp_interfaces/msg")
 
-<<<<<<< HEAD
 # install(FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_type_description/robp_interfaces/msg/ObjectPosition.json" "DESTINATION" "share/robp_interfaces/msg")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_type_description/robp_interfaces/msg/ObjectPosition.json" "DESTINATION" "share/robp_interfaces/msg")
 
@@ -332,8 +331,6 @@ ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/ro
 # install(FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_type_description/robp_interfaces/srv/BoxPositionSrv.json" "DESTINATION" "share/robp_interfaces/srv")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_type_description/robp_interfaces/srv/BoxPositionSrv.json" "DESTINATION" "share/robp_interfaces/srv")
 
-=======
->>>>>>> path-planner
 # install(DIRECTORY "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/" "DESTINATION" "include/robp_interfaces/robp_interfaces" "PATTERN" "*.h")
 ament_cmake_symlink_install_directory("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" DIRECTORY "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/" "DESTINATION" "include/robp_interfaces/robp_interfaces" "PATTERN" "*.h")
 
@@ -385,7 +382,6 @@ ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/ro
 # install(FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/msg/Encoders.idl" "DESTINATION" "share/robp_interfaces/msg")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/msg/Encoders.idl" "DESTINATION" "share/robp_interfaces/msg")
 
-<<<<<<< HEAD
 # install(FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl" "DESTINATION" "share/robp_interfaces/msg")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl" "DESTINATION" "share/robp_interfaces/msg")
 
@@ -398,15 +394,12 @@ ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/ro
 # install(FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl" "DESTINATION" "share/robp_interfaces/srv")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl" "DESTINATION" "share/robp_interfaces/srv")
 
-=======
->>>>>>> path-planner
 # install(FILES "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/DutyCycles.msg" "DESTINATION" "share/robp_interfaces/msg")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/DutyCycles.msg" "DESTINATION" "share/robp_interfaces/msg")
 
 # install(FILES "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/Encoders.msg" "DESTINATION" "share/robp_interfaces/msg")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/Encoders.msg" "DESTINATION" "share/robp_interfaces/msg")
 
-<<<<<<< HEAD
 # install(FILES "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/ObjectPosition.msg" "DESTINATION" "share/robp_interfaces/msg")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/ObjectPosition.msg" "DESTINATION" "share/robp_interfaces/msg")
 
@@ -419,8 +412,6 @@ ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/ro
 # install(FILES "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/srv/BoxPositionSrv.srv" "DESTINATION" "share/robp_interfaces/srv")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/srv/BoxPositionSrv.srv" "DESTINATION" "share/robp_interfaces/srv")
 
-=======
->>>>>>> path-planner
 # install(FILES "/home/group3-robot/robp_group3/build/robp_interfaces/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/robp_interfaces" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 ament_cmake_symlink_install_files("/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces" FILES "/home/group3-robot/robp_group3/build/robp_interfaces/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/robp_interfaces" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 

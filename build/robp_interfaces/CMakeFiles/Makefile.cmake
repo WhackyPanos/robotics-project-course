@@ -21,7 +21,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "rosidl_cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake"
   "rosidl_cmake/rosidl_cmake_export_typesupport_targets-extras.cmake"
   "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/CMakeLists.txt"
-<<<<<<< HEAD
   "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/BoxPosition.msg"
   "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/DutyCycles.msg"
   "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/Encoders.msg"
@@ -29,11 +28,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/package.xml"
   "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/srv/BoxPositionSrv.srv"
   "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/srv/ObjectPositionSrv.srv"
-=======
-  "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/DutyCycles.msg"
-  "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/Encoders.msg"
-  "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/package.xml"
->>>>>>> path-planner
   "/opt/ros/jazzy/lib/cmake/fastcdr/fastcdr-config-version.cmake"
   "/opt/ros/jazzy/lib/cmake/fastcdr/fastcdr-config.cmake"
   "/opt/ros/jazzy/lib/cmake/fastcdr/fastcdr-shared-targets-none.cmake"
@@ -440,7 +434,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/ros/jazzy/share/rosidl_typesupport_introspection_cpp/cmake/rosidl_typesupport_introspection_cppExport-none.cmake"
   "/opt/ros/jazzy/share/rosidl_typesupport_introspection_cpp/cmake/rosidl_typesupport_introspection_cppExport.cmake"
   "/opt/ros/jazzy/share/rosidl_typesupport_introspection_cpp/cmake/rosidl_typesupport_introspection_cpp_generate_interfaces.cmake"
-<<<<<<< HEAD
   "/opt/ros/jazzy/share/service_msgs/cmake/ament_cmake_export_dependencies-extras.cmake"
   "/opt/ros/jazzy/share/service_msgs/cmake/ament_cmake_export_include_directories-extras.cmake"
   "/opt/ros/jazzy/share/service_msgs/cmake/ament_cmake_export_libraries-extras.cmake"
@@ -467,8 +460,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/ros/jazzy/share/service_msgs/cmake/service_msgs__rosidl_typesupport_introspection_cExport.cmake"
   "/opt/ros/jazzy/share/service_msgs/cmake/service_msgs__rosidl_typesupport_introspection_cppExport-none.cmake"
   "/opt/ros/jazzy/share/service_msgs/cmake/service_msgs__rosidl_typesupport_introspection_cppExport.cmake"
-=======
->>>>>>> path-planner
   "/opt/ros/jazzy/share/std_msgs/cmake/ament_cmake_export_dependencies-extras.cmake"
   "/opt/ros/jazzy/share/std_msgs/cmake/ament_cmake_export_include_directories-extras.cmake"
   "/opt/ros/jazzy/share/std_msgs/cmake/ament_cmake_export_libraries-extras.cmake"
@@ -495,7 +486,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/ros/jazzy/share/std_msgs/cmake/std_msgs__rosidl_typesupport_introspection_cExport.cmake"
   "/opt/ros/jazzy/share/std_msgs/cmake/std_msgs__rosidl_typesupport_introspection_cppExport-none.cmake"
   "/opt/ros/jazzy/share/std_msgs/cmake/std_msgs__rosidl_typesupport_introspection_cppExport.cmake"
-<<<<<<< HEAD
   "/usr/share/cmake-3.28/Modules/CMakeCCompiler.cmake.in"
   "/usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c"
   "/usr/share/cmake-3.28/Modules/CMakeCInformation.cmake"
@@ -583,30 +573,13 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.28/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake"
   "/usr/share/cmake-3.28/Modules/Compiler/zOS-C-DetermineCompiler.cmake"
   "/usr/share/cmake-3.28/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake"
-=======
-  "/usr/share/cmake-3.28/Modules/CMakeCInformation.cmake"
-  "/usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake"
-  "/usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake"
-  "/usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake"
-  "/usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake"
-  "/usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake"
-  "/usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake"
-  "/usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake"
-  "/usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
-  "/usr/share/cmake-3.28/Modules/Compiler/GNU-C.cmake"
-  "/usr/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake"
-  "/usr/share/cmake-3.28/Modules/Compiler/GNU.cmake"
->>>>>>> path-planner
   "/usr/share/cmake-3.28/Modules/DartConfiguration.tcl.in"
   "/usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.28/Modules/FindPackageMessage.cmake"
   "/usr/share/cmake-3.28/Modules/FindPython/Support.cmake"
   "/usr/share/cmake-3.28/Modules/FindPython3.cmake"
-<<<<<<< HEAD
   "/usr/share/cmake-3.28/Modules/Internal/FeatureTesting.cmake"
   "/usr/share/cmake-3.28/Modules/Platform/Linux-Determine-CXX.cmake"
-=======
->>>>>>> path-planner
   "/usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake"
   "/usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake"
   "/usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake"
@@ -623,14 +596,11 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-<<<<<<< HEAD
   "CMakeFiles/3.28.3/CMakeSystem.cmake"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
-=======
->>>>>>> path-planner
   "ament_cmake_core/stamps/templates_2_cmake.py.stamp"
   "ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake"
   "ament_cmake_symlink_install/ament_cmake_symlink_install.cmake"
@@ -638,13 +608,10 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CTestConfiguration.ini"
   "ament_cmake_core/stamps/DutyCycles.msg.stamp"
   "ament_cmake_core/stamps/Encoders.msg.stamp"
-<<<<<<< HEAD
   "ament_cmake_core/stamps/ObjectPosition.msg.stamp"
   "ament_cmake_core/stamps/BoxPosition.msg.stamp"
   "ament_cmake_core/stamps/ObjectPositionSrv.srv.stamp"
   "ament_cmake_core/stamps/BoxPositionSrv.srv.stamp"
-=======
->>>>>>> path-planner
   "ament_cmake_core/stamps/package.xml.stamp"
   "ament_cmake_core/stamps/package_xml_2_cmake.py.stamp"
   "rosidl_generator_c/robp_interfaces/msg/rosidl_generator_c__visibility_control.h"

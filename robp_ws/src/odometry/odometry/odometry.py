@@ -35,11 +35,19 @@ class Odometry(Node):
         # Subscribe to encoder topic and call callback function on each recieved message
         self.create_subscription(
             Encoders, '/motor/encoders', self.encoder_callback, 10)
+        self.create_subscription(
+            Encoders, '/imu/data_raw', self.imu_callback, 10)
 
         # 2D pose
         self._x = 0.0
         self._y = 0.0
         self._yaw = 0.0
+
+        # keep encoder ticks
+        self.past_ticks_left = 0
+        self.past_ticks_right = 0
+        self.current_ticks_left = 0
+        self.current_ticks_right = 0
 
     def encoder_callback(self, msg: Encoders):
         """Takes encoder readings and updates the odometry.
@@ -58,12 +66,14 @@ class Odometry(Node):
         dt = 50 / 1000
         ticks_per_rev = 48 * 64
         wheel_radius = 0.04916  # TODO: Fill in
-        base = 0.31  # TODO: Fill in
+        base = 0.3125  # TODO: Fill in
         K = 2*np.pi/ticks_per_rev
 
         # Ticks since last message
-        delta_ticks_left = msg.delta_encoder_left
-        delta_ticks_right = msg.delta_encoder_right
+        self.current_ticks_left = msg.encoder_left
+        self.current_ticks_right = msg.encoder_right
+        delta_ticks_left = self.current_ticks_left - self.past_ticks_left
+        delta_ticks_right = self.current_ticks_right - self.past_ticks_right
 
         # TODO: Fill in
         D = wheel_radius/2 * K * (delta_ticks_right + delta_ticks_left)
@@ -86,6 +96,13 @@ class Odometry(Node):
         self.pose_msg.theta = self._yaw
 
         self._pose_pub.publish(self.pose_msg)
+        
+        # store as past ticks
+        self.past_ticks_left = self.current_ticks_left
+        self.past_ticks_right = self.current_ticks_right
+
+    def imu_callback(self, msg):
+        print(f"IMU message =",msg)
 
     def broadcast_transform(self, stamp, x, y, yaw):
         """Takes a 2D pose and broadcasts it as a ROS transform.

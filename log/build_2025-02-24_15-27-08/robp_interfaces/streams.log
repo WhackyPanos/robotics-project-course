@@ -1,0 +1,350 @@
+[0.038s] Invoking command in '/home/group3-robot/robp_group3/build/robp_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/robp_interfaces
+[1.057s] -- The C compiler identification is GNU 13.3.0
+[1.057s] -- The CXX compiler identification is GNU 13.3.0
+[1.057s] -- Detecting C compiler ABI info
+[1.057s] -- Detecting C compiler ABI info - done
+[1.059s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.059s] -- Detecting C compile features
+[1.059s] -- Detecting C compile features - done
+[1.060s] -- Detecting CXX compiler ABI info
+[1.060s] -- Detecting CXX compiler ABI info - done
+[1.060s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.060s] -- Detecting CXX compile features
+[1.060s] -- Detecting CXX compile features - done
+[1.060s] -- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.060s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.060s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.060s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[1.061s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.061s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.061s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[1.061s] -- Found std_msgs: 5.3.5 (/opt/ros/jazzy/share/std_msgs/cmake)
+[2.282s] -- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+[3.504s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[4.746s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[4.754s] -- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+[5.032s] -- Found PythonExtra: /usr/bin/python3  
+[5.829s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+[5.904s] -- Found ament_lint_auto: 0.17.1 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[5.952s] -- Added test 'lint_cmake' to check CMake code style
+[5.955s] -- Added test 'xmllint' to check XML markup files
+[5.964s] -- Configuring done (5.9s)
+[6.071s] -- Generating done (0.1s)
+[6.095s] -- Build files have been written to: /home/group3-robot/robp_group3/build/robp_interfaces
+[6.138s] Invoked command in '/home/group3-robot/robp_group3/build/robp_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/robp_interfaces
+[6.139s] Invoking command in '/home/group3-robot/robp_group3/build/robp_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/robp_interfaces -- -j8 -l8
+[6.802s] [  1%] [34m[1mGenerating type hashes for ROS interfaces[0m
+[6.802s] [  1%] Built target ament_cmake_python_symlink_robp_interfaces
+[6.922s] running egg_info
+[6.923s] creating robp_interfaces.egg-info
+[6.982s] writing robp_interfaces.egg-info/PKG-INFO
+[6.982s] writing dependency_links to robp_interfaces.egg-info/dependency_links.txt
+[6.982s] writing top-level names to robp_interfaces.egg-info/top_level.txt
+[6.982s] writing manifest file 'robp_interfaces.egg-info/SOURCES.txt'
+[7.081s] reading manifest file 'robp_interfaces.egg-info/SOURCES.txt'
+[7.081s] writing manifest file 'robp_interfaces.egg-info/SOURCES.txt'
+[7.167s] [  1%] Built target ament_cmake_python_build_robp_interfaces_egg
+[7.179s] [  1%] Built target robp_interfaces__rosidl_generator_type_description
+[7.207s] [  2%] [34m[1mGenerating C code for ROS interfaces[0m
+[7.243s] [  3%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[9.370s] [  3%] Built target robp_interfaces__cpp
+[9.650s] [  4%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o[0m
+[9.653s] [  5%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__functions.c.o[0m
+[9.660s] [  7%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o[0m
+[9.683s] [  8%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__description.c.o[0m
+[9.689s] [  9%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.c.o[0m
+[9.730s] [ 10%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o[0m
+[9.730s] [ 11%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.o[0m
+[9.742s] [ 13%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.o[0m
+[9.773s] [ 14%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.o[0m
+[9.844s] [ 15%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__description.c.o[0m
+[9.847s] [ 16%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.o[0m
+[9.848s] [ 17%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.o[0m
+[9.859s] [ 19%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.o[0m
+[9.880s] [ 20%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__functions.c.o[0m
+[9.906s] [ 21%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o[0m
+[9.943s] [ 22%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.o[0m
+[10.009s] [ 23%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.o[0m
+[10.013s] [ 25%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o[0m
+[10.419s] [ 26%] [32m[1mLinking C shared library librobp_interfaces__rosidl_generator_c.so[0m
+[10.635s] [ 26%] Built target robp_interfaces__rosidl_generator_c
+[10.667s] [ 27%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[10.690s] [ 28%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[10.703s] [ 29%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[10.703s] [ 30%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[10.709s] [ 32%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[10.735s] [ 33%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[12.250s] [ 35%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/duty_cycles__type_support.cpp.o[0m
+[12.251s] [ 35%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/object_position__type_support.cpp.o[0m
+[12.261s] [ 36%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/encoders__type_support.cpp.o[0m
+[12.392s] [ 38%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/duty_cycles__type_support.cpp.o[0m
+[12.467s] [ 39%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/encoders__type_support.cpp.o[0m
+[12.577s] [ 40%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/object_position__type_support.cpp.o[0m
+[12.702s] [ 41%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/msg/box_position__type_support.cpp.o[0m
+[12.827s] [ 42%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/srv/object_position_srv__type_support.cpp.o[0m
+[12.954s] [ 44%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o[0m
+[13.039s] [ 45%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/msg/detail/box_position__type_support.cpp.o[0m
+[13.067s] [ 46%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robp_interfaces/srv/box_position_srv__type_support.cpp.o[0m
+[13.093s] [ 47%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__type_support.c.o[0m
+[13.202s] [ 48%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/object_position__type_support.c.o[0m
+[13.308s] [ 50%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp.o[0m
+[13.316s] [ 51%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/box_position__type_support.c.o[0m
+[13.400s] [ 52%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_c.so[0m
+[13.433s] [ 53%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/duty_cycles__type_support.cpp.o[0m
+[13.519s] [ 54%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/object_position_srv__type_support.c.o[0m
+[13.588s] [ 54%] Built target robp_interfaces__rosidl_typesupport_c
+[13.646s] [ 55%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp.o[0m
+[13.696s] [ 57%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/object_position_srv__type_support.cpp.o[0m
+[13.791s] [ 58%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o[0m
+[13.931s] [ 59%] [32m[1mLinking C shared library librobp_interfaces__rosidl_typesupport_introspection_c.so[0m
+[14.007s] [ 59%] Built target robp_interfaces__rosidl_typesupport_introspection_c
+[14.019s] [ 60%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/encoders__type_support.cpp.o[0m
+[14.353s] [ 61%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.cpp.o[0m
+[14.947s] [ 63%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o[0m
+[14.986s] [ 64%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/object_position__type_support.cpp.o[0m
+[15.227s] [ 65%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.o[0m
+[15.228s] [ 66%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/msg/box_position__type_support.cpp.o[0m
+[15.346s] [ 67%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.o[0m
+[15.923s] [ 69%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.o[0m
+[15.980s] [ 70%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_introspection_cpp.so[0m
+[16.373s] [ 71%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/duty_cycles__type_support.cpp.o[0m
+[16.433s] [ 71%] Built target robp_interfaces__rosidl_typesupport_introspection_cpp
+[16.467s] [ 72%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/srv/object_position_srv__type_support.cpp.o[0m
+[16.497s] [ 73%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robp_interfaces/srv/box_position_srv__type_support.cpp.o[0m
+[16.915s] [ 75%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/encoders__type_support.cpp.o[0m
+[17.121s] [ 76%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/object_position__type_support.cpp.o[0m
+[17.661s] [ 77%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/msg/detail/dds_fastrtps/box_position__type_support.cpp.o[0m
+[17.880s] [ 78%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/object_position_srv__type_support.cpp.o[0m
+[17.908s] [ 79%] [32mBuilding CXX object CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/dds_fastrtps/box_position_srv__type_support.cpp.o[0m
+[18.531s] [ 80%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_cpp.so[0m
+[18.871s] [ 80%] Built target robp_interfaces__rosidl_typesupport_cpp
+[18.886s] [ 82%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_fastrtps_c.so[0m
+[19.278s] [ 82%] Built target robp_interfaces__rosidl_typesupport_fastrtps_c
+[20.656s] [ 83%] [32m[1mLinking CXX shared library librobp_interfaces__rosidl_typesupport_fastrtps_cpp.so[0m
+[20.921s] [ 83%] Built target robp_interfaces__rosidl_typesupport_fastrtps_cpp
+[20.984s] [ 83%] Built target robp_interfaces
+[21.050s] [ 84%] [34m[1mGenerating Python code for ROS interfaces[0m
+[24.796s] [ 84%] Built target robp_interfaces__py
+[24.827s] [ 85%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.c.o[0m
+[25.045s] [ 86%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c.o[0m
+[25.322s] [ 88%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c.o[0m
+[25.554s] [ 89%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_box_position_s.c.o[0m
+[25.843s] [ 90%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_object_position_s.c.o[0m
+[26.092s] [ 91%] [32mBuilding C object CMakeFiles/robp_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robp_interfaces/msg/_encoders_s.c.o[0m
+[26.372s] [ 92%] [32m[1mLinking C shared library librobp_interfaces__rosidl_generator_py.so[0m
+[26.445s] [ 92%] Built target robp_interfaces__rosidl_generator_py
+[26.472s] [ 94%] [32mBuilding C object CMakeFiles/robp_interfaces_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[26.659s] [ 95%] [32m[1mLinking C shared module rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so[0m
+[26.705s] [ 95%] Built target robp_interfaces_s__rosidl_typesupport_fastrtps_c
+[26.756s] [ 96%] [32mBuilding C object CMakeFiles/robp_interfaces_s__rosidl_typesupport_c.dir/rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.c.o[0m
+[26.935s] [ 97%] [32m[1mLinking C shared module rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_c.so[0m
+[26.973s] [ 97%] Built target robp_interfaces_s__rosidl_typesupport_c
+[26.999s] [ 98%] [32mBuilding C object CMakeFiles/robp_interfaces_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[27.192s] [100%] [32m[1mLinking C shared module rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_introspection_c.so[0m
+[27.238s] [100%] Built target robp_interfaces_s__rosidl_typesupport_introspection_c
+[27.253s] Invoked command in '/home/group3-robot/robp_group3/build/robp_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/robp_interfaces -- -j8 -l8
+[27.253s] Invoking command in '/home/group3-robot/robp_group3/build/robp_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/robp_interfaces
+[27.265s] -- Install configuration: ""
+[27.266s] -- Execute custom install script
+[27.267s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/ament_index/resource_index/rosidl_interfaces/robp_interfaces
+[27.278s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/DutyCycles.json
+[27.290s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/Encoders.json
+[27.301s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/ObjectPosition.json
+[27.313s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/BoxPosition.json
+[27.328s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/ObjectPositionSrv.json
+[27.339s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/BoxPositionSrv.json
+[27.351s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/box_position.h
+[27.364s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__functions.h
+[27.372s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__struct.h
+[27.383s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__type_support.h
+[27.393s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__functions.h
+[27.407s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__struct.h
+[27.415s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__type_support.h
+[27.424s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__functions.h
+[27.432s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__struct.h
+[27.444s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__type_support.h
+[27.458s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__functions.h
+[27.468s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__struct.h
+[27.479s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__type_support.h
+[27.491s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/duty_cycles.h
+[27.502s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/encoders.h
+[27.513s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/object_position.h
+[27.525s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_generator_c__visibility_control.h
+[27.533s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/box_position_srv.h
+[27.544s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__functions.h
+[27.551s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__struct.h
+[27.560s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__type_support.h
+[27.568s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__functions.h
+[27.576s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__struct.h
+[27.585s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__type_support.h
+[27.593s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/object_position_srv.h
+[27.601s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/library_path.sh
+[27.610s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/library_path.dsv
+[27.617s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__rosidl_typesupport_fastrtps_c.h
+[27.625s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h
+[27.633s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__rosidl_typesupport_fastrtps_c.h
+[27.642s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__rosidl_typesupport_fastrtps_c.h
+[27.649s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[27.658s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_fastrtps_c.h
+[27.668s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_fastrtps_c.h
+[27.676s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__rosidl_typesupport_introspection_c.h
+[27.685s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
+[27.695s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__rosidl_typesupport_introspection_c.h
+[27.704s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__rosidl_typesupport_introspection_c.h
+[27.713s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[27.720s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_introspection_c.h
+[27.727s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_introspection_c.h
+[27.735s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/box_position.hpp
+[27.743s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__builder.hpp
+[27.753s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__struct.hpp
+[27.760s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__traits.hpp
+[27.767s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__type_support.hpp
+[27.777s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__builder.hpp
+[27.786s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__struct.hpp
+[27.794s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__traits.hpp
+[27.803s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__type_support.hpp
+[27.809s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__builder.hpp
+[27.819s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__struct.hpp
+[27.830s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__traits.hpp
+[27.839s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__type_support.hpp
+[27.846s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__builder.hpp
+[27.855s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__struct.hpp
+[27.863s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__traits.hpp
+[27.871s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__type_support.hpp
+[27.880s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/duty_cycles.hpp
+[27.891s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/encoders.hpp
+[27.899s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/object_position.hpp
+[27.910s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
+[27.919s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/box_position_srv.hpp
+[27.930s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__builder.hpp
+[27.939s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__struct.hpp
+[27.947s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__traits.hpp
+[27.956s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__type_support.hpp
+[27.964s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__builder.hpp
+[27.973s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__struct.hpp
+[27.983s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__traits.hpp
+[27.994s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__type_support.hpp
+[28.005s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/object_position_srv.hpp
+[28.018s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__rosidl_typesupport_fastrtps_cpp.hpp
+[28.027s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_cpp.hpp
+[28.038s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__rosidl_typesupport_fastrtps_cpp.hpp
+[28.048s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__rosidl_typesupport_fastrtps_cpp.hpp
+[28.058s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[28.070s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_fastrtps_cpp.hpp
+[28.081s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_fastrtps_cpp.hpp
+[28.093s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__rosidl_typesupport_introspection_cpp.hpp
+[28.101s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_cpp.hpp
+[28.112s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__rosidl_typesupport_introspection_cpp.hpp
+[28.119s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__rosidl_typesupport_introspection_cpp.hpp
+[28.131s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_introspection_cpp.hpp
+[28.142s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_introspection_cpp.hpp
+[28.153s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/pythonpath.sh
+[28.161s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/pythonpath.dsv
+[28.172s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces-1.0.0-py3.12.egg-info/PKG-INFO
+[28.183s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces-1.0.0-py3.12.egg-info/SOURCES.txt
+[28.193s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces-1.0.0-py3.12.egg-info/dependency_links.txt
+[28.203s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces-1.0.0-py3.12.egg-info/top_level.txt
+[28.212s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/__init__.py
+[28.222s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.c
+[28.230s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+[28.240s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+[28.248s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/__init__.py
+[28.256s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_box_position.py
+[28.264s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_box_position_s.c
+[28.271s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_duty_cycles.py
+[28.279s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_duty_cycles_s.c
+[28.287s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_encoders.py
+[28.296s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_encoders_s.c
+[28.303s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_object_position.py
+[28.314s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_object_position_s.c
+[28.322s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_c.so
+[28.330s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so
+[28.338s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_introspection_c.so
+[28.346s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/__init__.py
+[28.354s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_box_position_srv.py
+[28.361s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_box_position_srv_s.c
+[28.371s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_object_position_srv.py
+[28.381s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_object_position_srv_s.c
+[28.389s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so
+[28.389s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_introspection_c.so
+[28.389s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_c.so
+[28.390s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/DutyCycles.idl
+[28.398s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/Encoders.idl
+[28.406s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/ObjectPosition.idl
+[28.413s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/BoxPosition.idl
+[28.423s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/ObjectPositionSrv.idl
+[28.431s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/BoxPositionSrv.idl
+[28.438s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/DutyCycles.msg
+[28.446s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/Encoders.msg
+[28.453s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/ObjectPosition.msg
+[28.461s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/BoxPosition.msg
+[28.468s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/ObjectPositionSrv.srv
+[28.477s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/BoxPositionSrv.srv
+[28.485s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/ament_index/resource_index/package_run_dependencies/robp_interfaces
+[28.492s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/ament_index/resource_index/parent_prefix_path/robp_interfaces
+[28.501s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/ament_prefix_path.sh
+[28.509s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/ament_prefix_path.dsv
+[28.516s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/path.sh
+[28.524s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/path.dsv
+[28.532s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/local_setup.bash
+[28.541s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/local_setup.sh
+[28.552s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/local_setup.zsh
+[28.562s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/local_setup.dsv
+[28.569s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/package.dsv
+[28.577s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/ament_index/resource_index/packages/robp_interfaces
+[28.585s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/rosidl_cmake-extras.cmake
+[28.593s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+[28.601s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+[28.610s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+[28.619s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+[28.629s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[28.637s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[28.645s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfacesConfig.cmake
+[28.653s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfacesConfig-version.cmake
+[28.662s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/package.xml
+[28.670s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_generator_c.so
+[28.671s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_generator_c.so" to ""
+[28.671s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_fastrtps_c.so
+[28.671s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_fastrtps_c.so" to ""
+[28.671s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_introspection_c.so
+[28.672s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_introspection_c.so" to ""
+[28.672s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_c.so
+[28.672s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_c.so" to ""
+[28.673s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_fastrtps_cpp.so
+[28.674s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""
+[28.674s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_introspection_cpp.so
+[28.674s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_introspection_cpp.so" to ""
+[28.674s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_cpp.so
+[28.674s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_cpp.so" to ""
+[28.727s] Listing '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces'...
+[28.727s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/__init__.py'...
+[28.727s] Listing '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg'...
+[28.727s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/__init__.py'...
+[28.728s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_box_position.py'...
+[28.728s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_duty_cycles.py'...
+[28.728s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_encoders.py'...
+[28.728s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_object_position.py'...
+[28.728s] Listing '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv'...
+[28.728s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/__init__.py'...
+[28.728s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_box_position_srv.py'...
+[28.728s] Compiling '/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_object_position_srv.py'...
+[28.733s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_generator_py.so
+[28.734s] -- Set non-toolchain portion of runtime path of "/home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_generator_py.so" to ""
+[28.736s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_generator_cExport.cmake
+[28.736s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_generator_cExport-noconfig.cmake
+[28.736s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+[28.736s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[28.736s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfaces__rosidl_typesupport_introspection_cExport.cmake
+[28.736s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[28.736s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfaces__rosidl_typesupport_cExport.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfaces__rosidl_typesupport_cExport-noconfig.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_generator_cppExport.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfaces__rosidl_typesupport_cppExport.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/robp_interfaces__rosidl_typesupport_cppExport-noconfig.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_generator_pyExport.cmake
+[28.737s] -- Installing: /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/cmake/export_robp_interfaces__rosidl_generator_pyExport-noconfig.cmake
+[28.740s] Invoked command in '/home/group3-robot/robp_group3/build/robp_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/robp_interfaces

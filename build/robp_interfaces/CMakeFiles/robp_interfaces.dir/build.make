@@ -68,13 +68,10 @@ include CMakeFiles/robp_interfaces.dir/progress.make
 
 CMakeFiles/robp_interfaces: /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/DutyCycles.msg
 CMakeFiles/robp_interfaces: /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/Encoders.msg
-<<<<<<< HEAD
 CMakeFiles/robp_interfaces: /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/ObjectPosition.msg
 CMakeFiles/robp_interfaces: /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/msg/BoxPosition.msg
 CMakeFiles/robp_interfaces: /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/srv/ObjectPositionSrv.srv
 CMakeFiles/robp_interfaces: /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces/srv/BoxPositionSrv.srv
-=======
->>>>>>> path-planner
 CMakeFiles/robp_interfaces: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
 CMakeFiles/robp_interfaces: /opt/ros/jazzy/share/std_msgs/msg/Byte.idl
 CMakeFiles/robp_interfaces: /opt/ros/jazzy/share/std_msgs/msg/ByteMultiArray.idl
@@ -105,10 +102,7 @@ CMakeFiles/robp_interfaces: /opt/ros/jazzy/share/std_msgs/msg/UInt64.idl
 CMakeFiles/robp_interfaces: /opt/ros/jazzy/share/std_msgs/msg/UInt64MultiArray.idl
 CMakeFiles/robp_interfaces: /opt/ros/jazzy/share/std_msgs/msg/UInt8.idl
 CMakeFiles/robp_interfaces: /opt/ros/jazzy/share/std_msgs/msg/UInt8MultiArray.idl
-<<<<<<< HEAD
 CMakeFiles/robp_interfaces: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
-=======
->>>>>>> path-planner
 
 robp_interfaces: CMakeFiles/robp_interfaces
 robp_interfaces: CMakeFiles/robp_interfaces.dir/build.make

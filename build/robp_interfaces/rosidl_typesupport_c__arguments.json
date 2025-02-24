@@ -4,15 +4,11 @@
   "template_dir": "/opt/ros/jazzy/share/rosidl_typesupport_c/resource",
   "idl_tuples": [
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/DutyCycles.idl",
-<<<<<<< HEAD
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/Encoders.idl",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/ObjectPosition.idl",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/BoxPosition.idl",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:srv/ObjectPositionSrv.idl",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:srv/BoxPositionSrv.idl"
-=======
-    "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/Encoders.idl"
->>>>>>> path-planner
   ],
   "ros_interface_dependencies": [
     "std_msgs:/opt/ros/jazzy/share/std_msgs/msg/Bool.idl",
@@ -46,12 +42,8 @@
     "std_msgs:/opt/ros/jazzy/share/std_msgs/msg/UInt8.idl",
     "std_msgs:/opt/ros/jazzy/share/std_msgs/msg/UInt8MultiArray.idl",
     "builtin_interfaces:/opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl",
-<<<<<<< HEAD
     "builtin_interfaces:/opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl",
     "service_msgs:/opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl"
-=======
-    "builtin_interfaces:/opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl"
->>>>>>> path-planner
   ],
   "target_dependencies": [
     "/opt/ros/jazzy/lib/rosidl_typesupport_c/rosidl_typesupport_c",
@@ -62,13 +54,10 @@
     "/opt/ros/jazzy/share/rosidl_typesupport_c/resource/srv__type_support.cpp.em",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/msg/DutyCycles.idl",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/msg/Encoders.idl",
-<<<<<<< HEAD
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/msg/BoxPosition.idl",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/srv/ObjectPositionSrv.idl",
     "/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl",
-=======
->>>>>>> path-planner
     "/opt/ros/jazzy/share/std_msgs/msg/Bool.idl",
     "/opt/ros/jazzy/share/std_msgs/msg/Byte.idl",
     "/opt/ros/jazzy/share/std_msgs/msg/ByteMultiArray.idl",
@@ -100,11 +89,7 @@
     "/opt/ros/jazzy/share/std_msgs/msg/UInt8.idl",
     "/opt/ros/jazzy/share/std_msgs/msg/UInt8MultiArray.idl",
     "/opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl",
-<<<<<<< HEAD
     "/opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl",
     "/opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl"
-=======
-    "/opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl"
->>>>>>> path-planner
   ]
 }

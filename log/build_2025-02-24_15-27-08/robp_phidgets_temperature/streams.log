@@ -1,0 +1,63 @@
+[0.245s] Invoking command in '/home/group3-robot/robp_group3/build/robp_phidgets_temperature': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_phidgets/robp_phidgets_temperature -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/robp_phidgets_temperature
+[1.049s] -- robp_phidgets_temperature: You did not request a specific build type: Choosing 'Release' for maximum performance
+[1.049s] -- The C compiler identification is GNU 13.3.0
+[1.049s] -- The CXX compiler identification is GNU 13.3.0
+[1.049s] -- Detecting C compiler ABI info
+[1.050s] -- Detecting C compiler ABI info - done
+[1.051s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.051s] -- Detecting C compile features
+[1.051s] -- Detecting C compile features - done
+[1.051s] -- Detecting CXX compiler ABI info
+[1.051s] -- Detecting CXX compiler ABI info - done
+[1.051s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.052s] -- Detecting CXX compile features
+[1.052s] -- Detecting CXX compile features - done
+[1.052s] -- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+[1.052s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.052s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.052s] -- Found libphidget22: 2.3.3 (/opt/ros/jazzy/share/libphidget22/cmake)
+[1.053s] -- Found phidgets_api: 2.3.3 (/opt/ros/jazzy/share/phidgets_api/cmake)
+[1.053s] -- Found rclcpp: 28.1.6 (/opt/ros/jazzy/share/rclcpp/cmake)
+[1.053s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[1.071s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[1.093s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.139s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.290s] -- Found rmw_implementation_cmake: 7.3.1 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.292s] -- Found rmw_fastrtps_cpp: 8.4.1 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.489s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[1.551s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[1.619s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.763s] -- Found rclcpp_components: 28.1.6 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+[1.824s] -- Found sensor_msgs: 5.3.5 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[2.088s] -- Configuring done (1.8s)
+[2.105s] -- Generating done (0.0s)
+[2.110s] -- Build files have been written to: /home/group3-robot/robp_group3/build/robp_phidgets_temperature
+[2.132s] Invoked command in '/home/group3-robot/robp_group3/build/robp_phidgets_temperature' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_phidgets/robp_phidgets_temperature -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/robp_phidgets_temperature
+[2.132s] Invoking command in '/home/group3-robot/robp_group3/build/robp_phidgets_temperature': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/robp_phidgets_temperature -- -j8 -l8
+[2.256s] [ 50%] [32mBuilding CXX object CMakeFiles/robp_phidgets_temperature.dir/src/temperature.cpp.o[0m
+[21.334s] [100%] [32m[1mLinking CXX shared library librobp_phidgets_temperature.so[0m
+[22.173s] [100%] Built target robp_phidgets_temperature
+[22.220s] Invoked command in '/home/group3-robot/robp_group3/build/robp_phidgets_temperature' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/robp_phidgets_temperature -- -j8 -l8
+[22.221s] Invoking command in '/home/group3-robot/robp_group3/build/robp_phidgets_temperature': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/robp_phidgets_temperature
+[22.248s] -- Install configuration: "Release"
+[22.248s] -- Execute custom install script
+[22.258s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/lib/librobp_phidgets_temperature.so
+[22.289s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/include/robp_phidgets_temperature/temperature.hpp
+[22.311s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/launch/temperature_launch.py
+[22.333s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/ament_index/resource_index/package_run_dependencies/robp_phidgets_temperature
+[22.365s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/ament_index/resource_index/parent_prefix_path/robp_phidgets_temperature
+[22.388s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/environment/ament_prefix_path.sh
+[22.402s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/environment/ament_prefix_path.dsv
+[22.450s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/environment/path.sh
+[22.485s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/environment/path.dsv
+[22.532s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/local_setup.bash
+[22.556s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/local_setup.sh
+[22.596s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/local_setup.zsh
+[22.636s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/local_setup.dsv
+[22.686s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/package.dsv
+[22.711s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/ament_index/resource_index/packages/robp_phidgets_temperature
+[22.747s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/ament_index/resource_index/rclcpp_components/robp_phidgets_temperature
+[22.782s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/cmake/robp_phidgets_temperatureConfig.cmake
+[22.806s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/cmake/robp_phidgets_temperatureConfig-version.cmake
+[22.834s] -- Symlinking: /home/group3-robot/robp_group3/install/robp_phidgets_temperature/share/robp_phidgets_temperature/package.xml
+[22.871s] Invoked command in '/home/group3-robot/robp_group3/build/robp_phidgets_temperature' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/mapping:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/behavior_tree:/home/group3-robot/robp_group3/robp_ws/install/handle_objects:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/robp_phidgets_temperature

@@ -76,6 +76,10 @@ class CarrotPlanner(Node):
     def goal_callback(self, msg: PointStamped):
         self.goal_position.x = msg.point.x
         self.goal_position.y = msg.point.y
+        # my temporary goal
+        self.goal_position.x = 0.5
+        self.goal_position.y = 0
+        #
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
         self.get_logger().info(f"New goal received: x={msg.point.x:.2f}, y={msg.point.y:.2f}")
@@ -231,6 +235,7 @@ class CarrotPlanner(Node):
         self.vel_cmd.angular.z = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
 
+"""
 def main(args=None):
     rclpy.init(args=args)
     node = CarrotPlanner()
@@ -240,3 +245,4 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+    """
