@@ -1,0 +1,34 @@
+[2.086s] Invoking command in '/home/group3-robot/robp_group3/build/arm_servos_pubs_subs': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/arm_servos_pubs_subs/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build
+[2.613s] running develop
+[3.010s] Removing /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm-servos-pubs-subs.egg-link (link to .)
+[3.103s] Invoked command in '/home/group3-robot/robp_group3/build/arm_servos_pubs_subs' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/arm_servos_pubs_subs/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build
+[3.104s] Invoking command in '/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_arm/arm_servos_pubs_subs': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/arm_servos_pubs_subs/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../../../build/arm_servos_pubs_subs build --build-base /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build install --record /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/install.log --single-version-externally-managed install_data --force
+[3.804s] running egg_info
+[3.838s] writing ../../../../../build/arm_servos_pubs_subs/arm_servos_pubs_subs.egg-info/PKG-INFO
+[3.838s] writing dependency_links to ../../../../../build/arm_servos_pubs_subs/arm_servos_pubs_subs.egg-info/dependency_links.txt
+[3.838s] writing entry points to ../../../../../build/arm_servos_pubs_subs/arm_servos_pubs_subs.egg-info/entry_points.txt
+[3.838s] writing requirements to ../../../../../build/arm_servos_pubs_subs/arm_servos_pubs_subs.egg-info/requires.txt
+[3.839s] writing top-level names to ../../../../../build/arm_servos_pubs_subs/arm_servos_pubs_subs.egg-info/top_level.txt
+[3.892s] reading manifest file '../../../../../build/arm_servos_pubs_subs/arm_servos_pubs_subs.egg-info/SOURCES.txt'
+[3.893s] writing manifest file '../../../../../build/arm_servos_pubs_subs/arm_servos_pubs_subs.egg-info/SOURCES.txt'
+[3.893s] running build
+[3.893s] running build_py
+[3.894s] running install
+[3.908s] running install_lib
+[3.935s] creating /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm_servos_pubs_subs
+[3.936s] copying /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build/lib/arm_servos_pubs_subs/servo_pos_subscriber.py -> /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm_servos_pubs_subs
+[3.937s] copying /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build/lib/arm_servos_pubs_subs/move_servos_publisher.py -> /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm_servos_pubs_subs
+[3.938s] copying /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build/lib/arm_servos_pubs_subs/__init__.py -> /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm_servos_pubs_subs
+[3.948s] byte-compiling /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm_servos_pubs_subs/servo_pos_subscriber.py to servo_pos_subscriber.cpython-312.pyc
+[3.950s] byte-compiling /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm_servos_pubs_subs/move_servos_publisher.py to move_servos_publisher.cpython-312.pyc
+[3.952s] byte-compiling /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm_servos_pubs_subs/__init__.py to __init__.cpython-312.pyc
+[3.952s] running install_data
+[3.952s] copying resource/arm_servos_pubs_subs -> /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/share/ament_index/resource_index/packages
+[3.952s] copying package.xml -> /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/share/arm_servos_pubs_subs
+[3.952s] running install_egg_info
+[3.984s] Copying ../../../../../build/arm_servos_pubs_subs/arm_servos_pubs_subs.egg-info to /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm_servos_pubs_subs-0.0.0-py3.12.egg-info
+[3.985s] running install_scripts
+[4.245s] Installing listener script to /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/arm_servos_pubs_subs
+[4.245s] Installing talker script to /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/arm_servos_pubs_subs
+[4.245s] writing list of installed files to '/home/group3-robot/robp_group3/build/arm_servos_pubs_subs/install.log'
+[4.313s] Invoked command in '/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_arm/arm_servos_pubs_subs' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/arm_servos_pubs_subs/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../../../build/arm_servos_pubs_subs build --build-base /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build install --record /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/install.log --single-version-externally-managed install_data --force

@@ -176,6 +176,7 @@ CMakeFiles/micro_ros_msgs_uninstall.dir/clean:
 # Target rules for target CMakeFiles/micro_ros_msgs.dir
 
 # All Build rule for target.
+<<<<<<< HEAD
 CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_c.dir/all
 CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__cpp.dir/all
 CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_fastrtps_cpp.dir/all
@@ -185,6 +186,17 @@ CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport
 CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_introspection_c.dir/all
 CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_introspection_cpp.dir/all
 CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_cpp.dir/all
+=======
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_introspection_cpp.dir/all
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_cpp.dir/all
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_c.dir/all
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__cpp.dir/all
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_fastrtps_cpp.dir/all
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_generator_c.dir/all
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_fastrtps_c.dir/all
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_typesupport_introspection_c.dir/all
+CMakeFiles/micro_ros_msgs.dir/all: CMakeFiles/micro_ros_msgs__rosidl_generator_type_description.dir/all
+>>>>>>> path-planner
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_msgs.dir/build.make CMakeFiles/micro_ros_msgs.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/micro_ros_msgs.dir/build.make CMakeFiles/micro_ros_msgs.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/group3-robot/robp_group3/build/micro_ros_msgs/CMakeFiles --progress-num= "Built target micro_ros_msgs"

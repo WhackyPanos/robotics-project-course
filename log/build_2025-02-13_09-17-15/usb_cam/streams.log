@@ -1,0 +1,130 @@
+[0.015s] Invoking command in '/home/group3-robot/robp_group3/build/usb_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/src/install/detection:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/robp_robot/usb_cam -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/usb_cam
+[0.171s] -- The C compiler identification is GNU 13.3.0
+[0.234s] -- The CXX compiler identification is GNU 13.3.0
+[0.276s] -- Detecting C compiler ABI info
+[0.448s] -- Detecting C compiler ABI info - done
+[0.473s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.473s] -- Detecting C compile features
+[0.474s] -- Detecting C compile features - done
+[0.487s] -- Detecting CXX compiler ABI info
+[0.625s] -- Detecting CXX compiler ABI info - done
+[0.643s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.644s] -- Detecting CXX compile features
+[0.644s] -- Detecting CXX compile features - done
+[0.653s] -- Found ament_cmake_auto: 2.5.3 (/opt/ros/jazzy/share/ament_cmake_auto/cmake)
+[1.226s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.530s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[2.114s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[2.192s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[2.279s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.374s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.790s] -- Found rmw_implementation_cmake: 7.3.1 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[2.816s] -- Found rmw_fastrtps_cpp: 8.4.1 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[3.215s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[3.313s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[3.426s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[4.687s] -- Setting yaml-cpp_DIR to: '/opt/ros/jazzy/share/yaml_cpp_vendor/cmake/../../../opt/yaml_cpp_vendor/share/cmake/yaml-cpp'
+[5.281s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[5.319s] -- Found OpenCV: /usr (found version "4.6.0") 
+[5.334s] -- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
+[5.341s] -- Checking for module 'libavcodec'
+[5.395s] --   Found libavcodec, version 60.31.102
+[5.513s] -- Checking for module 'libavutil'
+[5.565s] --   Found libavutil, version 58.29.100
+[5.662s] -- Checking for module 'libswscale'
+[5.712s] --   Found libswscale, version 7.5.100
+[5.864s] -- Found ament_lint_auto: 0.17.1 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[5.982s] -- Found gtest sources under '/opt/ros/jazzy/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[5.994s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[6.287s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[6.288s] -- Found Threads: TRUE  
+[6.332s] -- Added test 'copyright' to check source files copyright and LICENSE
+[6.339s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[6.340s] -- Configured cppcheck include dirs: /home/group3-robot/robp_group3/robp_ws/src/robp_robot/usb_cam/include
+[6.344s] -- Configured cppcheck exclude dirs and/or files: 
+[6.353s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[6.353s] -- Configured cpplint exclude dirs and/or files: 
+[6.354s] -- Added test 'flake8' to check Python code syntax and style conventions
+[6.354s] -- Configured 'flake8' exclude dirs and/or files: 
+[6.354s] -- Added test 'lint_cmake' to check CMake code style
+[6.356s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[6.360s] -- Added test 'uncrustify' to check C / C++ code style
+[6.360s] -- Configured uncrustify additional arguments: 
+[6.362s] -- Added test 'xmllint' to check XML markup files
+[6.368s] -- Configuring done (6.3s)
+[6.450s] -- Generating done (0.1s)
+[6.464s] -- Build files have been written to: /home/group3-robot/robp_group3/build/usb_cam
+[6.489s] Invoked command in '/home/group3-robot/robp_group3/build/usb_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/src/install/detection:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/robp_robot/usb_cam -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/usb_cam
+[6.490s] Invoking command in '/home/group3-robot/robp_group3/build/usb_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/src/install/detection:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/usb_cam -- -j8 -l8
+[6.613s] [  7%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[6.613s] [ 14%] [32mBuilding CXX object CMakeFiles/usb_cam.dir/src/usb_cam.cpp.o[0m
+[6.622s] [ 21%] [32mBuilding CXX object CMakeFiles/usb_cam_node_exe.dir/rclcpp_components/node_main_usb_cam_node_exe.cpp.o[0m
+[6.629s] [ 28%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[9.045s] [ 35%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[9.507s] [ 35%] Built target gtest_main
+[11.798s] [ 42%] [32m[1mLinking CXX shared library libusb_cam.so[0m
+[12.236s] [ 42%] Built target usb_cam
+[12.298s] [ 50%] [32mBuilding CXX object CMakeFiles/usb_cam_node.dir/src/usb_cam_node.cpp.o[0m
+[13.412s] [ 57%] [32m[1mLinking CXX executable usb_cam_node_exe[0m
+[13.621s] [ 57%] Built target usb_cam_node_exe
+[14.862s] [ 64%] [32m[1mLinking CXX static library libgtest.a[0m
+[15.097s] [ 64%] Built target gtest
+[15.142s] [ 71%] [32mBuilding CXX object CMakeFiles/test_usb_cam_utils.dir/test/test_usb_cam_utils.cpp.o[0m
+[15.149s] [ 78%] [32mBuilding CXX object CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o[0m
+[16.879s] [ 85%] [32m[1mLinking CXX executable test_usb_cam_utils[0m
+[17.077s] [ 92%] [32m[1mLinking CXX executable test_pixel_formats[0m
+[17.157s] [ 92%] Built target test_usb_cam_utils
+[17.281s] [ 92%] Built target test_pixel_formats
+[28.082s] [100%] [32m[1mLinking CXX shared library libusb_cam_node.so[0m
+[28.924s] [100%] Built target usb_cam_node
+[28.960s] Invoked command in '/home/group3-robot/robp_group3/build/usb_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/src/install/detection:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/usb_cam -- -j8 -l8
+[28.964s] Invoking command in '/home/group3-robot/robp_group3/build/usb_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/src/install/detection:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/usb_cam
+[28.986s] -- Install configuration: ""
+[28.989s] -- Execute custom install script
+[28.989s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/environment/library_path.sh
+[29.014s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/environment/library_path.dsv
+[29.041s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/lib/usb_cam/usb_cam_node_exe
+[29.067s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/lib/usb_cam/show_image.py
+[29.091s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/lib/libusb_cam.so
+[29.114s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/lib/libusb_cam_node.so
+[29.144s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/constants.hpp
+[29.167s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/conversions.hpp
+[29.193s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/av_pixel_format_helper.hpp
+[29.219s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/m420.hpp
+[29.241s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/mjpeg.hpp
+[29.254s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/mono.hpp
+[29.266s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/pixel_format_base.hpp
+[29.280s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/rgb.hpp
+[29.292s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/utils.hpp
+[29.318s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/uyvy.hpp
+[29.339s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/formats/yuyv.hpp
+[29.351s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/usb_cam.hpp
+[29.364s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/usb_cam_node.hpp
+[29.377s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/include/usb_cam/utils.hpp
+[29.390s] -- Up-to-date symlink: /home/group3-robot/robp_group3/install/usb_cam/lib/libusb_cam_node.so
+[29.390s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/launch/__init__.py
+[29.413s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/launch/camera.launch.py
+[29.436s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/launch/camera_config.py
+[29.460s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/config/camera_info.yaml
+[29.487s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/config/params_1.yaml
+[29.511s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/config/params_2.yaml
+[29.533s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/ament_index/resource_index/package_run_dependencies/usb_cam
+[29.562s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/ament_index/resource_index/parent_prefix_path/usb_cam
+[29.588s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/environment/ament_prefix_path.sh
+[29.612s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/environment/ament_prefix_path.dsv
+[29.639s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/environment/path.sh
+[29.660s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/environment/path.dsv
+[29.684s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/local_setup.bash
+[29.710s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/local_setup.sh
+[29.736s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/local_setup.zsh
+[29.758s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/local_setup.dsv
+[29.785s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/package.dsv
+[29.809s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/ament_index/resource_index/packages/usb_cam
+[29.839s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/ament_index/resource_index/rclcpp_components/usb_cam
+[29.856s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/cmake/ament_cmake_export_libraries-extras.cmake
+[29.869s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/cmake/ament_cmake_export_dependencies-extras.cmake
+[29.881s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/cmake/ament_cmake_export_include_directories-extras.cmake
+[29.894s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/cmake/usb_camConfig.cmake
+[29.907s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/cmake/usb_camConfig-version.cmake
+[29.919s] -- Symlinking: /home/group3-robot/robp_group3/install/usb_cam/share/usb_cam/package.xml
+[29.933s] Invoked command in '/home/group3-robot/robp_group3/build/usb_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/group3-robot/robp_group3/robp_ws/src/install/detection:/home/group3-robot/robp_group3/robp_ws/install/robp_launch:/home/group3-robot/robp_group3/robp_ws/install/odometry:/home/group3-robot/robp_group3/robp_ws/install/path_planner:/home/group3-robot/robp_group3/robp_ws/install/joystick_teleop:/home/group3-robot/robp_group3/robp_ws/install/detection:/home/group3-robot/robp_group3/robp_ws/install/arm_servos_pubs_subs:/home/group3-robot/robp_group3/robp_ws/install/arm_controller:/home/group3-robot/dd2419_ws/install/robp_launch:/home/group3-robot/dd2419_ws/install/odometry:/home/group3-robot/dd2419_ws/install/joystick_teleop:/home/group3-robot/dd2419_ws/install/detection:/home/group3-robot/dd2419_ws/install/arm_servos_pubs_subs:/home/group3-robot/dd2419_ws/install/arm_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/usb_cam

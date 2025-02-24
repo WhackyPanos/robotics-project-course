@@ -205,8 +205,13 @@ librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libaction_msgs__rosidl_typesuppo
 librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libaction_msgs__rosidl_typesupport_cpp.so
 librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libaction_msgs__rosidl_generator_py.so
 librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_c.so
+<<<<<<< HEAD
 librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_introspection_c.so
 librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_cpp.so
+=======
+librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_cpp.so
+librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_introspection_c.so
+>>>>>>> path-planner
 librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_introspection_cpp.so
 librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_cpp.so
 librobp_phidgets_spatial.so: /opt/ros/jazzy/lib/libaction_msgs__rosidl_typesupport_c.so

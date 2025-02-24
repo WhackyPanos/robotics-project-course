@@ -1,6 +1,9 @@
 /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/DutyCycles.idl
 /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/Encoders.idl
+<<<<<<< HEAD
 /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/ObjectPosition.idl
 /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:msg/BoxPosition.idl
 /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:srv/ObjectPositionSrv.idl
 /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_adapter/robp_interfaces:srv/BoxPositionSrv.idl
+=======
+>>>>>>> path-planner

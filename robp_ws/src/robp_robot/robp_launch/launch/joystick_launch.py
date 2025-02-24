@@ -13,6 +13,7 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
         ),
 
+<<<<<<< HEAD
         
         IncludeLaunchDescription(
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))
@@ -27,6 +28,31 @@ def generate_launch_description():
             package='odometry',
             executable='odometry'
         ),
+=======
+        
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))
+        ),
+
+        # IncludeLaunchDescription(
+        #     AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/detection_launch.py'))
+        # ),
+
+        # IncludeLaunchDescription(
+        #     AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/lidar_launch.yaml'))
+        # ),
+        
+>>>>>>> path-planner
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
+        ),
+        Node(
+            package='odometry',
+            executable='odometry'
+        ),
+        
         Node(
             package='joystick_teleop',
             executable='teleop'

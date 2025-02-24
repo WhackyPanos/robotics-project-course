@@ -1,10 +1,13 @@
 file(REMOVE_RECURSE
+<<<<<<< HEAD
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.o"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c.o.d"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.o"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c.o.d"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.o"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c.o.d"
+=======
+>>>>>>> path-planner
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o.d"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__functions.c.o"
@@ -17,6 +20,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.c.o.d"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.o"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.o.d"
+<<<<<<< HEAD
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o.d"
   "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.o"
@@ -44,6 +48,10 @@ file(REMOVE_RECURSE
   "rosidl_generator_c/robp_interfaces/msg/detail/box_position__struct.h"
   "rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c"
   "rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.h"
+=======
+  "librobp_interfaces__rosidl_generator_c.pdb"
+  "librobp_interfaces__rosidl_generator_c.so"
+>>>>>>> path-planner
   "rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c"
   "rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__functions.c"
   "rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__functions.h"
@@ -56,6 +64,7 @@ file(REMOVE_RECURSE
   "rosidl_generator_c/robp_interfaces/msg/detail/encoders__struct.h"
   "rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c"
   "rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.h"
+<<<<<<< HEAD
   "rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c"
   "rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c"
   "rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.h"
@@ -79,6 +88,10 @@ file(REMOVE_RECURSE
   "rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c"
   "rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.h"
   "rosidl_generator_c/robp_interfaces/srv/object_position_srv.h"
+=======
+  "rosidl_generator_c/robp_interfaces/msg/duty_cycles.h"
+  "rosidl_generator_c/robp_interfaces/msg/encoders.h"
+>>>>>>> path-planner
 )
 
 # Per-language clean rules from dependency scanning.

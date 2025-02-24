@@ -237,6 +237,7 @@ CMakeFiles/robp_interfaces_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__functions.h \
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.h \
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__struct.h \
+<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.h \
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.h \
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/object_position__struct.h \
@@ -251,3 +252,6 @@ CMakeFiles/robp_interfaces_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.h \
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__struct.h \
  /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.h
+=======
+ /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.h
+>>>>>>> path-planner

@@ -1,0 +1,37 @@
+[1.660s] Invoking command in '/home/group3-robot/robp_group3/build/robp_boot_camp_launch': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/robp_boot_camp_launch/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build
+[2.114s] running develop
+[2.428s] Removing /home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages/robp-boot-camp-launch.egg-link (link to .)
+[2.494s] Invoked command in '/home/group3-robot/robp_group3/build/robp_boot_camp_launch' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/robp_boot_camp_launch/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build
+[2.495s] Invoking command in '/home/group3-robot/robp_group3/robp_ws/src/robp_boot_camp_launch': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/robp_boot_camp_launch/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/robp_boot_camp_launch build --build-base /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build install --record /home/group3-robot/robp_group3/build/robp_boot_camp_launch/install.log --single-version-externally-managed install_data --force
+[2.923s] running egg_info
+[2.955s] writing ../../../build/robp_boot_camp_launch/robp_boot_camp_launch.egg-info/PKG-INFO
+[2.956s] writing dependency_links to ../../../build/robp_boot_camp_launch/robp_boot_camp_launch.egg-info/dependency_links.txt
+[2.958s] writing requirements to ../../../build/robp_boot_camp_launch/robp_boot_camp_launch.egg-info/requires.txt
+[2.958s] writing top-level names to ../../../build/robp_boot_camp_launch/robp_boot_camp_launch.egg-info/top_level.txt
+[3.015s] reading manifest file '../../../build/robp_boot_camp_launch/robp_boot_camp_launch.egg-info/SOURCES.txt'
+[3.015s] writing manifest file '../../../build/robp_boot_camp_launch/robp_boot_camp_launch.egg-info/SOURCES.txt'
+[3.015s] running build
+[3.016s] running build_py
+[3.016s] creating /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build
+[3.016s] creating /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build/lib
+[3.017s] creating /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build/lib/robp_boot_camp_launch
+[3.017s] copying robp_boot_camp_launch/__init__.py -> /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build/lib/robp_boot_camp_launch
+[3.017s] running install
+[3.028s] running install_lib
+[3.055s] creating /home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages/robp_boot_camp_launch
+[3.058s] copying /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build/lib/robp_boot_camp_launch/__init__.py -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages/robp_boot_camp_launch
+[3.058s] byte-compiling /home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages/robp_boot_camp_launch/__init__.py to __init__.cpython-312.pyc
+[3.058s] running install_data
+[3.058s] copying resource/robp_boot_camp_launch -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/share/ament_index/resource_index/packages
+[3.058s] copying launch/boot_camp_part1_launch.xml -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/share/robp_boot_camp_launch/launch
+[3.058s] copying launch/boot_camp_part3_launch.xml -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/share/robp_boot_camp_launch/launch
+[3.058s] copying launch/boot_camp_part2_launch.xml -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/share/robp_boot_camp_launch/launch
+[3.058s] copying rviz/boot_camp_part3.rviz -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/share/robp_boot_camp_launch/rviz
+[3.058s] copying rviz/boot_camp_part1.rviz -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/share/robp_boot_camp_launch/rviz
+[3.059s] copying rviz/boot_camp_part2.rviz -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/share/robp_boot_camp_launch/rviz
+[3.059s] copying package.xml -> /home/group3-robot/robp_group3/install/robp_boot_camp_launch/share/robp_boot_camp_launch
+[3.059s] running install_egg_info
+[3.106s] Copying ../../../build/robp_boot_camp_launch/robp_boot_camp_launch.egg-info to /home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages/robp_boot_camp_launch-1.0.0-py3.12.egg-info
+[3.107s] running install_scripts
+[3.325s] writing list of installed files to '/home/group3-robot/robp_group3/build/robp_boot_camp_launch/install.log'
+[3.398s] Invoked command in '/home/group3-robot/robp_group3/robp_ws/src/robp_boot_camp_launch' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/robp_boot_camp_launch/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/robp_boot_camp_launch build --build-base /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build install --record /home/group3-robot/robp_group3/build/robp_boot_camp_launch/install.log --single-version-externally-managed install_data --force

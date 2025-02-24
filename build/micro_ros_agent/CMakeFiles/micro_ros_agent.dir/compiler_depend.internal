@@ -23,6 +23,7 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/graph.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/node.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+<<<<<<< HEAD
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/common.h
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/backtracer.h
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/circular_q.h
@@ -42,6 +43,8 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/version.h
+=======
+>>>>>>> path-planner
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp
@@ -604,6 +607,10 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
  /usr/include/c++/13/unordered_map
  /usr/include/c++/13/utility
  /usr/include/c++/13/vector
+<<<<<<< HEAD
+=======
+ /usr/include/c++/13/version
+>>>>>>> path-planner
  /usr/include/ctype.h
  /usr/include/endian.h
  /usr/include/errno.h
@@ -628,6 +635,29 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o
  /usr/include/pthread.h
  /usr/include/sched.h
  /usr/include/signal.h
+<<<<<<< HEAD
+=======
+ /usr/include/spdlog/common.h
+ /usr/include/spdlog/details/backtracer.h
+ /usr/include/spdlog/details/circular_q.h
+ /usr/include/spdlog/details/console_globals.h
+ /usr/include/spdlog/details/log_msg.h
+ /usr/include/spdlog/details/log_msg_buffer.h
+ /usr/include/spdlog/details/null_mutex.h
+ /usr/include/spdlog/details/periodic_worker.h
+ /usr/include/spdlog/details/registry.h
+ /usr/include/spdlog/details/synchronous_factory.h
+ /usr/include/spdlog/fmt/bin_to_hex.h
+ /usr/include/spdlog/fmt/fmt.h
+ /usr/include/spdlog/fmt/ostr.h
+ /usr/include/spdlog/formatter.h
+ /usr/include/spdlog/logger.h
+ /usr/include/spdlog/sinks/sink.h
+ /usr/include/spdlog/sinks/stdout_sinks.h
+ /usr/include/spdlog/spdlog.h
+ /usr/include/spdlog/tweakme.h
+ /usr/include/spdlog/version.h
+>>>>>>> path-planner
  /usr/include/stdc-predef.h
  /usr/include/stdint.h
  /usr/include/stdio.h
@@ -2274,6 +2304,7 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/graph.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/node.hpp
  /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+<<<<<<< HEAD
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/common.h
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/backtracer.h
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/circular_q.h
@@ -2293,6 +2324,8 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/version.h
+=======
+>>>>>>> path-planner
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp
@@ -2855,6 +2888,10 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
  /usr/include/c++/13/unordered_map
  /usr/include/c++/13/utility
  /usr/include/c++/13/vector
+<<<<<<< HEAD
+=======
+ /usr/include/c++/13/version
+>>>>>>> path-planner
  /usr/include/ctype.h
  /usr/include/endian.h
  /usr/include/errno.h
@@ -2879,6 +2916,29 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o
  /usr/include/pthread.h
  /usr/include/sched.h
  /usr/include/signal.h
+<<<<<<< HEAD
+=======
+ /usr/include/spdlog/common.h
+ /usr/include/spdlog/details/backtracer.h
+ /usr/include/spdlog/details/circular_q.h
+ /usr/include/spdlog/details/console_globals.h
+ /usr/include/spdlog/details/log_msg.h
+ /usr/include/spdlog/details/log_msg_buffer.h
+ /usr/include/spdlog/details/null_mutex.h
+ /usr/include/spdlog/details/periodic_worker.h
+ /usr/include/spdlog/details/registry.h
+ /usr/include/spdlog/details/synchronous_factory.h
+ /usr/include/spdlog/fmt/bin_to_hex.h
+ /usr/include/spdlog/fmt/fmt.h
+ /usr/include/spdlog/fmt/ostr.h
+ /usr/include/spdlog/formatter.h
+ /usr/include/spdlog/logger.h
+ /usr/include/spdlog/sinks/sink.h
+ /usr/include/spdlog/sinks/stdout_sinks.h
+ /usr/include/spdlog/spdlog.h
+ /usr/include/spdlog/tweakme.h
+ /usr/include/spdlog/version.h
+>>>>>>> path-planner
  /usr/include/stdc-predef.h
  /usr/include/stdint.h
  /usr/include/stdio.h

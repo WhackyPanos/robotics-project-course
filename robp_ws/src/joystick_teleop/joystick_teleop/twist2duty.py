@@ -17,8 +17,9 @@ class Twist2Duty(Node):
         self.axis_straight = 7  # Left stick up/down
         self.axis_rotate = 2  # CHANGE LATER ON
         #self.axis_angular = 6  # Left stick left/right
-        self.max_linear = 0.1 # maximum linear velocity
-        self.max_angular = 0.05 # maximum angular velocity
+        # TODO made some assumptions about the velocities... we should check tho
+        self.max_linear = 0.8 # maximum linear velocity
+        self.max_angular = 4.8 # maximum angular velocity
 
         # Robot parameters
         self.wheel_radius = 0.04921  # meters

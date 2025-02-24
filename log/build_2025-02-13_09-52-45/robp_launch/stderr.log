@@ -1,0 +1,2 @@
+/home/group3-robot/ros2_venv/lib/python3.12/site-packages/setuptools/_distutils/dist.py:270: UserWarning: Unknown distribution option: 'tests_require'
+  warnings.warn(msg)

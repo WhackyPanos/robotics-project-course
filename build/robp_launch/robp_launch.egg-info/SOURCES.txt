@@ -3,6 +3,11 @@ setup.cfg
 setup.py
 launch/arm_camera_launch.yaml
 launch/arm_servo_launch.py
+<<<<<<< HEAD
+=======
+launch/boot_camp_part1_launch.xml
+launch/control_launch.py
+>>>>>>> path-planner
 launch/detection_launch.py
 launch/frames_launch.xml
 launch/joystick_launch.py
@@ -10,8 +15,13 @@ launch/lidar_launch.yaml
 launch/lidar_odom_launch.py
 launch/path_planner_launch.py
 launch/phidgets_launch.py
+<<<<<<< HEAD
 launch/pick_objects_launch.py
 launch/rs_d435i_launch.py
+=======
+launch/rs_d435i_launch.py
+launch/test_path_planner_launch.py
+>>>>>>> path-planner
 resource/robp_launch
 robp_launch/__init__.py
 robp_launch.egg-info/PKG-INFO

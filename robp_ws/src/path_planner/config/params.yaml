@@ -3,6 +3,6 @@
     width: 1.0
     height: 1.0
     border_safety_margin: 0.1
-    linear_velocity: 0.01
-    angular_velocity: 0.005
+    linear_velocity: 0.02
+    angular_velocity: 0.01
     goal_threshold: 0.2

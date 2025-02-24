@@ -86,7 +86,10 @@ uagent-prefix/src/uagent-stamp/uagent-build: uagent-prefix/src/uagent-stamp/uage
 	$(MAKE)
 	/usr/bin/cmake -E touch /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/uagent-prefix/src/uagent-stamp/uagent-build
 
+<<<<<<< HEAD
 uagent-prefix/src/uagent-stamp/uagent-configure: spdlog/src/spdlog-stamp/spdlog-done
+=======
+>>>>>>> path-planner
 uagent-prefix/src/uagent-stamp/uagent-configure: uagent-prefix/tmp/uagent-cfgcmd.txt
 uagent-prefix/src/uagent-stamp/uagent-configure: uagent-prefix/tmp/uagent-cache-.cmake
 uagent-prefix/src/uagent-stamp/uagent-configure: uagent-prefix/src/uagent-stamp/uagent-patch

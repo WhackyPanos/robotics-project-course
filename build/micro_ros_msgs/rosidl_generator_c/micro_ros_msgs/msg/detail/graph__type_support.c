@@ -4,10 +4,17 @@
 
 #include <string.h>
 
+<<<<<<< HEAD
 #include "micro_ros_msgs/msg/detail/graph__struct.h"
 #include "rosidl_typesupport_interface/macros.h"
 #include "micro_ros_msgs/msg/detail/graph__type_support.h"
 #include "micro_ros_msgs/msg/detail/graph__functions.h"
+=======
+#include "micro_ros_msgs/msg/detail/graph__type_support.h"
+#include "micro_ros_msgs/msg/detail/graph__struct.h"
+#include "micro_ros_msgs/msg/detail/graph__functions.h"
+#include "rosidl_typesupport_interface/macros.h"
+>>>>>>> path-planner
 
 #ifdef __cplusplus
 extern "C"

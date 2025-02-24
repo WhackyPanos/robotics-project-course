@@ -25,8 +25,13 @@ CMakeFiles/drive_base_msgs__rosidl_generator_c.dir/rosidl_generator_c/drive_base
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
  /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/time__struct.h \
  /home/group3-robot/robp_group3/build/drive_base_msgs/rosidl_generator_c/drive_base_msgs/msg/detail/command_header__struct.h \
+<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/drive_base_msgs/rosidl_generator_c/drive_base_msgs/msg/detail/command_status__type_support.h \
  /opt/ros/jazzy/include/rosidl_typesupport_interface/rosidl_typesupport_interface/macros.h \
+=======
+ /opt/ros/jazzy/include/rosidl_typesupport_interface/rosidl_typesupport_interface/macros.h \
+ /home/group3-robot/robp_group3/build/drive_base_msgs/rosidl_generator_c/drive_base_msgs/msg/detail/command_status__type_support.h \
+>>>>>>> path-planner
  /home/group3-robot/robp_group3/build/drive_base_msgs/rosidl_generator_c/drive_base_msgs/msg/rosidl_generator_c__visibility_control.h \
  /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/message_type_support_struct.h \
  /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/type_description/type_description__struct.h \

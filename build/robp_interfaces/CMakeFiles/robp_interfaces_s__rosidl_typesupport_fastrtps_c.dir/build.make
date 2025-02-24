@@ -97,20 +97,29 @@ rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrt
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: librobp_interfaces__rosidl_typesupport_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librmw.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_c.so
+<<<<<<< HEAD
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_c.so
+=======
+>>>>>>> path-planner
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_typesupport_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: librobp_interfaces__rosidl_generator_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_fastrtps_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
+<<<<<<< HEAD
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_c.so
+=======
+>>>>>>> path-planner
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_typesupport_fastrtps_cpp.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librmw.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_dynamic_typesupport.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_typesupport_fastrtps_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libfastcdr.so.2.2.5
+<<<<<<< HEAD
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_generator_c.so
+=======
+>>>>>>> path-planner
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_runtime_c.so
 rosidl_generator_py/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librcutils.so

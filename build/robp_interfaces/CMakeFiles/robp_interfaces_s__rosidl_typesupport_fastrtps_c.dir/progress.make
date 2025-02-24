@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 CMAKE_PROGRESS_1 = 81
 CMAKE_PROGRESS_2 = 82
+=======
+CMAKE_PROGRESS_1 = 41
+CMAKE_PROGRESS_2 = 42
+>>>>>>> path-planner
 

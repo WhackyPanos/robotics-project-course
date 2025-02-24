@@ -90,10 +90,13 @@ rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/rosid
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/rosidl_generator_c/resource/srv__type_support.h.em
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: rosidl_adapter/robp_interfaces/msg/DutyCycles.idl
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: rosidl_adapter/robp_interfaces/msg/Encoders.idl
+<<<<<<< HEAD
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: rosidl_adapter/robp_interfaces/msg/BoxPosition.idl
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: rosidl_adapter/robp_interfaces/srv/ObjectPositionSrv.idl
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl
+=======
+>>>>>>> path-planner
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/std_msgs/msg/Byte.idl
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/std_msgs/msg/ByteMultiArray.idl
@@ -126,7 +129,10 @@ rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/std_m
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/std_msgs/msg/UInt8MultiArray.idl
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl
+<<<<<<< HEAD
 rosidl_generator_c/robp_interfaces/msg/duty_cycles.h: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
+=======
+>>>>>>> path-planner
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C code for ROS interfaces"
 	/usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_c/cmake/../../../lib/rosidl_generator_c/rosidl_generator_c --generator-arguments-file /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c__arguments.json
 
@@ -151,6 +157,7 @@ rosidl_generator_c/robp_interfaces/msg/detail/encoders__struct.h: rosidl_generat
 rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.h: rosidl_generator_c/robp_interfaces/msg/duty_cycles.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.h
 
+<<<<<<< HEAD
 rosidl_generator_c/robp_interfaces/msg/object_position.h: rosidl_generator_c/robp_interfaces/msg/duty_cycles.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/robp_interfaces/msg/object_position.h
 
@@ -199,6 +206,8 @@ rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__struct.h: rosidl
 rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.h: rosidl_generator_c/robp_interfaces/msg/duty_cycles.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.h
 
+=======
+>>>>>>> path-planner
 rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c: rosidl_generator_c/robp_interfaces/msg/duty_cycles.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c
 
@@ -217,6 +226,7 @@ rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.c: rosidl_gene
 rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c: rosidl_generator_c/robp_interfaces/msg/duty_cycles.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c
 
+<<<<<<< HEAD
 rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c: rosidl_generator_c/robp_interfaces/msg/duty_cycles.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c
 
@@ -253,6 +263,8 @@ rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c: ros
 rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c: rosidl_generator_c/robp_interfaces/msg/duty_cycles.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c
 
+=======
+>>>>>>> path-planner
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/flags.make
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o: rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/compiler_depend.ts
@@ -337,6 +349,7 @@ CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_inter
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c -o CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.s
 
+<<<<<<< HEAD
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/flags.make
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o: rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/compiler_depend.ts
@@ -505,6 +518,8 @@ CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_inter
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c -o CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.s
 
+=======
+>>>>>>> path-planner
 # Object files for target robp_interfaces__rosidl_generator_c
 robp_interfaces__rosidl_generator_c_OBJECTS = \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c.o" \
@@ -512,6 +527,7 @@ robp_interfaces__rosidl_generator_c_OBJECTS = \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__type_support.c.o" \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__description.c.o" \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.c.o" \
+<<<<<<< HEAD
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.o" \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o" \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.o" \
@@ -525,6 +541,9 @@ robp_interfaces__rosidl_generator_c_OBJECTS = \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__description.c.o" \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__functions.c.o" \
 "CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/srv/detail/box_position_srv__type_support.c.o"
+=======
+"CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.o"
+>>>>>>> path-planner
 
 # External object files for target robp_interfaces__rosidl_generator_c
 robp_interfaces__rosidl_generator_c_EXTERNAL_OBJECTS =
@@ -535,6 +554,7 @@ librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_ge
 librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__description.c.o
 librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__functions.c.o
 librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c.o
+<<<<<<< HEAD
 librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c.o
 librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c.o
 librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robp_interfaces/msg/detail/object_position__type_support.c.o
@@ -550,11 +570,19 @@ librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_ge
 librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make
 librobp_interfaces__rosidl_generator_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
 librobp_interfaces__rosidl_generator_c.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_generator_c.so
+=======
+librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/build.make
+librobp_interfaces__rosidl_generator_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
+>>>>>>> path-planner
 librobp_interfaces__rosidl_generator_c.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_c.so
 librobp_interfaces__rosidl_generator_c.so: /opt/ros/jazzy/lib/librosidl_runtime_c.so
 librobp_interfaces__rosidl_generator_c.so: /opt/ros/jazzy/lib/librcutils.so
 librobp_interfaces__rosidl_generator_c.so: CMakeFiles/robp_interfaces__rosidl_generator_c.dir/link.txt
+<<<<<<< HEAD
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking C shared library librobp_interfaces__rosidl_generator_c.so"
+=======
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C shared library librobp_interfaces__rosidl_generator_c.so"
+>>>>>>> path-planner
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/robp_interfaces__rosidl_generator_c.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -565,6 +593,7 @@ CMakeFiles/robp_interfaces__rosidl_generator_c.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/robp_interfaces__rosidl_generator_c.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/robp_interfaces__rosidl_generator_c.dir/clean
 
+<<<<<<< HEAD
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/box_position.h
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/box_position__description.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/box_position__functions.c
@@ -572,6 +601,8 @@ CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/ro
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/box_position__struct.h
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/box_position__type_support.h
+=======
+>>>>>>> path-planner
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__description.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__functions.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/duty_cycles__functions.h
@@ -584,6 +615,7 @@ CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/ro
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/encoders__struct.h
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/encoders__type_support.h
+<<<<<<< HEAD
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/object_position__description.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/detail/object_position__functions.h
@@ -607,6 +639,10 @@ CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/ro
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.c
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/srv/detail/object_position_srv__type_support.h
 CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/srv/object_position_srv.h
+=======
+CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/duty_cycles.h
+CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/robp_interfaces/msg/encoders.h
+>>>>>>> path-planner
 	cd /home/group3-robot/robp_group3/build/robp_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles/robp_interfaces__rosidl_generator_c.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/robp_interfaces__rosidl_generator_c.dir/depend
 

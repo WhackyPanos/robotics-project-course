@@ -1,0 +1,19 @@
+[0.893s] Invoking command in '/home/group3-robot/robp_group3/build/mapping': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/mapping/prefix_override:/home/group3-robot/ros2_venv/lib/python3.12/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(ros2_venv) /home/group3-robot/ros2_venv/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/mapping/build --no-deps symlink_data
+[1.192s] /home/group3-robot/ros2_venv/lib/python3.12/site-packages/setuptools/_distutils/dist.py:270: UserWarning: Unknown distribution option: 'tests_require'
+[1.192s]   warnings.warn(msg)
+[1.384s] running develop
+[1.634s] running egg_info
+[1.656s] writing mapping.egg-info/PKG-INFO
+[1.657s] writing dependency_links to mapping.egg-info/dependency_links.txt
+[1.657s] writing entry points to mapping.egg-info/entry_points.txt
+[1.657s] writing requirements to mapping.egg-info/requires.txt
+[1.657s] writing top-level names to mapping.egg-info/top_level.txt
+[1.701s] reading manifest file 'mapping.egg-info/SOURCES.txt'
+[1.703s] writing manifest file 'mapping.egg-info/SOURCES.txt'
+[1.730s] running build_ext
+[1.730s] Creating /home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages/mapping.egg-link (link to .)
+[1.730s] Installing mapping script to /home/group3-robot/robp_group3/install/mapping/lib/mapping
+[1.730s] 
+[1.730s] Installed /home/group3-robot/robp_group3/build/mapping
+[1.730s] running symlink_data
+[1.820s] Invoked command in '/home/group3-robot/robp_group3/build/mapping' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/mapping/prefix_override:/home/group3-robot/ros2_venv/lib/python3.12/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/mapping/lib/python3.12/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(ros2_venv) /home/group3-robot/ros2_venv/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/mapping/build --no-deps symlink_data

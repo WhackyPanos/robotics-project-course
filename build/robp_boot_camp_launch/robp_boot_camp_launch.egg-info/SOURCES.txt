@@ -1,0 +1,17 @@
+package.xml
+setup.cfg
+setup.py
+launch/boot_camp_part1_launch.xml
+launch/boot_camp_part2_launch.xml
+launch/boot_camp_part3_launch.xml
+resource/robp_boot_camp_launch
+robp_boot_camp_launch/__init__.py
+robp_boot_camp_launch.egg-info/PKG-INFO
+robp_boot_camp_launch.egg-info/SOURCES.txt
+robp_boot_camp_launch.egg-info/dependency_links.txt
+robp_boot_camp_launch.egg-info/requires.txt
+robp_boot_camp_launch.egg-info/top_level.txt
+robp_boot_camp_launch.egg-info/zip-safe
+rviz/boot_camp_part1.rviz
+rviz/boot_camp_part2.rviz
+rviz/boot_camp_part3.rviz

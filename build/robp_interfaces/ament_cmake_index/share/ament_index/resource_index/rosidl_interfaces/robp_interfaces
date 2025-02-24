@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 msg/BoxPosition.idl
 msg/BoxPosition.msg
 msg/DutyCycles.idl
@@ -10,3 +11,9 @@ srv/BoxPositionSrv.idl
 srv/BoxPositionSrv.srv
 srv/ObjectPositionSrv.idl
 srv/ObjectPositionSrv.srv
+=======
+msg/DutyCycles.idl
+msg/DutyCycles.msg
+msg/Encoders.idl
+msg/Encoders.msg
+>>>>>>> path-planner

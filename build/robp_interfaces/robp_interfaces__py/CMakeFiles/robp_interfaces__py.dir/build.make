@@ -71,6 +71,7 @@ include /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.c
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_duty_cycles.py
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_encoders.py
+<<<<<<< HEAD
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_object_position.py
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_box_position.py
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/srv/_object_position_srv.py
@@ -83,6 +84,11 @@ include /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_box_position_s.c
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c
 /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c
+=======
+/home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/__init__.py
+/home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.c
+/home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_encoders_s.c
+>>>>>>> path-planner
 
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/lib/rosidl_generator_py/rosidl_generator_py
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/lib/python3.12/site-packages/rosidl_generator_py/__init__.py
@@ -99,10 +105,13 @@ rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fas
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/rosidl_generator_py/resource/_srv.py.em
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robp_interfaces/msg/DutyCycles.idl
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robp_interfaces/msg/Encoders.idl
+<<<<<<< HEAD
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robp_interfaces/msg/BoxPosition.idl
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robp_interfaces/srv/ObjectPositionSrv.idl
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl
+=======
+>>>>>>> path-planner
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/std_msgs/msg/Byte.idl
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/std_msgs/msg/ByteMultiArray.idl
@@ -135,7 +144,10 @@ rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fas
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/std_msgs/msg/UInt8MultiArray.idl
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl
+<<<<<<< HEAD
 rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
+=======
+>>>>>>> path-planner
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code for ROS interfaces"
 	cd /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py && /usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_py/cmake/../../../lib/rosidl_generator_py/rosidl_generator_py --generator-arguments-file /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_py__arguments.json --typesupport-impls "rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c;rosidl_typesupport_c"
 
@@ -151,6 +163,7 @@ rosidl_generator_py/robp_interfaces/msg/_duty_cycles.py: rosidl_generator_py/rob
 rosidl_generator_py/robp_interfaces/msg/_encoders.py: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robp_interfaces/msg/_encoders.py
 
+<<<<<<< HEAD
 rosidl_generator_py/robp_interfaces/msg/_object_position.py: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robp_interfaces/msg/_object_position.py
 
@@ -169,12 +182,18 @@ rosidl_generator_py/robp_interfaces/msg/__init__.py: rosidl_generator_py/robp_in
 rosidl_generator_py/robp_interfaces/srv/__init__.py: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robp_interfaces/srv/__init__.py
 
+=======
+rosidl_generator_py/robp_interfaces/msg/__init__.py: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robp_interfaces/msg/__init__.py
+
+>>>>>>> path-planner
 rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.c: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.c
 
 rosidl_generator_py/robp_interfaces/msg/_encoders_s.c: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robp_interfaces/msg/_encoders_s.c
 
+<<<<<<< HEAD
 rosidl_generator_py/robp_interfaces/msg/_object_position_s.c: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robp_interfaces/msg/_object_position_s.c
 
@@ -187,17 +206,23 @@ rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c: rosidl_generat
 rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c
 
+=======
+>>>>>>> path-planner
 robp_interfaces__py: /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_c.c
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.c
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/__init__.py
+<<<<<<< HEAD
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_box_position.py
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_box_position_s.c
+=======
+>>>>>>> path-planner
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_duty_cycles.py
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_duty_cycles_s.c
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_encoders.py
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_encoders_s.c
+<<<<<<< HEAD
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_object_position.py
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/msg/_object_position_s.c
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/srv/__init__.py
@@ -205,6 +230,8 @@ robp_interfaces__py: rosidl_generator_py/robp_interfaces/srv/_box_position_srv.p
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/srv/_box_position_srv_s.c
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/srv/_object_position_srv.py
 robp_interfaces__py: rosidl_generator_py/robp_interfaces/srv/_object_position_srv_s.c
+=======
+>>>>>>> path-planner
 robp_interfaces__py: /home/group3-robot/robp_group3/build/robp_interfaces/robp_interfaces__py/CMakeFiles/robp_interfaces__py.dir/build.make
 .PHONY : robp_interfaces__py
 

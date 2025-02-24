@@ -1,0 +1,37 @@
+[2.387s] Invoking command in '/home/group3-robot/robp_group3/build/detection': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/detection/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/group3-robot/robp_group3/build/detection/build
+[2.934s] running develop
+[3.400s] Removing /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection.egg-link (link to .)
+[3.503s] Invoked command in '/home/group3-robot/robp_group3/build/detection' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/detection/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/group3-robot/robp_group3/build/detection/build
+[3.504s] Invoking command in '/home/group3-robot/robp_group3/robp_ws/src/detection': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/detection/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/detection build --build-base /home/group3-robot/robp_group3/build/detection/build install --record /home/group3-robot/robp_group3/build/detection/install.log --single-version-externally-managed install_data --force
+[3.979s] running egg_info
+[4.011s] writing ../../../build/detection/detection.egg-info/PKG-INFO
+[4.011s] writing dependency_links to ../../../build/detection/detection.egg-info/dependency_links.txt
+[4.011s] writing entry points to ../../../build/detection/detection.egg-info/entry_points.txt
+[4.011s] writing requirements to ../../../build/detection/detection.egg-info/requires.txt
+[4.011s] writing top-level names to ../../../build/detection/detection.egg-info/top_level.txt
+[4.071s] reading manifest file '../../../build/detection/detection.egg-info/SOURCES.txt'
+[4.071s] adding license file 'LICENSE'
+[4.071s] writing manifest file '../../../build/detection/detection.egg-info/SOURCES.txt'
+[4.071s] running build
+[4.071s] running build_py
+[4.071s] creating /home/group3-robot/robp_group3/build/detection/build
+[4.078s] creating /home/group3-robot/robp_group3/build/detection/build/lib
+[4.078s] creating /home/group3-robot/robp_group3/build/detection/build/lib/detection
+[4.078s] copying detection/detection.py -> /home/group3-robot/robp_group3/build/detection/build/lib/detection
+[4.078s] copying detection/__init__.py -> /home/group3-robot/robp_group3/build/detection/build/lib/detection
+[4.078s] running install
+[4.084s] running install_lib
+[4.133s] creating /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection
+[4.136s] copying /home/group3-robot/robp_group3/build/detection/build/lib/detection/detection.py -> /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection
+[4.136s] copying /home/group3-robot/robp_group3/build/detection/build/lib/detection/__init__.py -> /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection
+[4.140s] byte-compiling /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection/detection.py to detection.cpython-312.pyc
+[4.146s] byte-compiling /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection/__init__.py to __init__.cpython-312.pyc
+[4.146s] running install_data
+[4.147s] copying resource/detection -> /home/group3-robot/robp_group3/install/detection/share/ament_index/resource_index/packages
+[4.147s] copying package.xml -> /home/group3-robot/robp_group3/install/detection/share/detection
+[4.147s] running install_egg_info
+[4.223s] Copying ../../../build/detection/detection.egg-info to /home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages/detection-0.0.0-py3.12.egg-info
+[4.228s] running install_scripts
+[4.450s] Installing detection script to /home/group3-robot/robp_group3/install/detection/lib/detection
+[4.451s] writing list of installed files to '/home/group3-robot/robp_group3/build/detection/install.log'
+[4.678s] Invoked command in '/home/group3-robot/robp_group3/robp_ws/src/detection' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/detection/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/detection/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/detection build --build-base /home/group3-robot/robp_group3/build/detection/build install --record /home/group3-robot/robp_group3/build/detection/install.log --single-version-externally-managed install_data --force

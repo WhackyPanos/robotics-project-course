@@ -60,7 +60,11 @@ add_library(robp_interfaces::robp_interfaces__rosidl_typesupport_fastrtps_cpp SH
 
 set_target_properties(robp_interfaces::robp_interfaces__rosidl_typesupport_fastrtps_cpp PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/robp_interfaces"
+<<<<<<< HEAD
   INTERFACE_LINK_LIBRARIES "fastcdr;rmw::rmw;rosidl_runtime_c::rosidl_runtime_c;rosidl_runtime_cpp::rosidl_runtime_cpp;rosidl_typesupport_interface::rosidl_typesupport_interface;rosidl_typesupport_fastrtps_cpp::rosidl_typesupport_fastrtps_cpp;std_msgs::std_msgs__rosidl_typesupport_fastrtps_cpp;builtin_interfaces::builtin_interfaces__rosidl_typesupport_fastrtps_cpp;service_msgs::service_msgs__rosidl_typesupport_fastrtps_cpp;robp_interfaces::robp_interfaces__rosidl_generator_c;robp_interfaces::robp_interfaces__rosidl_generator_cpp"
+=======
+  INTERFACE_LINK_LIBRARIES "fastcdr;rmw::rmw;rosidl_runtime_c::rosidl_runtime_c;rosidl_runtime_cpp::rosidl_runtime_cpp;rosidl_typesupport_interface::rosidl_typesupport_interface;rosidl_typesupport_fastrtps_cpp::rosidl_typesupport_fastrtps_cpp;std_msgs::std_msgs__rosidl_typesupport_fastrtps_cpp;builtin_interfaces::builtin_interfaces__rosidl_typesupport_fastrtps_cpp;robp_interfaces::robp_interfaces__rosidl_generator_c;robp_interfaces::robp_interfaces__rosidl_generator_cpp"
+>>>>>>> path-planner
 )
 
 if(CMAKE_VERSION VERSION_LESS 2.8.12)

@@ -240,12 +240,18 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/SessionManager.hpp \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/logger/Logger.hpp \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Color.hpp \
+<<<<<<< HEAD
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/spdlog.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/common.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/tweakme.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/null_mutex.h \
  /usr/include/c++/13/atomic \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/fmt.h \
+=======
+ /usr/include/spdlog/spdlog.h /usr/include/spdlog/common.h \
+ /usr/include/spdlog/tweakme.h /usr/include/spdlog/details/null_mutex.h \
+ /usr/include/c++/13/atomic /usr/include/spdlog/fmt/fmt.h \
+>>>>>>> path-planner
  /usr/include/fmt/core.h /usr/include/c++/13/cstring \
  /usr/include/string.h /usr/include/strings.h \
  /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
@@ -271,6 +277,7 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: \
  /usr/include/c++/13/tr1/poly_hermite.tcc \
  /usr/include/c++/13/tr1/poly_laguerre.tcc \
  /usr/include/c++/13/tr1/riemann_zeta.tcc /usr/include/fmt/core.h \
+<<<<<<< HEAD
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/registry.h \
  /usr/include/c++/13/mutex /usr/include/c++/13/bits/std_mutex.h \
  /usr/include/c++/13/bits/unique_lock.h \
@@ -289,6 +296,26 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/console_globals.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/sink.h \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/formatter.h \
+=======
+ /usr/include/spdlog/details/registry.h \
+ /usr/include/spdlog/details/periodic_worker.h \
+ /usr/include/c++/13/condition_variable \
+ /usr/include/c++/13/bits/std_mutex.h \
+ /usr/include/c++/13/bits/unique_lock.h /usr/include/c++/13/mutex \
+ /usr/include/c++/13/thread /usr/include/c++/13/bits/std_thread.h \
+ /usr/include/c++/13/bits/this_thread_sleep.h \
+ /usr/include/spdlog/logger.h /usr/include/spdlog/details/log_msg.h \
+ /usr/include/spdlog/details/backtracer.h \
+ /usr/include/spdlog/details/log_msg_buffer.h \
+ /usr/include/spdlog/details/circular_q.h /usr/include/c++/13/cassert \
+ /usr/include/assert.h /usr/include/spdlog/version.h \
+ /usr/include/spdlog/details/synchronous_factory.h \
+ /usr/include/spdlog/fmt/ostr.h /usr/include/fmt/ostream.h \
+ /usr/include/fmt/format.h /usr/include/spdlog/fmt/bin_to_hex.h \
+ /usr/include/c++/13/version /usr/include/spdlog/sinks/stdout_sinks.h \
+ /usr/include/spdlog/details/console_globals.h \
+ /usr/include/spdlog/sinks/sink.h /usr/include/spdlog/formatter.h \
+>>>>>>> path-planner
  /usr/include/c++/13/map /usr/include/c++/13/bits/stl_tree.h \
  /usr/include/c++/13/bits/stl_map.h \
  /usr/include/c++/13/bits/stl_multimap.h \
@@ -296,7 +323,10 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/Scheduler.hpp \
  /usr/include/c++/13/deque /usr/include/c++/13/bits/stl_deque.h \
  /usr/include/c++/13/bits/deque.tcc \
+<<<<<<< HEAD
  /usr/include/c++/13/condition_variable \
+=======
+>>>>>>> path-planner
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/Packet.hpp \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/InputMessage.hpp \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/MessageHeader.hpp \
@@ -326,8 +356,11 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/OutputMessage.hpp \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Functions.hpp \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/processor/Processor.hpp \
+<<<<<<< HEAD
  /usr/include/c++/13/thread /usr/include/c++/13/bits/std_thread.h \
  /usr/include/c++/13/bits/this_thread_sleep.h \
+=======
+>>>>>>> path-planner
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv4AgentLinux.hpp \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv4EndPoint.hpp \
  /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerLinux.hpp \

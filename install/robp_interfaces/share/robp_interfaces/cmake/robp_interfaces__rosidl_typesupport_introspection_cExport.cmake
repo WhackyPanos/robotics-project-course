@@ -60,7 +60,11 @@ add_library(robp_interfaces::robp_interfaces__rosidl_typesupport_introspection_c
 
 set_target_properties(robp_interfaces::robp_interfaces__rosidl_typesupport_introspection_c PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/robp_interfaces"
+<<<<<<< HEAD
   INTERFACE_LINK_LIBRARIES "robp_interfaces::robp_interfaces__rosidl_generator_c;rosidl_runtime_c::rosidl_runtime_c;rosidl_typesupport_interface::rosidl_typesupport_interface;rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c;std_msgs::std_msgs__rosidl_typesupport_introspection_c;builtin_interfaces::builtin_interfaces__rosidl_typesupport_introspection_c;service_msgs::service_msgs__rosidl_typesupport_introspection_c"
+=======
+  INTERFACE_LINK_LIBRARIES "robp_interfaces::robp_interfaces__rosidl_generator_c;rosidl_runtime_c::rosidl_runtime_c;rosidl_typesupport_interface::rosidl_typesupport_interface;rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c;std_msgs::std_msgs__rosidl_typesupport_introspection_c;builtin_interfaces::builtin_interfaces__rosidl_typesupport_introspection_c"
+>>>>>>> path-planner
 )
 
 if(CMAKE_VERSION VERSION_LESS 2.8.12)
