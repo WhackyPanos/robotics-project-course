@@ -8,13 +8,13 @@ from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from handle_objects.ik_solver import IKNode
 import PyKDL as kdl
-from robp_interfaces.msg import BoxPosition, ObjectPosition
-from robp_interfaces.srv import BoxPositionSrv, ObjectPositionSrv
+from robp_robot.robp_interfaces.msg import BoxPosition, ObjectPosition
+from robp_robot.robp_interfaces.srv import BoxPositionSrv, ObjectPositionSrv
 from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 import tf2_geometry_msgs
-from geometry_msgs.msg import PoseStamped, Pose
+from geometry_msgs.msg import PoseStamped, Pose, PointStamped
 from math import pi
 import numpy as np 
 
@@ -23,40 +23,31 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         super().__init__(name=name)
 
         self.ik_solver = IKNode()
-        # Initialize the transform broadcaster, buffer and listener
         self.to_frame_rel = 'arm_base_link'
         self.from_frame_rel = 'map'
-
-        self.arm_moving = False
-        self.arm_tucked = False
-
-        # current angles and servo angles limits 
-        self.current_angles = None
-        self.lb_angles = [0.0,0.0,30.0,30.0,60.0,0.0]
-        self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
-
-
-    def setup(self, **kwargs):
-        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
-           a parallel checking for a valid policy configuration after children have been added or removed"""
-        self.node = kwargs['node']
-        self.dopmc_available = False # dopac = detected object position in the arm camera (frame)
-        self.ready2move= False
         self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
         self.thresholds = [10**-4,10**-3,10**-2]
+        self.initial_guesses = [[0,80*pi/180,80*pi/180,0,0,0],[10*pi/180,75*pi/180,0,0,0,0],[0,0,0,0,0,0]]
+
+        # current angles and servo angles limits 
+        self.current_angles, self.desired_servo_angles = None, None
+        self.lb_angles = [0.0,0.0,30.0,30.0,60.0,0.0]
+        self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
 
         # Initialize the transform buffer and listener
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self.node)
 
-        # temporary snippet to publish object position in map frame
+        # get object position in the main camera frame
+        """
         self.dopmc_subscriber = self.node.create_subscription(
             ObjectPosition,
             '/detected_object_pose/main_camera',
             self.dopmc_callback,
             10)
-        
-        self.pub = self.node.create_publisher(ObjectPosition, '/detected_object_pose/main_camera', 10)
+        """
+        self.node.create_subscriber(PointStamped, '/temp_goal', self.dopmc_callback, 10)
+        #self.pub = self.node.create_publisher(ObjectPosition, '/detected_object_pose/main_camera', 10)
 
         # initialize servo publisher and servo sensor subscriber to send commands to arm
         self.ota_publisher_ = self.node.create_publisher(
@@ -70,99 +61,168 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
                 self.servo_angles_callback,
                 10
             )  
-        self.obj_tuck_arm_time = 2000 # in ms   
-        
+        self.obj_tuck_arm_time = 3000 # in ms   
+
+
+    def setup(self, **kwargs):
+        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
+           a parallel checking for a valid policy configuration after children have been added or removed"""
+        self.node = kwargs['node']
+        self.dopmc_available = False # dopac = detected object position in the arm camera (frame)
+        self.ready2move= False
+        self.arm_moving = False
+        self.arm_tucked = False  
+        self.object_grasped = False     
         
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
           status is not RUNNING thereafter."""  
-        self.ready2move= True  
+        """ Wait x seconds to initiate arm movement (and publish object position later on)"""
+        self.timer = self.create_timer(1, self.init_arm_movement)
+
+        """ include this later on
         msg = ObjectPosition()
         msg.x = 0.14
         msg.y = -0.05
         msg.object_type = 'S'
         self.pub.publish(msg)
-
+        """
          
     def update(self):
             """ Behavior Tree execution step. Called whenever the node is ticked """
             #solve_ik(self, target_pose, provided_initial_guess, eps=5e-3, maxiter=100000)
             self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
 
-            # compute target and perform inverse kinematics
-            if self.x is not None and self.y is not None and self.z is not None and not self.arm_moving:
+            # if object position is available, compute target and perform inverse kinematics
+            if self.ready2move and not self.arm_moving: # is necessary, self.x is not None and self.y is not None and self.z is not None and 
                 target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
-                for i, thresh in enumerate(self.thresholds):
-                    result, angles = self.ik_solver.solve_ik(
-                        target_pose=target_pose,
-                        provided_initial_guess = [0,80*pi/180,80*pi/180,0,0],
-                        eps= thresh,
-                        maxiter=100000)
-                    if result >= 0:
-                        # publish corrected angles in the servo_pos topic
-                        self.node.get_logger().info(f"IK Solution: {angles}")
-                        self.publish_angles(angles)
-                        self.arm_moving = True
-                        return py_trees.common.Status.SUCCESS
-                    else:
-                        print(f"IK Solver failed for {thresh}, trying bigger error threshold!")
+                for j,IG in enumerate(self.initial_guesses):
+                    for i, thresh in enumerate(self.thresholds):
+                        result, angles = self.ik_solver.solve_ik(
+                            target_pose=target_pose,
+                            provided_initial_guess = IG, #[0,80*pi/180,80*pi/180,0,0],
+                            eps= thresh,
+                            maxiter=100000)
+                        if result >= 0:
+                            # publish corrected angles in the servo_pos topic
+                            self.node.get_logger().info(f"IK Solution: {angles}")
+                            self.publish_angles(angles)
+                            self.arm_moving = True
+                            return py_trees.common.Status.RUNNING
+                        else:
+                            self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
+                    self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
                 return py_trees.common.Status.FAILURE
+            
+            # if arm is moving but not in grasp position, return keep running
+            elif self.arm_moving and not self.arm_tucked:
+                return py_trees.common.Status.RUNNING 
+            
+            # if arm is in grasp position,  start grasping 
+            elif self.arm_tucked:
+                msg = Int16MultiArray()
+                msg.layout = MultiArrayLayout(
+                    dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
+                    data_offset=0
+                )  
+                times = [self.obj_tuck_arm_time] * 6
+                self.desired_servo_angles.data[0] = 8000 #keep gripper close
+                msg.data = self.desired_servo_angles + times
+                self.ota_publisher_.publish(msg)
+                return py_trees.common.Status.RUNNING
+            
+            # if object is grasped, return success
+            elif self.object_grasped:
+                return py_trees.common.Status.SUCCESS
+            
             else:
                 return py_trees.common.Status.RUNNING  
+            
+    def terminate(self, new_status: py_trees.common.Status):
+        """
+        Minimal termination implementation.
+        When is this called? Whenever your behaviour switches to a non-running state.
+            - SUCCESS || FAILURE : your behaviour's work cycle has finished
+            - INVALID : a higher priority branch has interrupted, or shutting down
+        """
+        if self.object_grasped:
+            return py_trees.common.Status.SUCESS
+
+    def init_arm_movement(self):
+        """ trigger flat to start arm movement"""
+        self.ready2move = True
+        self.timer.cancel()
 
     def dopmc_callback(self,msg):
-        if self.ready2move:
-            self.X = msg.x
-            self.Y = msg.y
-            obj = msg.object_type
+        # rn msg is pointstamped
+        self.X = msg.point.x # later on change to msg.x
+        self.Y = msg.point.x # later on change to msg.y
+        obj = "C" # change later on to msg.object_type
 
-            # get transform from map frame to frame of the arm base
-            time = rclpy.time.Time() #retrieve most recent transform ig
-            try:
-                t = self.tf_buffer.lookup_transform(
-                    self.to_frame_rel,
-                    self.from_frame_rel,
-                    time)
-            except TransformException as ex:
-                self.node.get_logger().info(
-                    f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
-                return
-            
-            # do transformation
-            self.x = t.transform.translation.x + self.X
-            self.y = t.transform.translation.y
-            self.z = t.transform.translation.z
-            
-            """
-            pose_map_frame = PoseStamped()
-            pose_map_frame.header.stamp = t.header.stamp
-            pose_map_frame.header.frame_id = "map"
-            pose_map_frame.pose.position.x =0.0
-            pose_map_frame.pose.position.y = 0.0
-            pose_map_frame.pose.position.z = 0.0
-            pose_map_frame.pose.orientation.x =0.0
-            pose_map_frame.pose.orientation.y = 0.0
-            pose_map_frame.pose.orientation.z = 0.0
-            pose_map_frame.pose.orientation.w = 0.0            
-            transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_map_frame, t)
-            self.x = transformed_pose.pose.position.x
-            self.y = transformed_pose.pose.position.y
-            self.z = transformed_pose.pose.position.z
-            
-            qx = t.transform.rotation.x
-            qy = t.transform.rotation.y
-            qz = t.transform.rotation.z
-            qw = t.transform.rotation.w
-            """
-            # define target with kdl instance
-            self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
-            #self.target = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
+        # get transform from map frame to frame of the arm base
+        time = rclpy.time.Time() #retrieve most recent transform ig
+        try:
+            t = self.tf_buffer.lookup_transform(
+                self.to_frame_rel,
+                self.from_frame_rel,
+                time)
+        except TransformException as ex:
+            self.node.get_logger().info(
+                f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
+            return
+        
+        # do transformation
+        self.x = t.transform.translation.x + self.X
+        self.y = t.transform.translation.y
+        self.z = t.transform.translation.z
+        
+        """
+        pose_map_frame = PoseStamped()
+        pose_map_frame.header.stamp = t.header.stamp
+        pose_map_frame.header.frame_id = "map"
+        pose_map_frame.pose.position.x =0.0
+        pose_map_frame.pose.position.y = 0.0
+        pose_map_frame.pose.position.z = 0.0
+        pose_map_frame.pose.orientation.x =0.0
+        pose_map_frame.pose.orientation.y = 0.0
+        pose_map_frame.pose.orientation.z = 0.0
+        pose_map_frame.pose.orientation.w = 0.0            
+        transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_map_frame, t)
+        self.x = transformed_pose.pose.position.x
+        self.y = transformed_pose.pose.position.y
+        self.z = transformed_pose.pose.position.z
+        
+        qx = t.transform.rotation.x
+        qy = t.transform.rotation.y
+        qz = t.transform.rotation.z
+        qw = t.transform.rotation.w
+        """
+        # define target with kdl instance
+        self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
 
     def servo_angles_callback(self, msg):
+        """ Callback to check if arm is in a good enough position while moving. improve later on"""
         self.current_angles = msg.position
- 
-                        
+        if self.arm_moving and not self.arm_tucked and not self.object_grasped:
+            self.arm_tucked = True
+            self.arm_moving = False
+            for i in range(1, len(self.current_angles)) :
+                if abs(self.desired_servo_angles[i] -self.current_angles[i]) > self.angle_threshold:
+                    print(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -self.current_angles[i])}")
+                    self.arm_tucked = False
+                    self.arm_moving = True
+                    break
+
+        elif not self.arm_moving and self.arm_tucked and not self.object_grasped:
+            self.object_grasped = True
+            for i in range(1, len(self.current_angles)) :
+                if abs(self.desired_servo_angles[i] -self.current_angles[i]) > self.angle_threshold:
+                    print(f"Ongoing grasping {abs(self.desired_servo_angles[i] -self.current_angles[i])}")
+                    self.object_grasped = False
+                    break
+
     def publish_angles(self, ik_angles):
+        """ Publish corrected angles to the arm after having computing inverse kinematics"""
         # retrieve current angles (supposedly arm is stretched) and compute corrected angles to publish
         init_angles = np.multiply(0.01,np.array(self.current_angles)) #, np.array(0.01*[1,1,-1,1,-1,1]))
         desired_angles = self.wrap_angle((180/pi)*np.array(ik_angles[::-1]), "degrees")
@@ -180,7 +240,8 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             data_offset=0
         )      
         times = [self.obj_tuck_arm_time] * 6
-        msg.data = [int(angle*100) for angle in pub_angles] + times
+        self.desired_servo_angles = [int(angle*100) for angle in pub_angles]
+        msg.data = self.desired_servo_angles + times
         msg.data[0] = 2600 #keep gripper open
         
         self.ota_publisher_.publish(msg)
@@ -201,13 +262,6 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         return final_angles
 
         
-    def terminate(self, new_status: py_trees.common.Status):
-        """
-        Minimal termination implementation.
-        When is this called? Whenever your behaviour switches to a non-running state.
-            - SUCCESS || FAILURE : your behaviour's work cycle has finished
-            - INVALID : a higher priority branch has interrupted, or shutting down
-        """
 
  # -----------------------------------------------------------------------------------------------------------------------
 
