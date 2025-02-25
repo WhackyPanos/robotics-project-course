@@ -25,10 +25,10 @@ class PickBT(Node):
 
         # Initialize behaviors and pass ROS node to them
         collect = goCollect()
-        #move_to_pick = Move2Pick()
-        #obj_tuck_bhv = ObjTuckArm()
+        move_to_pick = Move2Pick()
+        obj_tuck_bhv = ObjTuckArm()
         
-        root.add_child(collect) #, move_to_pick, obj_tuck_bhv
+        root.add_children([obj_tuck_bhv]) #, move_to_pick, obj_tuck_bhv
         
         return root
 
@@ -42,10 +42,14 @@ def main(args=None):
     node.tree.setup(timeout=10.0, node=node)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=100)
+    node.tree.tick_tock(period_ms=1000)
 
     # Spin the node to keep it alive
-    rclpy.spin(node)
+    try:
+        rclpy.spin(node)  # This keeps the node alive
+    except KeyboardInterrupt:
+        pass  # Handle Ctrl+C gracefully
+
 
     # Shutdown the node
     rclpy.shutdown()

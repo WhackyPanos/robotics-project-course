@@ -47,7 +47,7 @@ class CollectObjectMS2(Node):
             history=HistoryPolicy.KEEP_LAST,
             depth=10
         )
-        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, qos_profile)
+        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PointStamped, '/temp_goal', self.goal_callback, qos_profile)
         self.goal_reached_publisher = self.create_publisher(Bool, '/goal_reached', 10)
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
@@ -59,7 +59,6 @@ class CollectObjectMS2(Node):
 
     def goal_callback(self, msg: PointStamped):
         """ Callback function to receive the goal position from the behavior tree. """
-        self.get_logger().info("Goal Received!")
         self.goal_position.x = msg.point.x
         self.goal_position.y = msg.point.y
         self.goal_reached_flag = False
@@ -118,6 +117,7 @@ class CollectObjectMS2(Node):
     def navigate_to_goal(self, x, y, theta):
         """ Compute commands to move the robot towards the goal in map frame. """
         """ Parameters """
+  
         angle_tolerance = 0.1  # Angle threshold for facing the goal (adjust as needed)
         distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
         goal_angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
@@ -154,7 +154,6 @@ class CollectObjectMS2(Node):
             self.goal_reached_flag = True
             self.get_logger().info("Goal reached!")
             return
-
         self.cmd_vel_publisher.publish(self.vel_cmd)
         self.rate.sleep()
 
