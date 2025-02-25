@@ -26,24 +26,9 @@ class IKNode(Node):
 
         # --- Example FK
         self.fk_solver = kdl.ChainFkSolverPos_recursive(self.chain) 
-        self.solve_fk([-15.706226190621685, -58.89322565161596, 89.19116421034657, -83.70501671216269, -6.281438203134586, -15.707868506470371])
-        # (29.999217819631284, 0.0, -3.473498557566425) cm
-
-
-        """
-                    self.desired_servo_angles = [12000] * 6
-            self.desired_servo_angles[0] = 2600 # gripper is different
-            # obj tuck arm angles
-            self.desired_servo_angles[4] = 6000  # servo 5
-            self.desired_servo_angles[3] = 20000   # servo 4
-            self.desired_servo_angles[2] = 8000 # servo 3
-        #self.solve_fk([0.0, 0.6147484289969556, -0.16042951294421512])
-        """
-
-        # ---- Example IK Call (uncomment to test) ----
-        #target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
-        #self.solve_ik(target_pose)
-
+        #self.solve_fk([-15.706226190621685, -58.89322565161596, 89.19116421034657, -83.70501671216269, -6.281438203134586, -15.707868506470371])
+        self.solve_fk([0.0,90,0.0,0.0,0.0,0.0])
+        self.solve_fk([0.0,90*pi/180,0.0,0.0,0.0,0.0])
 
     def create_arm_chain(self):
         """
@@ -147,30 +132,36 @@ class IKNode(Node):
         # joints limits in the solver domain
         self.q_min = kdl.JntArray(self.chain.getNrOfJoints())
         self.q_max = kdl.JntArray(self.chain.getNrOfJoints())
-        self.q_min[0] = -120# * pi / 180 #-120
-        self.q_min[1] = -60.0# * pi / 180 #-60.0
-        self.q_min[2] = -90.0# * pi / 180 #-90.0
-        self.q_min[3] = -90.0# * pi / 180 #-90.0
-        self.q_min[4] = -120.0# * pi / 180 #-120.0
-        self.q_min[5] = -1000  # Assuming the last joint has no specific limits
+        self.q_min[0] = -120.0* pi / 180 #-120
+        self.q_min[1] = -120.0* pi / 180 #-60.0
+        self.q_min[2] = -120.0* pi / 180 #-90.0
+        self.q_min[3] = -120.0* pi / 180 #-90.0
+        self.q_min[4] = -120.0* pi / 180 #-120.0
+        self.q_min[5] = -1000#-1000  # Assuming the last joint has no specific limits
 
-        self.q_max[0] = 120.0#* pi / 180 #120.0
-        self.q_max[1] = 60.0# * pi / 180 #60.0
-        self.q_max[2] = 90.0# * pi / 180 #90.0
-        self.q_max[3] = 90.0#* pi / 180 #90.0
-        self.q_max[4] = 120.0 #* pi / 180 #120.0
+        self.q_max[0] = 120.0* pi / 180 #120.0
+        self.q_max[1] = 120.0* pi / 180 #60.0
+        self.q_max[2] = 120.0* pi / 180 #90.0
+        self.q_max[3] = 120.0* pi / 180 #90.0
+        self.q_max[4] = 120.0 * pi / 180 #120.0
         self.q_max[5] = 1000  # Assuming the last joint has no specific limits
 
         # create solver
-        self.ik_solver = kdl.ChainIkSolverPos_NR_JL(
+        # self.ik_solver = kdl.ChainIkSolverPos_NR_JL(
+        #     chain = self.chain,
+        #     q_min = self.q_min, 
+        #     q_max = self.q_max,
+        #     fksolver= fksol,
+        #     iksolver = iksol,
+        #     eps = eps,
+        #     maxiter = maxiter
+        #     ) 
+        
+        self.ik_solver = kdl.ChainIkSolverPos_LMA(
             chain = self.chain,
-            q_min = self.q_min, 
-            q_max = self.q_max,
-            fksolver= fksol,
-            iksolver = iksol,
             eps = eps,
-            maxiter = maxiter
-            ) 
+            maxiter = maxiter,
+            ) # Levenberg-Marquardt IK Solver
 
         # Determine the number of joints 
         num_joints = self.chain.getNrOfJoints()
