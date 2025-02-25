@@ -55,7 +55,7 @@ class CollectObjectMS2(Node):
         # Retrieve parameter values
         self.linear_velocity = 0.1
         self.angular_velocity = 0.2
-        self.goal_threshold = 0.14
+        self.goal_threshold = 0.16
 
     def goal_callback(self, msg: PointStamped):
         """ Callback function to receive the goal position from the behavior tree. """

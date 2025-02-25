@@ -14,7 +14,7 @@ class goCollect(py_trees.behaviour.Behaviour, Node):
         # define goal position for now
         self.goal = PointStamped()
         self.goal.header.frame_id = "map"
-        self.goal.point.x = 0.6
+        self.goal.point.x = 0.5
         self.goal.point.y = 0.0
         self.goal.point.z = 0.0
         self.planner = CollectObjectMS2()
