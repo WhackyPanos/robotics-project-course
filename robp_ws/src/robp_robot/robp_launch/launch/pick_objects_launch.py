@@ -9,6 +9,12 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     robp_launch_dir = get_package_share_directory('robp_launch')
+    # Get the current directory (where the launch file is located)
+    launch_dir = os.path.dirname(os.path.realpath(__file__))
+    
+    # Define the path to the custom .rviz file in the same directory
+    rviz_config_path = os.path.join(launch_dir, 'rviz2_collection.rviz')  # Adjust the filename if needed
+    
     return launch.LaunchDescription([
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
@@ -46,13 +52,14 @@ def generate_launch_description():
 
         #  Node(
         #     package='robp_launch',
-        #     executable='rviz2_collection',
+        #     executable='rviz2',
         #     output='screen',
+        #     arguments = ['-d',rviz_config_path]
 
-        #     # arguments=['-d', os.path.join(
-        #     #     get_package_share_directory('your_package_name'),  # Replace with your package name
-        #     #     'rviz', 'default.rviz') ] # Path to your .rviz configuration file
-        # )
+            # arguments=['-d', os.path.join(
+            #     get_package_share_directory('your_package_name'),  # Replace with your package name
+            #     'rviz', 'default.rviz') ] # Path to your .rviz configuration file
+        #)
     ])
 
 
