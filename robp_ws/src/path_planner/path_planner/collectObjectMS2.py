@@ -8,10 +8,13 @@ from rclpy.node import Node
 from geometry_msgs.msg import Point, Twist, PoseStamped, TransformStamped, PointStamped
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Pose2D
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
+
+
 
 class CollectObjectMS2(Node):
     def __init__(self):
-        super().__init__('collect_cbject_ms2')
+        super().__init__('collect_object_ms2')
 
         # Initialize TF2 Buffer and Listener
         self.tf_buffer = tf2_ros.Buffer()
@@ -39,8 +42,13 @@ class CollectObjectMS2(Node):
         self.obstacle_found = False
 
         #self.create_subscription(PoseStamped, '/path', self.odometry_callback, 10)
-        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
-        self.create_subscription(PointStamped, '/temp_goal', self.goal_callback, 10)
+        qos_profile = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10
+        )
+        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, qos_profile)
+        self.create_subscription(PointStamped, '/temp_goal', self.goal_callback, qos_profile)
         self.goal_reached_publisher = self.create_publisher(Bool, '/goal_reached', 10)
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
@@ -51,6 +59,7 @@ class CollectObjectMS2(Node):
 
     def goal_callback(self, msg: PointStamped):
         """ Callback function to receive the goal position from the behavior tree. """
+        self.get_logger().info("Goal Received!")
         self.goal_position.x = msg.point.x
         self.goal_position.y = msg.point.y
         self.goal_reached_flag = False

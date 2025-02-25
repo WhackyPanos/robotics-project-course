@@ -37,7 +37,22 @@ def generate_launch_description():
             executable='pick_bt',
             output='screen',   # This ensures output goes to the terminal
             emulate_tty=True   # Ensures that print() statements are immediately flushed
-        )
+        ),
+        Node(
+            package='joystick_teleop',
+            executable='twist2duty'
+            
+        ),
+
+        #  Node(
+        #     package='robp_launch',
+        #     executable='rviz2_collection',
+        #     output='screen',
+
+        #     # arguments=['-d', os.path.join(
+        #     #     get_package_share_directory('your_package_name'),  # Replace with your package name
+        #     #     'rviz', 'default.rviz') ] # Path to your .rviz configuration file
+        # )
     ])
 
 

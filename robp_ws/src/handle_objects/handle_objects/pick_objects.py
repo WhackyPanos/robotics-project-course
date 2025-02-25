@@ -8,8 +8,8 @@ from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from handle_objects.ik_solver import IKNode
 import PyKDL as kdl
-from robp_robot.robp_interfaces.msg import BoxPosition, ObjectPosition
-from robp_robot.robp_interfaces.srv import BoxPositionSrv, ObjectPositionSrv
+from robp_interfaces.msg import BoxPosition, ObjectPosition
+from robp_interfaces.srv import BoxPositionSrv, ObjectPositionSrv
 from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener

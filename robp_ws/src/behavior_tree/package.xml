@@ -15,6 +15,7 @@
   <depend>handle_objects</depend>
   <depend>std_msgs</depend>
   <depend>path_planner</depend>
+  <depend>geometry_msgs</depend>
 
  
  

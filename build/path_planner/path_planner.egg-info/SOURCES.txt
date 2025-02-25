@@ -2,7 +2,9 @@ package.xml
 setup.cfg
 setup.py
 path_planner/__init__.py
+path_planner/collectObjectMS2.py
 path_planner/obstacle_avoidance.py
+path_planner/path_execution.py
 path_planner/path_planner.py
 path_planner/point_generator.py
 path_planner/point_publisher_test.py

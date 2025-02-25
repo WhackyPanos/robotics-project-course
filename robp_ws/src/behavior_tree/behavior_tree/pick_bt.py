@@ -7,6 +7,7 @@ from py_trees_ros.trees import BehaviourTree
 from handle_objects.pick_objects import InitTuckArm, ObjTuckArm, Move2Pick, DetectObject
 from path_planner.path_planner import CarrotPlanner
 from behavior_tree.goCollect_bhv import goCollect
+from rclpy.executors import MultiThreadedExecutor
 
 class PickBT(Node):
     def __init__(self) -> None:
@@ -51,3 +52,4 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+

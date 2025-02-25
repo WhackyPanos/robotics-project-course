@@ -23,6 +23,7 @@ setup(
             'path_planner = path_planner.path_planner:main',
             'point_generator = path_planner.point_generator:main',
             'point_publisher_test = path_planner.point_publisher_test:main',
+            'path_execution = path_planner.path_execution:main'
         ],
     },
 )
