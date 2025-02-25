@@ -1,5 +1,5 @@
-#ifndef DETECTION_NODE_HPP
-#define DETECTION_NODE_HPP
+#ifndef CLUSTERING_NODE_H
+#define CLUSTERING_NODE_H
 
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/point_cloud2.hpp>
@@ -26,6 +26,16 @@ private:
     // ROS 2 interfaces
     rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr subscription_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr publisher_;
+
+    // Parameters
+    std::string cloud_topic_;
+    std::string cluster_topic_;
+    double z_filter_min_;
+    double z_filter_max_;
+    double y_filter_min_;
+    double y_filter_max_;
+    double cluster_tolerance_;
+    int cluster_min_size_;
 };
 
-#endif // DETECTION_NODE_HPP
+#endif // CLUSTERING_NODE_H

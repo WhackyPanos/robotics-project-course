@@ -65,7 +65,7 @@ class Map_file(Node):
             for label, x, y, a, _ in self.map:
                 lenx = len(str(abs(x))) 
                 leny = len(str(abs(y))) 
-                self.get_logger().info(f"lenx: {lenx}, x: {x}")
+                # self.get_logger().info(f"lenx: {lenx}, x: {x}")
                 space1 = 8 - lenx
                 space2 = 8 - leny
                 if x < 0:

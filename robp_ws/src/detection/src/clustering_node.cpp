@@ -1,4 +1,4 @@
-#include "clustering.hpp"
+#include "clustering.h"
 
 int main(int argc, char* argv[])
 {

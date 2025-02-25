@@ -12,9 +12,6 @@ def generate_launch_description():
         # IncludeLaunchDescription(
         #     PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/rs_d435i_launch.py'))
         # ),
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
-        # ),
         IncludeLaunchDescription(
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))
         ),
@@ -27,19 +24,37 @@ def generate_launch_description():
             package='odometry',
             executable='odometry'
         ),
-        # Node(
-        #     package='detection',
-        #     executable='detection'
-        # ),
         Node(
             package='detection',
             executable='clustering_node',
-            output='screen'
+            output='screen',
+            parameters=[{
+                "cloud_topic": "/camera/camera/depth/color/points",
+                "cluster_topic": "/camera/camera/depth/color/cluster_points",
+                "dist_filter_min": 0.0,
+                "dist_filter_max": 1.0,
+                "height_filter_min": 0.0,
+                "height_filter_max": 0.075,
+                "cluster_tolerance": 0.05,
+                "cluster_min_size": 100
+            }]
         ),
         Node(
             package='detection',
             executable='classifier_node',
-            output='screen'
+            output='screen',
+            parameters=[{
+                "cloud_topic": "/camera/camera/depth/color/cluster_points",
+                "classification_topic": "/detection/class",
+                "box_filter_min": 0.0,
+                "box_filter_max": 0.008,
+                "box_filter_threshold": 50,
+                "animal_filter_min": 0.045,
+                "animal_filter_max": 0.05,
+                "sphere_filter_min": 0.056,
+                "sphere_filter_max": 0.059,
+                "visualize_OBB": True
+            }]
         ),
          Node(
             package='map_file',
