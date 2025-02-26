@@ -44,6 +44,7 @@ This will:
 | Topic | Type | Description |
 | --- | ---| --- |
 | /camera/camera/depth/color/points | sensor_msgs/msg/PointCloud2 | Raw point cloud data from the depth camera.|
+| /cmd_vel | sensor_msgs/msg/Twist | Velocity sent by the controller. |
 ---
 #### **Published Topics**
 | Topic | Type | Description |
@@ -57,10 +58,11 @@ This will:
 | cluster_topic | string | /camera/camera/depth/color/cluster_points | Output clustered point cloud topic. |
 | dist_filter_min | double | 0.0 | Minimum distance filter for points. |
 | dist_filter_max | double | 1.0 | Maximum distance filter for points. |
-| height_filter_min | double | 0.0 | Minimum height filter for points (same level as RGB-D cam). |
+| height_filter_min | double | -0.025 | Minimum height filter for points (above RGB-D cam). |
 | height_filter_max | double | 0.075 | Maximum height filter for points (above ground). |
 | cluster_min_size | int | 100 | Minimum number of points per cluster. |
 | cluster_tolerance | double | 0.05 | Distance tolerance for clustering. |
+| ang_velocity_threshold | double | 0.3 | Maximum angular velocity clustering is done. |
 
 ---
 
