@@ -24,9 +24,22 @@ class Map_file(Node):
     def __init__(self):
         super().__init__('map_file')
 
-        # Subscribe to point cloud topic and call callback function on each received message
+        # Declare parameters with default values
+        self.box_threshold = self.get_parameter_or('box_threshold', 20)
+        self.object_threshold = self.get_parameter_or('object_threshold', 5)
+        self.msg_topic = self.get_parameter_or('msg_topic', '/detection/class')
+
+        # Set QoS profile
+        qos_profile = QoSProfile(depth=10)
+        qos_profile.reliability = ReliabilityPolicy.RELIABLE
+
+        # Subscribe to classification msg
         self.create_subscription(
-            String, '/detection/class', self.map_callback, 10)
+            String, 
+            self.msg_topic,
+            self.map_callback, 
+            qos_profile 
+        )
 
         self.file = "map_file.txt"
         self.map = []
@@ -37,21 +50,25 @@ class Map_file(Node):
 
     def map_callback(self, msg: String):
         data = msg.data.split()
-        classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 360
-        new_label = self.classifications.get(classify, '3')
+        classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 180
+        new_label = self.classifications.get(classify)
         new_votes = [0, 0, 0, 0] 
         classes = ['B', '1', '2', '3']
 
         for idx, (label, x, y, a, votes) in enumerate(self.map):
             distance = np.sqrt((x-new_x)**2+(y-new_y)**2)
-            threshold = 20 if 'B' in (new_label, label) else 10
+            threshold = self.box_threshold if 'B' in (new_label, label) else self.object_threshold
             if distance < threshold:
                 votes[classes.index(new_label)] += 1
                 max_index = np.argmax(votes)
+                if 'B' in (new_label, label):
+                    avg_a = int(round((a + new_a) / 2, 0))
+                else:
+                    avg_a = 0
                 self.map[idx] = (classes[max_index], 
                                  int(round((x + new_x) / 2, 0)),
                                  int(round((y + new_y) / 2, 0)),
-                                 int(round((a + new_a) / 2, 0)),
+                                 avg_a,
                                  votes)
                 self.update_file()
                 return
@@ -73,7 +90,6 @@ class Map_file(Node):
                 if y < 0:
                     space2 -= 1
                 file.write(f"{label}       {x}{' '*space1}{y}{' '*space2}{a}\n")
-
 
 
 def main():

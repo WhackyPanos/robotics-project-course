@@ -11,7 +11,7 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("cluster_topic", cluster_topic_, std::string("/camera/camera/depth/color/cluster_points"));
     this->get_parameter_or("dist_filter_min", z_filter_min_, 0.0);
     this->get_parameter_or("dist_filter_max", z_filter_max_, 1.0);
-    this->get_parameter_or("height_filter_min", y_filter_min_, 0.0);
+    this->get_parameter_or("height_filter_min", y_filter_min_, -0.025);
     this->get_parameter_or("height_filter_max", y_filter_max_, 0.075);
     this->get_parameter_or("cluster_tolerance", cluster_tolerance_, 0.05);
     this->get_parameter_or("cluster_min_size", cluster_min_size_, 100);
@@ -67,15 +67,26 @@ void Clustering::cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr m
             for (const auto& idx : cluster.indices) {
                 cloud_cluster->push_back((*cloud)[idx]);
             }
+
+            // Only publish cluster if no obstacle
+            pcl::PointCloud<pcl::PointXYZRGB>::Ptr obstacle (new pcl::PointCloud<pcl::PointXYZRGB>);
+            pass.setInputCloud(cloud_cluster);
+            pass.setFilterFieldName("y");
+            pass.setFilterLimits(y_filter_min_, -0.02);
+            pass.filter(*obstacle);
+
             cloud_cluster->width = cloud_cluster->size();
             cloud_cluster->height = 1;
             cloud_cluster->is_dense = true;
             
-            sensor_msgs::msg::PointCloud2 output;
-            pcl::toROSMsg(*cloud_cluster, output);
-            output.header.stamp = msg->header.stamp;
-            output.header.frame_id = msg->header.frame_id;
-            publisher_->publish(output);
+            if (obstacle->empty())
+            {
+                sensor_msgs::msg::PointCloud2 output;
+                pcl::toROSMsg(*cloud_cluster, output);
+                output.header.stamp = msg->header.stamp;
+                output.header.frame_id = msg->header.frame_id;
+                publisher_->publish(output);
+            }
         }
     }
 }
