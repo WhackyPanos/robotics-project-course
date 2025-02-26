@@ -50,8 +50,8 @@ class CarrotPlanner(Node):
         # Declare parameters with default values. If the parameters are set in the launch file, the default values will be overwritten
         # check config folder for params.yaml
         # TODO yaml file doesn't import properly
-        self.declare_parameter('linear_velocity', 0.1)
-        self.declare_parameter('angular_velocity', 0.2)
+        self.declare_parameter('linear_velocity', 0.2)
+        self.declare_parameter('angular_velocity', 0.4)
         self.declare_parameter('goal_threshold', 0.05)
         self.declare_parameter('obstacle_threshold', 0.2)
 
