@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
-import math
-import string
+
 import numpy as np
 
 import rclpy
@@ -9,20 +8,17 @@ from rclpy.node import Node
 from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
 from std_msgs.msg import String
 
-from tf2_ros import TransformException
-from tf2_ros.buffer import Buffer
-from tf2_ros.transform_listener import TransformListener
-from tf2_ros import TransformBroadcaster
-import tf2_geometry_msgs
-from tf_transformations import quaternion_from_euler, euler_from_quaternion
-from geometry_msgs.msg import TransformStamped, PointStamped
-import tf2_geometry_msgs
+from visualization_msgs.msg import Marker, MarkerArray
+from geometry_msgs.msg import Point, Pose
 
 
 class Map_file(Node):
 
     def __init__(self):
         super().__init__('map_file')
+
+        # Publisher for the objects
+        self.publisher = self.create_publisher(MarkerArray, '/object_positions', 10)
 
         # Declare parameters with default values
         self.box_threshold = self.get_parameter_or('box_threshold', 20)
@@ -78,6 +74,8 @@ class Map_file(Node):
         self.update_file()
 
     def update_file(self):
+        msg = MarkerArray()
+
         with open(self.file, 'w') as file:
             for label, x, y, a, _ in self.map:
                 lenx = len(str(abs(x))) 
@@ -90,6 +88,15 @@ class Map_file(Node):
                 if y < 0:
                     space2 -= 1
                 file.write(f"{label}       {x}{' '*space1}{y}{' '*space2}{a}\n")
+
+                marker = Marker()
+                marker.header.frame_id = label
+                marker.pose.position.x = float(x)
+                marker.pose.position.y = float(y)
+                marker.pose.position.z = float(a)
+                msg.markers.append(marker)
+        
+        self.publisher.publish(msg)
 
 
 def main():
