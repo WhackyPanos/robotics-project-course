@@ -22,11 +22,19 @@ ros2 launch robp_launch arm_servo_launch.py
 py-trees-tree-viewer
 ```
 These commands won't print anything useful in the terminal, so for simplicity you can keep them in the background. You may have to run the last one every one you run the program if you want to see the behavior tree.
-
+To ensure that the robot starts at the origin of the map frame, run:
+```
+ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 map odom
+```
 Finally, launch the main launch file, which will launch the odometry, the path planner, the behavior tree and the arm manipulation nodes/scripts.
 ```
 ros2 launch robp_launch pick_objects_launch.py
 ```
 
 Check https://github.com/migsdigs/Hiwonder_xArm_ESP32 for more info regarding the arm
+
+
 For the IK package, check http://docs.ros.org/en/diamondback/api/kdl/html/python/
+
+
+For the arm specs, check https://www.hiwonder.com/products/xarm-unowith-sensor?variant=39331923132503&srsltid=AfmBOooGbdCby8XU3ATdsrkbgDQDVWoAjqy35_XWEmgEiev440lmVCe0
