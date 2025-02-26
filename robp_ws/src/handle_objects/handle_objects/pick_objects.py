@@ -118,23 +118,21 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             self.node.get_logger().info(f"Trying to reach {[self.x, self.y, self.z]}")
             if self.ready2move and not self.arm_moving and self.x is not None: # is necessary, self.x is not None and self.y is not None and self.z is not None and 
                 target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
-                # for j,IG in enumerate(self.initial_guesses):
-                #     for i, thresh in enumerate(self.thresholds):
-                #         result, angles = self.ik_solver.solve_ik(target_pose, IG, thresh, 100000)
-                #         if result >= 0:
-                #             # publish corrected angles in the servo_pos topic
-                #             #self.node.get_logger().info(f"IK Solution: {angles}")
-                #             out_limits = self.publish_angles(angles)
-                #             if not out_limits:
-                #                 self.arm_moving = True
-                #                 return py_trees.common.Status.RUNNING
-                #             else:
-                #                 self.node.get_logger().info(f"Joints limits were reached, trying different initial guess")
-                #                 break
-                #         else:
-                #             self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
-                #     self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
-                # self.node.get_logger().info(f"COULD NOT GET SOLUTION, trying plan B")
+                for j,IG in enumerate(self.initial_guesses):
+                    for i, thresh in enumerate(self.thresholds):
+                        result, angles = self.ik_solver.solve_ik(target_pose, IG, thresh, 100000)
+                        if result >= 0:
+                            # publish corrected angles in the servo_pos topic. this function already shows message in terminal
+                            out_limits, msg = self.publish_angles(angles)
+                            if not out_limits:
+                                self.arm_moving = True
+                                return py_trees.common.Status.RUNNING
+                            else:
+                                break
+                        else:
+                            self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
+                    self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
+                self.node.get_logger().warn(f"COULD NOT GET SOLUTION, trying plan B")
 
                 # if everything fails, try a simpler approach
                 msg = self.pick_planB(self.x, self.y, self.z)
@@ -252,18 +250,13 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         """ Publish corrected angles to the arm after having computing inverse kinematics"""
         # retrieve current angles (supposedly arm is stretched) and compute corrected angles to publish
         init_angles = np.multiply(0.01,np.array(self.current_angles)) # from servo sensors, pass from cdeg to deg
-        desired_angles = self.wrap_angle((180/pi)*np.array(ik_angles[::-1]), "degrees")
-        res_angles = self.wrap_angle(init_angles + self.wrap_angle(np.multiply(ik_angles[::-1], [1,1,-1,1,-1,1]), "degrees"), "degrees")
-        res_angles = init_angles +np.multiply(ik_angles[::-1], [1,1,-1,1,-1,1])
+        desired_angles = self.wrap_angle((180/pi)*np.array(ik_angles[::-1]), "degrees") # convert ik_angles to angles bw -180 and 180        
+        res_angles = init_angles + np.multiply(ik_angles[::-1], [1,1,-1,1,-1,1]) # CHECK THIS VECTOR AGAIN
         pub_angles, out_limits = self.check_limits(res_angles, self.lb_angles, self.ub_angles)
 
         self.node.get_logger().info(f"Current angles are {init_angles}") 
         self.node.get_logger().info(f"IK angles after wrapping are {desired_angles}")
         self.node.get_logger().info(f"Resulting angles {res_angles}")
-        self.node.get_logger().info(f"Angles to publish are {pub_angles}")
-
-        #self.node.get_logger().info(f"Resulted angles are {res_angles}")
-        #self.node.get_logger().info(f"Angles to publish are {pub_angles}")
 
         msg = Int16MultiArray()
         msg.layout = MultiArrayLayout(
@@ -275,16 +268,20 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         msg.data = self.desired_servo_angles + times
         msg.data[0] = 2600 #keep gripper open
         
-        #self.node.get_logger().info(f" Angles = {self.desired_servo_angles} and out of limits = {out_limits}")
-        #self.ota_publisher_.publish(msg)
 
+        if not out_limits:
+            self.node.get_logger().info(f" Angles that could be published = {self.desired_servo_angles}")
+            self.ota_publisher_.publish(msg)
+        else:
+            self.node.get_logger().info(f" Angles out of limits, trying again ")
+            
         return out_limits
 
-    def wrap_angle(self, angles, units:str):
+    def wrap_angle(self, angles, units: str):
         if units == "radians":
-            return [angle % (2 * pi) for angle in angles]
+            return [(angle + pi) % (2 * pi) - pi for angle in angles]
         else:
-            return [angle % (360) for angle in angles]
+            return [(angle + 180) % 360 - 180 for angle in angles]
         
     def check_limits(self, angles, lb, ub):
         final_angles = angles
@@ -323,7 +320,7 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
                #self.node.get_logger().info(f" x = {new_x} and z = {new_z} not reacheable ({abs(new_z), self.a, self.b, l0*sin(i*pi/180)})")
                 continue           
             q[0] = theta*180/pi
-            q[1] = i
+            q[1] = 90 - i
             q[2] = (atan2(new_z, new_x) - atan2(l2*sin(q2), l1 + l2*cos(q2)))*180/pi
             q[3] = q2*180/pi
 
@@ -357,7 +354,7 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             
         # if no solution was found, msg is invalid
         msg = None
-        self.node.get_logger().warn("Plan B did not work, returning FAILURE")
+        self.node.get_logger().error("Plan B did not work, returning FAILURE")
         return msg
 
  # -----------------------------------------------------------------------------------------------------------------------
