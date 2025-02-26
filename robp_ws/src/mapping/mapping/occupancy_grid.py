@@ -26,7 +26,7 @@ class OccupancyGridNode(Node):
         self.publisher = self.create_publisher(OccupancyGrid, '/map', 10) 
         self.subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
         self.tf_buffer = Buffer()
-        self.tf_listener = TransformListener(self.tf_buffer, self) 
+        self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection() 
         
         # Gets workspace variables from tsv file
