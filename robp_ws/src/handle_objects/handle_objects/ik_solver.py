@@ -24,25 +24,11 @@ class IKNode(Node):
         self.chain = kdl.Chain()
         self.create_arm_chain()
 
-        # ---- Create Solvers ----
         # --- Example FK
         self.fk_solver = kdl.ChainFkSolverPos_recursive(self.chain) 
-        #self.solve_fk([0.34302397440126586, 1.0547689084840541, 1.4089493890372988, 0.6764331390453682, -2.7985465101362204, 3.141069037127051])
-
-        """
-                    self.desired_servo_angles = [12000] * 6
-            self.desired_servo_angles[0] = 2600 # gripper is different
-            # obj tuck arm angles
-            self.desired_servo_angles[4] = 6000  # servo 5
-            self.desired_servo_angles[3] = 20000   # servo 4
-            self.desired_servo_angles[2] = 8000 # servo 3
-        #self.solve_fk([0.0, 0.6147484289969556, -0.16042951294421512])
-        """
-
-        # ---- Example IK Call (uncomment to test) ----
-        #target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(9.963456717271555*0.01, 0, 25.932833880796892*0.01))
-        #self.solve_ik(target_pose)
-
+        #self.solve_fk([-15.706226190621685, -58.89322565161596, 89.19116421034657, -83.70501671216269, -6.281438203134586, -15.707868506470371])
+        self.solve_fk([0.0,90,0.0,0.0,0.0,0.0])
+        self.solve_fk([0.0,90*pi/180,0.0,0.0,0.0,0.0])
 
     def create_arm_chain(self):
         """
@@ -128,26 +114,54 @@ class IKNode(Node):
     
     def solve_ik(self, target_pose, provided_initial_guess, eps=5e-3, maxiter=100000):
         """
-        Solve inverse kinematics for a given end-effector target pose.
-        
+        Solve inverse kinematics for a given end-effector target pose.  
         :param target_pose: A kdl.Frame representing the desired pose.
             - The frame contains both a rotation (orientation) and a translation (position).
             For example: kdl.Frame(kdl.Rotation.RPY(0, 0, 1.57), kdl.Vector(0.3, 0.2, 0.4))
-            This pose must be expressed in the robot's base frame.
-        
+            This pose must be expressed in the robot's base frame.  
         Procedure:
           1. Determine the number of moving joints from the chain.
           2. Create an initial guess and an output JntArray of that size.
           3. Call the IK solver (CartToJnt) with the initial guess, target pose, and output array.
           4. Report the solution if successful, or log an error otherwise.
         """
+
+        fksol = kdl.ChainFkSolverPos_recursive(self.chain)
+        iksol = kdl.ChainIkSolverVel_pinv(self.chain, eps, maxiter)  # or another IK solver depending on your needs
+        
+        # joints limits in the solver domain
+        self.q_min = kdl.JntArray(self.chain.getNrOfJoints())
+        self.q_max = kdl.JntArray(self.chain.getNrOfJoints())
+        self.q_min[0] = -120.0* pi / 180 #-120
+        self.q_min[1] = -120.0* pi / 180 #-60.0
+        self.q_min[2] = -120.0* pi / 180 #-90.0
+        self.q_min[3] = -120.0* pi / 180 #-90.0
+        self.q_min[4] = -120.0* pi / 180 #-120.0
+        self.q_min[5] = -1000#-1000  # Assuming the last joint has no specific limits
+
+        self.q_max[0] = 120.0* pi / 180 #120.0
+        self.q_max[1] = 120.0* pi / 180 #60.0
+        self.q_max[2] = 120.0* pi / 180 #90.0
+        self.q_max[3] = 120.0* pi / 180 #90.0
+        self.q_max[4] = 120.0 * pi / 180 #120.0
+        self.q_max[5] = 1000  # Assuming the last joint has no specific limits
+
         # create solver
+        # self.ik_solver = kdl.ChainIkSolverPos_NR_JL(
+        #     chain = self.chain,
+        #     q_min = self.q_min, 
+        #     q_max = self.q_max,
+        #     fksolver= fksol,
+        #     iksolver = iksol,
+        #     eps = eps,
+        #     maxiter = maxiter
+        #     ) 
+        
         self.ik_solver = kdl.ChainIkSolverPos_LMA(
             chain = self.chain,
             eps = eps,
             maxiter = maxiter,
             ) # Levenberg-Marquardt IK Solver
-
 
         # Determine the number of joints 
         num_joints = self.chain.getNrOfJoints()
@@ -156,19 +170,15 @@ class IKNode(Node):
         for i,angle in enumerate(provided_initial_guess):
             initial_guess[i] = angle
 
-        #self.get_logger().info(f"For the {num_joints} joitns, the following initial configuration is: {joint_positions}")
-        #self.get_logger().info(f"Links lengths {self.link_lengths}")
-        #self.get_logger().info(f"Initial guess {initial_guess}")
-
         result = self.ik_solver.CartToJnt(initial_guess, target_pose, joint_positions)
 
         if result >= 0:
             angles = [joint_positions[i] for i in range(num_joints)]
-            #self.get_logger().info(f"IK Solution: {angles}")
+            #self.get_logger().info(f"IK Original Solution: {angles}")
         else:
             angles = None
             #self.get_logger().error("IK Solver failed!")
-            #self.get_logger().error(f"Result = {result}")
+            self.get_logger().error(f"Result = {result}")
         return result, angles
 
 

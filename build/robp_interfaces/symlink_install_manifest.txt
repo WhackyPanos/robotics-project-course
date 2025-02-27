@@ -1,7 +1,6 @@
 /home/group3-robot/robp_group3/install/robp_interfaces/share/ament_index/resource_index/rosidl_interfaces/robp_interfaces
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/DutyCycles.json
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/Encoders.json
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/ObjectPosition.json
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/BoxPosition.json
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/ObjectPositionSrv.json
@@ -10,15 +9,12 @@
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__functions.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__struct.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__type_support.h
-=======
->>>>>>> path-planner
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__functions.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__struct.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__type_support.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__functions.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__struct.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__type_support.h
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__functions.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__struct.h
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__type_support.h
@@ -55,19 +51,6 @@
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__struct.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__traits.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/box_position__type_support.hpp
-=======
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/duty_cycles.h
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/encoders.h
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_generator_c__visibility_control.h
-/home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/library_path.sh
-/home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/library_path.dsv
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__rosidl_typesupport_fastrtps_c.h
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_c.h
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__rosidl_typesupport_introspection_c.h
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
->>>>>>> path-planner
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__builder.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__struct.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__traits.hpp
@@ -76,7 +59,6 @@
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__struct.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__traits.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__type_support.hpp
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__builder.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__struct.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__traits.hpp
@@ -108,16 +90,6 @@
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/object_position__rosidl_typesupport_introspection_cpp.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_introspection_cpp.hpp
 /home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_introspection_cpp.hpp
-=======
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/duty_cycles.hpp
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/encoders.hpp
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_cpp.hpp
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__rosidl_typesupport_fastrtps_cpp.hpp
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_introspection_cpp.hpp
-/home/group3-robot/robp_group3/install/robp_interfaces/include/robp_interfaces/robp_interfaces/msg/detail/encoders__rosidl_typesupport_introspection_cpp.hpp
->>>>>>> path-planner
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/pythonpath.sh
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/pythonpath.dsv
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces-1.0.0-py3.12.egg-info/PKG-INFO
@@ -129,16 +101,12 @@
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/_robp_interfaces_s.ep.rosidl_typesupport_introspection_c.c
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/__init__.py
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_box_position.py
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_box_position_s.c
-=======
->>>>>>> path-planner
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_duty_cycles.py
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_duty_cycles_s.c
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_encoders.py
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_encoders_s.c
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_object_position.py
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/msg/_object_position_s.c
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_c.so
@@ -149,17 +117,11 @@
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_box_position_srv_s.c
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_object_position_srv.py
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/srv/_object_position_srv_s.c
-=======
-/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_c.so
-/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so
-/home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_introspection_c.so
->>>>>>> path-planner
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_fastrtps_c.so
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_introspection_c.so
 /home/group3-robot/robp_group3/install/robp_interfaces/lib/python3.12/site-packages/robp_interfaces/robp_interfaces_s__rosidl_typesupport_c.so
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/DutyCycles.idl
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/Encoders.idl
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/ObjectPosition.idl
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/BoxPosition.idl
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/ObjectPositionSrv.idl
@@ -170,10 +132,6 @@
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/BoxPosition.msg
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/ObjectPositionSrv.srv
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/srv/BoxPositionSrv.srv
-=======
-/home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/DutyCycles.msg
-/home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/msg/Encoders.msg
->>>>>>> path-planner
 /home/group3-robot/robp_group3/install/robp_interfaces/share/ament_index/resource_index/package_run_dependencies/robp_interfaces
 /home/group3-robot/robp_group3/install/robp_interfaces/share/ament_index/resource_index/parent_prefix_path/robp_interfaces
 /home/group3-robot/robp_group3/install/robp_interfaces/share/robp_interfaces/environment/ament_prefix_path.sh

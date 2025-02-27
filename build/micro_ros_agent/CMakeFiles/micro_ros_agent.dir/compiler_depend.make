@@ -22,7 +22,6 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o: /home/group3-robot/robp_gr
   /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/graph.hpp \
   /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/node.hpp \
   /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
-<<<<<<< HEAD
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/common.h \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/backtracer.h \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/circular_q.h \
@@ -42,8 +41,6 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o: /home/group3-robot/robp_gr
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/spdlog.h \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/tweakme.h \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/version.h \
-=======
->>>>>>> path-planner
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp \
@@ -606,10 +603,6 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o: /home/group3-robot/robp_gr
   /usr/include/c++/13/unordered_map \
   /usr/include/c++/13/utility \
   /usr/include/c++/13/vector \
-<<<<<<< HEAD
-=======
-  /usr/include/c++/13/version \
->>>>>>> path-planner
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -634,29 +627,6 @@ CMakeFiles/micro_ros_agent.dir/src/agent/Agent.cpp.o: /home/group3-robot/robp_gr
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/signal.h \
-<<<<<<< HEAD
-=======
-  /usr/include/spdlog/common.h \
-  /usr/include/spdlog/details/backtracer.h \
-  /usr/include/spdlog/details/circular_q.h \
-  /usr/include/spdlog/details/console_globals.h \
-  /usr/include/spdlog/details/log_msg.h \
-  /usr/include/spdlog/details/log_msg_buffer.h \
-  /usr/include/spdlog/details/null_mutex.h \
-  /usr/include/spdlog/details/periodic_worker.h \
-  /usr/include/spdlog/details/registry.h \
-  /usr/include/spdlog/details/synchronous_factory.h \
-  /usr/include/spdlog/fmt/bin_to_hex.h \
-  /usr/include/spdlog/fmt/fmt.h \
-  /usr/include/spdlog/fmt/ostr.h \
-  /usr/include/spdlog/formatter.h \
-  /usr/include/spdlog/logger.h \
-  /usr/include/spdlog/sinks/sink.h \
-  /usr/include/spdlog/sinks/stdout_sinks.h \
-  /usr/include/spdlog/spdlog.h \
-  /usr/include/spdlog/tweakme.h \
-  /usr/include/spdlog/version.h \
->>>>>>> path-planner
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
@@ -2299,7 +2269,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
   /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/graph.hpp \
   /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/node.hpp \
   /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
-<<<<<<< HEAD
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/common.h \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/backtracer.h \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/circular_q.h \
@@ -2319,8 +2288,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/spdlog.h \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/tweakme.h \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/version.h \
-=======
->>>>>>> path-planner
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp \
   /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp \
@@ -2883,10 +2850,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
   /usr/include/c++/13/unordered_map \
   /usr/include/c++/13/utility \
   /usr/include/c++/13/vector \
-<<<<<<< HEAD
-=======
-  /usr/include/c++/13/version \
->>>>>>> path-planner
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -2911,29 +2874,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/signal.h \
-<<<<<<< HEAD
-=======
-  /usr/include/spdlog/common.h \
-  /usr/include/spdlog/details/backtracer.h \
-  /usr/include/spdlog/details/circular_q.h \
-  /usr/include/spdlog/details/console_globals.h \
-  /usr/include/spdlog/details/log_msg.h \
-  /usr/include/spdlog/details/log_msg_buffer.h \
-  /usr/include/spdlog/details/null_mutex.h \
-  /usr/include/spdlog/details/periodic_worker.h \
-  /usr/include/spdlog/details/registry.h \
-  /usr/include/spdlog/details/synchronous_factory.h \
-  /usr/include/spdlog/fmt/bin_to_hex.h \
-  /usr/include/spdlog/fmt/fmt.h \
-  /usr/include/spdlog/fmt/ostr.h \
-  /usr/include/spdlog/formatter.h \
-  /usr/include/spdlog/logger.h \
-  /usr/include/spdlog/sinks/sink.h \
-  /usr/include/spdlog/sinks/stdout_sinks.h \
-  /usr/include/spdlog/spdlog.h \
-  /usr/include/spdlog/tweakme.h \
-  /usr/include/spdlog/version.h \
->>>>>>> path-planner
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
@@ -3129,11 +3069,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
-
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
@@ -3186,11 +3121,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/x86_64-linux-gnu/bits/termios.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/x86_64-linux-gnu/bits/termios-struct.h:
-
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/bits/termios-c_cflag.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
@@ -3251,11 +3181,7 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
-<<<<<<< HEAD
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
-=======
-/usr/include/x86_64-linux-gnu/bits/locale.h:
->>>>>>> path-planner
 
 /usr/include/x86_64-linux-gnu/bits/iscanonical.h:
 
@@ -3263,11 +3189,8 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/x86_64-linux-gnu/bits/fp-logb.h:
 
-<<<<<<< HEAD
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
-=======
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/bits/environments.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
@@ -3284,13 +3207,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/x86_64-linux-gnu/bits/fcntl.h:
-
-/usr/include/x86_64-linux-gnu/asm/errno.h:
-
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
 
 /usr/include/wctype.h:
@@ -3315,41 +3231,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/stdc-predef.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
-
-/usr/include/spdlog/version.h:
-
-/usr/include/spdlog/tweakme.h:
-
-/usr/include/spdlog/sinks/stdout_sinks.h:
-
-/usr/include/spdlog/logger.h:
-
-/usr/include/spdlog/formatter.h:
-
-/usr/include/spdlog/fmt/ostr.h:
-
-/usr/include/spdlog/fmt/fmt.h:
-
-/usr/include/spdlog/fmt/bin_to_hex.h:
-
-/usr/include/spdlog/details/registry.h:
-
-/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
-
-/usr/include/spdlog/details/periodic_worker.h:
-
-/usr/include/spdlog/details/null_mutex.h:
-
-/usr/include/spdlog/details/log_msg.h:
-
-/usr/include/spdlog/details/console_globals.h:
-
-/usr/include/spdlog/details/circular_q.h:
-
->>>>>>> path-planner
 /usr/include/sched.h:
 
 /usr/include/pthread.h:
@@ -3380,11 +3261,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/fmt/format.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/fmt/core.h:
-
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/sys/poll.h:
 
 /usr/include/fcntl.h:
@@ -3399,11 +3275,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/typeinfo:
 
-<<<<<<< HEAD
-=======
-/usr/include/c++/13/tr1/riemann_zeta.tcc:
-
->>>>>>> path-planner
 /usr/include/c++/13/tr1/modified_bessel_func.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
@@ -3458,7 +3329,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/list:
 
-<<<<<<< HEAD
 /usr/include/c++/13/limits:
 
 /usr/include/c++/13/iterator:
@@ -3494,45 +3364,11 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
 /usr/include/c++/13/deque:
-=======
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/TypesBase.h:
-
-/usr/include/x86_64-linux-gnu/bits/floatn.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/InstanceHandle.h:
-
-/usr/include/c++/13/cctype:
-
-/usr/include/c++/13/bits/unique_ptr.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/DynamicData.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/AnnotationParameterValue.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/qos/WriterQos.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/publisher/Publisher.h:
-
-/usr/include/c++/13/csignal:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/utils/IPLocator.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv6EndPoint.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPConnection.hpp:
->>>>>>> path-planner
 
 /usr/include/fmt/ostream.h:
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/fastrtps_dll.h:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/fastrtps/fastrtps/eProsima_auto_link.h:
-
-/opt/ros/jazzy/include/fastcdr/fastcdr/FastBuffer.h:
-
->>>>>>> path-planner
 /usr/include/c++/13/bits/deque.tcc:
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/TopicDataType.h:
@@ -3541,23 +3377,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/Domain.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
-
-/usr/include/linux/falloc.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/TypeObjectHashId.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/SerialEndPoint.hpp:
-
-/usr/include/c++/13/map:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/entity__traits.hpp:
-
-/opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/type_description/individual_type_description__struct.h:
-
->>>>>>> path-planner
 /usr/include/endian.h:
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/participant/Participant.h:
@@ -3572,17 +3391,10 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/locale_conv.h:
 
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h:
 
 /usr/include/c++/13/bits/refwrap.h:
 
-=======
-/usr/include/c++/13/bits/refwrap.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/TypeDescriptor.h:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/flowcontrol/FlowControllerConsts.hpp:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/Time_t.h:
@@ -3591,13 +3403,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/uses_allocator_args.h:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/SerializedPayload.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/Property.h:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/history/IPayloadPool.h:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/can/CanAgentLinux.hpp:
@@ -3642,11 +3447,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/FragmentNumber.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/spdlog/details/synchronous_factory.h:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/rmw/rmw/rmw.h:
 
 /opt/ros/jazzy/include/rmw_dds_common/rmw_dds_common/msg/detail/participant_entities_info__builder.hpp:
@@ -3673,11 +3473,8 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/BaseStatus.hpp:
 
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/registry.h:
 
-=======
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastrtps/attributes/all_attributes.h:
 
 /opt/ros/jazzy/include/rmw_dds_common/rmw_dds_common/msg/detail/gid__struct.hpp:
@@ -3696,13 +3493,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/rmw/rmw/message_sequence.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/c++/13/bits/stl_tempbuf.h:
-
-/usr/include/c++/13/bits/regex_executor.tcc:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/attributes/PropertyPolicy.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/attributes/ExternalLocators.hpp:
@@ -3721,13 +3511,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/stl_construct.h:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/TypeIdentifierTypes.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/subscriber/qos/SubscriberQos.hpp:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/attributes/ReaderAttributes.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/topic/TopicDataType.hpp:
@@ -3740,22 +3523,14 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/localefwd.h:
 
-<<<<<<< HEAD
 /usr/include/c++/13/exception:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/subscriber/SampleState.hpp:
 
-=======
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/subscriber/SampleInfo.hpp:
 
-<<<<<<< HEAD
-=======
-/usr/include/spdlog/spdlog.h:
-
->>>>>>> path-planner
 /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/utils/demangle.hpp:
 
 /usr/include/termios.h:
@@ -3766,7 +3541,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/ios_base.h:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/publisher/qos/WriterQos.hpp:
 
 /usr/include/linux/stddef.h:
@@ -3821,87 +3595,12 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/Scheduler.hpp:
 
-=======
-/usr/include/c++/13/iterator:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/Token.h:
-
-/usr/include/x86_64-linux-gnu/bits/termios-tcflow.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/subscriber/DataReader.hpp:
-
-/usr/include/c++/13/bits/align.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/baud_rate_table_linux.h:
-
-/home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_typesupport.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiTermiosAgentLinux.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/endianness.h:
-
-/opt/ros/jazzy/include/rosidl_runtime_cpp/rosidl_runtime_cpp/message_initialization.hpp:
-
-/usr/include/c++/13/bits/hashtable.h:
-
-/usr/include/x86_64-linux-gnu/sys/ttydefaults.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/SerialAgentLinux.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/publisher/qos/WriterQos.hpp:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/publisher/qos/DataWriterQos.hpp:
 
 /usr/include/x86_64-linux-gnu/sys/socket.h:
 
 /opt/ros/jazzy/include/rcutils/rcutils/snprintf.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/x86_64-linux-gnu/bits/errno.h:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/node__traits.hpp:
-
-/usr/include/c++/13/bits/exception.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/resources/ResourceManagement.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/SharedMutexPriority.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/WriteParams.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/subscriber/qos/ReaderQos.hpp:
-
-/usr/include/spdlog/common.h:
-
-/opt/ros/jazzy/include/rmw/rmw/localhost.h:
-
-/usr/include/x86_64-linux-gnu/bits/getopt_core.h:
-
-/usr/include/c++/13/bits/stl_vector.h:
-
-/opt/ros/jazzy/include/rmw/rmw/event_callback_type.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/policy/ParameterTypes.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/policy/WriterDataLifecycleQosPolicy.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/qos/SampleRejectedStatus.hpp:
-
-/usr/include/c++/13/bits/std_mutex.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerLinux.hpp:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/node__builder.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/topic/ContentFilteredTopic.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/scheduler/Scheduler.hpp:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/IncompatibleQosStatus.hpp:
 
 /usr/include/c++/13/bits/sstream.tcc:
@@ -3910,7 +3609,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/qos/QosPolicies.h:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastrtps/publisher/Publisher.h:
 
 /usr/include/c++/13/csignal:
@@ -3922,13 +3620,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/console_globals.h:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/MultiTermiosAgentLinux.hpp:
-=======
-/opt/ros/jazzy/include/fastrtps/fastrtps/utils/collections/ResourceLimitedContainerConfig.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/common/InstanceHandle.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/PortParameters.h:
->>>>>>> path-planner
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h:
 
@@ -3940,33 +3631,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/backward/auto_ptr.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/c++/13/streambuf:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/domain/qos/DomainParticipantQos.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/IPv4EndPoint.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp:
-
-/opt/ros/jazzy/include/fastcdr/fastcdr/exceptions/Exception.h:
-
-/opt/ros/jazzy/include/rmw_dds_common/rmw_dds_common/msg/detail/participant_entities_info__struct.hpp:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/graph.hpp:
-
-/usr/include/c++/13/bits/codecvt.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/reader/ReaderDiscoveryInfo.h:
-
-/usr/include/c++/13/bits/stl_tree.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/transport/TransportReceiverInterface.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fast/FastMiddleware.hpp:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/builtin/data/WriterProxyData.h:
 
 /usr/include/c++/13/tr1/special_function_util.h:
@@ -3979,7 +3643,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/subscriber/ViewState.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h:
@@ -4055,15 +3718,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /opt/ros/jazzy/include/rcutils/rcutils/types.h:
 
 /usr/include/c++/13/condition_variable:
-=======
-/usr/include/spdlog/details/backtracer.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/subscriber/ViewState.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/subscriber/SampleState.hpp:
-
-/usr/include/c++/13/exception:
->>>>>>> path-planner
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/transport/network/NetworkInterface.hpp:
 
@@ -4073,35 +3727,8 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/endpoint/MultiSerialEndPoint.hpp:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastrtps/qos/LivelinessChangedStatus.h:
 
-=======
-/usr/include/c++/13/istream:
-
-/usr/include/x86_64-linux-gnu/asm/posix_types.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/topic/IContentFilter.hpp:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/graph__struct.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/messages/CDRMessage.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/publisher/qos/PublisherQos.hpp:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/graph__builder.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/AnnotationDescriptor.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/qos/LivelinessChangedStatus.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/TermiosAgentLinux.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/DeadlineMissedStatus.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/Server.hpp:
-
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/GuidPrefix_t.hpp:
@@ -4112,7 +3739,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/core/LoanableTypedCollection.hpp:
 
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/OutputMessage.hpp:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/SequenceNumber.h:
@@ -4126,25 +3752,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /opt/ros/jazzy/include/fastcdr/fastcdr/exceptions/BadParamException.h:
 
 /usr/include/c++/13/bits/stl_raw_storage_iter.h:
-=======
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/topic/qos/TopicQos.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp:
-
-/home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/src/agent/utils/demangle.cpp:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/TypeIdentifier.h:
-
-/usr/include/c++/13/bits/streambuf_iterator.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/qos/ReaderQos.h:
-
-/usr/include/x86_64-linux-gnu/bits/confname.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv6AgentLinux.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp:
->>>>>>> path-planner
 
 /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/entity__struct.hpp:
 
@@ -4154,15 +3761,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/alloca.h:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/topic/Topic.hpp:
-
-/usr/include/netinet/in.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/domain/DomainParticipant.hpp:
-
->>>>>>> path-planner
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/processor/Processor.hpp:
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
@@ -4179,7 +3777,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/stl_queue.h:
 
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/XRCETypes.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/confname.h:
@@ -4187,15 +3784,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv6AgentLinux.hpp:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSMiddleware.hpp:
-=======
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/graph__type_support.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/domain/qos/DomainParticipantFactoryQos.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
-
-/usr/include/c++/13/ios:
->>>>>>> path-planner
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
 
@@ -4209,7 +3797,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/chrono:
 
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/version.h:
 
 /opt/ros/jazzy/include/rcutils/rcutils/types/uint8_array.h:
@@ -4287,11 +3874,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/SubMessageHeader.hpp:
-=======
-/opt/ros/jazzy/include/fastrtps/fastrtps/attributes/RequesterAttributes.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/LivelinessChangedStatus.hpp:
->>>>>>> path-planner
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/attributes/ReplierAttributes.hpp:
 
@@ -4301,65 +3883,9 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/rcutils/rcutils/types/string_map.h:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/topic/qos/TopicQos.hpp:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/AgentInstance.hpp:
-=======
-/opt/ros/jazzy/include/fastcdr/fastcdr/cdr/fixed_size_string.hpp:
-
-/opt/ros/jazzy/include/rmw/rmw/discovery_options.h:
-
-/opt/ros/jazzy/include/rosidl_runtime_cpp/rosidl_typesupport_cpp/message_type_support.hpp:
-
-/usr/include/c++/13/bits/locale_classes.tcc:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/DynamicDataPtr.h:
-
-/usr/include/c++/13/bits/uniform_int_dist.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/PublicationMatchedStatus.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/attributes/SubscriberAttributes.h:
-
-/usr/include/c++/13/bits/node_handle.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/builtin/topic/SubscriptionBuiltinTopicData.hpp:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/entity__builder.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
-
-/opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/string.h:
-
-/usr/include/c++/13/bits/basic_string.tcc:
-
-/usr/include/c++/13/version:
-
-/usr/include/c++/13/bits/regex.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/tcp/TCPv4AgentLinux.hpp:
-
-/opt/ros/jazzy/include/rmw_dds_common/rmw_dds_common/msg/node_entities_info.hpp:
-
-/home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/src/agent/Agent.cpp:
-
-/usr/include/linux/stddef.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/builtin/data/ReaderProxyData.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/flowcontrol/FlowControllerSchedulerPolicy.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/domain/DomainParticipantFactory.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/Middleware.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
-
-/usr/include/c++/13/bits/stl_multimap.h:
->>>>>>> path-planner
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/attributes/PublisherAttributes.h:
 
@@ -4371,7 +3897,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/Packet.hpp:
 
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/node__builder.hpp:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServerLinux.hpp:
@@ -4431,25 +3956,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /usr/include/c++/13/bits/stl_tree.h:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp:
-=======
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/transport/network/NetmaskFilterKind.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/publisher/Publisher.hpp:
-
-/usr/include/c++/13/cwchar:
-
-/usr/include/c++/13/bits/std_thread.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/stream_framing/StreamFramingProtocol.hpp:
-
-/opt/ros/jazzy/include/rosidl_dynamic_typesupport/rosidl_dynamic_typesupport/dynamic_message_type_support_struct.h:
-
-/home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_manager.hpp:
-
-/usr/include/c++/13/bits/cxxabi_init_exception.h:
->>>>>>> path-planner
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/utils/Callbacks.hpp:
 
@@ -4459,43 +3965,9 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/rmw_dds_common/rmw_dds_common/msg/detail/node_entities_info__type_support.hpp:
 
-<<<<<<< HEAD
 /usr/include/x86_64-linux-gnu/bits/termios-struct.h:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/details/backtracer.h:
-=======
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/Agent.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/condition/Condition.hpp:
-
-/usr/include/c++/13/ostream:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/BinaryProperty.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/visibility.hpp:
-
-/opt/ros/jazzy/include/fastcdr/fastcdr/Cdr.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/InputMessage.hpp:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/middleware/fastdds/FastDDSMiddleware.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/VendorId_t.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
-
-/usr/include/spdlog/details/log_msg_buffer.h:
-
-/opt/ros/jazzy/include/fastcdr/fastcdr/exceptions/BadParamException.h:
-
-/usr/include/c++/13/bits/stl_raw_storage_iter.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/message/OutputMessage.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/SequenceNumber.h:
-
-/opt/ros/jazzy/include/rmw_dds_common/rmw_dds_common/msg/participant_entities_info.hpp:
->>>>>>> path-planner
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv4AgentLinux.hpp:
 
@@ -4509,7 +3981,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/cwctype:
 
-<<<<<<< HEAD
 /usr/include/fmt/core.h:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h:
@@ -4608,8 +4079,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/qos/ReaderQos.h:
 
-=======
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastrtps/types/TypeObject.h:
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/udp/UDPv6AgentLinux.hpp:
@@ -4618,17 +4087,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastcdr/fastcdr/exceptions/LockedExternalAccessException.hpp:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/fastrtps/fastrtps/qos/LivelinessLostStatus.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/domain/DomainParticipantListener.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/SubMessageHeader.hpp:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/messages/CDRMessage.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/publisher/PublisherListener.hpp:
@@ -4643,19 +4101,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Color.hpp:
 
-<<<<<<< HEAD
-=======
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/utils/Functions.hpp:
-
-/usr/include/c++/13/bits/parse_numbers.h:
-
-/usr/include/linux/errno.h:
-
-/usr/include/c++/13/bits/std_abs.h:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/fastcdr/fastcdr/CdrSizeCalculator.hpp:
 
 /opt/ros/jazzy/include/fastcdr/fastcdr/config.h:
@@ -4670,19 +4115,9 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastcdr/fastcdr/exceptions/BadOptionalAccessException.hpp:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/MatchedStatus.hpp:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/core/Entity.hpp:
-=======
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/builtin/topic/ParticipantBuiltinTopicData.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/transport/TransportDescriptorInterface.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/security/accesscontrol/SecurityMaskUtilities.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/builtin/topic/PublicationBuiltinTopicData.hpp:
->>>>>>> path-planner
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/serial/PseudoTerminalAgentLinux.hpp:
 
@@ -4698,19 +4133,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/core/policy/QosPolicies.hpp:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/rmw/rmw/macros.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/policy/ReaderDataLifecycleQosPolicy.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/LocatorSelectorEntry.hpp:
-
-/opt/ros/jazzy/include/rcutils/rcutils/types.h:
-
-/usr/include/c++/13/condition_variable:
-
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/bits/termios-misc.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/Types.h:
@@ -4723,24 +4145,16 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/types/MessageHeader.hpp:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/builtin/data/ContentFilterProperty.hpp:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/participant/ParticipantDiscoveryInfo.h:
 
-=======
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/participant/ParticipantDiscoveryInfo.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/builtin/data/ContentFilterProperty.hpp:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/rcutils/rcutils/error_handling.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/flowcontrol/ThroughputControllerDescriptor.h:
 
 /usr/include/c++/13/backward/binders.h:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastrtps/qos/WriterQos.h:
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/types/AnnotationDescriptor.h:
@@ -4782,55 +4196,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /home/group3-robot/robp_group3/arm_ws/src/uros/micro-ROS-Agent/micro_ros_agent/include/agent/graph_manager/graph_manager.hpp:
 
 /opt/ros/jazzy/include/rosidl_dynamic_typesupport/rosidl_dynamic_typesupport/dynamic_message_type_support_struct.h:
-=======
-/usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/attributes/ThreadSettings.hpp:
-
-/opt/ros/jazzy/include/fastcdr/fastcdr/xcdr/external.hpp:
-
-/usr/include/x86_64-linux-gnu/sys/stat.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/types/DynamicTypePtr.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/log/Log.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/RemoteLocators.hpp:
-
-/usr/include/c++/13/bits/memoryfwd.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/Entity.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/MatchedStatus.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/SampleRejectedStatus.hpp:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/node__type_support.hpp:
-
-/opt/ros/jazzy/include/rmw_dds_common/rmw_dds_common/visibility_control.h:
-
-/usr/include/c++/13/bits/algorithmfwd.h:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/qos/DeadlineMissedStatus.h:
-
-/home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/discovery/DiscoveryServer.hpp:
-
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/graph__traits.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastrtps/config.h:
-
-/usr/include/c++/13/bits/regex_constants.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/flowcontrol/FlowControllerDescriptor.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/dds/publisher/DataWriterListener.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
-
-/usr/include/c++/13/deque:
->>>>>>> path-planner
 
 /opt/ros/jazzy/include/fastrtps/fastrtps/utils/fixed_size_string.hpp:
 
@@ -4868,21 +4233,10 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/rcutils/rcutils/sha256.h:
 
-<<<<<<< HEAD
 /usr/include/c++/13/initializer_list:
 
 /usr/include/c++/13/bits/stl_stack.h:
 
-=======
-/usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:
-
-/usr/include/c++/13/ext/aligned_buffer.h:
-
-/usr/include/c++/13/bits/stl_stack.h:
-
-/usr/include/c++/13/initializer_list:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/rcutils/rcutils/testing/fault_injection.h:
 
 /usr/include/c++/13/bits/specfun.h:
@@ -4917,11 +4271,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/rcutils/rcutils/types/string_array.h:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/rcutils/rcutils/types/uint8_array.h:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/rcutils/rcutils/visibility_control.h:
 
 /opt/ros/jazzy/include/rmw/rmw/domain_id.h:
@@ -4972,28 +4321,14 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/stl_iterator_base_types.h:
 
-<<<<<<< HEAD
-=======
-/usr/include/c++/13/bits/basic_ios.tcc:
-
-/opt/ros/jazzy/include/rmw/rmw/subscription_content_filter_options.h:
-
-/usr/include/x86_64-linux-gnu/bits/socket_type.h:
-
-/usr/include/c++/13/bits/stl_pair.h:
-
->>>>>>> path-planner
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/transport/SessionManager.hpp:
 
 /usr/include/c++/13/bits/uses_allocator.h:
 
-<<<<<<< HEAD
 /usr/include/c++/13/ext/atomicity.h:
 
 /opt/ros/jazzy/include/rmw/rmw/time.h:
 
-=======
->>>>>>> path-planner
 /usr/include/x86_64-linux-gnu/bits/time.h:
 
 /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/message_initialization.h:
@@ -5066,11 +4401,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/primitives_sequence.h:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/service_type_support_struct.h:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/type_description/field_type__struct.h:
 
 /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/visibility_control.h:
@@ -5091,22 +4421,16 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/stl_iterator_base_funcs.h:
 
-<<<<<<< HEAD
 /usr/include/c++/13/iostream:
 
 /usr/include/asm-generic/errno.h:
 
-=======
->>>>>>> path-planner
 /usr/include/asm-generic/int-ll64.h:
 
 /home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/rosidl_generator_cpp__visibility_control.hpp:
 
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/fmt/ostr.h:
 
-=======
->>>>>>> path-planner
 /opt/ros/jazzy/include/rmw/rmw/events_statuses/incompatible_type.h:
 
 /usr/include/asm-generic/posix_types.h:
@@ -5209,17 +4533,10 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/ostream_insert.h:
 
-<<<<<<< HEAD
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/all_common.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/LocatorSelector.hpp:
 
-=======
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/LocatorSelector.hpp:
-
-/opt/ros/jazzy/include/fastrtps/fastdds/rtps/common/all_common.h:
-
->>>>>>> path-planner
 /usr/include/c++/13/bits/stl_set.h:
 
 /opt/ros/jazzy/include/fastrtps/fastdds/dds/core/status/SubscriptionMatchedStatus.hpp:
@@ -5264,13 +4581,6 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 
 /usr/include/c++/13/bits/stl_iterator.h:
 
-<<<<<<< HEAD
-=======
-/opt/ros/jazzy/include/rmw/rmw/event.h:
-
-/usr/include/c++/13/ext/numeric_traits.h:
-
->>>>>>> path-planner
 /opt/ros/jazzy/include/rmw/rmw/init_options.h:
 
 /usr/include/c++/13/bits/stl_multiset.h:
@@ -5336,40 +4646,3 @@ CMakeFiles/micro_ros_agent.dir/src/main.cpp.o: /home/group3-robot/robp_group3/ar
 /usr/include/c++/13/bits/stl_list.h:
 
 /usr/include/c++/13/debug/debug.h:
-<<<<<<< HEAD
-=======
-
-/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
-
-/usr/include/c++/13/ext/alloc_traits.h:
-
-/usr/include/spdlog/sinks/sink.h:
-
-/opt/ros/jazzy/include/rmw/rmw/time.h:
-
-/usr/include/c++/13/ext/atomicity.h:
-
-/usr/include/c++/13/ext/concurrence.h:
-
-/usr/include/c++/13/ext/string_conversions.h:
-
-/usr/include/x86_64-linux-gnu/bits/time64.h:
-
-/usr/include/c++/13/ext/type_traits.h:
-
-/usr/include/c++/13/fstream:
-
-/opt/ros/jazzy/include/rmw_dds_common/rmw_dds_common/msg/detail/participant_entities_info__type_support.hpp:
-
-/usr/include/c++/13/functional:
-
-/usr/include/c++/13/iomanip:
-
-/usr/include/c++/13/iosfwd:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/c++/13/iostream:
-
-/usr/include/c++/13/limits:
->>>>>>> path-planner

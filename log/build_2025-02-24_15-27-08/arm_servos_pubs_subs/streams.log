@@ -1,0 +1,25 @@
+[2.144s] Invoking command in '/home/group3-robot/robp_group3/build/arm_servos_pubs_subs': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/arm_servos_pubs_subs/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build --no-deps symlink_data
+[2.808s] running develop
+[3.324s] running egg_info
+[3.324s] creating arm_servos_pubs_subs.egg-info
+[3.361s] writing arm_servos_pubs_subs.egg-info/PKG-INFO
+[3.361s] writing dependency_links to arm_servos_pubs_subs.egg-info/dependency_links.txt
+[3.361s] writing entry points to arm_servos_pubs_subs.egg-info/entry_points.txt
+[3.361s] writing requirements to arm_servos_pubs_subs.egg-info/requires.txt
+[3.361s] writing top-level names to arm_servos_pubs_subs.egg-info/top_level.txt
+[3.362s] writing manifest file 'arm_servos_pubs_subs.egg-info/SOURCES.txt'
+[3.437s] reading manifest file 'arm_servos_pubs_subs.egg-info/SOURCES.txt'
+[3.438s] writing manifest file 'arm_servos_pubs_subs.egg-info/SOURCES.txt'
+[3.472s] running build_ext
+[3.472s] Creating /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages/arm-servos-pubs-subs.egg-link (link to .)
+[3.474s] Installing listener script to /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/arm_servos_pubs_subs
+[3.474s] Installing talker script to /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/arm_servos_pubs_subs
+[3.474s] 
+[3.475s] Installed /home/group3-robot/robp_group3/build/arm_servos_pubs_subs
+[3.475s] running symlink_data
+[3.475s] creating /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/share/ament_index
+[3.475s] creating /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/share/ament_index/resource_index
+[3.475s] creating /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/share/ament_index/resource_index/packages
+[3.476s] symbolically linking /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/resource/arm_servos_pubs_subs -> /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/share/ament_index/resource_index/packages
+[3.476s] symbolically linking /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/package.xml -> /home/group3-robot/robp_group3/install/arm_servos_pubs_subs/share/arm_servos_pubs_subs
+[4.169s] Invoked command in '/home/group3-robot/robp_group3/build/arm_servos_pubs_subs' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/arm_servos_pubs_subs/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/arm_servos_pubs_subs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/arm_servos_pubs_subs/build --no-deps symlink_data

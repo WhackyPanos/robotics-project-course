@@ -47,6 +47,7 @@ class Twist2Duty(Node):
         duty_msg.duty_cycle_right = right_duty
         self.publisher.publish(duty_msg)
 
+
 def main(args=None):
     rclpy.init(args=args)
     node = Twist2Duty()

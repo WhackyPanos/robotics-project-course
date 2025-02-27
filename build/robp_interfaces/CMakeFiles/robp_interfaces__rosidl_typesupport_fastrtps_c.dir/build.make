@@ -79,13 +79,10 @@ rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typ
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: /opt/ros/jazzy/share/rosidl_typesupport_fastrtps_c/resource/srv__type_support_c.cpp.em
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/robp_interfaces/msg/DutyCycles.idl
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/robp_interfaces/msg/Encoders.idl
-<<<<<<< HEAD
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/robp_interfaces/msg/ObjectPosition.idl
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/robp_interfaces/msg/BoxPosition.idl
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/robp_interfaces/srv/ObjectPositionSrv.idl
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/robp_interfaces/srv/BoxPositionSrv.idl
-=======
->>>>>>> path-planner
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: /opt/ros/jazzy/share/std_msgs/msg/Byte.idl
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: /opt/ros/jazzy/share/std_msgs/msg/ByteMultiArray.idl
@@ -118,10 +115,7 @@ rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typ
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: /opt/ros/jazzy/share/std_msgs/msg/UInt8MultiArray.idl
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: /opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: /opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl
-<<<<<<< HEAD
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
-=======
->>>>>>> path-planner
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C type support for eProsima Fast-RTPS"
 	/usr/bin/python3 /opt/ros/jazzy/lib/rosidl_typesupport_fastrtps_c/rosidl_typesupport_fastrtps_c --generator-arguments-file /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_fastrtps_c__arguments.json
 
@@ -134,7 +128,6 @@ rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__rosidl_typesu
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp
 
-<<<<<<< HEAD
 rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__rosidl_typesupport_fastrtps_c.h: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__rosidl_typesupport_fastrtps_c.h
 
@@ -159,8 +152,6 @@ rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__rosid
 rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp
 
-=======
->>>>>>> path-planner
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp.o: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/flags.make
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp.o: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp.o: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/compiler_depend.ts
@@ -189,7 +180,6 @@ CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp -o CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp.s
 
-<<<<<<< HEAD
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/flags.make
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/compiler_depend.ts
@@ -254,19 +244,12 @@ robp_interfaces__rosidl_typesupport_fastrtps_c_OBJECTS = \
 "CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.o" \
 "CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.o" \
 "CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp.o"
-=======
-# Object files for target robp_interfaces__rosidl_typesupport_fastrtps_c
-robp_interfaces__rosidl_typesupport_fastrtps_c_OBJECTS = \
-"CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp.o" \
-"CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp.o"
->>>>>>> path-planner
 
 # External object files for target robp_interfaces__rosidl_typesupport_fastrtps_c
 robp_interfaces__rosidl_typesupport_fastrtps_c_EXTERNAL_OBJECTS =
 
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp.o
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp.o
-<<<<<<< HEAD
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp.o
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp.o
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp.o
@@ -276,31 +259,18 @@ librobp_interfaces__rosidl_typesupport_fastrtps_c.so: librobp_interfaces__rosidl
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_fastrtps_c.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_c.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
-=======
-librobp_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make
-librobp_interfaces__rosidl_typesupport_fastrtps_c.so: librobp_interfaces__rosidl_generator_c.so
-librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_fastrtps_c.so
->>>>>>> path-planner
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_c.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_typesupport_fastrtps_cpp.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librmw.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_dynamic_typesupport.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_typesupport_fastrtps_c.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libfastcdr.so.2.2.5
-<<<<<<< HEAD
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_generator_c.so
-=======
-librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
->>>>>>> path-planner
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_c.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librosidl_runtime_c.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/jazzy/lib/librcutils.so
 librobp_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/link.txt
-<<<<<<< HEAD
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX shared library librobp_interfaces__rosidl_typesupport_fastrtps_c.so"
-=======
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX shared library librobp_interfaces__rosidl_typesupport_fastrtps_c.so"
->>>>>>> path-planner
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -311,24 +281,18 @@ CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/clean
 
-<<<<<<< HEAD
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__rosidl_typesupport_fastrtps_c.h
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/box_position__type_support_c.cpp
-=======
->>>>>>> path-planner
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__rosidl_typesupport_fastrtps_c.h
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/duty_cycles__type_support_c.cpp
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__rosidl_typesupport_fastrtps_c.h
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/encoders__type_support_c.cpp
-<<<<<<< HEAD
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__rosidl_typesupport_fastrtps_c.h
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/msg/detail/object_position__type_support_c.cpp
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__rosidl_typesupport_fastrtps_c.h
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/box_position_srv__type_support_c.cpp
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_fastrtps_c.h
 CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/robp_interfaces/srv/detail/object_position_srv__type_support_c.cpp
-=======
->>>>>>> path-planner
 	cd /home/group3-robot/robp_group3/build/robp_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces /home/group3-robot/robp_group3/build/robp_interfaces/CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/robp_interfaces__rosidl_typesupport_fastrtps_c.dir/depend
 

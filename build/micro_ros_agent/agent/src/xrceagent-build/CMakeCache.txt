@@ -292,12 +292,9 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 //Installation directory for data
 DATA_INSTALL_DIR:PATH=share
 
-<<<<<<< HEAD
 //Git command line client
 GIT_EXECUTABLE:FILEPATH=/usr/bin/git
 
-=======
->>>>>>> path-planner
 //Installation directory for C headers
 INCLUDE_INSTALL_DIR:PATH=include
 
@@ -442,11 +439,7 @@ pkgcfg_lib__OPENSSL_crypto:FILEPATH=/usr/lib/x86_64-linux-gnu/libcrypto.so
 pkgcfg_lib__OPENSSL_ssl:FILEPATH=/usr/lib/x86_64-linux-gnu/libssl.so
 
 //The directory containing a CMake configuration file for spdlog.
-<<<<<<< HEAD
 spdlog_DIR:PATH=/home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/lib/cmake/spdlog
-=======
-spdlog_DIR:PATH=/home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/lib/cmake/spdlog
->>>>>>> path-planner
 
 //Value Computed by CMake
 uagent_superbuild_BINARY_DIR:STATIC=/home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build
@@ -647,11 +640,8 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libcrypto.so][/usr/include][c ][v3.0.13()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
-<<<<<<< HEAD
 //ADVANCED property for variable: GIT_EXECUTABLE
 GIT_EXECUTABLE-ADVANCED:INTERNAL=1
-=======
->>>>>>> path-planner
 //ADVANCED property for variable: OPENSSL_CRYPTO_LIBRARY
 OPENSSL_CRYPTO_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENSSL_INCLUDE_DIR

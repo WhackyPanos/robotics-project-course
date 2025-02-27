@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-geometry_msgs:rclpy:std_msgs:tf2_geometry_msgs:tf2_ros
-=======
 geometry_msgs:rclpy:sensor_msgs:std_msgs:tf2_geometry_msgs:tf2_ros
->>>>>>> path-planner

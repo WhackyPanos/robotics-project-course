@@ -166,7 +166,6 @@ librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libcomposition_interfaces__rosi
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/librcl_interfaces__rosidl_typesupport_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libcomposition_interfaces__rosidl_generator_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/librcl_interfaces__rosidl_generator_c.so
-<<<<<<< HEAD
 librobp_phidgets_encoders.so: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_c.so
 librobp_phidgets_encoders.so: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_generator_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_fastrtps_c.so
@@ -181,22 +180,6 @@ librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_cpp.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
-=======
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_c.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_introspection_c.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_fastrtps_cpp.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_introspection_cpp.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_cpp.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_c.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_generator_c.so
-librobp_phidgets_encoders.so: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_typesupport_c.so
-librobp_phidgets_encoders.so: /home/group3-robot/robp_group3/install/robp_interfaces/lib/librobp_interfaces__rosidl_generator_c.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_fastrtps_c.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_introspection_c.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_fastrtps_cpp.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_introspection_cpp.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_cpp.so
->>>>>>> path-planner
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/librosidl_typesupport_fastrtps_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_introspection_c.so
@@ -211,15 +194,9 @@ librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/librosidl_typesupport_introspec
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_cpp.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/librosidl_typesupport_cpp.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_py.so
-<<<<<<< HEAD
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_typesupport_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libservice_msgs__rosidl_generator_c.so
-=======
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_typesupport_c.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_typesupport_c.so
-librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libstd_msgs__rosidl_generator_c.so
->>>>>>> path-planner
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/libbuiltin_interfaces__rosidl_generator_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/librosidl_typesupport_c.so
 librobp_phidgets_encoders.so: /opt/ros/jazzy/lib/librcpputils.so

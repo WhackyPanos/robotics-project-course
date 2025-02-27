@@ -2,14 +2,10 @@
   "package_name": "robp_interfaces",
   "non_idl_tuples": [
     "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces:msg/DutyCycles.msg",
-<<<<<<< HEAD
     "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces:msg/Encoders.msg",
     "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces:msg/ObjectPosition.msg",
     "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces:msg/BoxPosition.msg",
     "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces:srv/ObjectPositionSrv.srv",
     "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces:srv/BoxPositionSrv.srv"
-=======
-    "/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_interfaces:msg/Encoders.msg"
->>>>>>> path-planner
   ]
 }

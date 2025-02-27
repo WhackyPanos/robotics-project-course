@@ -2,6 +2,7 @@ package.xml
 setup.cfg
 setup.py
 behavior_tree/__init__.py
+behavior_tree/goCollect_bhv.py
 behavior_tree/main_bt.py
 behavior_tree/pick_bt.py
 behavior_tree.egg-info/PKG-INFO

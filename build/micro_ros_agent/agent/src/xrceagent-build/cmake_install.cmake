@@ -121,7 +121,6 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     )
 endif()
 
-<<<<<<< HEAD
 if(CMAKE_INSTALL_COMPONENT STREQUAL "spdlog-1.9.2" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
    "/home/group3-robot/robp_group3/install/micro_ros_agent/")
@@ -134,8 +133,6 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "spdlog-1.9.2" OR NOT CMAKE_INSTALL_COMPONEN
   file(INSTALL DESTINATION "/home/group3-robot/robp_group3/install/micro_ros_agent" TYPE DIRECTORY FILES "/home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/" USE_SOURCE_PERMISSIONS)
 endif()
 
-=======
->>>>>>> path-planner
 if(CMAKE_INSTALL_COMPONENT)
   set(CMAKE_INSTALL_MANIFEST "install_manifest_${CMAKE_INSTALL_COMPONENT}.txt")
 else()
