@@ -25,9 +25,9 @@ class OccupancyGridNode(Node):
         super().__init__('occupancy_grid')
         self.publisher = self.create_publisher(OccupancyGrid, '/map', 10) 
         self.subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
-        self.tf_buffer = Buffer()
+        self.tf_buffer = Buffer(node=self)   
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
-        self.proj = LaserProjection() 
+        self.proj = LaserProjection()
         
         # Gets workspace variables from tsv file
         vertices, min_x, max_x, min_y, max_y = self.read_workspace()
@@ -47,7 +47,7 @@ class OccupancyGridNode(Node):
         max_x = float('-inf')
         min_y = float('inf')
         max_y = float('-inf')
-        tsv_file_path = '/home/robot/robp_group3/robp_ws/src/mapping/mapping/workspace_2.tsv'
+        tsv_file_path = '/home/group3-robot/robp_group3/robp_ws/src/mapping/mapping/workspace_2.tsv'
         vertices = [] # Stores verticies as (x, y) tuples
         with open(tsv_file_path, newline='') as tsvfile:
             reader = csv.reader(tsvfile, delimiter='\t') # List of lists  
@@ -123,7 +123,7 @@ class OccupancyGridNode(Node):
         from_frame_rel = msg.header.frame_id # Lidar link
         time = rclpy.time.Time().from_msg(msg.header.stamp)
         try:
-            t = self.tf_buffer.lookup_transform(to_frame_rel, from_frame_rel, time, timeout=rclpy.duration.Duration(seconds=10.0)) 
+            t = self.tf_buffer.lookup_transform(to_frame_rel, from_frame_rel, time, timeout=rclpy.duration.Duration(seconds=1.0)) 
         except TransformException as ex:
             self.get_logger().info(f'Could not transform {to_frame_rel} to {from_frame_rel}: {ex}')
             return
