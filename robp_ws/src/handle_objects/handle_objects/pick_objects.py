@@ -41,7 +41,7 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         #     [-5*pi/180, 120*pi/180, 60*pi/180, -10*pi/180, 0, 0]  
         # ]
         self.initial_guesses = [[0,0,0,0,0,0]]
-        self.angle_threshold = 100
+        self.angle_threshold = 80
 
         # current angles and joints limits in the arm domain
         self.current_angles, self.desired_servo_angles = None, None
@@ -115,31 +115,34 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             #self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
 
             # if object position is available, compute target and perform inverse kinematics
-            self.node.get_logger().info(f"Trying to reach {[self.x, self.y, self.z]}")
-            if self.ready2move and not self.arm_moving and self.x is not None: # is necessary, self.x is not None and self.y is not None and self.z is not None and 
-                target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
-                for j,IG in enumerate(self.initial_guesses):
-                    for i, thresh in enumerate(self.thresholds):
-                        result, angles = self.ik_solver.solve_ik(target_pose, IG, thresh, 100000)
-                        if result >= 0:
-                            # publish corrected angles in the servo_pos topic. this function already shows message in terminal
-                            out_limits, msg = self.publish_angles(angles)
-                            if not out_limits:
-                                self.arm_moving = True
-                                return py_trees.common.Status.RUNNING
-                            else:
-                                break
-                        else:
-                            self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
-                    self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
+            
+            if self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
+                self.object_transform() # tranform object position from map frame to arm base frame
+                self.node.get_logger().info(f"Trying to reach {[self.x, self.y, self.z]}")
+                # target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
+                # for j,IG in enumerate(self.initial_guesses):
+                #     for i, thresh in enumerate(self.thresholds):
+                #         result, angles = self.ik_solver.solve_ik(target_pose, IG, thresh, 100000)
+                #         if result >= 0:
+                #             # publish corrected angles in the servo_pos topic. this function already shows message in terminal
+                #             out_limits = self.publish_angles(angles)
+                #             if not out_limits:
+                #                 self.arm_moving = True
+                #                 return py_trees.common.Status.RUNNING
+                #             else:
+                #                 break
+                #         else:
+                #             self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
+                #     self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
                 self.node.get_logger().warn(f"COULD NOT GET SOLUTION, trying plan B")
 
                 # if everything fails, try a simpler approach
                 msg = self.pick_planB(self.x, self.y, self.z)
                 if msg is not None:
                     self.ota_publisher_.publish(msg)
+                    #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
                     self.arm_moving = True
-                    return py_trees.common.Status.SUCCESS
+                    return py_trees.common.Status.RUNNING
                 else:
                     return py_trees.common.Status.FAILURE
             
@@ -148,21 +151,28 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
                 return py_trees.common.Status.RUNNING 
             
             # if arm is in grasp position,  start grasping 
-            elif self.arm_tucked:
+            elif self.arm_tucked and not self.object_grasped and not self.arm_moving:
+                self.node.get_logger().info(f"Arm Moving = {self.arm_moving}, Arm Tucked = {self.arm_tucked} and grasped = {self.object_grasped}")
                 msg = Int16MultiArray()
                 msg.layout = MultiArrayLayout(
                     dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
                     data_offset=0
                 )  
                 times = [self.obj_tuck_arm_time] * 6
-                self.desired_servo_angles[0] = 9000 #close gripper
+                self.desired_servo_angles[0] = 10000 #close gripper
                 msg.data = self.desired_servo_angles + times
-                #self.ota_publisher_.publish(msg)
+                self.ota_publisher_.publish(msg)
+                #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
+                self.arm_moving = True
                 #self.node.get_logger().info(f"Publishing the anglee {self.desired_servo_angles}")
                 return py_trees.common.Status.RUNNING
             
+            elif self.arm_tucked and not self.object_grasped and self.arm_moving:
+                return py_trees.common.Status.RUNNING 
+            
             # if object is grasped, return success
             elif self.object_grasped:
+                self.node.get_logger().info(f"Sucess, lifting arm now")
                 return py_trees.common.Status.SUCCESS
             
             else:
@@ -183,12 +193,24 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         self.ready2move = True
         self.timer.cancel()
 
+    # def wait_for_movement(self):
+    #     if self.arm_moving and self.arm_tucked:
+    #         self.arm_moving = False
+    #         self.object_grasped = True
+    #     elif self.arm_moving and not self.arm_tucked:
+    #         self.arm_moving = False
+    #         self.arm_tucked = True
+    #         self.node.get_logger().warn("Concluding this arm movement due to time limit, angles are not accurate!")
+    #     self.move_timer.cancel()
+
+
     def dopmc_callback(self,msg):
-        # rn msg is pointstamped
+        # store object position in map frame
         self.X = msg.point.x # later on change to msg.x
         self.Y = msg.point.y # later on change to msg.y
         obj = "C" # change later on to msg.object_type
 
+    def object_transform(self):
         # get transform from map frame to frame of the arm base
         time = rclpy.time.Time() #retrieve most recent transform ig
         try:
@@ -202,25 +224,18 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             return
         
         # do transformation   
-        pose_map_frame = PoseStamped()
-        pose_map_frame.pose.position.x =self.X
-        pose_map_frame.pose.position.y = self.Y
-        pose_map_frame.pose.position.z = 0.0
-        pose_map_frame.pose.orientation.x =0.0
-        pose_map_frame.pose.orientation.y = 0.0
-        pose_map_frame.pose.orientation.z = 0.0
-        pose_map_frame.pose.orientation.w = 0.0            
-        transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_map_frame.pose, t)
-        self.x = transformed_pose.position.x
-        self.y = transformed_pose.position.y
-        self.z = transformed_pose.position.z
+        object_MF = PointStamped()
+        object_MF.header.frame_id = 'map'
+        object_MF.point.x = self.X
+        object_MF.point.y = self.Y
+        object_MF.point.z = 0.0         
+        object_ABF = tf2_geometry_msgs.do_transform_point(object_MF, t)
+        self.x = object_ABF.point.x
+        self.y = object_ABF.point.y
+        self.z = object_ABF.point.z
 
-        self.x = 0.16 # DELETE AS SOON AS WE HAVE A VALID MAP FRAME
-        
-        qx = t.transform.rotation.x
-        qy = t.transform.rotation.y
-        qz = t.transform.rotation.z
-        qw = t.transform.rotation.w
+        #self.x = 0.16 # DELETE AS SOON AS WE HAVE A VALID MAP FRAME
+        #self.y = 0
         
         # define target with kdl instance
         self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
@@ -233,19 +248,22 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             self.arm_moving = False
             for i in range(1, len(self.current_angles)) :
                 if abs(self.desired_servo_angles[i] -self.current_angles[i]) > self.angle_threshold:
-                    print(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -self.current_angles[i])}")
+                    self.node.get_logger().info(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -self.current_angles[i])} in joint {i+1}")
                     self.arm_tucked = False
                     self.arm_moving = True
                     break
 
-        elif not self.arm_moving and self.arm_tucked and not self.object_grasped:
+        elif self.arm_moving and self.arm_tucked and not self.object_grasped:
+            self.desired_servo_angles[0] = 10000
             self.object_grasped = True
+            self.arm_moving = False
             for i in range(1, len(self.current_angles)) :
                 if abs(self.desired_servo_angles[i] -self.current_angles[i]) > self.angle_threshold:
-                    print(f"Ongoing grasping {abs(self.desired_servo_angles[i] -self.current_angles[i])}")
+                    self.node.get_logger().info(f"Ongoing grasping {abs(self.desired_servo_angles[i] -self.current_angles[i])}")
                     self.object_grasped = False
+                    self.arm_moving = True
                     break
-
+        
     def publish_angles(self, ik_angles):
         """ Publish corrected angles to the arm after having computing inverse kinematics"""
         # retrieve current angles (supposedly arm is stretched) and compute corrected angles to publish
@@ -270,8 +288,9 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         
 
         if not out_limits:
-            self.node.get_logger().info(f" Angles that could be published = {self.desired_servo_angles}")
+            self.node.get_logger().info(f" Angles will be published with ik_solver = {self.desired_servo_angles}")
             self.ota_publisher_.publish(msg)
+            #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
         else:
             self.node.get_logger().info(f" Angles out of limits, trying again ")
             
@@ -296,19 +315,21 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         return final_angles, out_limits
 
     def pick_planB(self, x, y, z):  
-        self.a, self.b, self.c, self.d, self.e, self.f, self.g = 0.01 * 7.4, 0.01 * 1.5, 0.01 * 11.5, 0.01 * 4.45, 0.01 * 21.3, 0.01 * 5.3, 0.01 * 9.5 
 
         # we will iterate with different orientations for the 1st link. 
-        for i in range(90,25,-5):
+        count = 0
+        for i in range(90,25,-2):
             # Initiate constants
             good_flag = True
-            l1 = self.e - self.c
-            l2 = self.f + self.g + 0.02 #2cm to account for object height and avoid colliding with ground
-            l0 = self.c -self.b
+            height = 93*(10**-3)
+            l0 = 101*(10**-3)
+            l1 = 95*(10**-3)
+            l2 = 168*(10**-3)+ 0.0  #1cm to account for object height and avoid colliding with ground
+            
             q = [0.0, 0.0, 0.0, 0.0] #joint angles, from base to last y joint, respectively
 
             # Account for the geometry (different frame)
-            new_z = -(abs(z) + self.a + self.b+ l0*sin(i*pi/180))
+            new_z = -(abs(z) + height+ l0*sin(i*pi/180))
             new_x = sqrt(x**2 + y**2)-l0*cos(i*pi/180)
             theta = atan2(y,x) #orientation of the arm base
 
@@ -328,10 +349,13 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             for j in range(len(q)):
                 if q[j] < self.lb_q[j] or q[j] > self.ub_q[j]:
                     good_flag = False
-                    self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = q{j})")
+                    self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = {q[j+1]})")
             if good_flag == True:
+                if count == 0: # skip one more step to avoid joint limits
+                    count +=1
+                    continue
                 # create the msg to publish, in case it is valid
-                self.node.get_logger().info(f"Plan B worked: in the regular domain, angles = q{q}")
+                self.node.get_logger().info(f"Plan B worked: in the regular domain, angles = {q}")
 
                 msg = Int16MultiArray()
                 msg.layout = MultiArrayLayout(
@@ -394,7 +418,7 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
             # init tuck arm angles
             #self.desired_servo_angles = [45, 230, 80.5232360099144, 201.20685353937313, 68.846193182243155, 139.65382600499612]
             self.desired_servo_angles = [12000]*6
-            self.desired_servo_angles[0] = 9000 # gripper is different
+            self.desired_servo_angles[0] = 10000 # gripper is different
             
             # self.solve_fk([-15.706226190621685, -58.89322565161596, 89.19116421034657, -83.70501671216269, -6.281438203134586, -15.707868506470371])
 

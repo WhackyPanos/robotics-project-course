@@ -29,6 +29,7 @@ class PickBT(Node):
         obj_tuck_bhv = ObjTuckArm()
         
         root.add_children([collect, move_to_pick, obj_tuck_bhv]) #, move_to_pick, obj_tuck_bhv
+        #root.add_children([obj_tuck_bhv])
         
         return root
 

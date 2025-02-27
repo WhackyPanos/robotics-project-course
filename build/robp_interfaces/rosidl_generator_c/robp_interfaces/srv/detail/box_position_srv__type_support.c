@@ -4,9 +4,9 @@
 
 #include <string.h>
 
+#include "robp_interfaces/srv/detail/box_position_srv__struct.h"
 #include "robp_interfaces/srv/detail/box_position_srv__functions.h"
 #include "rosidl_typesupport_interface/macros.h"
-#include "robp_interfaces/srv/detail/box_position_srv__struct.h"
 #include "robp_interfaces/srv/detail/box_position_srv__type_support.h"
 
 #ifdef __cplusplus
