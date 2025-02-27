@@ -661,7 +661,6 @@ class InitTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node 
         
 
 """
-
     def initialise(self):
         print("Initializing")
         msg = Int16MultiArray()
@@ -675,10 +674,8 @@ class InitTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node 
         print("Publishing tuck arm command.")
         self.arm_moving = True
         self.arm_tucked = False
-
         # Introduce time delay before creating the subscription 
         self.subs_delay_timer = self.node.create_timer(0.2, self.delay_callback)
-
     def delay_callback(self):
         print("Creating subscriber")
  

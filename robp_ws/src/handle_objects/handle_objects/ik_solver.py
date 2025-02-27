@@ -180,8 +180,3 @@ class IKNode(Node):
             #self.get_logger().error("IK Solver failed!")
             self.get_logger().error(f"Result = {result}")
         return result, angles
-
-
-
-
-
