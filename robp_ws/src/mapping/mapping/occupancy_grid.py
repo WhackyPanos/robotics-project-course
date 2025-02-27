@@ -73,7 +73,7 @@ class OccupancyGridNode(Node):
                 (i_x, i_y) = cell
                 self.grid[i_y, i_x] = 100
 
-        # Makes the grid thicker to avoid     
+        # Makes the grid thicker to avoid ray going through the fences on diagonals   
         #dilated_grid = binary_dilation(self.grid == 100, iterations=1).astype(int) * 100
         #self.grid = np.maximum(self.grid, dilated_grid)
     
@@ -122,12 +122,25 @@ class OccupancyGridNode(Node):
         to_frame_rel = 'map'
         from_frame_rel = msg.header.frame_id # Lidar link
         time = rclpy.time.Time().from_msg(msg.header.stamp)
-        try:
-            t = self.tf_buffer.lookup_transform(to_frame_rel, from_frame_rel, time, timeout=rclpy.duration.Duration(seconds=1.0)) 
-        except TransformException as ex:
-            self.get_logger().info(f'Could not transform {to_frame_rel} to {from_frame_rel}: {ex}')
-            return
         
+        tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, from_frame_rel, time)
+        tf_future.add_done_callback(lambda future: self.transform_callback(future, msg))
+
+        #rclpy.spin_until_future_complete(self, tf_future, timeout_sec=1)
+
+        #try:
+        #    t = self.tf_buffer.lookup_transform(to_frame_rel, from_frame_rel, time, timeout=rclpy.duration.Duration(seconds=1)) 
+        #except TransformException as ex:
+        #    self.get_logger().info(f'Could not transform {to_frame_rel} to {from_frame_rel}: {ex}')
+        #    return
+
+    def transform_callback(self, future, msg):
+        try:
+            t = future.result()  # Get the transform when ready
+        except TransformException as ex:
+            self.get_logger().info(f'Could not transform {msg.header.frame_id} to map: {ex}')
+            return
+
         # Gets the robots position in the map frame
         robot_x = t.transform.translation.x
         robot_y = t.transform.translation.y 
