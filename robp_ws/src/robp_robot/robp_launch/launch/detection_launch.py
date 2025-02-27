@@ -31,12 +31,14 @@ def generate_launch_description():
             parameters=[{
                 "cloud_topic": "/camera/camera/depth/color/points",
                 "cluster_topic": "/camera/camera/depth/color/cluster_points",
+                "twist_topic": "/cmd_vel",
                 "dist_filter_min": 0.0,
                 "dist_filter_max": 1.0,
-                "height_filter_min": 0.0,
+                "height_filter_min": -0.025,
                 "height_filter_max": 0.075,
                 "cluster_tolerance": 0.05,
-                "cluster_min_size": 100
+                "cluster_min_size": 100,
+                "ang_velocity_threshold": 0.3
             }]
         ),
         Node(
@@ -58,6 +60,12 @@ def generate_launch_description():
         ),
          Node(
             package='map_file',
-            executable='map_file'
+            executable='map_file',
+            output='screen',
+            parameters=[{
+                'box_threshold': 20,
+                'object_threshold': 10,
+                'msg_topic': '/detection/class'
+            }],
         )
     ])
