@@ -52,7 +52,7 @@ class RandomPointGenerator(Node):
             self.destroy_timer(self.timer)
             self.timer = None  # Reset the timer reference
     
-"""
+
 def main(args=None):
     rclpy.init(args=args)
     node = RandomPointGenerator()
@@ -62,4 +62,4 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-"""
+

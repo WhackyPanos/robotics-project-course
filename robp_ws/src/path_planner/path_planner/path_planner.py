@@ -77,9 +77,6 @@ class CarrotPlanner(Node):
         self.goal_position.x = msg.point.x
         self.goal_position.y = msg.point.y
         # my temporary goal
-        self.goal_position.x = 0.5
-        self.goal_position.y = 0
-        #
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
         self.get_logger().info(f"New goal received: x={msg.point.x:.2f}, y={msg.point.y:.2f}")
@@ -149,6 +146,7 @@ class CarrotPlanner(Node):
     def navigate_to_goal(self, x, y, theta):
         """ Compute commands to move the robot towards the goal in map frame. """
         """ Parameters """
+        
         angle_tolerance = 0.1  # Angle threshold for facing the goal (adjust as needed)
         distance_to_goal = math.sqrt((self.goal_position.x - x) ** 2 + (self.goal_position.y - y) ** 2)
         goal_angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
@@ -172,6 +170,7 @@ class CarrotPlanner(Node):
             self.bug()
             return
 
+        self.get_logger().info(f'x = {x}, y = {y}, goal_x_y = {self.goal_position.x, self.goal_position.y}')
         if distance_to_goal > self.goal_threshold:
 
             if dot_product < 0:  # If the goal is behind, rotate in place
@@ -235,7 +234,7 @@ class CarrotPlanner(Node):
         self.vel_cmd.angular.z = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
 
-"""
+
 def main(args=None):
     rclpy.init(args=args)
     node = CarrotPlanner()
@@ -245,4 +244,4 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-    """
+    
