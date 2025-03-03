@@ -18,7 +18,7 @@ class F710Teleop(Node):
         # Define joystick mappings (adjust based on testing)    
         self.axis_straight = 4  # Left stick up/down
         self.axis_sideways = 3  # Left stick left/right
-        self.axis_rotate = 2  # CHANGE LATER ON
+        self.rotate_button = 4  # CHANGE LATER ON
         self.max_linear = 0.8/4 # maximum linear velocity
         self.max_angular = 4.8/4 # maximum angular velocity
 
@@ -41,7 +41,10 @@ class F710Teleop(Node):
         #vx = cos(theta)*sqrt(msg.axes[self.axis_straight]**2 + msg.axes[self.axis_sideways]**2)*(1/sqrt(2))*self.max_linear
 
         twist_msg.linear.x = msg.axes[self.axis_straight] * self.max_linear
-        twist_msg.angular.z = msg.axes[self.axis_sideways] * self.max_angular
+        if msg.buttons[self.rotate_button] == 1:
+            twist_msg.angular.z = msg.axes[self.axis_sideways] * self.max_angular
+        else:
+            twist_msg.angular.z = 0.0
         twist_msg.linear.y = 0.0
         twist_msg.linear.z = 0.0
         twist_msg.angular.x = 0.0

@@ -27,15 +27,6 @@ def generate_launch_description():
             package='odometry',
             executable='odometry'
         ),
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
-        ),
-        Node(
-            package='odometry',
-            executable='odometry'
-        ),
         
         Node(
             package='joystick_teleop',
