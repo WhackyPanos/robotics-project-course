@@ -16,11 +16,17 @@ class F710Teleop(Node):
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # Define joystick mappings (adjust based on testing)    
-        self.axis_straight = 7  # Left stick up/down
-        self.axis_sideways = 6  # Left stick left/right
+        self.axis_straight = 4  # Left stick up/down
+        self.axis_sideways = 3  # Left stick left/right
         self.axis_rotate = 2  # CHANGE LATER ON
-        self.max_linear = 0.1 # maximum linear velocity
-        self.max_angular = 0.05 # maximum angular velocity
+        self.max_linear = 0.8/4 # maximum linear velocity
+        self.max_angular = 4.8/4 # maximum angular velocity
+
+        # Add a timer delay on startup
+        self.timer = self.create_timer(5.0, self.timer_callback)
+
+    def timer_callback(self):
+        self.timer.cancel()  # Cancel the timer after it runs once
 
     def joy_callback(self, msg):
         # Print joystick values
@@ -34,18 +40,14 @@ class F710Teleop(Node):
         #vx = sin(theta)*sqrt(msg.axes[self.axis_straight]**2 + msg.axes[self.axis_sideways]**2)*(1/sqrt(2))*self.max_linear
         #vx = cos(theta)*sqrt(msg.axes[self.axis_straight]**2 + msg.axes[self.axis_sideways]**2)*(1/sqrt(2))*self.max_linear
 
-        twist_msg.linear.x = min(max(msg.axes[self.axis_straight] * self.max_linear, -self.max_linear),self.max_linear)/4
+        twist_msg.linear.x = msg.axes[self.axis_straight] * self.max_linear
+        twist_msg.angular.z = msg.axes[self.axis_sideways] * self.max_angular
         twist_msg.linear.y = 0.0
-
-        if msg.buttons[self.axis_rotate] != 0:
-            twist_msg.angular.z = self.max_angular/4
-            twist_msg.linear.x = 0.0
-            twist_msg.linear.y = 0.0
-        else:
-            twist_msg.angular.z = 0.0
-
-        print(f'Linear Velocity (x,y): {twist_msg.linear.x} and {twist_msg.linear.y}')
-        print(f'Angular Velocity: {twist_msg.angular.z}')
+        twist_msg.linear.z = 0.0
+        twist_msg.angular.x = 0.0
+        twist_msg.angular.y = 0.0
+        # print(f'Linear Velocity (x,y): {twist_msg.linear.x} and {twist_msg.linear.y}')
+        # self.get_logger().info(f'Angular Velocity: {twist_msg.angular.z}')
 
         self.publisher.publish(twist_msg)
 
