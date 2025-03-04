@@ -1,0 +1,11 @@
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/uninstall.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/detection_uninstall.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/clustering_node.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/classifier_node.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/test.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/edit_cache.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/rebuild_cache.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/list_install_components.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/install.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/install/local.dir
+/home/group3-robot/robp_group3/build/detection/CMakeFiles/install/strip.dir

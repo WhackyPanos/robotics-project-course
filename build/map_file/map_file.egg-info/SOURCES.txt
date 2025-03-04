@@ -1,0 +1,13 @@
+package.xml
+setup.cfg
+setup.py
+map_file/__init__.py
+map_file/map_file.py
+map_file.egg-info/PKG-INFO
+map_file.egg-info/SOURCES.txt
+map_file.egg-info/dependency_links.txt
+map_file.egg-info/entry_points.txt
+map_file.egg-info/requires.txt
+map_file.egg-info/top_level.txt
+map_file.egg-info/zip-safe
+resource/map_file
