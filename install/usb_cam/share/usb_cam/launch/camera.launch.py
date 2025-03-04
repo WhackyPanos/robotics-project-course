@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/robp_ws/src/robp_robot/usb_cam/launch/camera.launch.py

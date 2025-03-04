@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_generator_cpp/robp_interfaces/srv/detail/box_position_srv__type_support.hpp

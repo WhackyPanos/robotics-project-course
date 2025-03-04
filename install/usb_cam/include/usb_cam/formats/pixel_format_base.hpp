@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/robp_ws/src/robp_robot/usb_cam/include/usb_cam/formats/pixel_format_base.hpp

@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/detection/ament_cmake_core/detectionConfig-version.cmake

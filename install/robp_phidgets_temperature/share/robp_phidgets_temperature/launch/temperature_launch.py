@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_phidgets/robp_phidgets_temperature/launch/temperature_launch.py

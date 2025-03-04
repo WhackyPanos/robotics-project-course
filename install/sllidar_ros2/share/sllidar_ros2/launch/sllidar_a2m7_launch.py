@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/robp_ws/src/robp_robot/sllidar_ros2/launch/sllidar_a2m7_launch.py

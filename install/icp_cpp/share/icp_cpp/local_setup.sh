@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/icp_cpp/ament_cmake_environment_hooks/local_setup.sh

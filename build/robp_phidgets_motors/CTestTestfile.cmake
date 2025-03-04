@@ -1,6 +1,0 @@
-# CMake generated Testfile for 
-# Source directory: /home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_phidgets/robp_phidgets_motors
-# Build directory: /home/group3-robot/robp_group3/build/robp_phidgets_motors
-# 
-# This file includes the relevant testing commands required for 
-# testing this directory and lists subdirectories to be tested as well.

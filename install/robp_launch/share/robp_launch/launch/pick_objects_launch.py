@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/robp_launch/launch/pick_objects_launch.py

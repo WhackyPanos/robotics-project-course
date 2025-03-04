@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/robp_ws/src/robp_robot/robp_launch/launch/test_path_planner_launch.py
