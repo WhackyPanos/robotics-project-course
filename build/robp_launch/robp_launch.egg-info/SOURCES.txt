@@ -10,6 +10,7 @@ launch/frames_launch.xml
 launch/joystick_launch.py
 launch/lidar_launch.yaml
 launch/lidar_odom_launch.py
+launch/localization_icp_launch.py
 launch/path_planner_launch.py
 launch/phidgets_launch.py
 launch/pick_objects_launch.py

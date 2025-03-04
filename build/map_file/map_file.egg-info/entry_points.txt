@@ -1,0 +1,2 @@
+[console_scripts]
+map_file = map_file.map_file:main

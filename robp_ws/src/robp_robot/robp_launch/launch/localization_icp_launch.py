@@ -56,6 +56,14 @@ def generate_launch_description():
             name='icp_node',  # Optional: Name the node (if you want a custom name)
             output='screen',  # This will print the output to the terminal
             parameters=[],  # Optional: Add any parameters you want to pass to the node
+        ),
+
+        Node(
+            package='localization',  # The name of your package
+            executable='ekf',  # The executable of your ICP node
+            name='ekf',  # Optional: Name the node (if you want a custom name)
+            output='screen',  # This will print the output to the terminal
+            parameters=[],  # Optional: Add any parameters you want to pass to the node
         )
 
 

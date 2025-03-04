@@ -1,0 +1,120 @@
+[0.022s] Invoking command in '/home/group3-robot/robp_group3/build/icp_cpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/icp_cpp -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/icp_cpp
+[0.087s] -- The C compiler identification is GNU 13.3.0
+[0.157s] -- The CXX compiler identification is GNU 13.3.0
+[0.175s] -- Detecting C compiler ABI info
+[0.273s] -- Detecting C compiler ABI info - done
+[0.297s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.299s] -- Detecting C compile features
+[0.300s] -- Detecting C compile features - done
+[0.309s] -- Detecting CXX compiler ABI info
+[0.429s] -- Detecting CXX compiler ABI info - done
+[0.439s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.439s] -- Detecting CXX compile features
+[0.440s] -- Detecting CXX compile features - done
+[0.442s] -- Found rclcpp: 28.1.6 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.629s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.731s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.821s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.839s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.864s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.889s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.997s] -- Found rmw_implementation_cmake: 7.3.1 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.000s] -- Found rmw_fastrtps_cpp: 8.4.1 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.107s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[1.138s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[1.172s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.274s] -- Found sensor_msgs: 5.3.5 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[1.356s] -- Found pcl_conversions: 2.6.2 (/opt/ros/jazzy/share/pcl_conversions/cmake)
+[1.447s] [33mCMake Warning (dev) at /usr/lib/x86_64-linux-gnu/cmake/pcl/Modules/FindFLANN.cmake:45 (find_package):
+[1.447s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[1.447s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[1.447s]   cmake_policy command to set the policy and suppress this warning.
+[1.447s] 
+[1.447s]   CMake variable FLANN_ROOT is set to:
+[1.448s] 
+[1.448s]     /usr
+[1.448s] 
+[1.448s]   For compatibility, find_package is ignoring the variable, but code in a
+[1.448s]   .cmake module might still use it.
+[1.448s] Call Stack (most recent call first):
+[1.448s]   /usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfig.cmake:261 (find_package)
+[1.448s]   /usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfig.cmake:306 (find_flann)
+[1.448s]   /usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfig.cmake:570 (find_external_library)
+[1.448s]   /opt/ros/jazzy/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[1.448s]   /opt/ros/jazzy/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)
+[1.448s]   CMakeLists.txt:9 (find_package)
+[1.448s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.449s] [0m
+[1.454s] -- Found flann version 1.9.2
+[1.976s] -- Found OpenMP_CXX: -fopenmp (found version "4.5") 
+[1.976s] -- Found OpenMP: TRUE (found version "4.5") found components: CXX 
+[5.424s] -- Checking for module 'libusb-1.0'
+[5.477s] --   Found libusb-1.0, version 1.0.27
+[5.616s] -- Found libusb: /usr/lib/x86_64-linux-gnu/libusb-1.0.so  
+[5.621s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[5.817s] -- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)
+[5.829s] -- Could NOT find Pcap (missing: PCAP_LIBRARIES PCAP_INCLUDE_DIRS) 
+[5.866s] -- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.3")  
+[5.918s] -- Found PNG: /usr/lib/x86_64-linux-gnu/libpng.so (found version "1.6.43") 
+[7.585s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[7.613s] -- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)
+[8.994s] -- Found Qhull version 8.0.2
+[10.329s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[11.638s] -- Found PCL_COMMON: /usr/lib/x86_64-linux-gnu/libpcl_common.so  
+[11.644s] -- Found PCL_KDTREE: /usr/lib/x86_64-linux-gnu/libpcl_kdtree.so  
+[11.645s] -- Found PCL_OCTREE: /usr/lib/x86_64-linux-gnu/libpcl_octree.so  
+[11.650s] -- Found PCL_SEARCH: /usr/lib/x86_64-linux-gnu/libpcl_search.so  
+[11.653s] -- Found PCL_SAMPLE_CONSENSUS: /usr/lib/x86_64-linux-gnu/libpcl_sample_consensus.so  
+[11.657s] -- Found PCL_FILTERS: /usr/lib/x86_64-linux-gnu/libpcl_filters.so  
+[11.658s] -- Found PCL_2D: /usr/include/pcl-1.14  
+[11.658s] -- Found PCL_GEOMETRY: /usr/include/pcl-1.14  
+[11.665s] -- Found PCL_IO: /usr/lib/x86_64-linux-gnu/libpcl_io.so  
+[11.669s] -- Found PCL_FEATURES: /usr/lib/x86_64-linux-gnu/libpcl_features.so  
+[11.671s] -- Found PCL_ML: /usr/lib/x86_64-linux-gnu/libpcl_ml.so  
+[11.676s] -- Found PCL_SEGMENTATION: /usr/lib/x86_64-linux-gnu/libpcl_segmentation.so  
+[11.678s] -- Found PCL_VISUALIZATION: /usr/lib/x86_64-linux-gnu/libpcl_visualization.so  
+[11.687s] -- Found PCL_SURFACE: /usr/lib/x86_64-linux-gnu/libpcl_surface.so  
+[11.687s] -- Found PCL_REGISTRATION: /usr/lib/x86_64-linux-gnu/libpcl_registration.so  
+[11.690s] -- Found PCL_KEYPOINTS: /usr/lib/x86_64-linux-gnu/libpcl_keypoints.so  
+[11.696s] -- Found PCL_TRACKING: /usr/lib/x86_64-linux-gnu/libpcl_tracking.so  
+[11.698s] -- Found PCL_RECOGNITION: /usr/lib/x86_64-linux-gnu/libpcl_recognition.so  
+[11.704s] -- Found PCL_STEREO: /usr/lib/x86_64-linux-gnu/libpcl_stereo.so  
+[11.706s] -- Found PCL_APPS: /usr/lib/x86_64-linux-gnu/libpcl_apps.so  
+[11.707s] -- Found PCL_IN_HAND_SCANNER: /usr/include/pcl-1.14  
+[11.710s] -- Found PCL_MODELER: /usr/include/pcl-1.14  
+[11.710s] -- Found PCL_POINT_CLOUD_EDITOR: /usr/include/pcl-1.14  
+[11.713s] -- Found PCL_OUTOFCORE: /usr/lib/x86_64-linux-gnu/libpcl_outofcore.so  
+[11.714s] -- Found PCL_PEOPLE: /usr/lib/x86_64-linux-gnu/libpcl_people.so  
+[11.729s] -- Found pcl_ros: 2.6.2 (/opt/ros/jazzy/share/pcl_ros/cmake)
+[12.148s] -- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+[12.153s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[12.153s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[12.510s] -- Configuring done (12.5s)
+[12.647s] -- Generating done (0.1s)
+[12.669s] -- Build files have been written to: /home/group3-robot/robp_group3/build/icp_cpp
+[13.042s] Invoked command in '/home/group3-robot/robp_group3/build/icp_cpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/group3-robot/robp_group3/robp_ws/src/icp_cpp -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/group3-robot/robp_group3/install/icp_cpp
+[13.043s] Invoking command in '/home/group3-robot/robp_group3/build/icp_cpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/icp_cpp -- -j8 -l8
+[13.257s] [ 50%] [32mBuilding CXX object CMakeFiles/icp_node.dir/src/icp_node.cpp.o[0m
+[40.235s] [100%] [32m[1mLinking CXX executable icp_node[0m
+[42.139s] [100%] Built target icp_node
+[42.151s] Invoked command in '/home/group3-robot/robp_group3/build/icp_cpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/group3-robot/robp_group3/build/icp_cpp -- -j8 -l8
+[42.152s] Invoking command in '/home/group3-robot/robp_group3/build/icp_cpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/icp_cpp
+[42.161s] -- Install configuration: ""
+[42.161s] -- Execute custom install script
+[42.161s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/lib/icp_cpp/icp_node
+[42.171s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/ament_index/resource_index/package_run_dependencies/icp_cpp
+[42.181s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/ament_index/resource_index/parent_prefix_path/icp_cpp
+[42.191s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/environment/ament_prefix_path.sh
+[42.200s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/environment/ament_prefix_path.dsv
+[42.210s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/environment/path.sh
+[42.220s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/environment/path.dsv
+[42.229s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/local_setup.bash
+[42.239s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/local_setup.sh
+[42.249s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/local_setup.zsh
+[42.258s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/local_setup.dsv
+[42.268s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/package.dsv
+[42.278s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/ament_index/resource_index/packages/icp_cpp
+[42.287s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/cmake/icp_cppConfig.cmake
+[42.297s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/cmake/icp_cppConfig-version.cmake
+[42.306s] -- Symlinking: /home/group3-robot/robp_group3/install/icp_cpp/share/icp_cpp/package.xml
+[42.318s] Invoked command in '/home/group3-robot/robp_group3/build/icp_cpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/group3-robot/robp_group3/build/icp_cpp

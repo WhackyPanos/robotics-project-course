@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'moveRosbag = localization.moveRosbag:main'
+            'ekf = localization.ekf:main'
         ],
     },
 )
