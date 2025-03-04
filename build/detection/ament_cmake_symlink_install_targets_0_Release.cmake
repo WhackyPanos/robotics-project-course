@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/group3-robot/robp_group3/build/detection/clustering_node" "/home/group3-robot/robp_group3/build/detection/classifier_node" "TARGETS" "clustering_node" "classifier_node" "DESTINATION" "lib/detection")
