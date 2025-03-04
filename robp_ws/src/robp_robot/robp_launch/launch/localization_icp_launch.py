@@ -48,7 +48,16 @@ def generate_launch_description():
         Node(
             package='joystick_teleop',
             executable='twist2duty'
+        ),
+
+        Node(
+            package='icp_cpp',  # The name of your package
+            executable='icp_node',  # The executable of your ICP node
+            name='icp_node',  # Optional: Name the node (if you want a custom name)
+            output='screen',  # This will print the output to the terminal
+            parameters=[],  # Optional: Add any parameters you want to pass to the node
         )
+
 
         # # RViz Node (Loads a specific RViz config file if available) possibility to add rviz specification
         # Node(
