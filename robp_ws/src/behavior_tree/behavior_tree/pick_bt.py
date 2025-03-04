@@ -5,6 +5,9 @@ import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
 from handle_objects.pick_objects import InitTuckArm, ObjTuckArm, Move2Pick, DetectObject
+from path_planner.path_planner import CarrotPlanner
+from behavior_tree.goCollect_bhv import goCollect
+from rclpy.executors import MultiThreadedExecutor
 
 class PickBT(Node):
     def __init__(self) -> None:
@@ -21,17 +24,12 @@ class PickBT(Node):
         root = py_trees.composites.Sequence(name="Root", memory= False)
 
         # Initialize behaviors and pass ROS node to them
-
-        #init_tuck_action = InitTuckArm()
-        obj_tuck_bhv = ObjTuckArm()
-        #pick_obj = Pick()
-        #init_tuck_bhv = InitTuckArm()
+        collect = goCollect()
         move_to_pick = Move2Pick()
+        obj_tuck_bhv = ObjTuckArm()
         
-        # Add behaviors to the root
-        #root.add_child(init_tuck_action)
-        #root.add_children([move_to_pick])
-        root.add_child(move_to_pick)
+        root.add_children([collect, move_to_pick, obj_tuck_bhv]) #, move_to_pick, obj_tuck_bhv
+        #root.add_children([obj_tuck_bhv])
         
         return root
 
@@ -48,10 +46,15 @@ def main(args=None):
     node.tree.tick_tock(period_ms=1000)
 
     # Spin the node to keep it alive
-    rclpy.spin(node)
+    try:
+        rclpy.spin(node)  # This keeps the node alive
+    except KeyboardInterrupt:
+        pass  # Handle Ctrl+C gracefully
+
 
     # Shutdown the node
     rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
+

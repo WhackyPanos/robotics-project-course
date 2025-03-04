@@ -1,0 +1,25 @@
+[2.189s] Invoking command in '/home/group3-robot/robp_group3/build/handle_objects': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/handle_objects/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/handle_objects/build --no-deps symlink_data
+[3.394s] running develop
+[3.394s] running egg_info
+[3.394s] creating handle_objects.egg-info
+[3.394s] writing handle_objects.egg-info/PKG-INFO
+[3.394s] writing dependency_links to handle_objects.egg-info/dependency_links.txt
+[3.394s] writing entry points to handle_objects.egg-info/entry_points.txt
+[3.394s] writing requirements to handle_objects.egg-info/requires.txt
+[3.395s] writing top-level names to handle_objects.egg-info/top_level.txt
+[3.395s] writing manifest file 'handle_objects.egg-info/SOURCES.txt'
+[3.395s] reading manifest file 'handle_objects.egg-info/SOURCES.txt'
+[3.395s] writing manifest file 'handle_objects.egg-info/SOURCES.txt'
+[3.395s] running build_ext
+[3.395s] Creating /home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages/handle-objects.egg-link (link to .)
+[3.395s] Installing ik_solver script to /home/group3-robot/robp_group3/install/handle_objects/lib/handle_objects
+[3.395s] Installing pick_objects script to /home/group3-robot/robp_group3/install/handle_objects/lib/handle_objects
+[3.395s] 
+[3.395s] Installed /home/group3-robot/robp_group3/build/handle_objects
+[3.396s] running symlink_data
+[3.396s] creating /home/group3-robot/robp_group3/install/handle_objects/share/ament_index
+[3.396s] creating /home/group3-robot/robp_group3/install/handle_objects/share/ament_index/resource_index
+[3.396s] creating /home/group3-robot/robp_group3/install/handle_objects/share/ament_index/resource_index/packages
+[3.396s] symbolically linking /home/group3-robot/robp_group3/build/handle_objects/resource/handle_objects -> /home/group3-robot/robp_group3/install/handle_objects/share/ament_index/resource_index/packages
+[3.396s] symbolically linking /home/group3-robot/robp_group3/build/handle_objects/package.xml -> /home/group3-robot/robp_group3/install/handle_objects/share/handle_objects
+[3.413s] Invoked command in '/home/group3-robot/robp_group3/build/handle_objects' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/handle_objects/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/handle_objects/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/handle_objects/build --no-deps symlink_data

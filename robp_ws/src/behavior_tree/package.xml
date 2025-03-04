@@ -13,6 +13,9 @@
   <depend>py_trees_ros</depend>
   <depend>py_trees_ros_interfaces</depend>  <!-- Ensures compatibility with py_trees_ros messages -->
   <depend>handle_objects</depend>
+  <depend>std_msgs</depend>
+  <depend>path_planner</depend>
+  <depend>geometry_msgs</depend>
 
  
  

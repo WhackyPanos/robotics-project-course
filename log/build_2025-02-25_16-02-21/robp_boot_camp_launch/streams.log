@@ -1,0 +1,15 @@
+[1.329s] Invoking command in '/home/group3-robot/robp_group3/build/robp_boot_camp_launch': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/robp_boot_camp_launch/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build --no-deps symlink_data
+[1.669s] running develop
+[1.844s] running egg_info
+[1.861s] writing robp_boot_camp_launch.egg-info/PKG-INFO
+[1.861s] writing dependency_links to robp_boot_camp_launch.egg-info/dependency_links.txt
+[1.861s] writing requirements to robp_boot_camp_launch.egg-info/requires.txt
+[1.861s] writing top-level names to robp_boot_camp_launch.egg-info/top_level.txt
+[1.897s] reading manifest file 'robp_boot_camp_launch.egg-info/SOURCES.txt'
+[1.898s] writing manifest file 'robp_boot_camp_launch.egg-info/SOURCES.txt'
+[1.917s] running build_ext
+[1.917s] Creating /home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages/robp-boot-camp-launch.egg-link (link to .)
+[1.918s] 
+[1.918s] Installed /home/group3-robot/robp_group3/build/robp_boot_camp_launch
+[1.918s] running symlink_data
+[1.955s] Invoked command in '/home/group3-robot/robp_group3/build/robp_boot_camp_launch' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/group3-robot/robp_group3/build/robp_boot_camp_launch/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/group3-robot/robp_group3/install/robp_boot_camp_launch/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/group3-robot/robp_group3/build/robp_boot_camp_launch/build --no-deps symlink_data

@@ -1,2 +1,3 @@
 [console_scripts]
+goCollect_bhv = behavior_tree.goCollect_bhv:main
 pick_bt = behavior_tree.pick_bt:main

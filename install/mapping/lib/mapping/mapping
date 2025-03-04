@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #!/usr/bin/python3
-=======
-#!/home/group3-robot/ros2_venv/bin/python3
->>>>>>> path-planner
 # EASY-INSTALL-ENTRY-SCRIPT: 'mapping','console_scripts','mapping'
 import re
 import sys

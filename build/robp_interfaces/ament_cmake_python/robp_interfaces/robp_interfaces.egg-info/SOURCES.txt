@@ -5,7 +5,6 @@ robp_interfaces.egg-info/SOURCES.txt
 robp_interfaces.egg-info/dependency_links.txt
 robp_interfaces.egg-info/top_level.txt
 robp_interfaces/msg/__init__.py
-<<<<<<< HEAD
 robp_interfaces/msg/_box_position.py
 robp_interfaces/msg/_duty_cycles.py
 robp_interfaces/msg/_encoders.py
@@ -13,7 +12,3 @@ robp_interfaces/msg/_object_position.py
 robp_interfaces/srv/__init__.py
 robp_interfaces/srv/_box_position_srv.py
 robp_interfaces/srv/_object_position_srv.py
-=======
-robp_interfaces/msg/_duty_cycles.py
-robp_interfaces/msg/_encoders.py
->>>>>>> path-planner

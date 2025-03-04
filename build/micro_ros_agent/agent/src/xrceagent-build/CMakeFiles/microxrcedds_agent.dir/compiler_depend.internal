@@ -3,7 +3,6 @@
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/Agent.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/Agent.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -27,31 +26,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/Agent.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Root.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
@@ -577,7 +551,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/Agent.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/AgentInstance.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/AgentInstance.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -601,31 +574,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/AgentInstance.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/AgentInstance.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
@@ -1258,7 +1206,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/AgentInstance.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/Root.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/Root.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -1282,31 +1229,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/Root.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Root.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
@@ -1766,7 +1688,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/Root.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/client/ProxyClient.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/client/ProxyClient.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -1790,31 +1711,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/client/ProxyClient.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -2344,7 +2240,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/client/ProxyClient.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/datareader/DataReader.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/datareader/DataReader.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -2368,31 +2263,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/datareader/DataReader.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -2716,7 +2586,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/datareader/DataReader.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/datawriter/DataWriter.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/datawriter/DataWriter.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -2740,31 +2609,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/datawriter/DataWriter.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -3082,7 +2926,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/datawriter/DataWriter.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/message/InputMessage.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/message/InputMessage.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -3106,31 +2949,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/InputMessage.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/types/MessageHeader.hpp
@@ -3419,7 +3237,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/InputMessage.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/message/OutputMessage.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -3443,31 +3260,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/OutputMessage.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/types/MessageHeader.hpp
@@ -3757,7 +3549,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fast/FastEntities.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/middleware/fast/FastEntities.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -3781,31 +3572,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fast/FastEntities.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/middleware/Middleware.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/middleware/fast/FastEntities.hpp
@@ -5275,7 +5041,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fastdds/FastDDSEntities.cpp
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fastdds/FastDDSMiddleware.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/middleware/fastdds/FastDDSMiddleware.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -5299,31 +5064,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/middleware/fastdds/FastDDSMiddleware.c
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/middleware/Middleware.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/middleware/fast/FastEntities.hpp
@@ -6079,7 +5819,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/object/XRCEObject.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/participant/Participant.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/participant/Participant.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -6103,31 +5842,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/participant/Participant.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -6443,7 +6157,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/participant/Participant.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/processor/Processor.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/processor/Processor.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -6467,31 +6180,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/processor/Processor.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Root.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
@@ -6846,7 +6534,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/processor/Processor.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/publisher/Publisher.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/publisher/Publisher.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -6870,31 +6557,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/publisher/Publisher.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -7211,7 +6873,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/publisher/Publisher.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/replier/Replier.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/replier/Replier.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -7235,31 +6896,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/replier/Replier.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -7582,7 +7218,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/replier/Replier.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/requester/Requester.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/requester/Requester.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -7606,31 +7241,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/requester/Requester.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -7954,7 +7564,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/requester/Requester.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/subscriber/Subscriber.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/subscriber/Subscriber.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -7978,31 +7587,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/subscriber/Subscriber.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -8319,7 +7903,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/subscriber/Subscriber.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/topic/Topic.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/topic/Topic.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -8343,31 +7926,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/topic/Topic.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/Session.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/session/SessionInfo.hpp
@@ -8684,7 +8242,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/topic/Topic.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/Server.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/Server.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -8708,31 +8265,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/Server.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Root.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/client/ProxyClient.hpp
@@ -9074,7 +8606,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/Server.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/can/CanAgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/can/CanAgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -9098,31 +8629,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/can/CanAgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -9482,7 +8988,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/can/CanAgentLinux.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/custom/CustomAgent.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/custom/CustomAgent.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -9506,31 +9011,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/custom/CustomAgent.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -10132,7 +9612,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/discovery/DiscoveryServer.cp
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/discovery/DiscoveryServerLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/discovery/DiscoveryServerLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -10156,31 +9635,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/discovery/DiscoveryServerLin
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/OutputMessage.hpp
@@ -10525,7 +9979,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/discovery/DiscoveryServerLin
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/MultiSerialAgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/serial/MultiSerialAgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -10549,31 +10002,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/MultiSerialAgentLinux
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -10899,7 +10327,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/MultiSerialAgentLinux
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/MultiTermiosAgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/serial/MultiTermiosAgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -10923,31 +10350,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/MultiTermiosAgentLinu
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -11298,7 +10700,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/MultiTermiosAgentLinu
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/PseudoTerminalAgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/serial/PseudoTerminalAgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -11322,31 +10723,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/PseudoTerminalAgentLi
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -11693,7 +11069,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/PseudoTerminalAgentLi
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/SerialAgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/serial/SerialAgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -11717,31 +11092,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/SerialAgentLinux.cpp.
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -12066,7 +11416,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/SerialAgentLinux.cpp.
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/TermiosAgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/serial/TermiosAgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -12090,31 +11439,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/serial/TermiosAgentLinux.cpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -12546,7 +11870,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/stream_framing/StreamFraming
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/tcp/TCPv4AgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/tcp/TCPv4AgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -12570,31 +11893,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/tcp/TCPv4AgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -12986,7 +12284,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/tcp/TCPv4AgentLinux.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/tcp/TCPv6AgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/tcp/TCPv6AgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -13010,31 +12307,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/tcp/TCPv6AgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -13426,7 +12698,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/tcp/TCPv6AgentLinux.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/udp/UDPv4AgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/udp/UDPv4AgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -13450,31 +12721,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/udp/UDPv4AgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -13833,7 +13079,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/udp/UDPv4AgentLinux.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/udp/UDPv6AgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/transport/udp/UDPv6AgentLinux.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -13857,31 +13102,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/transport/udp/UDPv6AgentLinux.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp
@@ -15404,7 +14624,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/types/XRCETypes.cpp.o
 
 CMakeFiles/microxrcedds_agent.dir/src/cpp/utils/ArgumentParser.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/src/cpp/utils/ArgumentParser.cpp
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h
@@ -15428,31 +14647,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/utils/ArgumentParser.cpp.o
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/version.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h
- /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/include/uxr/agent/config.hpp
->>>>>>> path-planner
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/Agent.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/logger/Logger.hpp
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/message/InputMessage.hpp

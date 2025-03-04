@@ -221,7 +221,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o: \
  /usr/include/c++/13/ratio /usr/include/c++/13/limits \
  /usr/include/c++/13/ctime /usr/include/c++/13/bits/parse_numbers.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent/include/uxr/agent/utils/Color.hpp \
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/spdlog.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/common.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/tweakme.h \
@@ -231,17 +230,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o: \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled/core.h \
  /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled/format.h \
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/spdlog.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/common.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/tweakme.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/null_mutex.h \
- /usr/include/c++/13/atomic \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/fmt.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h \
- /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h \
->>>>>>> path-planner
  /usr/include/c++/13/cmath /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
@@ -252,13 +240,8 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/fmt/bundled/core.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/registry.h \
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/core.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/registry.h \
->>>>>>> path-planner
  /usr/include/c++/13/unordered_map \
  /usr/include/c++/13/bits/unordered_map.h \
  /usr/include/c++/13/bits/hashtable.h \
@@ -266,7 +249,6 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o: \
  /usr/include/c++/13/bits/enable_special_members.h \
  /usr/include/c++/13/mutex /usr/include/c++/13/bits/std_mutex.h \
  /usr/include/c++/13/bits/unique_lock.h \
-<<<<<<< HEAD
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/logger.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/log_msg.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/backtracer.h \
@@ -282,20 +264,3 @@ CMakeFiles/microxrcedds_agent.dir/src/cpp/message/OutputMessage.cpp.o: \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/details/console_globals.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/sinks/sink.h \
  /home/group3-robot/robp_group3/build/micro_ros_agent/agent/src/xrceagent-build/temp_install/spdlog-1.9.2/include/spdlog/formatter.h
-=======
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/logger.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/backtracer.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/log_msg_buffer.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/circular_q.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/version.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/synchronous_factory.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/ostr.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/ostream.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bundled/format.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/fmt/bin_to_hex.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/stdout_sinks.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/details/console_globals.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/sinks/sink.h \
- /home/group3-robot/robp_group3/arm_ws/install/micro_ros_agent/include/spdlog/formatter.h
->>>>>>> path-planner

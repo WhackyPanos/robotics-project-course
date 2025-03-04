@@ -4,16 +4,10 @@
 
 #include <string.h>
 
+#include "drive_base_msgs/msg/detail/command_status__functions.h"
+#include "rosidl_typesupport_interface/macros.h"
+#include "drive_base_msgs/msg/detail/command_status__type_support.h"
 #include "drive_base_msgs/msg/detail/command_status__struct.h"
-<<<<<<< HEAD
-#include "drive_base_msgs/msg/detail/command_status__type_support.h"
-#include "drive_base_msgs/msg/detail/command_status__functions.h"
-#include "rosidl_typesupport_interface/macros.h"
-=======
-#include "rosidl_typesupport_interface/macros.h"
-#include "drive_base_msgs/msg/detail/command_status__type_support.h"
-#include "drive_base_msgs/msg/detail/command_status__functions.h"
->>>>>>> path-planner
 
 #ifdef __cplusplus
 extern "C"

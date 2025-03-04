@@ -91,7 +91,6 @@
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/uxr/agent/config.hpp
 /home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/LICENSE
 /home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/cmake/microxrcedds_agentConfig.cmake
-<<<<<<< HEAD
 /home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/cmake/microxrcedds_agentConfigVersion.cmake
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/async_logger-inl.h
 /home/group3-robot/robp_group3/install/micro_ros_agent/include/spdlog/pattern_formatter-inl.h
@@ -194,6 +193,3 @@
 /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake/spdlog/spdlogConfig.cmake
 /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake/spdlog/spdlogConfigTargets-release.cmake
 /home/group3-robot/robp_group3/install/micro_ros_agent/lib/cmake/spdlog/spdlogConfigTargets.cmake
-=======
-/home/group3-robot/robp_group3/install/micro_ros_agent/share/microxrcedds_agent/cmake/microxrcedds_agentConfigVersion.cmake
->>>>>>> path-planner

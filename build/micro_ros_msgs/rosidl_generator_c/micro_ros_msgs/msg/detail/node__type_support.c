@@ -4,17 +4,10 @@
 
 #include <string.h>
 
-<<<<<<< HEAD
-#include "micro_ros_msgs/msg/detail/node__type_support.h"
-#include "micro_ros_msgs/msg/detail/node__functions.h"
-#include "rosidl_typesupport_interface/macros.h"
-#include "micro_ros_msgs/msg/detail/node__struct.h"
-=======
-#include "micro_ros_msgs/msg/detail/node__struct.h"
 #include "micro_ros_msgs/msg/detail/node__type_support.h"
 #include "rosidl_typesupport_interface/macros.h"
+#include "micro_ros_msgs/msg/detail/node__struct.h"
 #include "micro_ros_msgs/msg/detail/node__functions.h"
->>>>>>> path-planner
 
 #ifdef __cplusplus
 extern "C"
