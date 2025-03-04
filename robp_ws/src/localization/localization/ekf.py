@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rclpy
-from rclpy import Node
+from rclpy.node import Node
 import numpy as np
 from filterpy.kalman import KalmanFilter
 from filterpy.common import Q_discrete_white_noise
@@ -20,3 +20,15 @@ class EKF(Node):
     my_filter.P *= 1000.                 # covariance matrix
     my_filter.R = 5                      # state uncertainty
     my_filter.Q = Q_discrete_white_noise(dim=2, dt=0.1, var=0.1) # process uncertainty
+    print("AAAA")
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = EKF()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
