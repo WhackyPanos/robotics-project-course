@@ -44,10 +44,10 @@ class MotionNode(Node):
         # Parameters
         # ==================
         self.linear_velocity = 0.2
-        self.angular_velocity = 0.4
+        self.angular_velocity = 0.6
         self.goal_threshold = 0.05
-        self.kp = 1.0
-        self.ki = 0.01
+        self.kp = 1.5
+        self.ki = 0.015
         self.kd = 0.5
         # ==================
 
@@ -117,8 +117,12 @@ class MotionNode(Node):
             iError = angle_diff * self.elapsed_time
             dError = (angle_diff - self.prev_angle_diff)/self.elapsed_time
             output = self.kp*angle_diff + self.ki*iError + self.kd*dError
+            if output > self.angular_velocity:
+                output = self.angular_velocity
+            elif output < -self.angular_velocity:
+                output = -self.angular_velocity
             self.vel_cmd.angular.z = output
-            if angle_diff > math.pi/2: # TODO adjust this value
+            if angle_diff > math.pi/7 or angle_diff < -math.pi/7: # TODO adjust this value
                 self.vel_cmd.linear.x = 0.0
             else:
                 self.vel_cmd.linear.x = self.linear_velocity
