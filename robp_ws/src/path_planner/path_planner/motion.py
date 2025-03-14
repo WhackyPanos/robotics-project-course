@@ -5,7 +5,8 @@ import math
 from rclpy.node import Node
 import tf2_ros
 import tf2_geometry_msgs
-from geometry_msgs.msg import Point, Pose2D, Twist, PoseStamped, TransformStamped, PointStamped
+from geometry_msgs.msg import Point, Pose2D, Twist, PoseStamped, PointStamped
+from nav_msgs.msg import Path
 from std_msgs.msg import Bool
 """
 This node is used to control the robot's motion to navigate to a goal position.
@@ -23,9 +24,14 @@ class MotionNode(Node):
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
 
         # Initialize the goal position
-        self.goal_position = Point()
-        self.goal_position.x = 0.0
-        self.goal_position.y = 0.0
+        self.goal_position = PoseStamped()
+        self.goal_position.pose.position.x = 0.0
+        self.goal_position.pose.position.y = 0.0
+        self.goal_position.pose.position.z = 0.0
+        self.goal_position.pose.orientation.x = 0.0
+        self.goal_position.pose.orientation.y = 0.0
+        self.goal_position.pose.orientation.z = 0.0
+        self.goal_position.pose.orientation.w = 1.0
         self.goal_reached_flag = True
 
         # Setup velocity msg
@@ -35,16 +41,21 @@ class MotionNode(Node):
         self.vel_cmd.angular.x = 0.0
         self.vel_cmd.angular.y = 0.0
 
+        self.is_path = False
+
         # Setup publishers and subscribers
         self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PointStamped, '/motion/goal', self.goal_callback, 10)
+        self.create_subscription(Path, '/motion/path', self.path_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
+        self.goal_publisher = self.create_publisher(PointStamped, '/motion/goal', 10)
+        self.path_publisher = self.create_publisher(Path, '/motion/path', 10)
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # Parameters
         # ==================
         self.linear_velocity = 0.2
-        self.angular_velocity = 0.6
+        self.angular_velocity = 0.4
         self.goal_threshold = 0.05
         self.kp = 1.5
         self.ki = 0.015
@@ -59,6 +70,17 @@ class MotionNode(Node):
         self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
+
+    def path_callback(self, msg:Path):
+        if len(msg.poses) > 0:
+            self.path = msg
+            pub_msg = PointStamped()
+            pub_msg.header.stamp = self.get_clock().now().to_msg()
+            pub_msg.header.frame_id = "map"
+            pub_msg.point.x = self.path.poses[0].pose.position.x
+            pub_msg.point.y = self.path.poses[0].pose.position.y
+            pub_msg.point.z = 0.0
+            self.goal_publisher.publish(pub_msg)
     
     # Checks robot's current position and its current goal, and commands the robot to move if it hasn't reached the goal
     def odometry_callback(self, msg: Pose2D):
@@ -133,6 +155,12 @@ class MotionNode(Node):
             self.cmd_vel_publisher.publish(self.vel_cmd)
             self.goal_reached_publisher.publish(Bool(data=True))
             self.goal_reached_flag = True
+            self.get_logger().info('Goal reached: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
+            if len(self.path.poses) > 1:
+                self.path.poses.pop(0)
+                self.path_publisher.publish(self.path)
+            else:
+                self.get_logger().info('No more goals in path.')
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
