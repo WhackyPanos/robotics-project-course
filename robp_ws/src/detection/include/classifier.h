@@ -4,6 +4,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include "std_msgs/msg/string.hpp"
 #include <sensor_msgs/msg/point_cloud2.hpp>
+#include <geometry_msgs/msg/twist.hpp>
 #include <geometry_msgs/msg/point_stamped.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <visualization_msgs/msg/marker.hpp>
@@ -46,6 +47,7 @@ private:
         const rclcpp::Time &stamp,
         const std::string &label,
         const OBBData &obb);
+    void twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg);
     
     // Computes oriented bounding box
     OBBData computeOBB(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
@@ -57,16 +59,22 @@ private:
     std::vector<float> computeSliceDiameters(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int num_slices);
 
     // ROS 2 interfaces
-    rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr subscription_;
-    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+    rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr cluster_sub_;
+    rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr class_pub_;
     rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
     std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
     std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
     
+    double angular_z_ = 0.0;
+    double linear_x_ = 0.0;
+    double linear_y_ = 0.0;
+
     // Parameters
     std::string classification;
     std::string cloud_topic_;
+    std::string twist_topic_;
     std::string classification_topic_;
     double box_filter_min_;
     double box_filter_max_;
@@ -76,6 +84,8 @@ private:
     double sphere_filter_min_;
     double sphere_filter_max_;
     bool visualize_OBB_;
+    double ang_vel_threshold_;
+    double lin_vel_threshold_;
 };
 
 #endif // CLASSIFIER_NODE_H

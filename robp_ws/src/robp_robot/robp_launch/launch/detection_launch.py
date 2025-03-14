@@ -30,7 +30,8 @@ def generate_launch_description():
             output='screen',
             parameters=[{
                 "cloud_topic": "/camera/camera/depth/color/points",
-                "cluster_topic": "/camera/camera/depth/color/cluster_points",
+                "cluster_topic": "/detection/cluster_points",
+                "detection_topic": "detection/object"
                 "twist_topic": "/cmd_vel",
                 "dist_filter_min": 0.0,
                 "dist_filter_max": 1.0,
@@ -38,7 +39,7 @@ def generate_launch_description():
                 "height_filter_max": 0.075,
                 "cluster_tolerance": 0.05,
                 "cluster_min_size": 100,
-                "ang_velocity_threshold": 0.3
+                "ang_vel_threshold": 0.0
             }]
         ),
         Node(
@@ -46,15 +47,18 @@ def generate_launch_description():
             executable='classifier_node',
             output='screen',
             parameters=[{
-                "cloud_topic": "/camera/camera/depth/color/cluster_points",
+                "cloud_topic": "/detection/cluster_points",
                 "classification_topic": "/detection/class",
+                "twist_topic": "/cmd_vel",
                 "box_filter_min": 0.0,
-                "box_filter_max": 0.008,
+                "box_filter_max": 0.0069,
                 "box_filter_threshold": 50,
                 "animal_filter_min": 0.045,
-                "animal_filter_max": 0.05,
+                "animal_filter_max": 0.048,
                 "sphere_filter_min": 0.056,
                 "sphere_filter_max": 0.059,
+                "ang_vel_threshold": 0.0,
+                "lin_vel_threshold": 0.0,
                 "visualize_OBB": True
             }]
         ),
@@ -64,7 +68,7 @@ def generate_launch_description():
             output='screen',
             parameters=[{
                 'box_threshold': 20,
-                'object_threshold': 10,
+                'object_threshold': 7,
                 'msg_topic': '/detection/class'
             }],
         )
