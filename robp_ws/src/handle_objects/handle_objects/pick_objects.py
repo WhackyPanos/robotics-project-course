@@ -18,7 +18,182 @@ from geometry_msgs.msg import PoseStamped, Pose, PointStamped
 from math import pi, acos, atan2, atan, cos, sin, sqrt
 import numpy as np 
 
-class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
+
+# ----------------------------------- BEHAVIOUR 1 ---------------------------------------------------------------
+class SetArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
+    def __init__(self, name, angles:list ):
+        super().__init__(name=name)
+        self.angles = angles
+    
+    def setup(self, **kwargs):
+            """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
+           a parallel checking for a valid policy configuration after children have been added or removed"""
+            print("Setting up ObjTuckArm node.")
+            self.node = kwargs['node']
+            self.arm_started = False
+            self.arm_moving = False
+            self.arm_tucked = False
+            self.done = False
+            qos_profile = QoSProfile(
+                reliability=ReliabilityPolicy.RELIABLE,  # Ensures message delivery
+                durability=DurabilityPolicy.VOLATILE,    # No history saved for late subscribers
+                depth=100  # Stores up to 10 messages before dropping old ones
+                )
+
+            self.ota_publisher_ = self.node.create_publisher(
+                msg_type = Int16MultiArray,
+                topic = '/multi_servo_cmd_sub',
+                qos_profile = qos_profile) # ota = object_tuck_arm
+            
+            self.servo_angles_subscriber_ = self.node.create_subscription(
+                JointState,
+                '/servo_pos_publisher',
+                self.servo_angles_callback,
+                10
+            )  
+            self.obj_tuck_arm_time = 2000 # in ms            
+             
+
+            self.desired_servo_angles = [12000]*6
+            self.desired_servo_angles[0] = 10000 # gripper is different
+            
+            # hard coded angles
+            self.desired_servo_angles[5] = self.angles[5]
+            self.desired_servo_angles[4] = self.angles[4]  
+            self.desired_servo_angles[3] = self.angles[3] 
+            self.desired_servo_angles[2] = self.angles[2]  
+            self.desired_servo_angles[1] = self.angles[1] 
+            self.desired_servo_angles[0] = self.angles[0] 
+
+            self.angle_threshold = 100 #1 degree  
+
+    def servo_angles_callback(self, msg):
+        current_angles = msg.position
+        if self.arm_started and self.arm_moving:
+            self.arm_tucked = True
+            self.arm_moving = False
+            for i in range(1, len(current_angles)) :
+                if abs(self.desired_servo_angles[i] -current_angles[i]) > self.angle_threshold:
+                    print(f"Arm still moving (hard-coded movement), error of {abs(self.desired_servo_angles[i] -current_angles[i])}")
+                    self.arm_tucked = False
+                    self.arm_moving = True
+                    break
+        #print(f'Current angles position: {current_angles[1]}')
+         
+    def publish_msg(self):
+        msg = Int16MultiArray()
+        msg.layout = MultiArrayLayout(
+            dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
+            data_offset=0
+        )      
+        times = [self.obj_tuck_arm_time] * 6
+        msg.data = self.desired_servo_angles + times
+        self.ota_publisher_.publish(msg)
+
+    def initialise(self):
+
+        self.timer = self.node.create_timer(3, self.timer_callback)
+        
+    def timer_callback(self):
+        self.arm_started = True
+        self.timer.cancel()
+        print(f"delay completed")
+         
+    def update(self):
+        """ Behavior Tree execution step. Called whenever the node is ticked """
+
+        print(f"Arm lifting: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
+        if self.done:
+            return py_trees.common.Status.SUCCESS
+        elif not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
+            return py_trees.common.Status.RUNNING
+        
+        elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
+            self.publish_msg()
+            self.arm_moving = True
+            return py_trees.common.Status.RUNNING  # Keep running while the arm moves
+        
+        elif self.arm_started and self.arm_moving and not self.arm_tucked:
+            #self.publish_msg()
+            return py_trees.common.Status.RUNNING # Keep running while the arm moves
+        
+        elif self.arm_tucked:
+            self.arm_started,self.arm_tucked, self.arm_moving, self.done= False, False, False, True
+            return py_trees.common.Status.SUCCESS
+
+        else:
+             print("ERROR")
+             
+    def terminate(self, new_status: py_trees.common.Status):
+        """
+        Minimal termination implementation.
+        When is this called? Whenever your behaviour switches to a non-running state.
+            - SUCCESS || FAILURE : your behaviour's work cycle has finished
+            - INVALID : a higher priority branch has interrupted, or shutting down
+        """
+        if new_status == py_trees.common.Status.SUCCESS:
+            self.arm_tucked == True # not really necessary
+            #print(f"New status is {new_status}")
+
+# ----------------------------------- BEHAVIOUR 2 ---------------------------------------------------------------
+class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
+    def __init__(self, name="Detect Object"):
+        super().__init__(name=name)
+        #py_trees.behaviour.Behaviour.__init__(self, name)
+        #Node.__init__(self, "pick_node")  # ROS 2 node initialization
+        self.ik_solver = IKNode()
+
+    def setup(self, **kwargs):
+        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
+           a parallel checking for a valid policy configuration after children have been added or removed"""
+        self.node = kwargs['node']
+        
+        
+    def initialise(self):
+        """ When is this called? The first time your behaviour is ticked and anytime the
+          status is not RUNNING thereafter."""    
+         
+    def update(self):
+            """ Behavior Tree execution step. Called whenever the node is ticked """
+
+    def terminate(self, new_status: py_trees.common.Status):
+        """
+        Minimal termination implementation.
+        When is this called? Whenever your behaviour switches to a non-running state.
+            - SUCCESS || FAILURE : your behaviour's work cycle has finished
+            - INVALID : a higher priority branch has interrupted, or shutting down
+        """
+# ----------------------------------- BEHAVIOUR 3 ---------------------------------------------------------------
+class SearchObjectArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
+    def __init__(self, name="Detect Object"):
+        super().__init__(name=name)
+        #py_trees.behaviour.Behaviour.__init__(self, name)
+        #Node.__init__(self, "pick_node")  # ROS 2 node initialization
+        self.ik_solver = IKNode()
+
+    def setup(self, **kwargs):
+        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
+           a parallel checking for a valid policy configuration after children have been added or removed"""
+        self.node = kwargs['node']
+        
+        
+    def initialise(self):
+        """ When is this called? The first time your behaviour is ticked and anytime the
+          status is not RUNNING thereafter."""    
+         
+    def update(self):
+            """ Behavior Tree execution step. Called whenever the node is ticked """
+
+    def terminate(self, new_status: py_trees.common.Status):
+        """
+        Minimal termination implementation.
+        When is this called? Whenever your behaviour switches to a non-running state.
+            - SUCCESS || FAILURE : your behaviour's work cycle has finished
+            - INVALID : a higher priority branch has interrupted, or shutting down
+        """
+
+# ----------------------------------- BEHAVIOUR 4---------------------------------------------------------------
+class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Move2Pick"):
         super().__init__(name=name)
 
@@ -386,131 +561,8 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         msg = None
         self.node.get_logger().error("Plan B did not work, returning FAILURE")
         return msg
-
- # -----------------------------------------------------------------------------------------------------------------------
-
-
-class Lift(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
-    def __init__(self, name="Lift"):
-        super().__init__(name=name)
-    
-    def setup(self, **kwargs):
-            """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
-           a parallel checking for a valid policy configuration after children have been added or removed"""
-            print("Setting up ObjTuckArm node.")
-            self.node = kwargs['node']
-            self.arm_started = False
-            self.arm_moving = False
-            self.arm_tucked = False
-            self.done = False
-            qos_profile = QoSProfile(
-                reliability=ReliabilityPolicy.RELIABLE,  # Ensures message delivery
-                durability=DurabilityPolicy.VOLATILE,    # No history saved for late subscribers
-                depth=100  # Stores up to 10 messages before dropping old ones
-                )
-
-            self.ota_publisher_ = self.node.create_publisher(
-                msg_type = Int16MultiArray,
-                topic = '/multi_servo_cmd_sub',
-                qos_profile = qos_profile) # ota = object_tuck_arm
-            
-            self.servo_angles_subscriber_ = self.node.create_subscription(
-                JointState,
-                '/servo_pos_publisher',
-                self.servo_angles_callback,
-                10
-            )  
-            self.obj_tuck_arm_time = 2000 # in ms            
-             
-            # init tuck arm angles
-            #self.desired_servo_angles = [45, 230, 80.5232360099144, 201.20685353937313, 68.846193182243155, 139.65382600499612]
-            self.desired_servo_angles = [12000]*6
-            self.desired_servo_angles[0] = 10000 # gripper is different
-            
-            # self.solve_fk([-15.706226190621685, -58.89322565161596, 89.19116421034657, -83.70501671216269, -6.281438203134586, -15.707868506470371])
-
-            #self.desired_servo_angles[5] = 6000 # gripper is different
-            # obj tuck arm angles
-            #self.desired_servo_angles[4] = 6000  # servo 5
-            #self.desired_servo_angles[3] = 20000   # servo 4
-            #self.desired_servo_angles[2] = 8000 # servo 3
-            self.angle_threshold = 100 #1 degree  
-
-    def servo_angles_callback(self, msg):
-        current_angles = msg.position
-        if self.arm_started and self.arm_moving:
-            self.arm_tucked = True
-            self.arm_moving = False
-            for i in range(1, len(current_angles)) :
-                if abs(self.desired_servo_angles[i] -current_angles[i]) > self.angle_threshold:
-                    print(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -current_angles[i])}")
-                    self.arm_tucked = False
-                    self.arm_moving = True
-                    break
-        #print(f'Current angles position: {current_angles[1]}')
-         
-    def publish_msg(self):
-        msg = Int16MultiArray()
-        msg.layout = MultiArrayLayout(
-            dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
-            data_offset=0
-        )      
-        times = [self.obj_tuck_arm_time] * 6
-        msg.data = self.desired_servo_angles + times
-        self.ota_publisher_.publish(msg)
-
-    def initialise(self):
-
-        self.timer = self.node.create_timer(3, self.timer_callback)
-        
-    def timer_callback(self):
-        self.arm_started = True
-        self.timer.cancel()
-        print(f"delay completed")
-         
-    def update(self):
-        """ Behavior Tree execution step. Called whenever the node is ticked """
-
-        print(f"Arm lifting: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
-        if self.done:
-            return py_trees.common.Status.SUCCESS
-        elif not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
-            return py_trees.common.Status.RUNNING
-        
-        elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
-            self.publish_msg()
-            self.arm_moving = True
-            return py_trees.common.Status.RUNNING  # Keep running while the arm moves
-        
-        elif self.arm_started and self.arm_moving and not self.arm_tucked:
-            #self.publish_msg()
-            return py_trees.common.Status.RUNNING # Keep running while the arm moves
-        
-        elif self.arm_tucked:
-            self.arm_started,self.arm_tucked, self.arm_moving, self.done= False, False, False, True
-            return py_trees.common.Status.SUCCESS
-
-        else:
-             print("ERROR")
-             
-    def terminate(self, new_status: py_trees.common.Status):
-        """
-        Minimal termination implementation.
-        When is this called? Whenever your behaviour switches to a non-running state.
-            - SUCCESS || FAILURE : your behaviour's work cycle has finished
-            - INVALID : a higher priority branch has interrupted, or shutting down
-        """
-        if new_status == py_trees.common.Status.SUCCESS:
-            self.arm_tucked == True # not really necessary
-            #print(f"New status is {new_status}")
-
-
-
-
-
- # -----------------------------------------------------------------------------------------------------------------------
-
-class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
+# ----------------------------------- BEHAVIOUR 5 ---------------------------------------------------------------
+class a(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Detect Object"):
         super().__init__(name=name)
         #py_trees.behaviour.Behaviour.__init__(self, name)
@@ -521,81 +573,14 @@ class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tre
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
            a parallel checking for a valid policy configuration after children have been added or removed"""
         self.node = kwargs['node']
-        self.dopac_available = False # dopac = detected object position in the arm camera (frame)
-        self.dopmc_available = False # dopmc = detected object position in the main camera (frame)
-
-        # clients that requests the position in the main camera frame (probably from map file)
-        self.dopmc_client = self.node.create_client(
-            service_type = ObjectPositionSrv,
-            service_name = '/detected_object_pose/main_camera')
-        self.dopac_client = self.node.create_client(
-            service_type = ObjectPositionSrv,
-            service_name = '/detected_object_pose/arm_camera')
-        self.dopac_publisher = self.node.create_publisher(
-            
-        )
         
         
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
           status is not RUNNING thereafter."""    
-    
-        while not self.dopmc_client.wait_for_service(timeout_sec=2.0) or not self.dopac_client.wait_for_service(timeout_sec=2.0):
-            self.get_logger().info('service not available, waiting for detected object position ...')
-        
-        # initializing requests
-        self.arm_request = ObjectPositionSrv.Request()
-        self.main_request = ObjectPositionSrv.Request()
-
-        # sending requests
-        self.dopmc_client.send_obj_position_request()
-        self.dopac_client.send_obj_position_request()
-         
-    def send_dopmc_request(self): 
-        self.main_request.wantObjectPose = True
-        self.dopmc_client.call_async(self.main_request).add_done_callback(self.dopmc_response_callback)
-
-    def send_dopac_request(self): 
-        self.arm_request.wantObjectPose = True  
-        self.dopac_client.call_async(self.arm_request).add_done_callback(self.dopac_response_callback)
-
-    def dopmc_response_callback(self, future):
-        """ Callback for the response from the main camera service. """
-        try:
-            response = future.result()
-            self.get_logger().info(f"Main camera pose response: {response.object_pose}")
-            # Do your computations or further processing here based on the response from the main camera
-            self.dopmc_available = True  # Mark that  now available
-        except Exception as e:
-            self.get_logger().error(f"Failed to get response from main camera service: {e}")
-
-    def dopac_response_callback(self, future):
-        """ Callback for the response from the arm camera service. """
-        try:
-            response = future.result()
-            self.get_logger().info(f"Arm camera pose response: {response.object_pose}")
-            # Do your computations or further processing here based on the response from the arm camera
-            self.dopac_available = True  # Mark that now available
-        except Exception as e:
-            self.get_logger().error(f"Failed to get response from arm camera service: {e}")
-
-
          
     def update(self):
             """ Behavior Tree execution step. Called whenever the node is ticked """
-            #self.ik_solver.solve_ik()
-            if not self.dopac_available:
-                return py_trees.common.Status.RUNNING
-            elif self.dopac_available:
-                
-                target_pose = 1; #TODO
-                #self.ik_solver.solve_ik()
-
-                # TODO
-                return py_trees.common.Status.RUNNING
-            
-            elif self.dopac_available is None:
-                return py_trees.common.FAILURE
 
     def terminate(self, new_status: py_trees.common.Status):
         """
@@ -604,9 +589,6 @@ class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tre
             - SUCCESS || FAILURE : your behaviour's work cycle has finished
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
-
-# -----------------------------------------------------------------------------------------------------------------------
-
 class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
     def __init__(self, name="Place"):
         super().__init__(name=name)
@@ -716,9 +698,5 @@ class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a 
         if new_status == py_trees.common.Status.SUCCESS:
             self.arm_tucked == True # not really necessary
             #print(f"New status is {new_status}")
-
-
-
-
 
  # -----------------------------------------------------------------------------------------------------------------------

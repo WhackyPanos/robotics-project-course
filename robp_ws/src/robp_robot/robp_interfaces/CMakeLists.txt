@@ -11,6 +11,7 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
 
 set(msg_files
+  "msg/Path.msg"
   "msg/DutyCycles.msg"
   "msg/Encoders.msg"
   "msg/ObjectPosition.msg"
