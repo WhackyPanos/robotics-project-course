@@ -17,9 +17,6 @@ class Map_file(Node):
     def __init__(self):
         super().__init__('map_file')
 
-        # Publisher for the objects
-        self.publisher = self.create_publisher(MarkerArray, '/object_positions', 10)
-
         # Declare parameters with default values
         self.box_threshold = self.get_parameter_or('box_threshold', 20)
         self.object_threshold = self.get_parameter_or('object_threshold', 5)
@@ -36,6 +33,9 @@ class Map_file(Node):
             self.map_callback, 
             qos_profile 
         )
+
+        # Publisher for the objects
+        self.publisher = self.create_publisher(MarkerArray, '/object_positions', 10)
 
         self.file = "map_file.txt"
         self.map = []
