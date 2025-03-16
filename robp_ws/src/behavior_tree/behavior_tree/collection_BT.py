@@ -15,11 +15,9 @@ from rclpy.executors import MultiThreadedExecutor
 class CollectionBT(Node):
     def __init__(self) -> None:
         super().__init__('behavior_tree')
-
-        # Create the root behavior
+        self.filename = '' #introduce name of the text file
+        self.objs_list, self.box_list = self.create_lists(self)
         root = self.create_root()
-
-        # Create and initialize the behavior tree
         self.tree = py_trees_ros.trees.BehaviourTree(root=root, unicode_tree_debug=False)
 
     def create_root(self):    
@@ -71,13 +69,30 @@ class CollectionBT(Node):
         # ------------------------ 4th step
 
 
-
-
-
-        
         root.add_children([compute_next_object, path_planning_execution]) #, move_to_pick, obj_tuck_bhv
         
         return root
+    
+    def create_lists(self):
+        """ Function to return a list with the objects to collect, as well as the boxes"""
+        data = []
+        with open(self.filename, 'r') as f:
+            for line in f:
+                line = line.strip() # remove leading and trailing whitespaces
+                words = line.split(',')
+                words.pop(0)
+                data.append(words)
+        header = data[0]
+        data.pop(0)
+
+        objs_list = [sublist for sublist in data if sublist[0] != 'B']
+        box_list = [sublist for sublist in data if sublist[0] == 'B']
+
+        return objs_list, box_list
+    
+
+
+
 
 def main(args=None):
     rclpy.init(args=args)
