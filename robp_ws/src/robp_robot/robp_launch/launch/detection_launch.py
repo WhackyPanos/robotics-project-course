@@ -31,7 +31,7 @@ def generate_launch_description():
             parameters=[{
                 "cloud_topic": "/camera/camera/depth/color/points",
                 "cluster_topic": "/detection/cluster_points",
-                "detection_topic": "detection/object"
+                "map_topic": "/map",
                 "twist_topic": "/cmd_vel",
                 "dist_filter_min": 0.0,
                 "dist_filter_max": 1.0,
@@ -39,6 +39,8 @@ def generate_launch_description():
                 "height_filter_max": 0.075,
                 "cluster_tolerance": 0.05,
                 "cluster_min_size": 100,
+                "occupancy_margin": 2,
+                "occupancy_value": 99,
                 "ang_vel_threshold": 0.0
             }]
         ),

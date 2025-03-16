@@ -45,24 +45,29 @@ This will:
 | --- | ---| --- |
 | /camera/camera/depth/color/points | sensor_msgs/msg/PointCloud2 | Raw point cloud data from the depth camera.|
 | /cmd_vel | sensor_msgs/msg/Twist | Velocity sent by the controller. |
+| /map | nav_msgs/msgs/OccupancyGrid| Occupancy grid. |
 ---
 #### **Published Topics**
 | Topic | Type | Description |
 | --- | ---| --- |
-| /camera/camera/depth/color/cluster_points | sensor_msgs/msg/PointCloud2 | Segmented object clusters. |
+| /detection/cluster_points | sensor_msgs/msg/PointCloud2 | Segmented object clusters. |
 ---
 #### **Parameters**
 | Parameter | Type | Default value | Description |
 | --- | ---| --- | --- |
 | cloud_topic | string | /camera/camera/depth/color/points | Input point cloud topic. |
-| cluster_topic | string | /camera/camera/depth/color/cluster_points | Output clustered point cloud topic. |
+| cluster_topic | string | /detection/cluster_points | Output clustered point cloud topic. |
+| twist_topic | string | /cmd_vel | Controller velocity topic. |
+| map_topic | string | /map | Occupancy grid topic. |
 | dist_filter_min | double | 0.0 | Minimum distance filter for points. |
 | dist_filter_max | double | 1.0 | Maximum distance filter for points. |
 | height_filter_min | double | -0.025 | Minimum height filter for points (above RGB-D cam). |
 | height_filter_max | double | 0.075 | Maximum height filter for points (above ground). |
 | cluster_min_size | int | 100 | Minimum number of points per cluster. |
 | cluster_tolerance | double | 0.05 | Distance tolerance for clustering. |
-| ang_velocity_threshold | double | 0.3 | Maximum angular velocity clustering is done. |
+| occupancy_margin | int | 2 | Number of cells in every direction as margin. |
+| occupancy_value | int | 99 | Grid value for objects. |
+| ang_velocity_threshold | double | 0.0 | Maximum angular velocity clustering is done. |
 
 ---
 
@@ -72,7 +77,8 @@ This will:
 #### **Subscribed Topics**
 | Topic | Type | Description |
 | --- | ---| --- |
-| /camera/camera/depth/color/cluster_points | sensor_msgs/msg/PointCloud2 | Segmented clusters from `clustering_node`. |
+| /detection/cluster_points | sensor_msgs/msg/PointCloud2 | Segmented clusters from `clustering_node`. |
+| /cmd_vel | sensor_msgs/msg/Twist | Velocity sent by the controller. |
 ---
 #### **Published Topics**
 | Topic | Type | Description |
@@ -84,6 +90,7 @@ This will:
 | Parameter | Type | Default value | Description |
 | --- | ---| --- | --- |
 | cloud_topic | string | /camera/camera/depth/color/cluster_points | Input point cloud topic. |
+| twist_topic | string | /cmd_vel | Controller velocity topic. |
 | classification_topic | string | /detection/class | Output classification topic. |
 | box_filter_min | double | 0.0 | Minimum height threshold for box classification. |
 | box_filter_max | double | 0.008 | Maximum height threshold for box classification. |
@@ -93,3 +100,5 @@ This will:
 | sphere_filter_min | double | 0.056 | Minimum height for sphere classification. |
 | sphere_filter_max | double | 0.059 | Minimum height for sphere classification. |
 | visualize_OBB | bool | false | Enables visualization of the oriented bounding box (OBB). |
+| ang_velocity_threshold | double | 0.0 | Maximum angular velocity classifying is done. |
+| lin_velocity_threshold | double | 0.0 | Maximum linear velocity classifying is done. |

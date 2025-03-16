@@ -12,14 +12,16 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("cloud_topic", cloud_topic_, std::string("/camera/camera/depth/color/points"));
     this->get_parameter_or("cluster_topic", cluster_topic_, std::string("/detection/cluster_points"));
     this->get_parameter_or("twist_topic", twist_topic_, std::string("/cmd_vel"));
-    this->get_parameter_or("detection_topic", detection_topic_, std::string("/detection/object"));
+    this->get_parameter_or("map_topic", map_topic_, std::string("/map"));
     this->get_parameter_or("dist_filter_min", z_filter_min_, 0.0);
     this->get_parameter_or("dist_filter_max", z_filter_max_, 1.0);
     this->get_parameter_or("height_filter_min", y_filter_min_, -0.025);
     this->get_parameter_or("height_filter_max", y_filter_max_, 0.075);
     this->get_parameter_or("cluster_tolerance", cluster_tolerance_, 0.05);
     this->get_parameter_or("cluster_min_size", cluster_min_size_, 100);
-    this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.3);
+    this->get_parameter_or("occupancy_margin", occupancy_margin_, 2);
+    this->get_parameter_or("occupancy_value", occupancy_value_, 99);
+    this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.0);
 
     // QoS for keeping only the latest message
     auto qos_profile = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_sensor_data));
@@ -31,14 +33,15 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
 
     // Subscriber for /cmd_vel to get the twist message
     twist_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
-        twist_topic_, 10, std::bind(&Clustering::twist_callback, this, _1));
+        twist_topic_, qos_profile, std::bind(&Clustering::twist_callback, this, _1));
+    
+    // Subscriber to occupancy grid
+    map_sub_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>(
+        map_topic_, qos_profile, std::bind(&Clustering::map_callback, this, _1));
 
     // Publisher for filtered point cloud
     cluster_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(
         cluster_topic_, 10);
-
-    // Publisher for detection position
-    detect_pub_ = this->create_publisher<std_msgs::msg::String>(detection_topic_, 10);
 
     // Initialize TF2 buffer and listener
     tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
@@ -50,6 +53,10 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
 void Clustering::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
     angular_z_ = msg->angular.z;
+}
+
+void Clustering::map_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg) {
+    latest_map_ = *msg;
 }
 
 void Clustering::cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
@@ -85,8 +92,9 @@ void Clustering::cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr m
             ec.setSearchMethod(tree);
             ec.setInputCloud(cloud);
             ec.extract(cluster_indices);
-            RCLCPP_INFO(this->get_logger(), "Clusters found: %zu", cluster_indices.size());
+            // RCLCPP_INFO(this->get_logger(), "Clusters found: %zu", cluster_indices.size());
 
+            // For each cluster separately
             for (const auto& cluster : cluster_indices)
             {
                 pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster (new pcl::PointCloud<pcl::PointXYZ>);
@@ -104,23 +112,24 @@ void Clustering::cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr m
                 if (obstacle->empty())
                 {
                     pcl::PointXYZ centre;
-                    centre = computeOBB(cloud_cluster);
+                    centre = computeOBBPosition(cloud_cluster);
 
-                    geometry_msgs::msg::PointStamped point;
-                    point.header.stamp = msg->header.stamp;
-                    point.header.frame_id = msg->header.frame_id;
+                    // TF centre
+                    geometry_msgs::msg::PointStamped centre_base, centre_map;
+                    centre_base.header.frame_id = msg->header.frame_id;
+                    centre_base.header.stamp = msg->header.stamp;
+                    centre_base.point.x = centre.x;
+                    centre_base.point.y = centre.y;
+                    centre_base.point.z = centre.z;
 
-                    // Set the position of the OBB (center)
-                    point.point.x = centre.x;
-                    point.point.y = centre.y;
-                    point.point.z = 0.0;
+                    try {
+                        tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
+                    } catch (tf2::TransformException &ex) {
+                        RCLCPP_ERROR(this->get_logger(), "Transform failed: %s", ex.what());
+                    }
 
-                    // Broadcast TF
-                    std::string label = "object";
-                    rclcpp::Duration timeout = rclcpp::Duration::from_seconds(1.0);
-                    tf_buffer_->waitForTransform("map", msg->header.frame_id, msg->header.stamp, timeout, 
-                                                std::bind(&Clustering::tf_callback, this, std::placeholders::_1, point, msg->header.stamp, label));
-
+                    // Only publish cluster if not already occupied
+                    if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
                     
                     cloud_cluster->width = cloud_cluster->size();
                     cloud_cluster->height = 1;
@@ -138,39 +147,8 @@ void Clustering::cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr m
     }
 }
 
-void Clustering::tf_callback(const tf2_ros::TransformStampedFuture &tf_future, 
-                            const geometry_msgs::msg::PointStamped &point, 
-                            const rclcpp::Time &stamp, 
-                            const std::string &label)
-{
-    try {
-        // Extract the transform
-        auto tf_base_map = tf_future.get();
 
-        // Transform the pose
-        geometry_msgs::msg::PointStamped transformed_point;
-        tf2::doTransform(point, transformed_point, tf_base_map);
-
-        std_msgs::msg::String detection_msg;
-        std::ostringstream ss;
-
-        // Format position to two decimal places
-        ss << label << " " 
-           << std::fixed << std::setprecision(2)
-           << transformed_point.point.x << " " 
-           << transformed_point.point.y;
-        
-        // Publish the message
-        detection_msg.data = ss.str();
-        detect_pub_->publish(detection_msg);
-
-    }
-    catch (const tf2::TransformException &ex) {
-        RCLCPP_ERROR(this->get_logger(), "Transform failed: %s", ex.what());
-    }
-}
-
-pcl::PointXYZ Clustering::computeOBB(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
+pcl::PointXYZ Clustering::computeOBBPosition(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
 {   
     pcl::MomentOfInertiaEstimation<pcl::PointXYZ> feature_extractor;
     feature_extractor.setInputCloud(cloud);
@@ -181,4 +159,23 @@ pcl::PointXYZ Clustering::computeOBB(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
     feature_extractor.getOBB(min_point_OBB, max_point_OBB, position_OBB, rotational_matrix_OBB);
 
     return position_OBB;
+}
+
+bool Clustering::is_occupied(float x, float y)
+{
+    if (latest_map_.data.empty()) return false;
+
+    int mx = static_cast<int>((x - latest_map_.info.origin.position.x) / latest_map_.info.resolution);
+    int my = static_cast<int>((y - latest_map_.info.origin.position.y) / latest_map_.info.resolution);
+    int width = latest_map_.info.width;
+    
+    for (int dx = -occupancy_margin_; dx <= occupancy_margin_; ++dx) {
+        for (int dy = -occupancy_margin_; dy <= occupancy_margin_; ++dy) {
+            int index = (my + dy) * width + (mx + dx);
+            if (index >= 0 && index < latest_map_.data.size() && latest_map_.data[index] == occupancy_value_ ) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
