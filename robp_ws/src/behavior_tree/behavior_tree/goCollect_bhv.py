@@ -8,16 +8,17 @@ from geometry_msgs.msg import PointStamped
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 
 
-class goCollect(py_trees.behaviour.Behaviour, Node):
-    def __init__(self, name="goCollect"):
+class goTo(py_trees.behaviour.Behaviour, Node):
+    def __init__(self, x, y, name="goTo"):
         super().__init__(name=name)
         # define goal position for now
         self.goal = PointStamped()
         self.goal.header.frame_id = "map"
-        self.goal.point.x = 0.5
-        self.goal.point.y = 0.0
+        self.goal.point.x = x
+        self.goal.point.y = y
         self.goal.point.z = 0.0
-        self.planner = CollectObjectMS2()
+        self.planner = CollectObjectMS2(name+'_node')
+        self.name = name
         
 
     def setup(self, **kwargs):
@@ -34,6 +35,7 @@ class goCollect(py_trees.behaviour.Behaviour, Node):
         self.node.create_subscription(Bool, '/goal_reached', self.goal_reached_callback, 10)
         self.point_reached = False
         self.moving = False
+        self.done = False
         
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
@@ -43,9 +45,14 @@ class goCollect(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
-        if self.point_reached:
+        if self.done:
+            return py_trees.common.Status.SUCCESS
+        elif self.point_reached:
+            self.done = True
+            self.node.get_logger().info(f"{self.name}: point {self.goal.point.x,self.goal.point.y} was reached")
             return py_trees.common.Status.SUCCESS
         else:
+            self.node.get_logger().info(f"{self.name}: point {self.goal.point.x,self.goal.point.y} NOT reached ")
             return py_trees.common.Status.RUNNING
 
 
@@ -60,7 +67,7 @@ class goCollect(py_trees.behaviour.Behaviour, Node):
 
     def publish_goal(self):
         """ Publish the goal position to the robot x seconds after the behavior initialized"""
-        self.node.get_logger().info("Goal Published")
+        #self.node.get_logger().info("Goal Published")
         self.goal_publisher.publish(self.goal)
         self.moving = True
         self.timer.cancel()

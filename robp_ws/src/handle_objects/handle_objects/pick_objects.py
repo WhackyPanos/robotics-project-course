@@ -66,6 +66,7 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
         self.arm_moving = False
         self.arm_tucked = False  
         self.object_grasped = False  
+        self.done = False
 
         # Initialize the transform buffer and listener
         self.tf_buffer = Buffer()
@@ -115,8 +116,9 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             #self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
 
             # if object position is available, compute target and perform inverse kinematics
-            
-            if self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
+            if self.done:
+                return py_trees.common.Status.SUCCESS
+            elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
                 self.object_transform() # tranform object position from map frame to arm base frame
                 self.node.get_logger().info(f"Trying to reach {[self.x, self.y, self.z]}")
                 # target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
@@ -142,12 +144,14 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
                     self.ota_publisher_.publish(msg)
                     #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
                     self.arm_moving = True
+                    self.node.get_logger().warn(f"Message published, arm is moving")
                     return py_trees.common.Status.RUNNING
                 else:
                     return py_trees.common.Status.FAILURE
             
             # if arm is moving but not in grasp position, return keep running
             elif self.arm_moving and not self.arm_tucked:
+                self.node.get_logger().warn(f"Arm is still  moving")
                 return py_trees.common.Status.RUNNING 
             
             # if arm is in grasp position,  start grasping 
@@ -173,6 +177,7 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
             # if object is grasped, return success
             elif self.object_grasped:
                 self.node.get_logger().info(f"Sucess, lifting arm now")
+                self.done = True
                 return py_trees.common.Status.SUCCESS
             
             else:
@@ -242,6 +247,7 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
 
     def servo_angles_callback(self, msg):
         """ Callback to check if arm is in a good enough position while moving. improve later on"""
+        #self.node.get_logger().warn(f"Checking joints")
         self.current_angles = msg.position
         if self.arm_moving and not self.arm_tucked and not self.object_grasped:
             self.arm_tucked = True
@@ -384,11 +390,9 @@ class Move2Pick(py_trees.behaviour.Behaviour, Node): # this class is a py_tree n
  # -----------------------------------------------------------------------------------------------------------------------
 
 
-class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
-    def __init__(self, name="ObjTuckArm"):
+class Lift(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
+    def __init__(self, name="Lift"):
         super().__init__(name=name)
-        #self.logger.debug("ObjTuckArm was called.")
-        #self.cached_context = None
     
     def setup(self, **kwargs):
             """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
@@ -396,6 +400,9 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
             print("Setting up ObjTuckArm node.")
             self.node = kwargs['node']
             self.arm_started = False
+            self.arm_moving = False
+            self.arm_tucked = False
+            self.done = False
             qos_profile = QoSProfile(
                 reliability=ReliabilityPolicy.RELIABLE,  # Ensures message delivery
                 durability=DurabilityPolicy.VOLATILE,    # No history saved for late subscribers
@@ -453,8 +460,7 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
         self.ota_publisher_.publish(msg)
 
     def initialise(self):
-        self.arm_moving = False
-        self.arm_tucked = False
+
         self.timer = self.node.create_timer(3, self.timer_callback)
         
     def timer_callback(self):
@@ -465,25 +471,23 @@ class ObjTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node a
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
 
-        print(f"started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
-
-        if not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
+        print(f"Arm lifting: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
+        if self.done:
+            return py_trees.common.Status.SUCCESS
+        elif not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
             return py_trees.common.Status.RUNNING
         
         elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
             self.publish_msg()
-            print("Publishing INITIAL tuck arm command.")
             self.arm_moving = True
             return py_trees.common.Status.RUNNING  # Keep running while the arm moves
         
         elif self.arm_started and self.arm_moving and not self.arm_tucked:
             #self.publish_msg()
-            print("Arm moving.")
             return py_trees.common.Status.RUNNING # Keep running while the arm moves
         
         elif self.arm_tucked:
-            print("Arm is in a good position")
-            self.arm_started,self.arm_tucked, self.arm_moving= False, False, False
+            self.arm_started,self.arm_tucked, self.arm_moving, self.done= False, False, False, True
             return py_trees.common.Status.SUCCESS
 
         else:
@@ -601,68 +605,61 @@ class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tre
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
 
- # -----------------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------
 
-
-class InitTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
-    def __init__(self, name="InitTuckArm"):
+class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
+    def __init__(self, name="Place"):
         super().__init__(name=name)
-
+        #self.logger.debug("ObjTuckArm was called.")
+        #self.cached_context = None
+    
     def setup(self, **kwargs):
             """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
            a parallel checking for a valid policy configuration after children have been added or removed"""
             print("Setting up ObjTuckArm node.")
             self.node = kwargs['node']
-            self.ita_publisher_ = self.node.create_publisher(
+            self.arm_started = False
+            qos_profile = QoSProfile(
+                reliability=ReliabilityPolicy.RELIABLE,  # Ensures message delivery
+                durability=DurabilityPolicy.VOLATILE,    # No history saved for late subscribers
+                depth=100  # Stores up to 10 messages before dropping old ones
+                )
+
+            self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
                 topic = '/multi_servo_cmd_sub',
-                qos_profile = 10) # ota = object_tuck_arm
-            self.init_tuck_arm_time = 1000 # in ms
-            self.arm_moving = True
+                qos_profile = qos_profile) # ota = object_tuck_arm
+            
+            self.servo_angles_subscriber_ = self.node.create_subscription(
+                JointState,
+                '/servo_pos_publisher',
+                self.servo_angles_callback,
+                10
+            )  
+            self.obj_tuck_arm_time = 2000 # in ms            
+             
+            # init tuck arm angles
+            #self.desired_servo_angles = [45, 230, 80.5232360099144, 201.20685353937313, 68.846193182243155, 139.65382600499612]
+            self.desired_servo_angles = [12000]*6
+            self.desired_servo_angles[0] = 10000 # gripper is different
+            self.desired_servo_angles[4] = 6500 # 
+            self.desired_servo_angles[3] = 8000 # 
+            self.angle_threshold = 100 #1 degree  
 
-    def initialise(self):
-        """ When is this called? The first time your behaviour is ticked and anytime the
-          status is not RUNNING thereafter."""
-        print("Initializing ObjTuckArm behavior.")
-        if self.arm_moving:
+    def servo_angles_callback(self, msg):
+        current_angles = msg.position
+        if self.arm_started and self.arm_moving:
+            self.arm_tucked = True
             self.arm_moving = False
-            self.timer = self.node.create_timer(self.init_tuck_arm_time*2, self.finish_tuck_arm)
-
-        
-    def finish_tuck_arm(self):
-        """ Callback to mark arm movement as complete after delay. """
-        print("Arm tucking finished.")
-        self.arm_moving = False
-        self.timer.cancel()  # Stop the timer
+            for i in range(1, len(current_angles)) :
+                if abs(self.desired_servo_angles[i] -current_angles[i]) > self.angle_threshold:
+                    print(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -current_angles[i])}")
+                    self.arm_tucked = False
+                    self.arm_moving = True
+                    break
+        #print(f'Current angles position: {current_angles[1]}')
          
-         
-    def update(self):
-        """ Behavior Tree execution step. Called whenever the node is ticked """
-        print(f"Ticking ObjTuckArm, it is {self.arm_moving} that the arm is moving")
-        if self.arm_moving:
-            return py_trees.common.Status.RUNNING  # Keep running while the arm moves
-
-        else:
-            # Publish the tuck command
-            msg = Int16MultiArray()
-            msg.layout = MultiArrayLayout(
-                dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
-                data_offset=0
-            )      
-            angles = [12000] * 6
-            angles[3] = 20000
-            angles[2] = 6000
-            times = [self.init_tuck_arm_time] * 6
-            msg.data = angles + times
-            print(f"About to publish message")
-            self.ita_publisher_.publish(msg)
-            print("Publishing tuck arm command.")
-            return py_trees.common.Status.SUCCESS
-        
-
-"""
-    def initialise(self):
-        print("Initializing")
+    def publish_msg(self):
         msg = Int16MultiArray()
         msg.layout = MultiArrayLayout(
             dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
@@ -671,13 +668,57 @@ class InitTuckArm(py_trees.behaviour.Behaviour): # this class is a py_tree node 
         times = [self.obj_tuck_arm_time] * 6
         msg.data = self.desired_servo_angles + times
         self.ota_publisher_.publish(msg)
-        print("Publishing tuck arm command.")
-        self.arm_moving = True
+
+    def initialise(self):
+        self.arm_moving = False
         self.arm_tucked = False
-        # Introduce time delay before creating the subscription 
-        self.subs_delay_timer = self.node.create_timer(0.2, self.delay_callback)
-    def delay_callback(self):
-        print("Creating subscriber")
- 
-        self.node.destroy_timer(self.subs_delay_timer)  # Correct way to remove the timer
-"""
+        self.timer = self.node.create_timer(3, self.timer_callback)
+        
+    def timer_callback(self):
+        self.arm_started = True
+        self.timer.cancel()
+        print(f"delay completed")
+         
+    def update(self):
+        """ Behavior Tree execution step. Called whenever the node is ticked """
+
+        print(f"Placing: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
+
+        if not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
+            return py_trees.common.Status.RUNNING
+        
+        elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
+            self.publish_msg()
+            print("Publishing INITIAL tuck arm command.")
+            self.arm_moving = True
+            return py_trees.common.Status.RUNNING  # Keep running while the arm moves
+        
+        elif self.arm_started and self.arm_moving and not self.arm_tucked:
+            #self.publish_msg()
+            print("Arm moving.")
+            return py_trees.common.Status.RUNNING # Keep running while the arm moves
+        
+        elif self.arm_tucked:
+            print("Arm is in a good position")
+            self.arm_started,self.arm_tucked, self.arm_moving= False, False, False
+            return py_trees.common.Status.SUCCESS
+
+        else:
+             print("ERROR")
+             
+    def terminate(self, new_status: py_trees.common.Status):
+        """
+        Minimal termination implementation.
+        When is this called? Whenever your behaviour switches to a non-running state.
+            - SUCCESS || FAILURE : your behaviour's work cycle has finished
+            - INVALID : a higher priority branch has interrupted, or shutting down
+        """
+        if new_status == py_trees.common.Status.SUCCESS:
+            self.arm_tucked == True # not really necessary
+            #print(f"New status is {new_status}")
+
+
+
+
+
+ # -----------------------------------------------------------------------------------------------------------------------
