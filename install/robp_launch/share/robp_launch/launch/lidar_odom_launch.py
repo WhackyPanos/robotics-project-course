@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/robp_launch/launch/lidar_odom_launch.py

@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/micro_ros_msgs/rosidl_generator_cpp/micro_ros_msgs/msg/detail/node__builder.hpp

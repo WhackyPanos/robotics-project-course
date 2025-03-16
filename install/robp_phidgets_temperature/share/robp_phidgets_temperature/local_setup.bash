@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/robp_phidgets_temperature/ament_cmake_environment_hooks/local_setup.bash

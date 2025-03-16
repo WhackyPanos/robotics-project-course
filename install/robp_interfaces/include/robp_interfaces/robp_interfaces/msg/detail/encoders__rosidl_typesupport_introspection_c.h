@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_introspection_c/robp_interfaces/msg/detail/encoders__rosidl_typesupport_introspection_c.h

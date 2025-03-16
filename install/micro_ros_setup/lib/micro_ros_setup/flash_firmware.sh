@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/arm_ws/src/micro_ros_setup/scripts/flash_firmware.sh

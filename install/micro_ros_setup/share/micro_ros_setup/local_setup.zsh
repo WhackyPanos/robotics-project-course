@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/micro_ros_setup/ament_cmake_environment_hooks/local_setup.zsh

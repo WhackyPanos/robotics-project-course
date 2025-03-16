@@ -21,9 +21,11 @@ setup(
     entry_points={
         'console_scripts': [
             'path_planner = path_planner.path_planner:main',
+            'motion = path_planner.motion:main',
             'point_generator = path_planner.point_generator:main',
             'point_publisher_test = path_planner.point_publisher_test:main',
-            'path_execution = path_planner.path_execution:main'
+            'path_execution = path_planner.path_execution:main',
+            'path_test = path_planner.path_test:main',
         ],
     },
 )

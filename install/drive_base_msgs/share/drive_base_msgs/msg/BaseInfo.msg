@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/arm_ws/src/uros/drive_base/drive_base_msgs/msg/BaseInfo.msg

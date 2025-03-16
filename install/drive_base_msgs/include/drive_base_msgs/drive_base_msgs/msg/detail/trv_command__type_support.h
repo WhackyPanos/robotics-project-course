@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/drive_base_msgs/rosidl_generator_c/drive_base_msgs/msg/detail/trv_command__type_support.h

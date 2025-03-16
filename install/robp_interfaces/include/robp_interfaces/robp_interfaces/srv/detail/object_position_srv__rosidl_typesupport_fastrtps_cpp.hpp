@@ -1,1 +1,0 @@
-/home/group3-robot/robp_group3/build/robp_interfaces/rosidl_typesupport_fastrtps_cpp/robp_interfaces/srv/detail/object_position_srv__rosidl_typesupport_fastrtps_cpp.hpp

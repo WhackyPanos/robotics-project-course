@@ -35,8 +35,6 @@ class Odometry(Node):
         # Subscribe to encoder topic and call callback function on each recieved message
         self.create_subscription(
             Encoders, '/motor/encoders', self.encoder_callback, 10)
-        self.create_subscription(
-            Encoders, '/imu/data_raw', self.imu_callback, 10)
 
         # 2D pose
         self._x = 0.0
@@ -101,8 +99,6 @@ class Odometry(Node):
         self.past_ticks_left = self.current_ticks_left
         self.past_ticks_right = self.current_ticks_right
 
-    def imu_callback(self, msg):
-        print(f"IMU message =",msg)
 
     def broadcast_transform(self, stamp, x, y, yaw):
         """Takes a 2D pose and broadcasts it as a ROS transform.
