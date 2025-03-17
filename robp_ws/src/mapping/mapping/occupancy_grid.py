@@ -26,7 +26,6 @@ class OccupancyGridNode(Node):
         super().__init__('occupancy_grid')
         self.publisher = self.create_publisher(OccupancyGrid, '/map', 10) 
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
-        self.camera_subscription = self.create_subscription()
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection() 
@@ -43,8 +42,8 @@ class OccupancyGridNode(Node):
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.grid.fill(-1) # Sets all cells to unknown
         self.geofence(vertices) # Sets a boundry for the workspace
-        # known with the lidar: 0
-        # known with the camera: 1
+        # free space from lidar: not marked
+        # free space from camera: 0
         # Occupied by lidar: 100
         # Occupied by camera: 99
         
@@ -137,14 +136,10 @@ class OccupancyGridNode(Node):
         lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
         lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
 
-        # DO THE FOLLOWING TWO THINGS:
-
-        # Looks up transfrom from camera_depth_optical_frame to map (use the same variable time)
+        # Looks up transfrom from camera_depth_optical_frame to map (uses the same time)
         camera_from_frame = 'camera_depth_optical_frame'
         camera_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, camera_from_frame, time)
         camera_tf_future.add_done_callback(lambda future: self.camera_transform_callback(future, msg))
-
-        # Mark cells between the max and min range and FOV relative to the camera_depth_optical_frame as 1 in the occupancy grid
 
     def lidar_transform_callback(self, future, msg):
         try:
@@ -164,12 +159,13 @@ class OccupancyGridNode(Node):
 
         for point in sensor_msgs_py.point_cloud2.read_points(cloud_map, field_names=("x", "y"), skip_nans=True):
             object_index = self.world_to_grid(point[0], point[1])
-            cells = self.raytrace(robot_index, object_index)
             
-            for cell in cells:
-                i_x, i_y = cell
-                if 0 <= i_x < self.width and 0 <= i_y < self.height:
-                    self.grid[i_y, i_x] = 0 # Mark as unoccupied
+            # # Lidar raytracing
+            # cells = self.raytrace(robot_index, object_index)
+            # for cell in cells:
+            #     i_x, i_y = cell
+            #     if 0 <= i_x < self.width and 0 <= i_y < self.height:
+            #         self.grid[i_y, i_x] = 0 # Mark as unoccupied
             
             # Mark endpoint as occupied (if within bounds)
             if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
@@ -207,7 +203,7 @@ class OccupancyGridNode(Node):
             end_x = cam_x + self.camera_max_range * np.cos(ray_angle) 
             end_y = cam_y + self.camera_max_range * np.sin(ray_angle)
             start_x = cam_x + self.camera_min_range * np.cos(ray_angle)
-            start_y = cam_x + self.camera_min_range * np.sin(ray_angle)
+            start_y = cam_y + self.camera_min_range * np.sin(ray_angle)
             
             start_i = self.world_to_grid(start_x, start_y)
             end_i = self.world_to_grid(end_x, end_y)
@@ -218,7 +214,7 @@ class OccupancyGridNode(Node):
                 if 0 <= i_x < self.width and 0 <= i_y < self.height:
                     # Mark as known by camera (free) if not already a fence/occupied by lidar
                     if self.grid[i_y, i_x] != 100:
-                        self.grid[i_y, i_x] = 1
+                        self.grid[i_y, i_x] = 0
         # Optionally, publish the updated grid after processing camera data.
         self.publish_grid(msg)
     
