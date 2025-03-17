@@ -3,6 +3,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include "std_msgs/msg/string.hpp"
+#include "std_msgs/msg/bool.hpp"
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <geometry_msgs/msg/point_stamped.hpp>
@@ -37,6 +38,7 @@ struct OBBData {
 class Classifier : public rclcpp::Node {
 public:
     Classifier();
+    bool perform_classification();
     
 private:
     // Callbacks
@@ -48,7 +50,13 @@ private:
         const std::string &label,
         const OBBData &obb);
     void twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg);
-    
+    void trigger_callback(const std_msgs::msg::Bool::SharedPtr msg);
+
+    bool tf(
+        const geometry_msgs::msg::PoseStamped &pose,
+        const rclcpp::Time &stamp,
+        const std::string &label,
+        const OBBData &obb);
     // Computes oriented bounding box
     OBBData computeOBB(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
     // Computes average curvature of the point cloud
@@ -61,8 +69,11 @@ private:
     // ROS 2 interfaces
     rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr cluster_sub_;
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr trigger_sub_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr class_pub_;
     rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr result_pub_;
+
     std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
     std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
@@ -70,12 +81,15 @@ private:
     double angular_z_ = 0.0;
     double linear_x_ = 0.0;
     double linear_y_ = 0.0;
+    sensor_msgs::msg::PointCloud2 latest_cluster_;
 
     // Parameters
     std::string classification;
     std::string cloud_topic_;
     std::string twist_topic_;
     std::string classification_topic_;
+    std::string trigger_topic_;
+    std::string result_topic_;
     double box_filter_min_;
     double box_filter_max_;
     int box_filter_threshold_;
