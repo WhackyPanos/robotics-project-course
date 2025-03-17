@@ -14,6 +14,7 @@ from geometry_msgs.msg import TransformStamped
 from robp_interfaces.msg import Encoders
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped, Pose2D
+from sensor_msgs.msg import Imu, MagneticField
 
 
 class Odometry(Node):
@@ -35,6 +36,14 @@ class Odometry(Node):
         # Subscribe to encoder topic and call callback function on each recieved message
         self.create_subscription(
             Encoders, '/motor/encoders', self.encoder_callback, 10)
+        
+        self.create_subscription(
+            Imu, '/imu/data_raw', self.imu_callback, 10)
+        
+        
+        self.init_imu_yaw = None
+        self.imu_yaw = None
+        self.prev_imu_yaw = None
 
         # 2D pose
         self._x = 0.0
@@ -46,6 +55,26 @@ class Odometry(Node):
         self.past_ticks_right = 0
         self.current_ticks_left = 0
         self.current_ticks_right = 0
+
+
+    def imu_callback(self, msg: Imu):
+        alpha = 0.1  # Complementary filter weight
+
+        quat = msg.orientation
+        _, _, temp_imu_yaw = euler_from_quaternion([quat.x, quat.y, quat.z, quat.w])
+
+        if self.init_imu_yaw is None:
+            self.init_imu_yaw = temp_imu_yaw
+        temp_imu_yaw = self.init_imu_yaw - temp_imu_yaw
+
+        if self.prev_imu_yaw is not None:
+            self.imu_yaw = alpha * temp_imu_yaw + (1 - alpha) * self.prev_imu_yaw
+        else:
+            pass
+            self.imu_yaw = temp_imu_yaw
+            self._yaw = temp_imu_yaw
+
+
 
     def encoder_callback(self, msg: Encoders):
         """Takes encoder readings and updates the odometry.
@@ -59,6 +88,8 @@ class Odometry(Node):
         run 'ros2 interface show robp_interfaces/msg/Encoders' in a terminal.
         """
         
+        if self.imu_yaw is None:
+            return
 
         # The kinematic parameters for the differential configuration
         dt = 50 / 1000
@@ -83,7 +114,6 @@ class Odometry(Node):
         
         #stamp = self.get_clock().now() # TODO: Fill in
         stamp = msg.header.stamp
-        #self.get_logger().info(f"Encoder callback triggered at {self.get_clock().now().to_msg().sec}")
 
         self.broadcast_transform(stamp, self._x, self._y, self._yaw)
         self.publish_path(stamp, self._x, self._y, self._yaw)
