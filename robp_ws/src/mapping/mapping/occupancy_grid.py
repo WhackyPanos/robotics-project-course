@@ -7,7 +7,6 @@ import sensor_msgs_py
 import numpy as np
 import csv
 import math
-from tf_transformations import quaternion_from_euler, euler_from_quaternion
 
 from math import fabs
 from rclpy.node import Node
@@ -26,9 +25,10 @@ class OccupancyGridNode(Node):
     def __init__(self):
 
         # Initializes
-        super().__init__('update_occupancy_grid')
-        self.publisher = self.create_publisher(OccupancyGrid, '/occupancy_grid', 10) 
+        super().__init__('occupancy_grid')
+        self.publisher = self.create_publisher(OccupancyGrid, '/map', 10) 
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
+        self.camera_subscription = self.create_subscription()
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection()
@@ -45,13 +45,13 @@ class OccupancyGridNode(Node):
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.grid.fill(-1) # Sets all cells to unknown
         self.geofence(vertices) # Sets a boundry for the workspace
-        # free space from lidar: not marked
-        # free space from camera: 0
+        # known with the lidar: 0
+        # known with the camera: 1
         # Occupied by lidar: 100
         # Occupied by camera: 99
         
         # Camera paramters
-        self.camera_FOV = 45 # np.pi/2 # Mapping should run all the time but how?
+        self.camera_FOV = np.pi/2 # Mapping should run all the time but how?
         self.camera_min_range = 0.3 # True value: 0.2
         self.camera_max_range = 0.8 # True value: 3.0
 
@@ -154,18 +154,22 @@ class OccupancyGridNode(Node):
         # Looks up transform from lidar link to map
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
-
+        
         lidar_from_frame_rel = msg.header.frame_id # Lidar link
         lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
         lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
 
-        # Looks up transfrom from camera_depth_optical_frame to map (uses the same time)
+        # DO THE FOLLOWING TWO THINGS:
+
+        # Looks up transfrom from camera_depth_optical_frame to map (use the same variable time)
         camera_from_frame = 'camera_depth_optical_frame'
         camera_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, camera_from_frame, time)
         camera_tf_future.add_done_callback(lambda future: self.camera_transform_callback(future, msg))
 
+        # Mark cells between the max and min range and FOV relative to the camera_depth_optical_frame as 1 in the occupancy grid
+
     def lidar_transform_callback(self, future, msg):
-        try:    
+        try:
             t_lidar = future.result()  # Get the transform when ready
         except TransformException as ex:
             self.get_logger().info(f'Could not transform {msg.header.frame_id} to map: {ex}')
@@ -194,7 +198,8 @@ class OccupancyGridNode(Node):
             if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
                 self.grid[object_index[1], object_index[0]] = 100  # occupied
 
-            # self.publish_current_grid(msg) # Will be replaced by behavior
+        # Publishes a new grid
+        self.publish_grid(msg)
     
     def camera_transform_callback(self, future, msg):
         try:
@@ -209,17 +214,14 @@ class OccupancyGridNode(Node):
         
         # Convert quaternion to yaw angle (assuming the camera is nearly horizontal)
         q = t_cam.transform.rotation
-        # siny_cosp = 2 * (q.w * q.z + q.x * q.y)
-        # cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z)
-        # yaw = math.atan2(siny_cosp, cosy_cosp)
+        siny_cosp = 2 * (q.w * q.z + q.x * q.y)
+        cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z)
+        yaw = math.atan2(siny_cosp, cosy_cosp)
         
-        euler = euler_from_quaternion([q.x, q.y, q.z, q.w])
-        yaw = euler[2] + np.pi/2
-
         # Sweep rays over the camera FOV (assumed centered around the optical axis)
         num_rays = 30  # You can adjust the number of rays for resolution
-        start_angle = - np.deg2rad(self.camera_FOV) / 2
-        end_angle = np.deg2rad(self.camera_FOV) / 2
+        start_angle = -self.camera_FOV / 2
+        end_angle = self.camera_FOV / 2
         
         for i in range(num_rays):
             angle = start_angle + i * (end_angle - start_angle) / (num_rays - 1)
@@ -228,7 +230,7 @@ class OccupancyGridNode(Node):
             end_x = cam_x + self.camera_max_range * np.cos(ray_angle) 
             end_y = cam_y + self.camera_max_range * np.sin(ray_angle)
             start_x = cam_x + self.camera_min_range * np.cos(ray_angle)
-            start_y = cam_y + self.camera_min_range * np.sin(ray_angle)
+            start_y = cam_x + self.camera_min_range * np.sin(ray_angle)
             
             start_i = self.world_to_grid(start_x, start_y)
             end_i = self.world_to_grid(end_x, end_y)
@@ -239,9 +241,10 @@ class OccupancyGridNode(Node):
                 if 0 <= i_x < self.width and 0 <= i_y < self.height:
                     # Mark as known by camera (free) if not already a fence/occupied by lidar
                     if self.grid[i_y, i_x] != 100:
-                        self.grid[i_y, i_x] = 0
-
-
+                        self.grid[i_y, i_x] = 1
+        # Optionally, publish the updated grid after processing camera data.
+        self.publish_grid(msg)
+    
 def main():
     rclpy.init()
     node = OccupancyGridNode()
