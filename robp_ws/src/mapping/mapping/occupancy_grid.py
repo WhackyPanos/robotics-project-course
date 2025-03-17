@@ -169,10 +169,7 @@ class OccupancyGridNode(Node):
             for cell in cells:
                 i_x, i_y = cell
                 if 0 <= i_x < self.width and 0 <= i_y < self.height:
-                    if self.grid[i_y, i_x] != 100:
-                        self.grid[i_y, i_x] = 0 # Mark as unoccupied
-                    else:
-                        break
+                    self.grid[i_y, i_x] = 0 # Mark as unoccupied
             
             # Mark endpoint as occupied (if within bounds)
             if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
