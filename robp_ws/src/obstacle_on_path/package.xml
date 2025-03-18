@@ -9,7 +9,7 @@
 
   <depend>python3-numpy</depend>
   <depend>rclpy</depend>
-  <depend>nav_msgs.msg</depend>
+  <depend>nav_msgs</depend>
   <depend>py_trees</depend>
 
   <export>
