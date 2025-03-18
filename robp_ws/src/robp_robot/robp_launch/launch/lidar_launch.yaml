@@ -18,3 +18,5 @@ launch:
           value: true
         - name: 'scan_mode'
           value: ''
+      output: "screen"
+      emulate_tty: true

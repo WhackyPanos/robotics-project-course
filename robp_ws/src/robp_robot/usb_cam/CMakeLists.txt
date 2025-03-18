@@ -14,6 +14,7 @@ find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
 find_package(OpenCV REQUIRED)
+find_package(camera_info_manager REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(avcodec REQUIRED libavcodec)
@@ -36,6 +37,10 @@ endif()
 ## Do not use ament_auto here so as to not link to rclcpp
 add_library(${PROJECT_NAME} SHARED
   src/usb_cam.cpp
+)
+
+ament_target_dependencies(${PROJECT_NAME}
+	camera_info_manager
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
