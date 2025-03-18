@@ -59,7 +59,7 @@ class CheckPath(Node):
     def behaviour(self):
         if self.path is None or self.map is None:
             self.get_logger().info("Waiting for path or map data.")
-            return 
+            return False
         
         map = self.map
         
@@ -90,16 +90,16 @@ class CheckPath(Node):
         self.get_logger().info("Path is clear.")
         return True
 
-def main():
-    rclpy.init()
-    node = CheckPath()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
+# def main():
+#     rclpy.init()
+#     node = CheckPath()
+#     try:
+#         rclpy.spin(node)
+#     except KeyboardInterrupt:
+#         pass
 
-    rclpy.shutdown()
+#     rclpy.shutdown()
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
 
