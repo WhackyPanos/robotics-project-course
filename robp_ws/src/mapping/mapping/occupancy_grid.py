@@ -23,7 +23,7 @@ class OccupancyGridNode(Node):
     def __init__(self):
 
         # Initializes
-        super().__init__('occupancy_grid')
+        super().__init__('update_occupancy_grid')
         self.publisher = self.create_publisher(OccupancyGrid, '/map', 10) 
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
         self.tf_buffer = Buffer()
@@ -113,9 +113,10 @@ class OccupancyGridNode(Node):
                 y0 += sy        
         return traversed # returns a lsit of cell indexes from start to one cell before end
 
-    def publish_grid(self, msg):
-        occupancy_grid_msg = OccupancyGrid() # Creates new occupancy grid msg
-        occupancy_grid_msg.header = Header() # Creates header for the occupancy grid msg
+    def publish_current_grid(self, msg):
+        """Publish the occupancy grid using the current grid data."""
+        occupancy_grid_msg = OccupancyGrid() 
+        occupancy_grid_msg.header = Header()
         occupancy_grid_msg.header.stamp = msg.header.stamp 
         occupancy_grid_msg.header.frame_id = 'map'
         occupancy_grid_msg.info.resolution = self.resolution
@@ -126,6 +127,7 @@ class OccupancyGridNode(Node):
         occupancy_grid_msg.info.origin.orientation.w = 1.0 # No rotation applied
         occupancy_grid_msg.data = self.grid.flatten().tolist()
         self.publisher.publish(occupancy_grid_msg)
+        self.get_logger().info("Published occupancy grid")
     
     def listener_callback(self, msg):
         # Looks up transform from lidar link to map
@@ -170,9 +172,6 @@ class OccupancyGridNode(Node):
             # Mark endpoint as occupied (if within bounds)
             if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
                 self.grid[object_index[1], object_index[0]] = 100  # occupied
-
-        # Publishes a new grid
-        self.publish_grid(msg)
     
     def camera_transform_callback(self, future, msg):
         try:
@@ -215,17 +214,3 @@ class OccupancyGridNode(Node):
                     # Mark as known by camera (free) if not already a fence/occupied by lidar
                     if self.grid[i_y, i_x] != 100:
                         self.grid[i_y, i_x] = 0
-        # Optionally, publish the updated grid after processing camera data.
-        self.publish_grid(msg)
-    
-def main():
-    rclpy.init()
-    node = OccupancyGridNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    rclpy.shutdown()
-
-if __name__ == "__main__":
-    main()
