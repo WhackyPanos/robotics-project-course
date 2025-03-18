@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import py_trees
+import rclpy
 from obstacle_on_path import CheckPath 
 
 class ObstacleOnPath(py_trees.behaviour.Behaviour):
@@ -11,6 +12,7 @@ class ObstacleOnPath(py_trees.behaviour.Behaviour):
     def setup(self, **kwargs):
         """ Setup function, called once before the first update. """
         self.check_path = kwargs['node']  
+        rclpy.get_global_executor().add_node(self.check_path)
 
     def initialise(self):
         """ Called when the behavior starts (on the first tick). """
@@ -18,10 +20,6 @@ class ObstacleOnPath(py_trees.behaviour.Behaviour):
 
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
-        if self.check_path.path is None or self.check_path.map is None:
-            self.get_logger().info("Waiting for path or map data.")
-            return py_trees.common.Status.RUNNING  
-
         clear_path = self.check_path.behaviour()
         self.get_logger().info("Checking if the path is clear of obstacles.")
         if clear_path:
