@@ -5,12 +5,14 @@ import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
 
-from exploration_bhv import UnexploredMap, PathPlan, NavigateToGoal, UpdateMap
+# Import classes
+from exploration_bhv import UnexploredMap, PathPlan, NavigateToGoal
 from obstacle_on_path.obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
 from detection_bt.detection_bt.classify_bt import ClassifyBT
 from detection_bt.detection_bt.cluster_bt import ClusterBT
-from map_file.map_file_bt import MapFileBT
-
+#from map_file.map_file_bt import MapFileBT
+from map_file.map_file import map_file_bt
+from mapping.mapping.UpdateOccupancyGrid_bhv import UpdateOccupnacyGrid
 
 class ExplorationBT(Node):
     def __init__(self) -> None:
@@ -25,11 +27,11 @@ class ExplorationBT(Node):
         map_not_fully_explored = UnexploredMap()
         path_plan = PathPlan()
         navigate_to_goal = NavigateToGoal()
-        update_map = UpdateMap()
+        update_occupnacy_grid = UpdateOccupnacyGrid()
         obstacle_on_path_detected = ObstacleOnPath()
         classify = ClassifyBT()
         new_object_detected = ClusterBT()
-        update_map_file = MapFileBT()
+        update_map_file = map_file_bt()
 
         second_sequence = py_trees.composites.Sequence(name='second_seq')
         second_sequence.add_children([new_object_detected, classify, update_map_file])
@@ -38,7 +40,7 @@ class ExplorationBT(Node):
         second_selector.add_children([obstacle_on_path_detected, second_sequence])
 
         first_parallel = py_trees.composites.Parallel(name='first_parallel')
-        first_parallel.add_children([second_selector, update_map])
+        first_parallel.add_children([second_selector, update_occupnacy_grid])
 
         first_selector = py_trees.composites.Selector(name='first_sel')
         first_selector.add_children([first_parallel, navigate_to_goal])
