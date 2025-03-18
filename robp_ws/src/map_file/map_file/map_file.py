@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 import os
-
 import numpy as np
 
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
-from std_msgs.msg import String
 
+from std_msgs.msg import String, Bool
 from visualization_msgs.msg import Marker, MarkerArray
 from geometry_msgs.msg import Point, Pose
 
@@ -37,15 +36,36 @@ class Map_file(Node):
         # Publisher for the objects
         self.publisher = self.create_publisher(MarkerArray, '/object_positions', 10)
 
+        # BT communication
+        self.trigger_sub = self.create_subscription(Bool, "/map_file/request", self.trigger_callback, 10)
+        self.result_pub = self.create_publisher(Bool, "/map_file/result", 10)
+
         self.file = "map_file.txt"
+        self.data = None
         self.map = []
         self.classifications = {'Box': 'B',
                                 'Cube': '1',
                                 'Sphere': '2',
                                 'Animal': '3',}
 
+
+    def trigger_callback(self, msg: Bool):
+        result_msg = Bool()
+        result_msg.data = False
+
+        if(msg.data):
+            result_msg.data = self.perform_map_file_update()
+
+        self.result_pub.publish(result_msg)
+
     def map_callback(self, msg: String):
-        data = msg.data.split()
+        self.data = msg.data
+
+    def perform_map_file_update(self):
+        if self.data is None:
+            return False
+        
+        data = self.data.split()
         classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 180
         new_label = self.classifications.get(classify)
         new_votes = [0, 0, 0, 0] 
@@ -72,6 +92,8 @@ class Map_file(Node):
         new_votes[classes.index(new_label)] += 1
         self.map.append((new_label, int(round(new_x, 0)), int(round(new_y, 0)), int(round(new_a, 0)), new_votes))
         self.update_file()
+
+        return True
 
     def update_file(self):
         msg = MarkerArray()

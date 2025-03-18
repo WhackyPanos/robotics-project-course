@@ -13,14 +13,16 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("cluster_topic", cluster_topic_, std::string("/detection/cluster_points"));
     this->get_parameter_or("twist_topic", twist_topic_, std::string("/cmd_vel"));
     this->get_parameter_or("map_topic", map_topic_, std::string("/map"));
+    this->get_parameter_or("trigger_topic", trigger_topic_, std::string("/detection/request"));
+    this->get_parameter_or("result_topic", result_topic_, std::string("/detection/result"));    
     this->get_parameter_or("dist_filter_min", z_filter_min_, 0.0);
     this->get_parameter_or("dist_filter_max", z_filter_max_, 1.0);
     this->get_parameter_or("height_filter_min", y_filter_min_, -0.025);
     this->get_parameter_or("height_filter_max", y_filter_max_, 0.075);
     this->get_parameter_or("cluster_tolerance", cluster_tolerance_, 0.05);
     this->get_parameter_or("cluster_min_size", cluster_min_size_, 100);
-    this->get_parameter_or("occupancy_margin", occupancy_margin_, 2);
-    this->get_parameter_or("occupancy_value", occupancy_value_, 99);
+    this->get_parameter_or("occupancy_margin", occupancy_margin_, 1);
+    this->get_parameter_or("occupancy_value", occupancy_value_, 1);
     this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.0);
 
     // QoS for keeping only the latest message
@@ -43,11 +45,123 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     cluster_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(
         cluster_topic_, 10);
 
+    // Publisher for stopping robot
+    twist_pub_ = this->create_publisher<geometry_msgs::msg::Twist>(
+        twist_topic_, 10);
+
+    // Subscribe to trigger topic
+    trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
+        trigger_topic_, qos_profile, std::bind(&Clustering::trigger_callback, this, _1));
+
+    // Publisher for clustering result
+    result_pub_ = this->create_publisher<std_msgs::msg::Bool>(result_topic_, 10);
+
     // Initialize TF2 buffer and listener
     tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
     auto timer_interface = std::make_shared<tf2_ros::CreateTimerROS>(this->get_node_base_interface(), this->get_node_timers_interface());
     tf_buffer_->setCreateTimerInterface(timer_interface);
     tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
+}
+
+bool Clustering::perform_clustering()
+{
+    if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
+        return false;
+    }
+
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::fromROSMsg(latest_cloud_, *cloud);
+
+    // Apply filtering
+    pcl::PassThrough<pcl::PointXYZ> pass;
+    pass.setInputCloud(cloud);
+    pass.setFilterFieldName("z");
+    pass.setFilterLimits(z_filter_min_, z_filter_max_);
+    pass.filter(*cloud);
+
+    pass.setFilterFieldName("y");
+    pass.setFilterLimits(y_filter_min_, y_filter_max_);
+    pass.filter(*cloud);
+
+    if (cloud->empty()) return false;
+
+    // Clustering
+    pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
+    tree->setInputCloud(cloud);
+
+    std::vector<pcl::PointIndices> cluster_indices;
+    pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
+    ec.setClusterTolerance(cluster_tolerance_);
+    ec.setMinClusterSize(cluster_min_size_);
+    ec.setSearchMethod(tree);
+    ec.setInputCloud(cloud);
+    ec.extract(cluster_indices);
+
+    if (cluster_indices.empty()) return false;
+
+    for (const auto& cluster : cluster_indices) {
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster(new pcl::PointCloud<pcl::PointXYZ>);
+        for (const auto& idx : cluster.indices) {
+            cloud_cluster->push_back((*cloud)[idx]);
+        }
+
+        pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
+        pass.setInputCloud(cloud_cluster);
+        pass.setFilterFieldName("y");
+        pass.setFilterLimits(y_filter_min_, -0.02);
+        pass.filter(*obstacle);
+
+        if (!obstacle->empty()) continue;
+
+        pcl::PointXYZ centre = computeOBBPosition(cloud_cluster);
+
+        geometry_msgs::msg::PointStamped centre_base, centre_map;
+        centre_base.header.frame_id = latest_cloud_.header.frame_id;
+        centre_base.header.stamp = latest_cloud_.header.stamp;
+        centre_base.point.x = centre.x;
+        centre_base.point.y = centre.y;
+        centre_base.point.z = centre.z;
+
+        try {
+            tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
+        } catch (tf2::TransformException &ex) {
+            RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
+            continue;
+        }
+
+        if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
+
+        cloud_cluster->width = cloud_cluster->size();
+        cloud_cluster->height = 1;
+        cloud_cluster->is_dense = true;
+
+        sensor_msgs::msg::PointCloud2 output;
+        pcl::toROSMsg(*cloud_cluster, output);
+        output.header.stamp = latest_cloud_.header.stamp;
+        output.header.frame_id = latest_cloud_.header.frame_id;
+        cluster_pub_->publish(output);
+
+        geometry_msgs::msg::Twist stop_msg;
+        stop_msg.linear.x = stop_msg.linear.y = stop_msg.linear.z = 0.0;
+        stop_msg.angular.x = stop_msg.angular.y = stop_msg.angular.z = 0.0;
+        twist_pub_->publish(stop_msg);
+
+        return true;  // At least one cluster was found and published
+    }
+
+    return false;
+}
+
+void Clustering::trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
+{   
+    std_msgs::msg::Bool result_msg;
+    result_msg.data = false;
+
+    if (msg->data){
+        result_msg.data = perform_clustering();
+    }
+
+    result_pub_->publish(result_msg);
 }
 
 void Clustering::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
@@ -61,92 +175,8 @@ void Clustering::map_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg)
 
 void Clustering::cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
 
-    // Only cluster if robot is not rotating 
-    if (std::abs(angular_z_) < ang_vel_threshold_)
-    {
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-        pcl::fromROSMsg(*msg, *cloud);
-
-        // Apply passthrough filtering
-        pcl::PassThrough<pcl::PointXYZ> pass;
-        pass.setInputCloud(cloud);
-        pass.setFilterFieldName("z");
-        pass.setFilterLimits(z_filter_min_, z_filter_max_);
-        pass.filter(*cloud);
-
-        pass.setFilterFieldName("y");
-        pass.setFilterLimits(y_filter_min_, y_filter_max_);
-        pass.filter(*cloud);
-        // RCLCPP_INFO(this->get_logger(), "After filtering: %zu points", cloud->size());
-
-        // Perform clustering using Euclidean clustering
-        if (cloud->size()>0)
-        {
-            pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
-            tree->setInputCloud(cloud);
-
-            std::vector<pcl::PointIndices> cluster_indices;
-            pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
-            ec.setClusterTolerance(cluster_tolerance_);
-            ec.setMinClusterSize(cluster_min_size_);
-            ec.setSearchMethod(tree);
-            ec.setInputCloud(cloud);
-            ec.extract(cluster_indices);
-            // RCLCPP_INFO(this->get_logger(), "Clusters found: %zu", cluster_indices.size());
-
-            // For each cluster separately
-            for (const auto& cluster : cluster_indices)
-            {
-                pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster (new pcl::PointCloud<pcl::PointXYZ>);
-                for (const auto& idx : cluster.indices) {
-                    cloud_cluster->push_back((*cloud)[idx]);
-                }
-
-                // Only publish cluster if no obstacle
-                pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle (new pcl::PointCloud<pcl::PointXYZ>);
-                pass.setInputCloud(cloud_cluster);
-                pass.setFilterFieldName("y");
-                pass.setFilterLimits(y_filter_min_, -0.02);
-                pass.filter(*obstacle);
-                
-                if (obstacle->empty())
-                {
-                    pcl::PointXYZ centre;
-                    centre = computeOBBPosition(cloud_cluster);
-
-                    // TF centre
-                    geometry_msgs::msg::PointStamped centre_base, centre_map;
-                    centre_base.header.frame_id = msg->header.frame_id;
-                    centre_base.header.stamp = msg->header.stamp;
-                    centre_base.point.x = centre.x;
-                    centre_base.point.y = centre.y;
-                    centre_base.point.z = centre.z;
-
-                    try {
-                        tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
-                    } catch (tf2::TransformException &ex) {
-                        RCLCPP_ERROR(this->get_logger(), "Transform failed: %s", ex.what());
-                    }
-
-                    // Only publish cluster if not already occupied
-                    if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
-                    
-                    cloud_cluster->width = cloud_cluster->size();
-                    cloud_cluster->height = 1;
-                    cloud_cluster->is_dense = true;
-
-                    sensor_msgs::msg::PointCloud2 output;
-                    pcl::toROSMsg(*cloud_cluster, output);
-                    output.header.stamp = msg->header.stamp;
-                    output.header.frame_id = msg->header.frame_id;
-                    cluster_pub_->publish(output);
-
-                }
-            }
-        }
-    }
+    latest_cloud_ = *msg;
 }
-
 
 pcl::PointXYZ Clustering::computeOBBPosition(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
 {   
