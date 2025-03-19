@@ -17,7 +17,7 @@ from laser_geometry import LaserProjection
 from nav_msgs.msg import OccupancyGrid
 from std_msgs.msg import Header
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
-from scipy.ndimage import binary_dilation
+from scipy.ndimage import binary_dilation, binary_fill_holes
 
 class OccupancyGridNode(Node):
     def __init__(self):
@@ -72,20 +72,23 @@ class OccupancyGridNode(Node):
         return vertices, min_x, max_x, min_y, max_y
 
     def geofence(self, vertices):
-        num_vertices = len(vertices)
-        for i in range(num_vertices):
+        # Create an empty mask
+        mask = np.zeros((self.height, self.width), dtype=bool)
+        
+        # Rasterize the geofence boundary
+        for i in range(len(vertices)):
             x0, y0 = vertices[i]
-            x1, y1 = vertices[ (i+1) % num_vertices] 
+            x1, y1 = vertices[(i + 1) % len(vertices)]
             start = self.world_to_grid(x0, y0)
             end = self.world_to_grid(x1, y1)
             cells = self.raytrace(start, end)
             for cell in cells:
-                (i_x, i_y) = cell
-                self.grid[i_y, i_x] = 100
-
-        # Makes the grid thicker to avoid ray going through the fences on diagonals   
-        #dilated_grid = binary_dilation(self.grid == 100, iterations=1).astype(int) * 100
-        #self.grid = np.maximum(self.grid, dilated_grid)
+                i_x, i_y = cell
+                mask[i_y, i_x] = True
+        
+        # Fill inside the geofence
+        filled_mask = binary_fill_holes(mask)
+        self.grid[filled_mask] = -1  # Mark inside as unknown (-1)
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
@@ -172,6 +175,8 @@ class OccupancyGridNode(Node):
             # Mark endpoint as occupied (if within bounds)
             if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
                 self.grid[object_index[1], object_index[0]] = 100  # occupied
+
+            self.publish_current_grid(msg) # Will be replaced by behavior
     
     def camera_transform_callback(self, future, msg):
         try:
