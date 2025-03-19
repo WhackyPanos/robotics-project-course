@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'ekf = localization.ekf:main'
+            #'ekf = localization.ekf:main',
+            'localization_transform = localization.localization_transform:main',
         ],
     },
 )

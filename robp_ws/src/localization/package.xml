@@ -14,9 +14,20 @@
 
   <depend>rclpy</depend> 
   <depend>python3-filterpy-pip</depend> 
+  <depend>geometry_msgs</depend> 
+  <depend>std_msgs</depend> 
+  <depend>sensor_msgs</depend> 
+  <depend>tf2_ros</depend> 
+  <depend>tf_transformations</depend> 
 
 
   <export>
     <build_type>ament_python</build_type>
   </export>
 </package>
+
+
+Footer
+Kungliga Tekniska hogskolan
+
+Kungliga Tekniska hogskolan avatar
