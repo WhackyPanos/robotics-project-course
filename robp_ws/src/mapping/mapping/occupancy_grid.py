@@ -17,13 +17,13 @@ from laser_geometry import LaserProjection
 from nav_msgs.msg import OccupancyGrid
 from std_msgs.msg import Header
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
-from scipy.ndimage import binary_dilation
+from scipy.ndimage import binary_dilation, binary_fill_holes
 
 class OccupancyGridNode(Node):
     def __init__(self):
 
         # Initializes
-        super().__init__('occupancy_grid')
+        super().__init__('update_occupancy_grid')
         self.publisher = self.create_publisher(OccupancyGrid, '/map', 10) 
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
         self.tf_buffer = Buffer()
@@ -72,20 +72,23 @@ class OccupancyGridNode(Node):
         return vertices, min_x, max_x, min_y, max_y
 
     def geofence(self, vertices):
-        num_vertices = len(vertices)
-        for i in range(num_vertices):
+        # Create an empty mask
+        mask = np.zeros((self.height, self.width), dtype=bool)
+        
+        # Rasterize the geofence boundary
+        for i in range(len(vertices)):
             x0, y0 = vertices[i]
-            x1, y1 = vertices[ (i+1) % num_vertices] 
+            x1, y1 = vertices[(i + 1) % len(vertices)]
             start = self.world_to_grid(x0, y0)
             end = self.world_to_grid(x1, y1)
             cells = self.raytrace(start, end)
             for cell in cells:
-                (i_x, i_y) = cell
-                self.grid[i_y, i_x] = 100
-
-        # Makes the grid thicker to avoid ray going through the fences on diagonals   
-        #dilated_grid = binary_dilation(self.grid == 100, iterations=1).astype(int) * 100
-        #self.grid = np.maximum(self.grid, dilated_grid)
+                i_x, i_y = cell
+                mask[i_y, i_x] = True
+        
+        # Fill inside the geofence
+        filled_mask = binary_fill_holes(mask)
+        self.grid[filled_mask] = -1  # Mark inside as unknown (-1)
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
@@ -113,9 +116,10 @@ class OccupancyGridNode(Node):
                 y0 += sy        
         return traversed # returns a lsit of cell indexes from start to one cell before end
 
-    def publish_grid(self, msg):
-        occupancy_grid_msg = OccupancyGrid() # Creates new occupancy grid msg
-        occupancy_grid_msg.header = Header() # Creates header for the occupancy grid msg
+    def publish_current_grid(self, msg):
+        """Publish the occupancy grid using the current grid data."""
+        occupancy_grid_msg = OccupancyGrid() 
+        occupancy_grid_msg.header = Header()
         occupancy_grid_msg.header.stamp = msg.header.stamp 
         occupancy_grid_msg.header.frame_id = 'map'
         occupancy_grid_msg.info.resolution = self.resolution
@@ -126,6 +130,7 @@ class OccupancyGridNode(Node):
         occupancy_grid_msg.info.origin.orientation.w = 1.0 # No rotation applied
         occupancy_grid_msg.data = self.grid.flatten().tolist()
         self.publisher.publish(occupancy_grid_msg)
+        self.get_logger().info("Published occupancy grid")
     
     def listener_callback(self, msg):
         # Looks up transform from lidar link to map
@@ -171,8 +176,7 @@ class OccupancyGridNode(Node):
             if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
                 self.grid[object_index[1], object_index[0]] = 100  # occupied
 
-        # Publishes a new grid
-        self.publish_grid(msg)
+            self.publish_current_grid(msg) # Will be replaced by behavior
     
     def camera_transform_callback(self, future, msg):
         try:
@@ -215,17 +219,3 @@ class OccupancyGridNode(Node):
                     # Mark as known by camera (free) if not already a fence/occupied by lidar
                     if self.grid[i_y, i_x] != 100:
                         self.grid[i_y, i_x] = 0
-        # Optionally, publish the updated grid after processing camera data.
-        self.publish_grid(msg)
-    
-def main():
-    rclpy.init()
-    node = OccupancyGridNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    rclpy.shutdown()
-
-if __name__ == "__main__":
-    main()
