@@ -14,7 +14,10 @@ PID controller was implemented to control the robot's angular velocity to reach 
 
 You may publish a PointStamped message to the topic '/motion/goal' to set a new goal position.
 When it reaches the goal, it will publish a Bool message (True) to the topic '/motion/goal_reached'.
+
+You may also publish a Path message to the topic '/motion/path' to set a path of goal positions.
 """
+
 class MotionNode(Node):
     def __init__(self):
         super().__init__('motion_node')
@@ -41,6 +44,7 @@ class MotionNode(Node):
         self.vel_cmd.angular.x = 0.0
         self.vel_cmd.angular.y = 0.0
 
+        self.path_reached = False
         self.is_path = False
 
         # Setup publishers and subscribers
@@ -73,6 +77,8 @@ class MotionNode(Node):
 
     def path_callback(self, msg:Path):
         if len(msg.poses) > 0:
+            self.path_reached = False
+            self.is_path = True
             self.path = msg
             pub_msg = PointStamped()
             pub_msg.header.stamp = self.get_clock().now().to_msg()
@@ -156,11 +162,15 @@ class MotionNode(Node):
             self.goal_reached_publisher.publish(Bool(data=True))
             self.goal_reached_flag = True
             self.get_logger().info('Goal reached: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
-            if len(self.path.poses) > 1:
+            
+            if len(self.path.poses) > 1 and self.is_path:
                 self.path.poses.pop(0)
                 self.path_publisher.publish(self.path)
-            else:
-                self.get_logger().info('No more goals in path.')
+            
+            elif len(self.path.poses) == 0 and self.is_path:
+                self.get_logger().info('Path execution completed.')
+                self.path_reached = True
+                self.is_path = False
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
