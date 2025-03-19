@@ -14,6 +14,8 @@ from geometry_msgs.msg import TransformStamped
 from robp_interfaces.msg import Encoders
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped, Pose2D
+from sensor_msgs.msg import Imu, MagneticField # MagneticField is msg for /imu_mag
+from collections import deque 
 
 
 class Odometry(Node):
@@ -35,6 +37,14 @@ class Odometry(Node):
         # Subscribe to encoder topic and call callback function on each recieved message
         self.create_subscription(
             Encoders, '/motor/encoders', self.encoder_callback, 10)
+        
+        self.create_subscription(
+            Imu, '/imu/data_raw', self.imu_callback, 10)
+        
+        
+        self.init_imu_yaw = None
+        self.prev_imu_yaw = None
+        #self.yaw_buffer = deque(maxlen=10)
 
         # 2D pose
         self._x = 0.0
@@ -47,6 +57,28 @@ class Odometry(Node):
         self.current_ticks_left = 0
         self.current_ticks_right = 0
 
+
+    def imu_callback(self, msg: Imu):
+        alpha = 0.5  # Weight for bias to past or new value of angle 
+
+        quat = msg.orientation
+        _, _, temp_imu_yaw = euler_from_quaternion([quat.x, quat.y, quat.z, quat.w])
+
+        # Sets initaial angle to 0
+        # if self.init_imu_yaw is None:
+        #     self.init_imu_yaw = temp_imu_yaw
+        # temp_imu_yaw = self.init_imu_yaw - temp_imu_yaw
+
+        temp_imu_yaw = - temp_imu_yaw # Comment out if you uncomment above code
+
+        if self.prev_imu_yaw is not None:
+            self._yaw = alpha * temp_imu_yaw + (1 - alpha) * self.prev_imu_yaw
+        else:
+            self._yaw = temp_imu_yaw
+        self.prev_imu_yaw = self._yaw
+
+
+
     def encoder_callback(self, msg: Encoders):
         """Takes encoder readings and updates the odometry.
 
@@ -58,7 +90,6 @@ class Odometry(Node):
         msg -- An encoders ROS message. To see more information about it 
         run 'ros2 interface show robp_interfaces/msg/Encoders' in a terminal.
         """
-        
 
         # The kinematic parameters for the differential configuration
         dt = 50 / 1000
@@ -73,6 +104,10 @@ class Odometry(Node):
         delta_ticks_left = self.current_ticks_left - self.past_ticks_left
         delta_ticks_right = self.current_ticks_right - self.past_ticks_right
 
+        if self._yaw is None:
+            self.get_logger().info(f'Waiting for IMU data')
+            return
+
         # TODO: Fill in
         D = wheel_radius/2 * K * (delta_ticks_right + delta_ticks_left)
         delta_theta = wheel_radius/base * K * (delta_ticks_right - delta_ticks_left)
@@ -83,7 +118,6 @@ class Odometry(Node):
         
         #stamp = self.get_clock().now() # TODO: Fill in
         stamp = msg.header.stamp
-        #self.get_logger().info(f"Encoder callback triggered at {self.get_clock().now().to_msg().sec}")
 
         self.broadcast_transform(stamp, self._x, self._y, self._yaw)
         self.publish_path(stamp, self._x, self._y, self._yaw)
