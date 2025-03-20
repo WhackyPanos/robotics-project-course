@@ -1,20 +1,22 @@
 #!/usr/bin/env python
 import py_trees
 import rclpy
-from occupancy_grid import OccupancyGridNode
+from rclpy.node import Node
+from .occupancy_grid import OccupancyGridNode
 
 # Note: this behiour only controls when the OccupancyGrid msg is published 
 
-class PublishOccupancyGrid(py_trees.behaviour.Behaviour):
-    def __init__(self, name="PublishOccupancyGridBT", node=None):
-        super().__init__(name=name)
-        self.node = node
+class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
+    def __init__(self, name="PublishOccupancyGridBT"):
+        # Initialize Behaviour (PyTrees) and Node (ROS2)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
+
         self.occupancy_grid =  OccupancyGridNode() # Ros node
-        #self.update_occupancy_grid.grid_update = False
 
     def setup(self, **kwargs):
         """ Setup function, called once before the first update. """
-        self.occupancy_grid = kwargs['node']  
+        # self.occupancy_grid = kwargs['node']  
         rclpy.get_global_executor().add_node(self.occupancy_grid) 
 
     def initialise(self):
@@ -24,7 +26,7 @@ class PublishOccupancyGrid(py_trees.behaviour.Behaviour):
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
         self.occupancy_grid.publish_current_grid()
-        self.node.get_logger().info("New occupancy grid published")
+        self.get_logger().info("New occupancy grid published")
         return py_trees.common.Status.SUCCESS
 
     def terminate(self, new_status: py_trees.common.Status):

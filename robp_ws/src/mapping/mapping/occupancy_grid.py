@@ -1,4 +1,5 @@
 import rclpy
+import rclpy.clock
 import rclpy.duration
 import rclpy.time
 from rclpy.executors import MultiThreadedExecutor
@@ -49,7 +50,7 @@ class OccupancyGridNode(Node):
         # Occupied by camera: 99
         
         # Camera paramters
-        self.camera_FOV = np.pi/2 # Mapping should run all the time but how?
+        self.camera_FOV = np.pi/4 # np.pi/2 # Mapping should run all the time but how?
         self.camera_min_range = 0.3 # True value: 0.2
         self.camera_max_range = 0.8 # True value: 3.0
 
@@ -132,11 +133,12 @@ class OccupancyGridNode(Node):
                 y0 += sy        
         return traversed # returns a lsit of cell indexes from start to one cell before end
 
-    def publish_current_grid(self, msg):
+    def publish_current_grid(self):
         """Publish the occupancy grid using the current grid data."""
         occupancy_grid_msg = OccupancyGrid() 
         occupancy_grid_msg.header = Header()
-        occupancy_grid_msg.header.stamp = msg.header.stamp 
+        self.get_logger().info("publish")
+        occupancy_grid_msg.header.stamp = rclpy.clock.Clock().now().to_msg()
         occupancy_grid_msg.header.frame_id = 'map'
         occupancy_grid_msg.info.resolution = self.resolution
         occupancy_grid_msg.info.width = self.width
@@ -182,7 +184,7 @@ class OccupancyGridNode(Node):
             object_index = self.world_to_grid(point[0], point[1])
             
             # # Lidar raytracing
-            # cells = self.raytrace(robot_index, object_index)
+            # cells = self.raytrace(robot_index, object_index)msg
             # for cell in cells:
             #     i_x, i_y = cell
             #     if 0 <= i_x < self.width and 0 <= i_y < self.height:
