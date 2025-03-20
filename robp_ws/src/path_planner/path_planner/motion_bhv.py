@@ -15,7 +15,7 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
     def setup(self, **kwargs):
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
         a parallel checking for a valid policy configuration after children have been added or removed"""
-        rclpy.get_global_executor().add_node(self.motion_node)
+        #rclpy.get_global_executor().add_node(self.motion_node)
 
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
@@ -28,12 +28,13 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
             if self.motion_node.path_reached:
                 return py_trees.common.Status.SUCCESS
             else:
-                return py_trees.common.Status.RUNNING
-        else:
+                return py_trees.common.Status.RUNNING if self.motion_node.navigate_to_goal() else py_trees.common.Status.FAILURE
+        elif self.motion_node.is_goal:
             if self.motion_node.goal_reached_flag:
                 return py_trees.common.Status.SUCCESS
             else:
-                return py_trees.common.Status.RUNNING
+                return py_trees.common.Status.RUNNING if self.motion_node.navigate_to_goal() else py_trees.common.Status.FAILURE
+        else: return py_trees.common.Status.FAILURE
 
     # def timer_callback(self):
     #     """ Callback function for the watchdog timer """

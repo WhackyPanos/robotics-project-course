@@ -27,7 +27,7 @@ class Odometry(Node):
         self._tf_broadcaster = TransformBroadcaster(self)
 
         # Initialize the path publisher
-        self._path_pub = self.create_publisher(Path, 'path', 100)
+        self._path_pub = self.create_publisher(Path, '/path', 100)
         self._pose_pub = self.create_publisher(Pose2D, '/odom_pose', 10)
 
         # Store the path here
@@ -65,11 +65,11 @@ class Odometry(Node):
         _, _, temp_imu_yaw = euler_from_quaternion([quat.x, quat.y, quat.z, quat.w])
 
         # Sets initaial angle to 0
-        # if self.init_imu_yaw is None:
-        #     self.init_imu_yaw = temp_imu_yaw
-        # temp_imu_yaw = self.init_imu_yaw - temp_imu_yaw
+        if self.init_imu_yaw is None:
+            self.init_imu_yaw = temp_imu_yaw
+        temp_imu_yaw = self.init_imu_yaw - temp_imu_yaw
 
-        temp_imu_yaw = - temp_imu_yaw # Comment out if you uncomment above code
+        # temp_imu_yaw = - temp_imu_yaw # Comment out if you uncomment above code
 
         if self.prev_imu_yaw is not None:
             self._yaw = alpha * temp_imu_yaw + (1 - alpha) * self.prev_imu_yaw

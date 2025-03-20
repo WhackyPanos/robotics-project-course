@@ -39,7 +39,7 @@ class RandomPoint(Node):
     def generate_new_point(self):
         if self.map_data is None:
             self.get_logger().warn("Map data not available yet!")
-            return
+            return False
         
         while True:
             x_desired = uniform(self.map_origin_x, self.map_origin_x + self.map_width * self.map_resolution)
@@ -55,6 +55,8 @@ class RandomPoint(Node):
         pub_msg.point.z = 0.0
         self.get_logger().info(f"Publishing new goal: x={x_desired:.2f}, y={y_desired:.2f}")
         self.publisher.publish(pub_msg)
+
+        return True
 
 
 def main():

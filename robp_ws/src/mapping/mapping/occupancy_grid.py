@@ -7,6 +7,7 @@ import sensor_msgs_py
 import numpy as np
 import csv
 import math
+from tf_transformations import quaternion_from_euler, euler_from_quaternion
 
 from math import fabs
 from rclpy.node import Node
@@ -50,7 +51,7 @@ class OccupancyGridNode(Node):
         # Occupied by camera: 99
         
         # Camera paramters
-        self.camera_FOV = np.pi/4 # np.pi/2 # Mapping should run all the time but how?
+        self.camera_FOV = 45 # np.pi/2 # Mapping should run all the time but how?
         self.camera_min_range = 0.3 # True value: 0.2
         self.camera_max_range = 0.8 # True value: 3.0
 
@@ -137,7 +138,6 @@ class OccupancyGridNode(Node):
         """Publish the occupancy grid using the current grid data."""
         occupancy_grid_msg = OccupancyGrid() 
         occupancy_grid_msg.header = Header()
-        self.get_logger().info("publish")
         occupancy_grid_msg.header.stamp = rclpy.clock.Clock().now().to_msg()
         occupancy_grid_msg.header.frame_id = 'map'
         occupancy_grid_msg.info.resolution = self.resolution
@@ -209,14 +209,17 @@ class OccupancyGridNode(Node):
         
         # Convert quaternion to yaw angle (assuming the camera is nearly horizontal)
         q = t_cam.transform.rotation
-        siny_cosp = 2 * (q.w * q.z + q.x * q.y)
-        cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z)
-        yaw = math.atan2(siny_cosp, cosy_cosp)
+        # siny_cosp = 2 * (q.w * q.z + q.x * q.y)
+        # cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z)
+        # yaw = math.atan2(siny_cosp, cosy_cosp)
         
+        euler = euler_from_quaternion([q.x, q.y, q.z, q.w])
+        yaw = euler[2] + np.pi/2
+
         # Sweep rays over the camera FOV (assumed centered around the optical axis)
         num_rays = 30  # You can adjust the number of rays for resolution
-        start_angle = -self.camera_FOV / 2
-        end_angle = self.camera_FOV / 2
+        start_angle = - np.deg2rad(self.camera_FOV) / 2
+        end_angle = np.deg2rad(self.camera_FOV) / 2
         
         for i in range(num_rays):
             angle = start_angle + i * (end_angle - start_angle) / (num_rays - 1)

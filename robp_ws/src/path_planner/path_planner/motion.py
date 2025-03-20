@@ -44,8 +44,13 @@ class MotionNode(Node):
         self.vel_cmd.angular.x = 0.0
         self.vel_cmd.angular.y = 0.0
 
+        self.x_map = None
+        self.y_map = None
+        self.theta_map = None
+
         self.path_reached = False
         self.is_path = False
+        self.is_goal = False
 
         # Setup publishers and subscribers
         self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
@@ -68,6 +73,7 @@ class MotionNode(Node):
 
     # Checks when new goal is received
     def goal_callback(self, msg:PointStamped):
+        self.is_goal = True
         self.goal_position = msg.point
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
@@ -128,13 +134,19 @@ class MotionNode(Node):
                 qw = transformed_pose.orientation.w
                 self.theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
 
-                # Proceed with goal tracking using transformed pose
-                self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
+                # # Proceed with goal tracking using transformed pose
+                # self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
             except Exception as e:
                 self.get_logger().warn(f"Transform failed: {str(e)}")
 
-    def navigate_to_goal(self, x, y, theta):
+    def navigate_to_goal(self):
         """ Control the robot to navigate to the goal position. """
+        x = self.x_map
+        y = self.y_map
+        theta = self.theta_map
+
+        if x is None or y is None or theta is None: return False
+
         distance = math.sqrt((self.goal_position.x - x)**2 + (self.goal_position.y - y)**2)
         angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
         angle_diff = angle - theta
@@ -163,17 +175,20 @@ class MotionNode(Node):
             self.goal_reached_flag = True
             self.get_logger().info('Goal reached: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
             
-            if len(self.path.poses) > 1 and self.is_path:
+            self.is_goal = False
+            if self.is_path and len(self.path.poses) > 1:
                 self.path.poses.pop(0)
                 self.path_publisher.publish(self.path)
             
-            elif len(self.path.poses) == 0 and self.is_path:
+            elif self.is_path and len(self.path.poses) == 0:
                 self.get_logger().info('Path execution completed.')
                 self.path_reached = True
                 self.is_path = False
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
+
+        return True
 
 def main(args=None):
     rclpy.init(args=args)

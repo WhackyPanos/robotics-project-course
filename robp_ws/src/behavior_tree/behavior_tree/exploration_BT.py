@@ -6,32 +6,47 @@ from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
 
 # Import classes
-# from exploration_bhv import UnexploredMap, PathPlan 
+from path_planner.random_point_bhv import PointGenerator
 from path_planner.motion_bhv import NavigateToGoal
 from obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
 from detection_bt.classify_bt import ClassifyBT
 from detection_bt.cluster_bt import ClusterBT
 from map_file.map_file_bt import MapFileBT
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
+from rclpy.executors import MultiThreadedExecutor
+from localization.localization_transform import Localization
 
 class ExplorationBT(Node):
     def __init__(self) -> None:
         super().__init__('behavior_tree_exploration')
-        root = self.create_root()
-        self.tree = py_trees_ros.trees.BehaviourTree(root=root, unicode_tree_debug=False)
+        # Create the root as a Sequence node
+        self.root = py_trees.composites.Sequence(name="Root", memory=True)
 
-    def create_root(self):    
-        # Create the root as a Sequence node (default memory=False is fine here)
-        root = py_trees.composites.Sequence(name="Root", memory= False)
+        self.goal = PointGenerator()
+        self.navigate_to_goal = NavigateToGoal()
+        self.pub_occupancy_grid = PublishOccupancyGrid()
+        self.obstacle_on_path_detected = ObstacleOnPath()
+        self.classify = ClassifyBT()
+        self.new_object_detected = ClusterBT()
+        self.update_map_file = MapFileBT()
+        self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False)
 
-        # map_not_fully_explored = UnexploredMap()
-        # path_plan = PathPlan()
-        navigate_to_goal = NavigateToGoal()
-        pub_occupancy_grid = PublishOccupancyGrid()
-        obstacle_on_path_detected = ObstacleOnPath()
-        classify = ClassifyBT()
-        new_object_detected = ClusterBT()
-        update_map_file = MapFileBT()
+    def create_root(self, executor):
+        """
+        Create the behavior tree root and add children nodes
+        """
+        # Add nodes to executor
+        executor.add_node(self.goal)
+        executor.add_node(self.navigate_to_goal)
+        executor.add_node(self.pub_occupancy_grid)
+        executor.add_node(self.pub_occupancy_grid.occupancy_grid)
+        executor.add_node(self.navigate_to_goal.motion_node)
+        executor.add_node(self.goal.random_point_node)
+
+        # Add behavior tree child nodes to the root
+        self.root.add_children([self.pub_occupancy_grid, self.goal, self.navigate_to_goal])
+
+        return self.root
 
         # second_sequence = py_trees.composites.Sequence(name='second_seq')
         # second_sequence.add_children([new_object_detected, classify, update_map_file])
@@ -48,33 +63,45 @@ class ExplorationBT(Node):
         # first_sequence = py_trees.composites.Sequence(name='first_seq')
         # first_sequence.add_children([path_plan, first_selector])
 
-        root.add_children([navigate_to_goal, pub_occupancy_grid])
+        # root.add_children([pub_occupancy_grid, goal, navigate_to_goal])
         
-        return root
+        # return root
 
 
 
 def main(args=None):
     rclpy.init(args=args)
 
+    # Initialize the executor with a valid context
+    executor = MultiThreadedExecutor()
+
     # Initialize the ExplorationBT node
     node = ExplorationBT()
+
+    # Create the root and set up the behavior tree
+    root = node.create_root(executor=executor)
+    tree = py_trees_ros.trees.BehaviourTree(root=root)
+
+    # Add the node to the executor
+    executor.add_node(node)
 
     # Setup the behavior tree with a timeout for setup (10 seconds)
     node.tree.setup(timeout=10.0, node=node)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=1000)
+    node.tree.tick_tock(period_ms=300)
 
-    # Spin the node to keep it alive
+    # Continuously tick the behavior tree
     try:
-        rclpy.spin(node)  # This keeps the node alive
+        while rclpy.ok():
+            executor.spin_once(timeout_sec=1.0)
     except KeyboardInterrupt:
         pass  # Handle Ctrl+C gracefully
 
-
-    # Shutdown the node
+    # Shutdown ROS2 and the executor
     rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
+
+

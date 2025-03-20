@@ -17,7 +17,7 @@ class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
     def setup(self, **kwargs):
         """ Setup function, called once before the first update. """
         # self.occupancy_grid = kwargs['node']  
-        rclpy.get_global_executor().add_node(self.occupancy_grid) 
+        #rclpy.get_global_executor().add_node(self.occupancy_grid) 
 
     def initialise(self):
         """ Called when the behavior starts (on the first tick). """
@@ -26,7 +26,6 @@ class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
         self.occupancy_grid.publish_current_grid()
-        self.get_logger().info("New occupancy grid published")
         return py_trees.common.Status.SUCCESS
 
     def terminate(self, new_status: py_trees.common.Status):
