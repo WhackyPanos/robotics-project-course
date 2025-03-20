@@ -10,9 +10,8 @@ class RandomPoint(Node):
     def __init__(self):
         super().__init__('random_point')
         
-        self.goal_subscription = self.create_subscription(Bool, '/goal_reached', self.goal_reached_callback, 10)
         self.map_subscription = self.create_subscription(OccupancyGrid, '/occupancy_grid', self.map_callback, 10)
-        self.publisher = self.create_publisher(PointStamped, '/temp_goal', 10)
+        self.publisher = self.create_publisher(PointStamped, '/motion/goal', 10)
         
         self.map_data = None
         self.map_width = 0
@@ -21,8 +20,6 @@ class RandomPoint(Node):
         self.map_origin_x = 0.0
         self.map_origin_y = 0.0
         
-        self.timer = None  # Initialize the timer as None
-
     def map_callback(self, msg):
         self.map_data = np.array(msg.data).reshape((msg.info.height, msg.info.width))
         self.map_width = msg.info.width
@@ -30,12 +27,8 @@ class RandomPoint(Node):
         self.map_resolution = msg.info.resolution
         self.map_origin_x = msg.info.origin.position.x
         self.map_origin_y = msg.info.origin.position.y
-
-    def goal_reached_callback(self, msg):
-        if msg.data and self.map_data is not None:
-            self.timer = self.create_timer(2, self.publish_new_goal)
-    
-    def is_free_space(self, x, y):
+ 
+    def is_not_occupied(self, x, y):
         grid_x = int((x - self.map_origin_x) / self.map_resolution)
         grid_y = int((y - self.map_origin_y) / self.map_resolution)
         
@@ -43,7 +36,7 @@ class RandomPoint(Node):
             return self.map_data[grid_y, grid_x] != 100  
         return False
 
-    def publish_new_goal(self):
+    def generate_new_point(self):
         if self.map_data is None:
             self.get_logger().warn("Map data not available yet!")
             return
@@ -51,8 +44,7 @@ class RandomPoint(Node):
         while True:
             x_desired = uniform(self.map_origin_x, self.map_origin_x + self.map_width * self.map_resolution)
             y_desired = uniform(self.map_origin_y, self.map_origin_y + self.map_height * self.map_resolution)
-            
-            if self.is_free_space(x_desired, y_desired):
+            if self.is_not_occupied(x_desired, y_desired):
                 break
 
         pub_msg = PointStamped()
@@ -64,10 +56,6 @@ class RandomPoint(Node):
         self.get_logger().info(f"Publishing new goal: x={x_desired:.2f}, y={y_desired:.2f}")
         self.publisher.publish(pub_msg)
 
-        # Destroy the timer to ensure it only runs once
-        if self.timer:
-            self.destroy_timer(self.timer)
-            self.timer = None  # Reset the timer reference
 
 def main():
     rclpy.init()
