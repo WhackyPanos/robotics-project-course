@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 import py_trees
 import rclpy
+from rclpy.node import Node
 from obstacle_on_path import CheckPath 
 
-class ObstacleOnPath(py_trees.behaviour.Behaviour):
-    def __init__(self, name="CheckPathInBT", node=None):
+class ObstacleOnPath(py_trees.behaviour.Behaviour, Node):
+    def __init__(self, name="CheckPathInBT"):
         super().__init__(name=name)
-        self.node = node  
+
         self.check_path = CheckPath() 
 
     def setup(self, **kwargs):

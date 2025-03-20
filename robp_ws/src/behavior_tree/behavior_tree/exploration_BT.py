@@ -6,7 +6,8 @@ from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
 
 # Import classes
-from exploration_bhv import UnexploredMap, PathPlan, NavigateToGoal
+from exploration_bhv import UnexploredMap, PathPlan
+from path_planner.motion_bhv import NavigateToGoal
 from obstacle_on_path.obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
 from detection_bt.detection_bt.classify_bt import ClassifyBT
 from detection_bt.detection_bt.cluster_bt import ClusterBT
