@@ -1,6 +1,7 @@
 import rclpy
 import rclpy.duration
 import rclpy.time
+from rclpy.executors import MultiThreadedExecutor
 import sensor_msgs_py
 import numpy as np
 import csv
@@ -24,7 +25,7 @@ class OccupancyGridNode(Node):
 
         # Initializes
         super().__init__('update_occupancy_grid')
-        self.publisher = self.create_publisher(OccupancyGrid, '/map', 10) 
+        self.publisher = self.create_publisher(OccupancyGrid, '/occupancy_grid', 10) 
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
@@ -35,10 +36,10 @@ class OccupancyGridNode(Node):
         
         # Grid parameters
         self.resolution = 0.02 # Grid cell size (m)
-        self.width = int((max_x - min_x)/self.resolution + 2)
-        self.height = int((max_y - min_y)/self.resolution + 2)      
-        self.origin_x = min_x - self.resolution 
-        self.origin_y = min_y - self.resolution
+        self.width = int((max_x - min_x)/self.resolution + 0.5)
+        self.height = int((max_y - min_y)/self.resolution + 0.5)      
+        self.origin_x = min_x  # - self.resolution  
+        self.origin_y = min_y # - self.resolution
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.grid.fill(-1) # Sets all cells to unknown
         self.geofence(vertices) # Sets a boundry for the workspace
@@ -72,6 +73,17 @@ class OccupancyGridNode(Node):
         return vertices, min_x, max_x, min_y, max_y
 
     def geofence(self, vertices):
+
+        # for i in range(len(vertices)):
+        #     x0, y0 = vertices[i]
+        #     x1, y1 = vertices[ (i+1) % len(vertices)] 
+        #     start = self.world_to_grid(x0, y0)
+        #     end = self.world_to_grid(x1, y1)
+        #     cells = self.raytrace(start, end)
+        #     for cell in cells:
+        #         (i_x, i_y) = cell
+        #         self.grid[i_y, i_x] = 100
+
         # Create an empty mask
         mask = np.zeros((self.height, self.width), dtype=bool)
         
@@ -88,7 +100,11 @@ class OccupancyGridNode(Node):
         
         # Fill inside the geofence
         filled_mask = binary_fill_holes(mask)
-        self.grid[filled_mask] = -1  # Mark inside as unknown (-1)
+        #self.grid[filled_mask] = -1  # Mark inside as unknown (-1)
+
+        # Fill outside the geofence
+        self.grid[mask] = 100 # Mark border fence as occupied (100)
+        self.grid[~filled_mask] = 100 # Mark outside as occupied (100)
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
@@ -130,13 +146,13 @@ class OccupancyGridNode(Node):
         occupancy_grid_msg.info.origin.orientation.w = 1.0 # No rotation applied
         occupancy_grid_msg.data = self.grid.flatten().tolist()
         self.publisher.publish(occupancy_grid_msg)
-        self.get_logger().info("Published occupancy grid")
+        # self.get_logger().info("Published occupancy grid")
     
     def listener_callback(self, msg):
         # Looks up transform from lidar link to map
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
-        
+
         lidar_from_frame_rel = msg.header.frame_id # Lidar link
         lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
         lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
@@ -147,7 +163,7 @@ class OccupancyGridNode(Node):
         camera_tf_future.add_done_callback(lambda future: self.camera_transform_callback(future, msg))
 
     def lidar_transform_callback(self, future, msg):
-        try:
+        try:    
             t_lidar = future.result()  # Get the transform when ready
         except TransformException as ex:
             self.get_logger().info(f'Could not transform {msg.header.frame_id} to map: {ex}')
@@ -176,7 +192,7 @@ class OccupancyGridNode(Node):
             if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
                 self.grid[object_index[1], object_index[0]] = 100  # occupied
 
-            self.publish_current_grid(msg) # Will be replaced by behavior
+            # self.publish_current_grid(msg) # Will be replaced by behavior
     
     def camera_transform_callback(self, future, msg):
         try:
@@ -219,3 +235,18 @@ class OccupancyGridNode(Node):
                     # Mark as known by camera (free) if not already a fence/occupied by lidar
                     if self.grid[i_y, i_x] != 100:
                         self.grid[i_y, i_x] = 0
+
+
+def main():
+    rclpy.init()
+    node = OccupancyGridNode()
+    
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    rclpy.shutdown()
+
+if __name__ == "__main__":
+    main()
+    

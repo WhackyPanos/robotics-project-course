@@ -90,10 +90,11 @@ class CarrotPlanner(Node):
         # self.get_logger().info(str(front))
         for d in front:
             if d < self.obstacle_threshold and not self.avoiding_obstacle:
-                self.get_logger().info("Obstacle found!")
-                self.obstacle_found = True
-                self.stop()
-                break
+                pass
+                # self.get_logger().info("Obstacle found!")
+                # self.obstacle_found = True
+                # self.stop()
+                # break
 
     def odometry_callback(self, msg: Pose2D):
         """ Transform the odometry pose from 'odom' to 'map' and control robot movement. """
