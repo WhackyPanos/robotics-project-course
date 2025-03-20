@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 import py_trees
 import rclpy
+from rclpy.node import Node
 from occupancy_grid import OccupancyGridNode
 
 # Note: this behiour only controls when the OccupancyGrid msg is published 
 
-class PublishOccupancyGrid(py_trees.behaviour.Behaviour):
-    def __init__(self, name="PublishOccupancyGridBT", node=None):
+class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
+    def __init__(self, name="PublishOccupancyGridBT"):
         super().__init__(name=name)
-        self.node = node
         self.occupancy_grid =  OccupancyGridNode() # Ros node
-        #self.update_occupancy_grid.grid_update = False
 
     def setup(self, **kwargs):
         """ Setup function, called once before the first update. """
