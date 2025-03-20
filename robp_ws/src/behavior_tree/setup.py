@@ -20,10 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pick_bt = behavior_tree.pick_bt:main',
-            'goCollect_bhv = behavior_tree.goCollect_bhv:main'
-            # add main_bt
-
+            'goCollect_bhv = behavior_tree.goCollect_bhv:main',
+            'exploration_BT = behavior_tree.exploration_BT:main',
+            'collection_BT = behavior_tree.collection_BT:main'
         ],
     },
 )

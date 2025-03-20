@@ -6,11 +6,11 @@ from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
 
 # Import classes
-from exploration_bhv import UnexploredMap, PathPlan
+# from exploration_bhv import UnexploredMap, PathPlan 
 from path_planner.motion_bhv import NavigateToGoal
-from obstacle_on_path.obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
-from detection_bt.detection_bt.classify_bt import ClassifyBT
-from detection_bt.detection_bt.cluster_bt import ClusterBT
+from obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
+from detection_bt.classify_bt import ClassifyBT
+from detection_bt.cluster_bt import ClusterBT
 from map_file.map_file_bt import MapFileBT
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
 
@@ -24,8 +24,8 @@ class ExplorationBT(Node):
         # Create the root as a Sequence node (default memory=False is fine here)
         root = py_trees.composites.Sequence(name="Root", memory= False)
 
-        map_not_fully_explored = UnexploredMap()
-        path_plan = PathPlan()
+        # map_not_fully_explored = UnexploredMap()
+        # path_plan = PathPlan()
         navigate_to_goal = NavigateToGoal()
         pub_occupancy_grid = PublishOccupancyGrid()
         obstacle_on_path_detected = ObstacleOnPath()
@@ -48,7 +48,7 @@ class ExplorationBT(Node):
         # first_sequence = py_trees.composites.Sequence(name='first_seq')
         # first_sequence.add_children([path_plan, first_selector])
 
-        root.add_children([path_plan, navigate_to_goal, pub_occupancy_grid])
+        root.add_children([navigate_to_goal, pub_occupancy_grid])
         
         return root
 

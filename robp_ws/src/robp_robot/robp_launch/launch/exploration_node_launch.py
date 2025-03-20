@@ -33,7 +33,7 @@ def generate_launch_description():
 
         Node(
             package='behavior_tree',
-            executable='exploration_BT.py'
+            executable='exploration_BT'
         ),
 
         # Node(

@@ -2,17 +2,18 @@
 import py_trees
 import rclpy
 from rclpy.node import Node
-from obstacle_on_path import CheckPath 
+from .obstacle_on_path import CheckPath 
 
 class ObstacleOnPath(py_trees.behaviour.Behaviour, Node):
     def __init__(self, name="CheckPathInBT"):
-        super().__init__(name=name)
+        # Initialize Behaviour (PyTrees) and Node (ROS2)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
 
         self.check_path = CheckPath() 
 
     def setup(self, **kwargs):
-        """ Setup function, called once before the first update. """
-        self.check_path = kwargs['node']  
+        """ Setup function, called once before the first update. """  
         rclpy.get_global_executor().add_node(self.check_path)
 
     def initialise(self):
