@@ -10,21 +10,19 @@ def generate_launch_description():
     robp_launch_dir = get_package_share_directory('robp_launch')
     return launch.LaunchDescription([
 
-        # Node(
-        #     package='icp_cpp',  # The name of your package
-        #     executable='icp_node',  # The executable of your ICP node
-        #     name='icp_node',  # Optional: Name the node (if you want a custom name)
-        #     output='screen',  # This will print the output to the terminal
-        #     parameters=[],  # Optional: Add any parameters you want to pass to the node
-        # ),
+        Node(
+            package='icp_cpp',  # The name of your package
+            executable='icp_node',  # The executable of your ICP node
+            name='icp_node',  # Optional: Name the node (if you want a custom name)
+            output='screen',  # This will print the output to the terminal
+        ),
 
-        # Node(
-        #     package='localization',  # The name of your package
-        #     executable='ekf',  # The executable of your ICP node
-        #     name='ekf',  # Optional: Name the node (if you want a custom name)
-        #     output='screen',  # This will print the output to the terminal
-        #     parameters=[],  # Optional: Add any parameters you want to pass to the node
-        # ),
+        Node(
+            package='localization',  # The name of your package
+            executable='localization_transform',  # The executable of your ICP node
+            name='localization_transform',  # Optional: Name the node (if you want a custom name)
+            output='screen',  # This will print the output to the terminal
+        ),
 
         Node(
             package='odometry',
@@ -34,6 +32,17 @@ def generate_launch_description():
         Node(
             package='behavior_tree',
             executable='exploration_BT'
+        ),
+
+        Node(
+            package='joystick_teleop',
+            executable='twist2duty'
+        ),
+
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
         ),
 
         # Node(
