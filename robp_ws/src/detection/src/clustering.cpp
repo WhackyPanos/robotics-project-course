@@ -118,6 +118,8 @@ bool Clustering::perform_clustering(bool new_req)
     // If new, check also for obstacle or occupation in grid
         if(new_req)
         {
+            RCLCPP_INFO(this->get_logger(), "Enter new req");
+            
             pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
             pass.setInputCloud(cloud_cluster);
             pass.setFilterFieldName("y");
@@ -138,7 +140,7 @@ bool Clustering::perform_clustering(bool new_req)
             try {
                 tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
             } catch (tf2::TransformException &ex) {
-                RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
+                RCLCPP_INFO(this->get_logger(), "Transform failed: %s", ex.what());
                 continue;
             }
             RCLCPP_INFO(this->get_logger(), "Check occupation");

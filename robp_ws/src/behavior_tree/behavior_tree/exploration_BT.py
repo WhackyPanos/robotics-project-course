@@ -113,7 +113,7 @@ def main(args=None):
     time.sleep(5.0)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=100)
+    node.tree.tick_tock(period_ms=3000)
 
     # Continuously tick the behavior tree
     try:

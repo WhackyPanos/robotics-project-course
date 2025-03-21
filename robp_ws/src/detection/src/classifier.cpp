@@ -204,7 +204,7 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
     try {
         tf_buffer_->transform(pose, transformed_pose, "map", tf2::durationFromSec(1.0));
     } catch (tf2::TransformException &ex) {
-        RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
+        RCLCPP_INFO(this->get_logger(), "Transform failed: %s", ex.what());
     }
 
     // Create a transform message
@@ -285,6 +285,8 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
 
     // Broadcast the transform
     tf_broadcaster_->sendTransform(transform_msg);
+
+    RCLCPP_INFO(this->get_logger(), "Classification successful");
     
     return true;
 }
