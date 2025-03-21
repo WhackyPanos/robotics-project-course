@@ -26,13 +26,14 @@
 class Clustering : public rclcpp::Node {
 public:
     Clustering();
-    bool perform_clustering(bool new_obj = true);
+    bool perform_clustering(bool new_req = true);
     
 private:
     void cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg);
     void twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg);
     void map_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg);
     void trigger_callback(const std_msgs::msg::Bool::SharedPtr msg);
+    void new_trigger_callback(const std_msgs::msg::Bool::SharedPtr msg);
 
     pcl::PointXYZ computeOBBPosition(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
     bool is_occupied(float x, float y);
@@ -42,6 +43,7 @@ private:
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
     rclcpp::Subscription<nav_msgs::msg::OccupancyGrid>::SharedPtr map_sub_;
     rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr trigger_sub_;
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr new_trigger_sub_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr cluster_pub_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr twist_pub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr result_pub_;
@@ -51,6 +53,7 @@ private:
     double angular_z_ = 0.0;
     nav_msgs::msg::OccupancyGrid latest_map_;
     sensor_msgs::msg::PointCloud2 latest_cloud_;
+    bool new_request = true;
 
     // Parameters
     std::string cloud_topic_;

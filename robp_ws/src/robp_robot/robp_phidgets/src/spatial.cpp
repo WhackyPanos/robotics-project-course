@@ -1,5 +1,5 @@
 // robp_phidgets
-#include <robp_phidgets_spatial/spatial.hpp>
+#include <robp_phidgets/spatial.hpp>
 
 // phidgets api
 #include <phidgets_api/phidget22.hpp>
@@ -7,50 +7,52 @@
 // ROS
 #include <angles/angles.h>
 
+#include <rclcpp/logging.hpp>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 
 // STL
 #include <chrono>
 
-namespace robp::phidgets
+namespace robp_phidgets
 {
-Spatial::Spatial(rclcpp::NodeOptions const &options) : Node("spatial", options)
+Spatial::Spatial() : Node("spatial")
 {
-	int32_t serial_number = this->declare_parameter("serial_num", -1);
-	hub_port_             = this->declare_parameter("hub_port", 0);
-	frame_id_             = this->declare_parameter("frame_id", "imu_link");
-	double data_rate      = this->declare_parameter("data_rate", 500.0);
-	int    algorithm      = this->declare_parameter("algorithm", 1);
+	int32_t serial_number = this->declare_parameter("spatial_serial_num", -1);
+	hub_port_             = this->declare_parameter("spatial_hub_port", 0);
+	frame_id_             = this->declare_parameter("spatial_frame_id", "imu_link");
+	double data_rate      = this->declare_parameter("spatial_data_rate", 500.0);
+	int    algorithm      = this->declare_parameter("spatial_algorithm", 1);
 	double ahrs_angular_velocity_threshold =
-	    this->declare_parameter("ahrs_angular_velocity_threshold", 0.5);
+	    this->declare_parameter("spatial_ahrs_angular_velocity_threshold", 0.5);
 	double ahrs_angular_velocity_delta_threshold =
-	    this->declare_parameter("ahrs_angular_velocity_delta_threshold", 0.1);
+	    this->declare_parameter("spatial_ahrs_angular_velocity_delta_threshold", 0.1);
 	double ahrs_acceleration_threshold =
-	    this->declare_parameter("ahrs_acceleration_threshold", 0.05);
-	double ahrs_mag_time   = this->declare_parameter("ahrs_mag_time", 120.0);
-	double ahrs_accel_time = this->declare_parameter("ahrs_accel_time", 120.0);
-	double ahrs_bias_time  = this->declare_parameter("ahrs_bias_time", 1.25);
-	bool   heating_enabled = this->declare_parameter("heating_enabled", false);
+	    this->declare_parameter("spatial_ahrs_acceleration_threshold", 0.05);
+	double ahrs_mag_time   = this->declare_parameter("spatial_ahrs_mag_time", 120.0);
+	double ahrs_accel_time = this->declare_parameter("spatial_ahrs_accel_time", 120.0);
+	double ahrs_bias_time  = this->declare_parameter("spatial_ahrs_bias_time", 1.25);
+	bool   heating_enabled = this->declare_parameter("spatial_heating_enabled", false);
 	// double linear_acceleration_stdev =
-	//     this->declare_parameter("linear_acceleration_stdev", 280.0);
+	//     this->declare_parameter("spatial_linear_acceleration_stdev", 280.0);
 	// double angular_velocity_stdev =
-	//     this->declare_parameter("angular_velocity_stdev", 0.095);
-	// double magnetic_field_stdev = this->declare_parameter("magnetic_field_stdev", 1.1);
-	// int    time_resynchronization_interval_ms =
-	//     this->declare_parameter("magnetic_field_stdev", 5000);
-	double cc_mag_field = this->declare_parameter("cc_mag_field", 0.52859);
-	double cc_offset0   = this->declare_parameter("cc_offset0", 0.03921);
-	double cc_offset1   = this->declare_parameter("cc_offset1", 0.19441);
-	double cc_offset2   = this->declare_parameter("cc_offset2", -0.03493);
-	double cc_gain0     = this->declare_parameter("cc_gain0", 1.81704);
-	double cc_gain1     = this->declare_parameter("cc_gain1", 1.81028);
-	double cc_gain2     = this->declare_parameter("cc_gain2", 2.04819);
-	double cc_t0        = this->declare_parameter("cc_t0", 0.00142);
-	double cc_t1        = this->declare_parameter("cc_t1", -0.03591);
-	double cc_t2        = this->declare_parameter("cc_t2", 0.00160);
-	double cc_t3        = this->declare_parameter("cc_t3", -0.05038);
-	double cc_t4        = this->declare_parameter("cc_t4", -0.03942);
-	double cc_t5        = this->declare_parameter("cc_t5", -0.05673);
+	//     this->declare_parameter("spatial_angular_velocity_stdev", 0.095);
+	// double magnetic_field_stdev =
+	// this->declare_parameter("spatial_magnetic_field_stdev", 1.1); int
+	// time_resynchronization_interval_ms =
+	//     this->declare_parameter("spatial_magnetic_field_stdev", 5000);
+	double cc_mag_field = this->declare_parameter("spatial_cc_mag_field", 0.52859);
+	double cc_offset0   = this->declare_parameter("spatial_cc_offset0", 0.03921);
+	double cc_offset1   = this->declare_parameter("spatial_cc_offset1", 0.19441);
+	double cc_offset2   = this->declare_parameter("spatial_cc_offset2", -0.03493);
+	double cc_gain0     = this->declare_parameter("spatial_cc_gain0", 1.81704);
+	double cc_gain1     = this->declare_parameter("spatial_cc_gain1", 1.81028);
+	double cc_gain2     = this->declare_parameter("spatial_cc_gain2", 2.04819);
+	double cc_t0        = this->declare_parameter("spatial_cc_t0", 0.00142);
+	double cc_t1        = this->declare_parameter("spatial_cc_t1", -0.03591);
+	double cc_t2        = this->declare_parameter("spatial_cc_t2", 0.00160);
+	double cc_t3        = this->declare_parameter("spatial_cc_t3", -0.05038);
+	double cc_t4        = this->declare_parameter("spatial_cc_t4", -0.03942);
+	double cc_t5        = this->declare_parameter("spatial_cc_t5", -0.05673);
 
 	imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu/data_raw", 1);
 	mag_pub_ = this->create_publisher<sensor_msgs::msg::MagneticField>("/imu/mag", 1);
@@ -83,11 +85,7 @@ Spatial::Spatial(rclcpp::NodeOptions const &options) : Node("spatial", options)
 	initialized_ = true;
 }
 
-Spatial::~Spatial()
-{
-	PhidgetHandle handle = reinterpret_cast<PhidgetHandle>(spatial_);
-	::phidgets::helpers::closeAndDelete(&handle);
-}
+Spatial::~Spatial() { close(); }
 
 void Spatial::create()
 {
@@ -95,6 +93,15 @@ void Spatial::create()
 	if (EPHIDGET_OK != ret) {
 		throw ::phidgets::Phidget22Error(
 		    "Failed to create temperature sensor on port " + std::to_string(hub_port_), ret);
+	}
+}
+
+void Spatial::close()
+{
+	if (nullptr != spatial_) {
+		PhidgetHandle handle = reinterpret_cast<PhidgetHandle>(spatial_);
+		::phidgets::helpers::closeAndDelete(&handle);
+		spatial_ = nullptr;
 	}
 }
 
@@ -142,7 +149,7 @@ void Spatial::calibrate()
 {
 	using namespace std::chrono_literals;
 
-	RCLCPP_INFO(this->get_logger(),
+	RCLCPP_WARN(this->get_logger(),
 	            "Calibrating IMU, this takes around 2 seconds to finish. Make sure that "
 	            "the device "
 	            "is not moved during this time.");
@@ -407,6 +414,10 @@ void Spatial::spatialCallback(PhidgetSpatialHandle /* ch */, void *ctx,
 {
 	Spatial *s = static_cast<Spatial *>(ctx);
 
+	if (!rclcpp::ok()) {
+		return;
+	}
+
 	rclcpp::Time now = s->now();
 
 	if (0 == s->last_cb_time_.seconds() && 0 == s->last_cb_time_.nanoseconds()) {
@@ -466,24 +477,25 @@ void Spatial::spatialCallback(PhidgetSpatialHandle /* ch */, void *ctx,
 
 void Spatial::attachCallback(PhidgetHandle /* ch */, void *ctx)
 {
-	printf("Attach spatial on port %d\n", static_cast<Spatial *>(ctx)->port());
-	static_cast<Spatial *>(ctx)->init();
-	static_cast<Spatial *>(ctx)->synchronize_timestamps_ = true;
-	static_cast<Spatial *>(ctx)->can_publish_            = false;
-	static_cast<Spatial *>(ctx)->last_cb_time_           = rclcpp::Time();
+	Spatial *s = static_cast<Spatial *>(ctx);
+	RCLCPP_INFO(s->get_logger(), "Attach spatial on port %d", s->port());
+	s->init();
+	s->synchronize_timestamps_ = true;
+	s->can_publish_            = false;
+	s->last_cb_time_           = rclcpp::Time();
 }
 
 void Spatial::detachCallback(PhidgetHandle /* ch */, void *ctx)
 {
-	printf("Detach spatial on port %d\n", static_cast<Spatial *>(ctx)->port());
+	Spatial *s = static_cast<Spatial *>(ctx);
+	RCLCPP_INFO(s->get_logger(), "Detach spatial on port %d", s->port());
 }
 
 void Spatial::errorCallback(PhidgetHandle /* ch */, void *ctx,
                             Phidget_ErrorEventCode code, char const *description)
 {
-	fprintf(stderr, "\x1B[31mError spatial on port %d: %s\033[0m\n",
-	        static_cast<Spatial *>(ctx)->port(), description);
-	fprintf(stderr, "----------\n");
+	Spatial *s = static_cast<Spatial *>(ctx);
+	RCLCPP_ERROR(s->get_logger(), "Error spatial on port %d: %s", s->port(), description);
 	PhidgetLog_log(PHIDGET_LOG_ERROR, "Error %d: %s", code, description);
 }
 
@@ -493,8 +505,4 @@ void Spatial::calibrateCallback(
 {
 	calibrate();
 }
-}  // namespace robp::phidgets
-
-#include <rclcpp_components/register_node_macro.hpp>
-
-RCLCPP_COMPONENTS_REGISTER_NODE(robp::phidgets::Spatial)
+}  // namespace robp_phidgets

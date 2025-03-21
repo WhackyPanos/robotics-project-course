@@ -4,6 +4,7 @@ import py_trees
 import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
+import time
 
 # Import classes
 from path_planner.random_point_bhv import PointGenerator
@@ -28,8 +29,9 @@ class ExplorationBT(Node):
         self.navigate_to_goal = NavigateToGoal()
         self.pub_occupancy_grid = PublishOccupancyGrid()
         self.obstacle_on_path_detected = ObstacleOnPath()
+        self.new_object_detected = ClusterBT(new_request=True)
+        self.object_detected = ClusterBT(new_request=False)
         self.classify = ClassifyBT()
-        self.new_object_detected = ClusterBT()
         self.update_map_file = MapFileBT()
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False)
 
@@ -41,12 +43,34 @@ class ExplorationBT(Node):
         executor.add_node(self.goal)
         executor.add_node(self.navigate_to_goal)
         executor.add_node(self.pub_occupancy_grid)
+        executor.add_node(self.new_object_detected)
+        executor.add_node(self.object_detected)
+        executor.add_node(self.classify)
+        executor.add_node(self.update_map_file)
+
+        executor.add_node(self.update_map_file.map_file_node)
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
         executor.add_node(self.goal.random_point_node)
 
+
+        third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
+        third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
+
+        decorator = py_trees.decorators.Repeat(
+            name='dec_repeat', 
+            child=third_sequence,
+            num_success=5   # 5 consecutive successes
+        )
+
+        second_sequence = py_trees.composites.Sequence(name='second_seq', memory=True)
+        second_sequence.add_children([self.new_object_detected, decorator])
+
+        first_selector = py_trees.composites.Selector(name='first_sel', memory=False)
+        first_selector.add_children([second_sequence, self.navigate_to_goal])
+
         # Add behavior tree child nodes to the root
-        self.root.add_children([self.pub_occupancy_grid, self.goal, self.navigate_to_goal])
+        self.root.add_children([self.pub_occupancy_grid, self.goal, first_selector])
 
         return self.root
 
@@ -81,22 +105,21 @@ def main(args=None):
     node = ExplorationBT()
 
     # Create the root and set up the behavior tree
-    root = node.create_root(executor=executor)
-    tree = py_trees_ros.trees.BehaviourTree(root=root)
+    node.create_root(executor=executor)
 
     # Add the node to the executor
     executor.add_node(node)
 
     # Setup the behavior tree with a timeout for setup (10 seconds)
     node.tree.setup(timeout=10.0, node=node)
+    time.sleep(5.0)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=300)
+    node.tree.tick_tock(period_ms=100)
 
     # Continuously tick the behavior tree
     try:
-        while rclpy.ok():
-            executor.spin_once(timeout_sec=1.0)
+         executor.spin()
     except KeyboardInterrupt:
         pass  # Handle Ctrl+C gracefully
 

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>robp_phidgets_encoders</name>
+  <name>robp_phidgets</name>
   <version>1.0.0</version>
-  <description>robp_phidgets_encoders</description>
+  <description>robp_phidgets</description>
 
   <maintainer email="dduberg@kth.se">Daniel Duberg</maintainer>
 
@@ -12,13 +12,17 @@
 
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
 
+  <depend>angles</depend>
   <depend>phidgets_api</depend>
   <depend>phidgets_msgs</depend>
   <depend>rclcpp</depend>
-  <depend>rclcpp_components</depend>
   <depend>robp_interfaces</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_geometry_msgs</depend>
 
-  <exec_depend>launch</exec_depend>
+  <!-- <exec_depend>launch</exec_depend> -->
 
   <export>
     <build_type>ament_cmake</build_type>

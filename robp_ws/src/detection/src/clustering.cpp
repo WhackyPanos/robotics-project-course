@@ -23,7 +23,7 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("cluster_min_size", cluster_min_size_, 100);
     this->get_parameter_or("occupancy_margin", occupancy_margin_, 0);
     this->get_parameter_or("occupancy_value", occupancy_value_, 0);
-    this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.0);
+    this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.2);
 
     // QoS for keeping only the latest message
     auto qos_profile = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_sensor_data));
@@ -53,6 +53,11 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
         trigger_topic_, qos_profile, std::bind(&Clustering::trigger_callback, this, _1));
 
+    // Subscribe to trigger topic
+    new_trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
+        "/detection/new_request", qos_profile, std::bind(&Clustering::new_trigger_callback, this, _1));
+
+
     // Publisher for clustering result
     result_pub_ = this->create_publisher<std_msgs::msg::Bool>(result_topic_, 10);
 
@@ -63,15 +68,17 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 }
 
-bool Clustering::perform_clustering(bool new_obj)
+bool Clustering::perform_clustering(bool new_req)
 {
-    if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
-        return false;
-    }
+    RCLCPP_INFO(this->get_logger(), "Enter clustering");
+    // if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
+    //     return false;
+    // }
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cloud_, *cloud);
 
+    RCLCPP_INFO(this->get_logger(), "Pass Filter");
     // Apply passthrough filtering
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cloud);
@@ -84,7 +91,7 @@ bool Clustering::perform_clustering(bool new_obj)
     pass.filter(*cloud);
 
     if (cloud->empty()) return false;
-
+    RCLCPP_INFO(this->get_logger(), "Clustering");
     // Clustering
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
     tree->setInputCloud(cloud);
@@ -107,8 +114,9 @@ bool Clustering::perform_clustering(bool new_obj)
             cloud_cluster->push_back((*cloud)[idx]);
         }
 
+        RCLCPP_INFO(this->get_logger(), "Cluster found");
     // If new, check also for obstacle or occupation in grid
-        if(new_obj)
+        if(new_req)
         {
             pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
             pass.setInputCloud(cloud_cluster);
@@ -133,7 +141,7 @@ bool Clustering::perform_clustering(bool new_obj)
                 RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
                 continue;
             }
-
+            RCLCPP_INFO(this->get_logger(), "Check occupation");
             if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
         }
     
@@ -147,6 +155,7 @@ bool Clustering::perform_clustering(bool new_obj)
         output.header.stamp = latest_cloud_.header.stamp;
         output.header.frame_id = latest_cloud_.header.frame_id;
         cluster_pub_->publish(output);
+        RCLCPP_INFO(this->get_logger(), "Publish cluster");
 
         geometry_msgs::msg::Twist stop_msg;
         stop_msg.linear.x = stop_msg.linear.y = stop_msg.linear.z = 0.0;
@@ -165,10 +174,15 @@ void Clustering::trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
     result_msg.data = false;
 
     if (msg->data){
-        result_msg.data = perform_clustering();
+            result_msg.data = perform_clustering(new_request);
     }
 
     result_pub_->publish(result_msg);
+}
+
+void Clustering::new_trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
+{
+    new_request = msg->data;
 }
 
 void Clustering::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)

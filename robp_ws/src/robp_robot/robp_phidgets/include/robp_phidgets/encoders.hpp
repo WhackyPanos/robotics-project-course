@@ -1,8 +1,8 @@
-#ifndef ROBP_PHIDGETS_ENCODERS_ENCODERS_HPP
-#define ROBP_PHIDGETS_ENCODERS_ENCODERS_HPP
+#ifndef ROBP_PHIDGETS_ENCODERS_HPP
+#define ROBP_PHIDGETS_ENCODERS_HPP
 
 // robp_phidgets
-#include <robp_phidgets_encoders/encoder.hpp>
+#include <robp_phidgets/encoder.hpp>
 
 // robp_interfaces
 #include <robp_interfaces/msg/encoders.hpp>
@@ -13,12 +13,12 @@
 // STL
 #include <memory>
 
-namespace robp::phidgets
+namespace robp_phidgets
 {
 class Encoders : public rclcpp::Node
 {
  public:
-	explicit Encoders(rclcpp::NodeOptions const& options);
+	Encoders();
 
  private:
 	void publish();
@@ -29,6 +29,6 @@ class Encoders : public rclcpp::Node
 
 	rclcpp::Publisher<robp_interfaces::msg::Encoders>::SharedPtr pub_;
 };
-}  // namespace robp::phidgets
+}  // namespace robp_phidgets
 
-#endif  // ROBP_PHIDGETS_ENCODERS_ENCODERS_HPP
+#endif  // ROBP_PHIDGETS_ENCODERS_HPP

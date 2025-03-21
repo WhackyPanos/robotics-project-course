@@ -1,14 +1,17 @@
 // robp_phidgets
-#include <robp_phidgets_encoders/encoder.hpp>
+#include <robp_phidgets/encoder.hpp>
 
 // phidgets api
 #include <phidgets_api/phidget22.hpp>
 
-namespace robp::phidgets
+// ROS
+#include <rclcpp/logging.hpp>
+
+namespace robp_phidgets
 {
-Encoder::Encoder(int32_t serial_number, int hub_port, bool is_hub_port_device,
-                 int channel, std::function<void()> callback)
-    : callback_(callback), hub_port_(hub_port)
+Encoder::Encoder(rclcpp::Node *node, int32_t serial_number, int hub_port,
+                 bool is_hub_port_device, int channel, std::function<void()> callback)
+    : node_(node), callback_(callback), hub_port_(hub_port)
 {
 	create();
 	assignEventHandlers();
@@ -17,11 +20,7 @@ Encoder::Encoder(int32_t serial_number, int hub_port, bool is_hub_port_device,
 	                                           channel);
 }
 
-Encoder::~Encoder()
-{
-	PhidgetHandle handle = reinterpret_cast<PhidgetHandle>(encoder_);
-	::phidgets::helpers::closeAndDelete(&handle);
-}
+Encoder::~Encoder() { close(); }
 
 void Encoder::create()
 {
@@ -29,6 +28,15 @@ void Encoder::create()
 	if (EPHIDGET_OK != ret) {
 		throw ::phidgets::Phidget22Error(
 		    "Failed to create encoder on port " + std::to_string(hub_port_), ret);
+	}
+}
+
+void Encoder::close()
+{
+	if (nullptr != encoder_) {
+		PhidgetHandle handle = reinterpret_cast<PhidgetHandle>(encoder_);
+		::phidgets::helpers::closeAndDelete(&handle);
+		encoder_ = nullptr;
 	}
 }
 
@@ -174,21 +182,23 @@ void Encoder::positionChangeCallback(PhidgetEncoderHandle /* ch */, void *ctx,
 
 void Encoder::attachCallback(PhidgetHandle /* ch */, void *ctx)
 {
-	printf("Attach encoder on port %d\n", static_cast<Encoder *>(ctx)->port());
-	static_cast<Encoder *>(ctx)->init();
+	Encoder *e = static_cast<Encoder *>(ctx);
+	RCLCPP_INFO(e->node_->get_logger(), "Attach encoder on port %d", e->port());
+	e->init();
 }
 
 void Encoder::detachCallback(PhidgetHandle /* ch */, void *ctx)
 {
-	printf("Detach encoder on port %d\n", static_cast<Encoder *>(ctx)->port());
+	Encoder *e = static_cast<Encoder *>(ctx);
+	RCLCPP_INFO(e->node_->get_logger(), "Detach encoder on port %d", e->port());
 }
 
 void Encoder::errorCallback(PhidgetHandle /* ch */, void *ctx,
                             Phidget_ErrorEventCode code, char const *description)
 {
-	fprintf(stderr, "\x1B[31mError encoder on port %d: %s\033[0m\n",
-	        static_cast<Encoder *>(ctx)->port(), description);
-	fprintf(stderr, "----------\n");
+	Encoder *e = static_cast<Encoder *>(ctx);
+	RCLCPP_ERROR(e->node_->get_logger(), "Error encoder on port %d: %s", e->port(),
+	             description);
 	PhidgetLog_log(PHIDGET_LOG_ERROR, "Error %d: %s", code, description);
 }
-}  // namespace robp::phidgets
+}  // namespace robp_phidgets

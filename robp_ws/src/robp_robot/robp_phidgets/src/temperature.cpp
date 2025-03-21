@@ -1,18 +1,20 @@
 // robp_phidgets_temperature
-#include <robp_phidgets_temperature/temperature.hpp>
+#include <robp_phidgets/temperature.hpp>
 
 // phidgets api
 #include <phidgets_api/phidget22.hpp>
 
-namespace robp::phidgets
+// ROS
+#include <rclcpp/logging.hpp>
+
+namespace robp_phidgets
 {
-Temperature::Temperature(rclcpp::NodeOptions const &options)
-    : Node("temperature", options)
+Temperature::Temperature() : Node("temperature")
 {
-	int32_t serial_number = this->declare_parameter("serial_num", -1);
-	hub_port_             = this->declare_parameter("hub_port", 0);
-	frame_id_             = this->declare_parameter("frame_id", "imu_link");
-	double data_rate      = this->declare_parameter("data_rate", 8.0);
+	int32_t serial_number = this->declare_parameter("temperature_serial_num", -1);
+	hub_port_             = this->declare_parameter("temperature_hub_port", 0);
+	frame_id_             = this->declare_parameter("temperature_frame_id", "imu_link");
+	double data_rate      = this->declare_parameter("temperature_data_rate", 8.0);
 	double temperature_change_trigger =
 	    this->declare_parameter("temperature_change_trigger", 0.0);
 
@@ -27,11 +29,7 @@ Temperature::Temperature(rclcpp::NodeOptions const &options)
 	setTemperatureChangeTrigger(temperature_change_trigger);
 }
 
-Temperature::~Temperature()
-{
-	PhidgetHandle handle = reinterpret_cast<PhidgetHandle>(temperature_);
-	::phidgets::helpers::closeAndDelete(&handle);
-}
+Temperature::~Temperature() { close(); }
 
 void Temperature::create()
 {
@@ -39,6 +37,15 @@ void Temperature::create()
 	if (EPHIDGET_OK != ret) {
 		throw ::phidgets::Phidget22Error(
 		    "Failed to create temperature sensor on port " + std::to_string(hub_port_), ret);
+	}
+}
+
+void Temperature::close()
+{
+	if (nullptr != temperature_) {
+		PhidgetHandle handle = reinterpret_cast<PhidgetHandle>(temperature_);
+		::phidgets::helpers::closeAndDelete(&handle);
+		temperature_ = nullptr;
 	}
 }
 
@@ -169,32 +176,32 @@ void Temperature::publish(double temperature)
 void Temperature::temperatureChangeCallback(PhidgetTemperatureSensorHandle /* ch */,
                                             void *ctx, double temperature)
 {
+	if (!rclcpp::ok()) {
+		return;
+	}
+
 	static_cast<Temperature *>(ctx)->publish(temperature);
 }
 
 void Temperature::attachCallback(PhidgetHandle /* ch */, void *ctx)
 {
-	printf("Attach temperature sensor on port %d\n",
-	       static_cast<Temperature *>(ctx)->port());
-	static_cast<Temperature *>(ctx)->init();
+	Temperature *t = static_cast<Temperature *>(ctx);
+	RCLCPP_INFO(t->get_logger(), "Attach temperature sensor on port %d", t->port());
+	t->init();
 }
 
 void Temperature::detachCallback(PhidgetHandle /* ch */, void *ctx)
 {
-	printf("Detach temperature sensor on port %d\n",
-	       static_cast<Temperature *>(ctx)->port());
+	Temperature *t = static_cast<Temperature *>(ctx);
+	RCLCPP_INFO(t->get_logger(), "Detach temperature sensor on port %d", t->port());
 }
 
 void Temperature::errorCallback(PhidgetHandle /* ch */, void *ctx,
                                 Phidget_ErrorEventCode code, char const *description)
 {
-	fprintf(stderr, "\x1B[31mError temperature sensor on port %d: %s\033[0m\n",
-	        static_cast<Temperature *>(ctx)->port(), description);
-	fprintf(stderr, "----------\n");
+	Temperature *t = static_cast<Temperature *>(ctx);
+	RCLCPP_ERROR(t->get_logger(), "Error temperature sensor on port %d: %s", t->port(),
+	             description);
 	PhidgetLog_log(PHIDGET_LOG_ERROR, "Error %d: %s", code, description);
 }
-}  // namespace robp::phidgets
-
-#include <rclcpp_components/register_node_macro.hpp>
-
-RCLCPP_COMPONENTS_REGISTER_NODE(robp::phidgets::Temperature)
+}  // namespace robp_phidgets

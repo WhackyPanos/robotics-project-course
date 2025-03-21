@@ -1,5 +1,5 @@
-#ifndef ROBP_PHIDGETS_SPATIAL_SPATIAL_HPP
-#define ROBP_PHIDGETS_SPATIAL_SPATIAL_HPP
+#ifndef ROBP_PHIDGETS_SPATIAL_HPP
+#define ROBP_PHIDGETS_SPATIAL_HPP
 
 // Phidget
 #include <libphidget22/phidget22.h>
@@ -15,12 +15,12 @@
 // STL
 #include <string>
 
-namespace robp::phidgets
+namespace robp_phidgets
 {
 class Spatial : public rclcpp::Node
 {
  public:
-	explicit Spatial(rclcpp::NodeOptions const &options);
+	Spatial();
 
 	~Spatial();
 
@@ -63,6 +63,8 @@ class Spatial : public rclcpp::Node
 
  private:
 	void create();
+
+	void close();
 
 	void assignEventHandlers();
 
@@ -155,6 +157,6 @@ class Spatial : public rclcpp::Node
 
 void accelerationChange(PhidgetAccelerometerHandle ch, void *ctx,
                         double const acceleration[3], double timestamp);
-}  // namespace robp::phidgets
+}  // namespace robp_phidgets
 
-#endif  // ROBP_PHIDGETS_SPATIAL_SPATIAL_HPP
+#endif  // ROBP_PHIDGETS_SPATIAL_HPP
