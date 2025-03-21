@@ -171,7 +171,13 @@ class planner_A_star(Node):
         self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
 <<<<<<< HEAD
         self.get_logger().info(f'Configuration space created with robot radius: {self.robot_radius}m')
-
+    
+    def world_to_grid(self, x, y):
+        '''Converts world coordinates in [m] to grid indices.'''
+        i_x = int((x - self.origin_x) / self.resolution)    
+        i_y = int((y - self.origin_y) / self.resolution)
+        return i_x, i_y
+    
     def path_plan(self): # Called from the behavior   
         # Get current position
         try:
@@ -192,8 +198,8 @@ class planner_A_star(Node):
         self.inflate_map(self.occupancy_grid_msg, only_obstacle=False)
 
         # Convert world to grid (using inherited function)
-        i_start_x, i_start_y = OccupancyGridNode.world_to_grid(start_x, start_y)
-        i_goal_x, i_goal_y = OccupancyGridNode.world_to_grid(self.goal_msg.point.x, self.goal_msg.point.y)
+        i_start_x, i_start_y = self.world_to_grid(start_x, start_y)
+        i_goal_x, i_goal_y = self.world_to_grid(self.goal_msg.point.x, self.goal_msg.point.y)
 
         node_goal = Nodes(i_goal_x, i_goal_y)
         node_start = Nodes(i_start_x, i_start_y)
