@@ -53,7 +53,7 @@ private:
     double angular_z_;
     nav_msgs::msg::OccupancyGrid latest_map_;
     sensor_msgs::msg::PointCloud2 latest_cloud_;
-    bool new_request;
+    bool new_request = true;
 
     // Parameters
     std::string cloud_topic_;
