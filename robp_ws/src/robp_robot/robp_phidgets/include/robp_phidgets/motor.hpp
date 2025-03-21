@@ -1,5 +1,5 @@
-#ifndef ROBP_PHIDGETS_MOTORS_MOTOR_HPP
-#define ROBP_PHIDGETS_MOTORS_MOTOR_HPP
+#ifndef ROBP_PHIDGETS_MOTOR_HPP
+#define ROBP_PHIDGETS_MOTOR_HPP
 
 // Phidget
 #include <libphidget22/phidget22.h>
@@ -8,13 +8,16 @@
 #include <functional>
 #include <mutex>
 
-namespace robp::phidgets
+// ROS
+#include <rclcpp/node.hpp>
+
+namespace robp_phidgets
 {
 class Motor
 {
  public:
-	explicit Motor(int32_t serial_number, int hub_port, bool is_hub_port_device,
-	               int channel, std::function<void()> callback);
+	Motor(rclcpp::Node *node, int32_t serial_number, int hub_port, bool is_hub_port_device,
+	      int channel, std::function<void()> callback);
 
 	~Motor();
 
@@ -55,6 +58,8 @@ class Motor
  private:
 	void create();
 
+	void close();
+
 	void assignEventHandlers();
 
 	void init();
@@ -69,6 +74,8 @@ class Motor
 	                          char const *description);
 
  private:
+	rclcpp::Node *node_;
+
 	PhidgetDCMotorHandle motor_;
 
 	std::function<void()> callback_;
@@ -85,6 +92,6 @@ class Motor
 	mutable double     last_velocity_{};
 	mutable bool       update_{};
 };
-}  // namespace robp::phidgets
+}  // namespace robp_phidgets
 
-#endif  // ROBP_PHIDGETS_MOTORS_MOTOR_HPP
+#endif  // ROBP_PHIDGETS_MOTOR_HPP

@@ -1,8 +1,8 @@
-#ifndef ROBP_PHIDGETS_MOTORS_MOTORS_HPP
-#define ROBP_PHIDGETS_MOTORS_MOTORS_HPP
+#ifndef ROBP_PHIDGETS_MOTORS_HPP
+#define ROBP_PHIDGETS_MOTORS_HPP
 
-// robp_phidgets_motors
-#include <robp_phidgets_motors/motor.hpp>
+// robp_phidgets
+#include <robp_phidgets/motor.hpp>
 
 // robp_interfaces
 #include <robp_interfaces/msg/duty_cycles.hpp>
@@ -15,12 +15,12 @@
 #include <cstdint>
 #include <memory>
 
-namespace robp::phidgets
+namespace robp_phidgets
 {
 class Motors : public rclcpp::Node
 {
  public:
-	explicit Motors(rclcpp::NodeOptions const& options);
+	Motors();
 
  private:
 	void dutyCyclesCallback(robp_interfaces::msg::DutyCycles const& msg);
@@ -41,6 +41,6 @@ class Motors : public rclcpp::Node
 	rclcpp::TimerBase::SharedPtr failsafe_timer_;
 	bool                         failsafe_first_{true};
 };
-}  // namespace robp::phidgets
+}  // namespace robp_phidgets
 
-#endif  // ROBP_PHIDGETS_MOTORS_MOTORS_HPP
+#endif  // ROBP_PHIDGETS_MOTORS_HPP

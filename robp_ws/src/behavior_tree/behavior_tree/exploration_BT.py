@@ -4,6 +4,7 @@ import py_trees
 import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
+import time
 
 # Import classes
 from path_planner.random_point_bhv import PointGenerator
@@ -49,9 +50,9 @@ class ExplorationBT(Node):
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
         executor.add_node(self.goal.random_point_node)
-        
 
-        third_sequence = py_trees.composites.Sequence(name='third_seq')
+
+        third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
         third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
 
         decorator = py_trees.decorators.Repeat(
@@ -102,22 +103,21 @@ def main(args=None):
     node = ExplorationBT()
 
     # Create the root and set up the behavior tree
-    root = node.create_root(executor=executor)
-    tree = py_trees_ros.trees.BehaviourTree(root=root)
+    node.create_root(executor=executor)
 
     # Add the node to the executor
     executor.add_node(node)
 
     # Setup the behavior tree with a timeout for setup (10 seconds)
     node.tree.setup(timeout=10.0, node=node)
+    time.sleep(5.0)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=300)
+    node.tree.tick_tock(period_ms=100)
 
     # Continuously tick the behavior tree
     try:
-        while rclpy.ok():
-            executor.spin_once(timeout_sec=1.0)
+         executor.spin()
     except KeyboardInterrupt:
         pass  # Handle Ctrl+C gracefully
 

@@ -5,12 +5,15 @@ from std_msgs.msg import Bool
 
 class ClusterBT(py_trees.behaviour.Behaviour, Node):
     def __init__(self, new_request: Bool, name="clustering_bt"):
-        py_trees.behaviour.Behaviour.__init__(self, name)
-        Node.__init__(self, name)
+        self.name = name + "_new" if new_request else name
+        py_trees.behaviour.Behaviour.__init__(self, self.name)
+        Node.__init__(self, self.name)
         self.new_req = new_request
+        self.cluster_found = None
 
     def setup(self, **kwargs):
         """ Initialize ROS publishers and subscribers. """
+        self.node = kwargs['node']
 
         # Subscribe to clustering result
         self.result_sub = self.node.create_subscription(
@@ -22,8 +25,7 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
 
     def initialise(self):
         """ Reset cluster_found before triggering clustering. """
-        self.cluster_found = None
-
+        self.cluster_found=None
         msg = Bool()
         msg.data=self.new_req
         self.new_req_pub.publish(msg)
@@ -37,7 +39,7 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
             return py_trees.common.Status.RUNNING
         return py_trees.common.Status.SUCCESS if self.cluster_found else py_trees.common.Status.FAILURE
 
-    def terminate(self):
+    def terminate(self, new_status: py_trees.common.Status):
         pass
 
     def result_callback(self, msg):

@@ -1,5 +1,5 @@
-#ifndef ROBP_PHIDGETS_TEMPERATURE_TEMPERATURE_HPP
-#define ROBP_PHIDGETS_TEMPERATURE_TEMPERATURE_HPP
+#ifndef ROBP_PHIDGETS_TEMPERATURE_HPP
+#define ROBP_PHIDGETS_TEMPERATURE_HPP
 
 // Phidget
 #include <libphidget22/phidget22.h>
@@ -11,12 +11,12 @@
 // STL
 #include <limits>
 
-namespace robp::phidgets
+namespace robp_phidgets
 {
 class Temperature : public rclcpp::Node
 {
  public:
-	explicit Temperature(rclcpp::NodeOptions const &options);
+	Temperature();
 
 	~Temperature();
 
@@ -34,6 +34,8 @@ class Temperature : public rclcpp::Node
 
  private:
 	void create();
+
+	void close();
 
 	void assignEventHandlers();
 
@@ -53,7 +55,7 @@ class Temperature : public rclcpp::Node
 
  private:
 	PhidgetTemperatureSensorHandle temperature_;
-  
+
 	rclcpp::Publisher<sensor_msgs::msg::Temperature>::SharedPtr pub_;
 
 	int         hub_port_;
@@ -62,6 +64,6 @@ class Temperature : public rclcpp::Node
 	double data_rate_{-1};
 	double temperature_change_trigger_{std::numeric_limits<double>::quiet_NaN()};
 };
-}  // namespace robp::phidgets
+}  // namespace robp_phidgets
 
 #endif  // ROBP_PHIDGETS_TEMPERATURE_HPP

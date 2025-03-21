@@ -1,5 +1,5 @@
 // robp_phidgets
-#include <robp_phidgets_motors/motor.hpp>
+#include <robp_phidgets/motor.hpp>
 
 // phidgets api
 #include <phidgets_api/phidget22.hpp>
@@ -7,11 +7,11 @@
 // STL
 #include <string>
 
-namespace robp::phidgets
+namespace robp_phidgets
 {
-Motor::Motor(int32_t serial_number, int hub_port, bool is_hub_port_device, int channel,
-             std::function<void()> callback)
-    : callback_(callback), hub_port_(hub_port)
+Motor::Motor(rclcpp::Node *node, int32_t serial_number, int hub_port,
+             bool is_hub_port_device, int channel, std::function<void()> callback)
+    : node_(node), callback_(callback), hub_port_(hub_port)
 {
 	create();
 	assignEventHandlers();
@@ -20,11 +20,7 @@ Motor::Motor(int32_t serial_number, int hub_port, bool is_hub_port_device, int c
 	                                           channel);
 }
 
-Motor::~Motor()
-{
-	PhidgetHandle handle = reinterpret_cast<PhidgetHandle>(motor_);
-	::phidgets::helpers::closeAndDelete(&handle);
-}
+Motor::~Motor() { close(); }
 
 void Motor::create()
 {
@@ -32,6 +28,15 @@ void Motor::create()
 	if (EPHIDGET_OK != ret) {
 		throw ::phidgets::Phidget22Error(
 		    "Failed to create motor on port " + std::to_string(hub_port_), ret);
+	}
+}
+
+void Motor::close()
+{
+	if (nullptr != motor_) {
+		PhidgetHandle handle = reinterpret_cast<PhidgetHandle>(motor_);
+		::phidgets::helpers::closeAndDelete(&handle);
+		motor_ = nullptr;
 	}
 }
 
@@ -265,21 +270,23 @@ void Motor::velocityUpdateCallback(PhidgetDCMotorHandle /* ch */, void *ctx,
 
 void Motor::attachCallback(PhidgetHandle /* ch */, void *ctx)
 {
-	printf("Attach motor on port %d\n", static_cast<Motor *>(ctx)->port());
-	static_cast<Motor *>(ctx)->init();
+	Motor *m = static_cast<Motor *>(ctx);
+	RCLCPP_INFO(m->node_->get_logger(), "Attach motor on port %d", m->port());
+	m->init();
 }
 
 void Motor::detachCallback(PhidgetHandle /* ch */, void *ctx)
 {
-	printf("Detach motor on port %d\n", static_cast<Motor *>(ctx)->port());
+	Motor *m = static_cast<Motor *>(ctx);
+	RCLCPP_INFO(m->node_->get_logger(), "Detach motor on port %d", m->port());
 }
 
 void Motor::errorCallback(PhidgetHandle /* ch */, void *ctx, Phidget_ErrorEventCode code,
                           char const *description)
 {
-	fprintf(stderr, "\x1B[31mError motor on port %d: %s\033[0m\n",
-	        static_cast<Motor *>(ctx)->port(), description);
-	fprintf(stderr, "----------\n");
+	Motor *m = static_cast<Motor *>(ctx);
+	RCLCPP_ERROR(m->node_->get_logger(), "Error motor on port %d: %s", m->port(),
+	             description);
 	PhidgetLog_log(PHIDGET_LOG_ERROR, "Error %d: %s", code, description);
 }
-}  // namespace robp::phidgets
+}  // namespace robp_phidgets

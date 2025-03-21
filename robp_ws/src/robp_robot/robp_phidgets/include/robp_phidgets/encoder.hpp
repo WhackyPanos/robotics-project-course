@@ -1,5 +1,5 @@
-#ifndef ROBP_PHIDGETS_ENCODERS_ENCODER_HPP
-#define ROBP_PHIDGETS_ENCODERS_ENCODER_HPP
+#ifndef ROBP_PHIDGETS_ENCODER_HPP
+#define ROBP_PHIDGETS_ENCODER_HPP
 
 // Phidget
 #include <libphidget22/phidget22.h>
@@ -8,13 +8,16 @@
 #include <atomic>
 #include <functional>
 
-namespace robp::phidgets
+// ROS
+#include <rclcpp/node.hpp>
+
+namespace robp_phidgets
 {
 class Encoder
 {
  public:
-	explicit Encoder(int32_t serial_number, int hub_port, bool is_hub_port_device,
-	                 int channel, std::function<void()> callback);
+	Encoder(rclcpp::Node *node, int32_t serial_number, int hub_port,
+	        bool is_hub_port_device, int channel, std::function<void()> callback);
 
 	~Encoder();
 
@@ -41,6 +44,8 @@ class Encoder
  private:
 	void create();
 
+	void close();
+
 	void assignEventHandlers();
 
 	void init();
@@ -57,6 +62,8 @@ class Encoder
 	                          char const *description);
 
  private:
+	rclcpp::Node *node_;
+
 	PhidgetEncoderHandle encoder_;
 
 	std::function<void()> callback_;
@@ -69,6 +76,6 @@ class Encoder
 	mutable std::atomic_int  position_change_{};
 	mutable std::atomic_bool changed_ = false;
 };
-}  // namespace robp::phidgets
+}  // namespace robp_phidgets
 
-#endif  // ROBP_PHIDGETS_ENCODERS_ENCODER_HPP
+#endif  // ROBP_PHIDGETS_ENCODER_HPP

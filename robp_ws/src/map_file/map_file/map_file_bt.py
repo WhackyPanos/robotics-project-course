@@ -18,5 +18,5 @@ class MapFileBT(py_trees.behaviour.Behaviour, Node):
     def update(self):
         return py_trees.common.Status.SUCCESS if self.map_file_node.perform_map_file_update() else py_trees.common.Status.FAILURE
 
-    def terminate(self):
+    def terminate(self, new_status: py_trees.common.Status):
         pass

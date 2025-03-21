@@ -62,9 +62,11 @@ Classifier::Classifier() : Node("clustering", rclcpp::NodeOptions()
 
 bool Classifier::perform_classification()
 {
-    if (latest_cluster_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_ || std::abs(linear_x_) >= lin_vel_threshold_ || std::abs(linear_y_) >= lin_vel_threshold_) {
+    if (std::abs(angular_z_) >= ang_vel_threshold_ || std::abs(linear_x_) >= lin_vel_threshold_ || std::abs(linear_y_) >= lin_vel_threshold_) {
         return false;
     }
+
+    RCLCPP_INFO(this->get_logger(), "enter classification");    
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cluster_, *cloud);
@@ -85,6 +87,7 @@ bool Classifier::perform_classification()
     pass.filter(*box_filtered);
     // RCLCPP_INFO(this->get_logger(), "Box filtering: %zu", box_filtered->size());
 
+    RCLCPP_INFO(this->get_logger(), "start classification");
     if (box_filtered->size() > box_filter_threshold_) 
     {
         classification = "Box";
@@ -141,7 +144,7 @@ bool Classifier::perform_classification()
         }
     }
 
-    // RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
+    RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
     
     geometry_msgs::msg::PoseStamped pose;
     pose.header.stamp = latest_cluster_.header.stamp;
@@ -202,7 +205,6 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
         tf_buffer_->transform(pose, transformed_pose, "map", tf2::durationFromSec(1.0));
     } catch (tf2::TransformException &ex) {
         RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
-        return false;
     }
 
     // Create a transform message
