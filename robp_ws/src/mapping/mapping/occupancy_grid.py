@@ -7,10 +7,7 @@ import sensor_msgs_py
 import numpy as np
 import csv
 import math
-<<<<<<< HEAD
 from tf_transformations import quaternion_from_euler, euler_from_quaternion
-=======
->>>>>>> origin/collection_bt
 
 from math import fabs
 from rclpy.node import Node
@@ -29,16 +26,9 @@ class OccupancyGridNode(Node):
     def __init__(self):
 
         # Initializes
-<<<<<<< HEAD
         super().__init__('update_occupancy_grid')
         self.publisher = self.create_publisher(OccupancyGrid, '/occupancy_grid', 10) 
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
-=======
-        super().__init__('occupancy_grid')
-        self.publisher = self.create_publisher(OccupancyGrid, '/map', 10) 
-        self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
-        self.camera_subscription = self.create_subscription()
->>>>>>> origin/collection_bt
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection()
@@ -55,22 +45,13 @@ class OccupancyGridNode(Node):
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.grid.fill(-1) # Sets all cells to unknown
         self.geofence(vertices) # Sets a boundry for the workspace
-<<<<<<< HEAD
         # free space from lidar: not marked
         # free space from camera: 0
-=======
-        # known with the lidar: 0
-        # known with the camera: 1
->>>>>>> origin/collection_bt
         # Occupied by lidar: 100
         # Occupied by camera: 99
         
         # Camera paramters
-<<<<<<< HEAD
         self.camera_FOV = 45 # np.pi/2 # Mapping should run all the time but how?
-=======
-        self.camera_FOV = np.pi/2 # Mapping should run all the time but how?
->>>>>>> origin/collection_bt
         self.camera_min_range = 0.3 # True value: 0.2
         self.camera_max_range = 0.8 # True value: 3.0
 
@@ -173,36 +154,18 @@ class OccupancyGridNode(Node):
         # Looks up transform from lidar link to map
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
-<<<<<<< HEAD
 
         lidar_from_frame_rel = msg.header.frame_id # Lidar link
         lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
         lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
 
         # Looks up transfrom from camera_depth_optical_frame to map (uses the same time)
-=======
-        
-        lidar_from_frame_rel = msg.header.frame_id # Lidar link
-        lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
-        lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
-
-        # DO THE FOLLOWING TWO THINGS:
-
-        # Looks up transfrom from camera_depth_optical_frame to map (use the same variable time)
->>>>>>> origin/collection_bt
         camera_from_frame = 'camera_depth_optical_frame'
         camera_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, camera_from_frame, time)
         camera_tf_future.add_done_callback(lambda future: self.camera_transform_callback(future, msg))
 
-<<<<<<< HEAD
     def lidar_transform_callback(self, future, msg):
         try:    
-=======
-        # Mark cells between the max and min range and FOV relative to the camera_depth_optical_frame as 1 in the occupancy grid
-
-    def lidar_transform_callback(self, future, msg):
-        try:
->>>>>>> origin/collection_bt
             t_lidar = future.result()  # Get the transform when ready
         except TransformException as ex:
             self.get_logger().info(f'Could not transform {msg.header.frame_id} to map: {ex}')
@@ -231,12 +194,7 @@ class OccupancyGridNode(Node):
             if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
                 self.grid[object_index[1], object_index[0]] = 100  # occupied
 
-<<<<<<< HEAD
             # self.publish_current_grid(msg) # Will be replaced by behavior
-=======
-        # Publishes a new grid
-        self.publish_grid(msg)
->>>>>>> origin/collection_bt
     
     def camera_transform_callback(self, future, msg):
         try:
@@ -244,7 +202,6 @@ class OccupancyGridNode(Node):
         except TransformException as ex:
             self.get_logger().info(f'Could not transform camera_depth_optical_frame to map: {ex}')
             return
-<<<<<<< HEAD
 
         # Get the camera's position in the map frame
         cam_x = t_cam.transform.translation.x
@@ -284,8 +241,6 @@ class OccupancyGridNode(Node):
                     if self.grid[i_y, i_x] != 100:
                         self.grid[i_y, i_x] = 0
 
-=======
->>>>>>> origin/collection_bt
 
         # Get the camera's position in the map frame
         cam_x = t_cam.transform.translation.x

@@ -62,12 +62,6 @@ class Map_file(Node):
         self.data = msg.data
 
     def perform_map_file_update(self):
-<<<<<<< HEAD
-=======
-        if self.data is None:
-            return False
-        
->>>>>>> origin/collection_bt
         data = self.data.split()
         classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 180
         new_label = self.classifications.get(classify)

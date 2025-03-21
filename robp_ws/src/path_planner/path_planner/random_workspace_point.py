@@ -11,11 +11,7 @@ class RandomPoint(Node):
         super().__init__('random_point')
         
         self.map_subscription = self.create_subscription(OccupancyGrid, '/occupancy_grid', self.map_callback, 10)
-<<<<<<< HEAD
         self.publisher = self.create_publisher(PointStamped, '/goal_point', 10)
-=======
-        self.publisher = self.create_publisher(PointStamped, '/motion/goal', 10)
->>>>>>> origin/collection_bt
         
         self.map_data = None
         self.map_width = 0

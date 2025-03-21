@@ -4,26 +4,16 @@ from rclpy.node import Node
 from std_msgs.msg import Bool
 
 class ClusterBT(py_trees.behaviour.Behaviour, Node):
-<<<<<<< HEAD
     def __init__(self, new_request: Bool, name="clustering_bt"):
         self.name = name + "_new" if new_request else name
         py_trees.behaviour.Behaviour.__init__(self, self.name)
         Node.__init__(self, self.name)
         self.new_req = new_request
         self.cluster_found = None
-=======
-    def __init__(self, name="clustering_bt"):
-        py_trees.behaviour.Behaviour.__init__(self, name)
-        Node.__init__(self, name)
->>>>>>> origin/collection_bt
 
     def setup(self, **kwargs):
         """ Initialize ROS publishers and subscribers. """
         self.node = kwargs['node']
-<<<<<<< HEAD
-=======
-        self.cluster_found = None
->>>>>>> origin/collection_bt
 
         # Subscribe to clustering result
         self.result_sub = self.node.create_subscription(
@@ -31,7 +21,6 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
 
         # Publish to request clustering
         self.request_pub = self.node.create_publisher(Bool, "/detection/request", 10)
-<<<<<<< HEAD
         self.new_req_pub = self.node.create_publisher(Bool, "/detection/new_request", 10)
 
     def initialise(self):
@@ -43,15 +32,6 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
         msg.data = True
         self.request_pub.publish(msg)
         
-=======
-
-    def initialise(self):
-        """ Reset cluster_found before triggering clustering. """
-        self.cluster_found = None
-        msg = Bool()
-        msg.data = True
-        self.request_pub.publish(msg)
->>>>>>> origin/collection_bt
 
     def update(self):
         """ Check clustering result and return status. """
@@ -59,13 +39,8 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
             return py_trees.common.Status.RUNNING
         return py_trees.common.Status.SUCCESS if self.cluster_found else py_trees.common.Status.FAILURE
 
-<<<<<<< HEAD
     def terminate(self, new_status: py_trees.common.Status):
         pass
-=======
-    def terminate(self):
-        return py_trees.common.Status.SUCCESS
->>>>>>> origin/collection_bt
 
     def result_callback(self, msg):
         """ Receive clustering result and store it. """
