@@ -61,7 +61,7 @@ class Planner_A_star(Node):
         self.robot_radius = 0.20
         self.cost_ratio = 5
         self.config_space = None
-        #self.map_info = None
+        self.map_info = None
         self.occupancy_grid_msg =None
         self.goal_msg = None
     
@@ -69,10 +69,11 @@ class Planner_A_star(Node):
         self.goal_msg = msg
         
     def map_callback(self, msg): # Create the configurations space
-        self.occupancy_grid_msg = msg        
+        self.occupancy_grid_msg = msg 
+        self.map_info = msg.info       
     
     def inflate_map(self, occupancy_grid_msg):
-        grid = np.array(occupancy_grid_msg.data).reshape(occupancy_grid_msg.info.height, occupancy_grid_msg.info.width)
+        grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
         binary_grid = np.zeros_like(grid)
         binary_grid[grid > 50] = 1
         # Calculate kernel size based on robot radius and map resolution
@@ -88,8 +89,8 @@ class Planner_A_star(Node):
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
-        i_x = int((x - self.origin_x) / self.resolution)    
-        i_y = int((y - self.origin_y) / self.resolution)
+        i_x = int((x - self.map_info.origin.position.x) / self.map_info.resolution)    
+        i_y = int((y - self.map_info.origin.position.y) / self.map_info.resolution)
         return i_x, i_y
     
     def path_plan(self): # Called from the behavior   
@@ -109,7 +110,7 @@ class Planner_A_star(Node):
             return
         
         # Inflate map
-        self.inflate_map(self.occupancy_grid_msg, only_obstacle=False)
+        self.inflate_map(self.occupancy_grid_msg)
 
         # Convert world to grid (using inherited function)
         i_start_x, i_start_y = self.world_to_grid(start_x, start_y)
@@ -134,29 +135,33 @@ class Planner_A_star(Node):
 
         node_list.reverse()
         full_path = Path()
-        simplified_path = [node_list[0]]  # Start with the first node
+        full_path.header.frame_id = "map"
+        full_path.header.stamp = self.get_clock().now().to_msg()
+        simplified_path = Path()
+        simplified_path.header.frame_id = "map"
+        simplified_path.header.stamp = self.get_clock().now().to_msg()
+        simplified_path.poses.append(self.node_to_pose(node_list[0]))  # Start with the first node
 
         for i, node in enumerate(node_list):
-            # Construct full_path
-            pose = PoseStamped()
-            pose.header.frame_id = "map"
-            pose.header.stamp = self.get_clock().now().to_msg()
-            pose.pose.position.x = node.x * self.map_info.resolution + self.map_info.origin.position.x
-            pose.pose.position.y = node.y * self.map_info.resolution + self.map_info.origin.position.y
+            # Convert node to PoseStamped
+            pose = self.node_to_pose(node)
             full_path.poses.append(pose)
 
-            # Skip first and last nodes for collinearity check
+            # Skip collinearity check for first and last nodes
             if 0 < i < len(node_list) - 1:
-                prev = simplified_path[-1]
-                next = node_list[i + 1]
-                dx1, dy1 = node.x - prev.x, node.y - prev.y
-                dx2, dy2 = next.x - node.x, next.y - node.y
-                
-                # If directions change, keep this node
-                if dx1 * dy2 != dy1 * dx2:
-                    simplified_path.append(node)
+                prev = simplified_path.poses[-1].pose.position
+                next_node = node_list[i + 1]
 
-        simplified_path.append(node_list[-1])  # Always keep the last node
+                dx1, dy1 = node.x - prev.x, node.y - prev.y
+                dx2, dy2 = next_node.x - node.x, next_node.y - node.y
+
+                # If direction changes, add to simplified path
+                if dx1 * dy2 != dy1 * dx2:
+                    simplified_path.poses.append(pose)
+
+        # Ensure last node is always included
+        simplified_path.poses.append(self.node_to_pose(node_list[-1]))
+
         return simplified_path, full_path
 
     def a_star(self, node_start, node_goal):
