@@ -5,6 +5,7 @@ import math
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Path, OccupancyGrid
+# Import inflate map
 
 
 class CheckPath(Node):
@@ -21,7 +22,7 @@ class CheckPath(Node):
 
         self.create_subscription(
             OccupancyGrid, 
-            '/config_space',  
+            '/occupancy_grid',  
             self.map_callback, 
             10)
 
@@ -46,27 +47,31 @@ class CheckPath(Node):
         # Store latest path msg
         self.path = []
         for pose in msg.poses:
-            i_x, i_y = self.world_to_grid(pose.pose.position.x, pose.pose.position.y) # Converts to gird indexes
-            self.path.append((i_x, i_y)) 
+            self.path.append((pose.pose.position.x, pose.pose.position.y))
 
     def map_callback(self, msg: OccupancyGrid):
         # Store latest map msg
-        self.config_space = msg
+        self.map = msg
 
     def behaviour(self):
         if self.path is None or self.config_space is None:
             self.get_logger().info("Waiting for path or map data.")
             return False
-
-        width = self.config_space.info.width
-        height = self.config_space.info.height
-        map_data = np.array(self.config_space.data).reshape((height, width))  
+        
+        map = self.map
+        # map = import.inflate_map(self.map)
+        
+        width = map.info.width
+        height = map.info.height
+        map_data = np.array(map.data).reshape((height, width))  
 
         for index in self.path:
             x, y = index
-            if map_data[y, x] == 100: 
+            if map_data[x, y] == 100:
                 return False
-        return True
+        
+        return
+
 
 
 # def main():
