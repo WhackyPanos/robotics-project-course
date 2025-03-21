@@ -10,17 +10,15 @@ from rclpy.executors import MultiThreadedExecutor
 import os
 from collection_bhv import I_ObjectList
 from path_planner.motion_bhv import NavigateToGoal
-from localization.localization_transform import Localization
+from localization.localization_bhv import Localization_bhv
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
-
-
 
 
 
 class CollectionBT(Node):
     def __init__(self) -> None:
         super().__init__('behavior_tree')
-        relative_path_to_file = os.path.join("..", "robp_ws/src/behavior_tree", "map_file.txt")
+        relative_path_to_file = os.path.join("..", "robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
         self.objs_list, self.box_list = self.create_lists()
 
@@ -31,9 +29,15 @@ class CollectionBT(Node):
         # Create the root as a Sequence node (default memory=False is fine here)
         next_object_bhv = I_ObjectList(self.objs_list, "next_object_pick")
         pub_occupancy_grid = PublishOccupancyGrid()
-        localization = Localization()
+        localization = Localization_bhv()
         navigate_to_goal = NavigateToGoal()
         path_planner = None
+
+        tuck_arm = SetArm('tuck_arm', [2600,12000,2000,18000,12000,12000])
+        #detect_object = DetectObject()
+        pick_object = ArmIK()
+        lift = SetArm('lift', [10000,12000,12000,12000,12000,12000])
+
 
         """ merge behaviors with composites """
         # Path planning and execution for picking
@@ -47,10 +51,23 @@ class CollectionBT(Node):
             policy = py_trees.common.ParallelPolicy.SuccessOnSelected([plan_and_move]))
 
         # Pick and lift operations
+        planA = py_trees.composites.Sequence(
+            name="PlanA", 
+            children = [tuck_arm, pick_object],
+            memory = False)
+        pick_lift = py_trees.composites.Sequence(
+            name="Pick&Lift", 
+            children = [planA, lift],
+            memory = False)
+ 
+        repeat_picklift = py_trees.decorators.Retry(
+            name = 'Repeat_Pick&Lift', 
+            child = py_trees.composites.Sequence([planA]), 
+            num_failures = 5)
 
         # Root creation
         root = py_trees.composites.Sequence(name="Root", memory= False)
-        root.add_children([next_object_bhv, path_planning_pick])
+        root.add_children([next_object_bhv, path_planning_pick, repeat_picklift])
         return root
     
     def create_lists(self):

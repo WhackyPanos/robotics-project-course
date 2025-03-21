@@ -17,7 +17,7 @@ class Localization_bhv(py_trees.behaviour.Behaviour, Node): # this class is a py
         self.node = kwargs["node"]
         self.icp_time = 0.2 #every 1 s
         self.node.create_subscription(
-            Bool, "/localization/activate", self.localization_activate_callback, 10)
+            Bool, "/icp/activate", self.localization_activate_callback, 10)
         self.localization_activate = True
         self.localization_timer = None
 
