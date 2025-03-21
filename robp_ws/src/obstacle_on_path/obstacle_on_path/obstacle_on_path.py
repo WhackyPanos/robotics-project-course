@@ -5,7 +5,7 @@ import math
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Path, OccupancyGrid
-# Import inflate map
+import binary
 
 class CheckPath(Node):
 
@@ -43,8 +43,7 @@ class CheckPath(Node):
             self.get_logger().info("Waiting for path or map data.")
             return False
         
-        map = self.map
-        # map = import.inflate_map(self.map)
+        map = self.inflate_map(self.map)
         
         width = map.info.width
         height = map.info.height
@@ -54,6 +53,30 @@ class CheckPath(Node):
             x, y = index
             if map_data[x, y] == 100:
                 return False
+    
+    def inflate_map(self, occupancy_grid_msg): # Create the configurations space
+        # The problem with doing path palnning when there is a new map topic is 
+        # Convert occupancy grid to numpy array
+        self.map_info = occupancy_grid_msg.info # Gets info from the occupancy grid
+
+        # Create binary occupancy grid (1 for obstacles, 0 for free space)
+        grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
+        binary_grid = np.zeros_like(grid)
+        
+        # Threshold for obstacles (usually >50 is considered occupied)
+        binary_grid[grid > 50] = 1
+        # Robot can drive through both known and unknown space
+        
+        # Calculate kernel size based on robot radius and map resolution
+        kernel_radius = int(np.ceil(self.robot_radius / self.map_info.resolution))
+        
+        # Create circular kernel for dilation
+        y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
+        kernel = x**2 + y**2 <= kernel_radius**2
+        
+        # Dilate obstacles to create configuration space
+        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
+        self.get_logger().info(f'Configuration space created with robot radius: {self.robot_radius}m')
         
         return
 
