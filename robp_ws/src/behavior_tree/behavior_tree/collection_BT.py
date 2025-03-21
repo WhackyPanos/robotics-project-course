@@ -8,7 +8,7 @@ from handle_objects.pick_objects import SetArm, DetectObject, SearchObjectArm, A
 from behavior_tree.goCollect_bhv import goTo
 from rclpy.executors import MultiThreadedExecutor
 import os
-from collection_bhv import UpdateObjectList, ArmTaskSucceeded
+from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded
 from path_planner.motion_bhv import NavigateToGoal
 from localization.localization_bhv import Localization_bhv
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid

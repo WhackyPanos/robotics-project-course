@@ -85,10 +85,7 @@ class MotionNode(Node):
 
     def path_callback(self, msg:Path):
         if len(msg.poses) > 0:
-<<<<<<< HEAD
             self.path_reached_publisher.publish(Bool(data=False))
-=======
->>>>>>> origin/collection_bt
             self.path_reached = False
             self.is_path = True
             self.path = msg

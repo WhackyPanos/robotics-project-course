@@ -22,14 +22,8 @@ def generate_launch_description():
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))
         ),
 
-<<<<<<< HEAD
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
         ),
-=======
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
-        # ),
->>>>>>> origin/collection_bt
 
     ])
