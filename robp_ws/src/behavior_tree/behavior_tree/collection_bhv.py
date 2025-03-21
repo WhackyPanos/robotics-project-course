@@ -27,7 +27,7 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         self.node = kwargs["node"]
         # TODO: transform to map
         self.tf_buffer = Buffer()
-        self.tf_listener = TransformListener(self.tf_buffer, self)
+        self.tf_listener = TransformListener(self.tf_buffer, self.node)
         self.to_frame_rel = 'map'
         self.from_frame_rel = 'odom'
 
@@ -98,8 +98,8 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
 
 
 class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
-    def _init__(self, name = 'ArmTaskSucceeded'):
-        super().__init__(name=name)
+    def __init__(self, name = 'ArmTaskSucceeded'):
+        super().__init__(name = name)
         self.arm_task = 'pick' # can be either 'pick' or 'place'
     def setup(self, **kwargs):
         self.node = kwargs["node"]

@@ -45,7 +45,8 @@ class CollectionBT(Node):
         # Path planning and execution for picking
         plan_and_move = py_trees.composites.Sequence(
             name = 'plan_and_move',
-            children = [path_planner, navigate_to_goal])
+            children = [navigate_to_goal],  #TODO: path_planner, navigate_to_goal
+            memory=False)
         
         path_planning_pick = py_trees.composites.Parallel(
             name = 'path_plan_pick', 
@@ -66,7 +67,7 @@ class CollectionBT(Node):
             memory = False)
         repeat_picklift = py_trees.decorators.Retry(
             name = 'Repeat_Pick&Lift', 
-            child = py_trees.composites.Sequence([pick_and_lift]), 
+            child = pick_and_lift, 
             num_failures = 2)
             # selector between them
         pick_or_place = py_trees.composites.Selector(
