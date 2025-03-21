@@ -71,9 +71,17 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
 bool Clustering::perform_clustering(bool new_req)
 {
     RCLCPP_INFO(this->get_logger(), "Enter clustering");
-    // if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
-    //     return false;
-    // }
+    if (std::abs(angular_z_) >= ang_vel_threshold_) {
+        return false;
+    }
+
+    pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
+    pass.setInputCloud(cloud);
+    pass.setFilterFieldName("y");
+    pass.setFilterLimits(y_filter_min_, -0.02);
+    pass.filter(*obstacle);
+
+    if (!obstacle->empty()) return false;
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cloud_, *cloud);
@@ -92,6 +100,8 @@ bool Clustering::perform_clustering(bool new_req)
 
     if (cloud->empty()) return false;
     RCLCPP_INFO(this->get_logger(), "Clustering");
+
+
     // Clustering
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
     tree->setInputCloud(cloud);
@@ -119,14 +129,6 @@ bool Clustering::perform_clustering(bool new_req)
         if(new_req)
         {
             RCLCPP_INFO(this->get_logger(), "Enter new req");
-            
-            pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
-            pass.setInputCloud(cloud_cluster);
-            pass.setFilterFieldName("y");
-            pass.setFilterLimits(y_filter_min_, -0.02);
-            pass.filter(*obstacle);
-
-            if (!obstacle->empty()) continue;
 
             pcl::PointXYZ centre = computeOBBPosition(cloud_cluster);
 
@@ -216,8 +218,6 @@ pcl::PointXYZ Clustering::computeOBBPosition(pcl::PointCloud<pcl::PointXYZ>::Ptr
 
 bool Clustering::is_occupied(float x, float y)
 {
-    if (latest_map_.data.empty()) return false;
-
     int mx = static_cast<int>((x - latest_map_.info.origin.position.x) / latest_map_.info.resolution);
     int my = static_cast<int>((y - latest_map_.info.origin.position.y) / latest_map_.info.resolution);
     int width = latest_map_.info.width;
@@ -225,7 +225,7 @@ bool Clustering::is_occupied(float x, float y)
     for (int dx = -occupancy_margin_; dx <= occupancy_margin_; ++dx) {
         for (int dy = -occupancy_margin_; dy <= occupancy_margin_; ++dy) {
             int index = (my + dy) * width + (mx + dx);
-            if (index >= 0 && index < latest_map_.data.size() && latest_map_.data[index] >= occupancy_value_ ) {
+            if (latest_map_.data[index] >= occupancy_value_ ) {
                 return true;
             }
         }
