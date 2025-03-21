@@ -63,7 +63,7 @@ class CollectionBT(Node):
         repeat_picklift = py_trees.decorators.Retry(
             name = 'Repeat_Pick&Lift', 
             child = py_trees.composites.Sequence([planA]), 
-            num_failures = 5)
+            num_failures = 2)
 
         # Root creation
         root = py_trees.composites.Sequence(name="Root", memory= False)

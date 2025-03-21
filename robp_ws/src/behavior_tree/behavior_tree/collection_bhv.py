@@ -21,7 +21,7 @@ class I_ObjectList(py_trees.behaviour.Behaviour, Node):
            a parallel checking for a valid policy configuration after children have been added or removed"""
         self.node = kwargs["node"]
         self.robot_pos_sub = self.node.create_subscription(Pose2D, '/odom_pose', self.get_robot_pos_callback, 10)
-        self.next_goal_pub = self.node.create_publisher(PointStamped,'/temp_goal', 10 )
+        self.next_goal_pub = self.node.create_publisher(PointStamped,'/motion/goal', 10 )
         self.need_next_object_sub = self.node.create_subscription(Bool, '/next_goal/object/need', self.need_next_object_callback, 10)
         self.update_object_list_sub = self.node.create_subscription(PointStamped, '/next_goal/object/update', self.update_object_list_callback, 10)
         self.need_next_object = False
