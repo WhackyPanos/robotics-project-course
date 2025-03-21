@@ -10,8 +10,6 @@ class ClassifyBT(py_trees.behaviour.Behaviour, Node):
 
     def setup(self, **kwargs):
         """ Initialize ROS publishers and subscribers. """
-        self.node = kwargs['node']
-        self.class_found = None
 
         # Subscribe to clustering result
         self.result_sub = self.node.create_subscription(
@@ -21,7 +19,6 @@ class ClassifyBT(py_trees.behaviour.Behaviour, Node):
         self.request_pub = self.node.create_publisher(Bool, "/classification/request", 10)
 
     def initialise(self):
-        
         self.class_found = None
         msg = Bool()
         msg.data = True
@@ -34,8 +31,7 @@ class ClassifyBT(py_trees.behaviour.Behaviour, Node):
         return py_trees.common.Status.SUCCESS if self.class_found else py_trees.common.Status.FAILURE
 
     def terminate(self):
-        return py_trees.common.Status.SUCCESS
+        pass
 
     def result_callback(self, msg):
-        
         self.class_found = msg.data

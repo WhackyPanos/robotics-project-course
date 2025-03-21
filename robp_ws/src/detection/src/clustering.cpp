@@ -53,6 +53,11 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
         trigger_topic_, qos_profile, std::bind(&Clustering::trigger_callback, this, _1));
 
+    // Subscribe to trigger topic
+    new_trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
+        "/detection/new_request", qos_profile, std::bind(&Clustering::new_trigger_callback, this, _1));
+
+
     // Publisher for clustering result
     result_pub_ = this->create_publisher<std_msgs::msg::Bool>(result_topic_, 10);
 
@@ -63,7 +68,7 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 }
 
-bool Clustering::perform_clustering(bool new_obj)
+bool Clustering::perform_clustering(bool new_req)
 {
     if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
         return false;
@@ -108,7 +113,7 @@ bool Clustering::perform_clustering(bool new_obj)
         }
 
     // If new, check also for obstacle or occupation in grid
-        if(new_obj)
+        if(new_req)
         {
             pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
             pass.setInputCloud(cloud_cluster);
@@ -165,10 +170,15 @@ void Clustering::trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
     result_msg.data = false;
 
     if (msg->data){
-        result_msg.data = perform_clustering();
+            result_msg.data = perform_clustering(new_request);
     }
 
     result_pub_->publish(result_msg);
+}
+
+void Clustering::new_trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
+{
+    new_request = msg->data;
 }
 
 void Clustering::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
