@@ -6,7 +6,7 @@ from A_star import Planner_A_star
 
 # Note: this behiour only controls when the OccupancyGrid msg is published 
 
-class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
+class PathPlan(py_trees.behaviour.Behaviour, Node):
     def __init__(self, name="PathPlannerBT", node=None):
         #super().__init__(name=name)
         py_trees.behaviour.Behaviour.__init__(self, name=name)
