@@ -3,7 +3,7 @@
 import py_trees
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension
+from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension, Bool
 from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from handle_objects.ik_solver import IKNode
@@ -202,23 +202,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.from_frame_rel = 'map'
         self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
         self.thresholds = [10**-4,10**-3,10**-2]
-        # self.initial_guesses = [
-        #     [0, 80*pi/180, 80*pi/180, 0, 0, 0],  
-        #     [10*pi/180, 75*pi/180, 40*pi/180, 10*pi/180, 0, 0],  
-        #     [0, 70*pi/180, 50*pi/180, 20*pi/180, 0, 0], 
-        #     [0,0,0,0,0,0], 
-        #     [-5*pi/180, 85*pi/180, 60*pi/180, -10*pi/180, 0, 0],  
-        #     [0, 90*pi/180, 70*pi/180, 10*pi/180, 0, 0],  
-        #     [5*pi/180, 60*pi/180, 80*pi/180, -5*pi/180, 0, 0],  
-        #     [-10*pi/180, 100*pi/180, 90*pi/180, 5*pi/180, 0, 0],  
-        #     [0, 95*pi/180, 85*pi/180, -5*pi/180, 0, 0],  
-        #     [0, 110*pi/180, 75*pi/180, 0, 0, 0],  
-        #     [-5*pi/180, 120*pi/180, 60*pi/180, -10*pi/180, 0, 0]  
-        # ]
         self.initial_guesses = [[0,0,0,0,0,0]]
         self.angle_threshold = 80
-
-        # current angles and joints limits in the arm domain
         self.current_angles, self.desired_servo_angles = None, None
 
         # joint limits in the arm domain
@@ -247,29 +232,14 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self.node)
 
-        # get object position in the main camera frame
-        """
-        self.dopmc_subscriber = self.node.create_subscription(
-            ObjectPosition,
-            '/detected_object_pose/main_camera',
-            self.dopmc_callback,
-            10)
-        """
-        self.node.create_subscription(PointStamped, '/temp_goal', self.dopmc_callback, 10)
-        #self.pub = self.node.create_publisher(ObjectPosition, '/detected_object_pose/main_camera', 10)
+        self.servo_angles_subscriber_ = self.node.create_subscription(JointState,'/servo_pos_publisher',self.servo_angles_callback,10)   
 
-        # initialize servo publisher and servo sensor subscriber to send commands to arm
         self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = 10) # ota = object_tuck_arm
-            
-        self.servo_angles_subscriber_ = self.node.create_subscription(
-                JointState,
-                '/servo_pos_publisher',
-                self.servo_angles_callback,
-                10
-            )     
+        self.picklift_pub = self.node.create_publisher(Bool, '/picklift/succeded', 10)
+              
         
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
@@ -277,20 +247,10 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         """ Wait x seconds to initiate arm movement (and publish object position later on)"""
         self.timer = self.node.create_timer(1, self.init_arm_movement)
 
-        """ include this later on
-        msg = ObjectPosition()
-        msg.x = 0.14
-        msg.y = -0.05
-        msg.object_type = 'S'
-        self.pub.publish(msg)
-        """
          
     def update(self):
             """ Behavior Tree execution step. Called whenever the node is ticked """
-            #solve_ik(self, target_pose, provided_initial_guess, eps=5e-3, maxiter=100000)
-            #self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
 
-            # if object position is available, compute target and perform inverse kinematics
             if self.done:
                 return py_trees.common.Status.SUCCESS
             elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
@@ -321,7 +281,9 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     self.arm_moving = True
                     self.node.get_logger().warn(f"Message published, arm is moving")
                     return py_trees.common.Status.RUNNING
+                # TODO: if pick and search fails, a message has to be published. That can happen here or in the arm camera
                 else:
+                    self.picklift_pub.publish(Bool(data=False))
                     return py_trees.common.Status.FAILURE
             
             # if arm is moving but not in grasp position, return keep running
@@ -335,15 +297,13 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 msg = Int16MultiArray()
                 msg.layout = MultiArrayLayout(
                     dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
-                    data_offset=0
-                )  
+                    data_offset=0)  
                 times = [self.obj_tuck_arm_time] * 6
                 self.desired_servo_angles[0] = 10000 #close gripper
                 msg.data = self.desired_servo_angles + times
                 self.ota_publisher_.publish(msg)
                 #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
                 self.arm_moving = True
-                #self.node.get_logger().info(f"Publishing the anglee {self.desired_servo_angles}")
                 return py_trees.common.Status.RUNNING
             
             elif self.arm_tucked and not self.object_grasped and self.arm_moving:
@@ -353,6 +313,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             elif self.object_grasped:
                 self.node.get_logger().info(f"Sucess, lifting arm now")
                 self.done = True
+                self.picklift_pub.publish(Bool(data=True))
                 return py_trees.common.Status.SUCCESS
             
             else:
@@ -372,23 +333,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         """ trigger flat to start arm movement"""
         self.ready2move = True
         self.timer.cancel()
-
-    # def wait_for_movement(self):
-    #     if self.arm_moving and self.arm_tucked:
-    #         self.arm_moving = False
-    #         self.object_grasped = True
-    #     elif self.arm_moving and not self.arm_tucked:
-    #         self.arm_moving = False
-    #         self.arm_tucked = True
-    #         self.node.get_logger().warn("Concluding this arm movement due to time limit, angles are not accurate!")
-    #     self.move_timer.cancel()
-
-
-    def dopmc_callback(self,msg):
-        # store object position in map frame
-        self.X = msg.point.x # later on change to msg.x
-        self.Y = msg.point.y # later on change to msg.y
-        obj = "C" # change later on to msg.object_type
 
     def object_transform(self):
         # get transform from map frame to frame of the arm base
@@ -413,9 +357,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.x = object_ABF.point.x
         self.y = object_ABF.point.y
         self.z = object_ABF.point.z
-
-        #self.x = 0.16 # DELETE AS SOON AS WE HAVE A VALID MAP FRAME
-        #self.y = 0
         
         # define target with kdl instance
         self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
@@ -561,6 +502,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         msg = None
         self.node.get_logger().error("Plan B did not work, returning FAILURE")
         return msg
+
 # ----------------------------------- BEHAVIOUR 5 ---------------------------------------------------------------
 class a(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Detect Object"):
@@ -589,6 +531,8 @@ class a(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and 
             - SUCCESS || FAILURE : your behaviour's work cycle has finished
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
+
+
 class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
     def __init__(self, name="Place"):
         super().__init__(name=name)
@@ -606,11 +550,6 @@ class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a 
                 durability=DurabilityPolicy.VOLATILE,    # No history saved for late subscribers
                 depth=100  # Stores up to 10 messages before dropping old ones
                 )
-
-            self.ota_publisher_ = self.node.create_publisher(
-                msg_type = Int16MultiArray,
-                topic = '/multi_servo_cmd_sub',
-                qos_profile = qos_profile) # ota = object_tuck_arm
             
             self.servo_angles_subscriber_ = self.node.create_subscription(
                 JointState,
@@ -618,6 +557,12 @@ class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a 
                 self.servo_angles_callback,
                 10
             )  
+
+            self.ota_publisher_ = self.node.create_publisher(
+                msg_type = Int16MultiArray,
+                topic = '/multi_servo_cmd_sub',
+                qos_profile = qos_profile) # ota = object_tuck_arm
+
             self.obj_tuck_arm_time = 2000 # in ms            
              
             # init tuck arm angles
