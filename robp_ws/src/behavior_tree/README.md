@@ -6,7 +6,7 @@ Package with the behavior trees for the Exploration and Collection phases.
 | Topic name | Published | Subscribed from | Description
 | --- | ---| --- | --- |
 | /motion/goal | ObjectsList behavior (collection_bhv.py)| A* node | The next goal is determined by the ObjectList node and published in this topic|
-| /next_goal/object/need | (1), (2) | ObjectsList behavior (collection_bhv.py) | Boolean msg to notify this behavior that a new object is to be computed (the closest one) |
+| /next_goal/object/need | (1), (2) | ObjectsList behavior (collection_bhv.py) | String msg to notify this behavior that a new object is to be computed (the closest one). It can be either 'Object', 'Box' or 'None'. |
 | /next_goal/object/update | (1) | ObjectsList behavior (collection_bhv.py) | Point message to indicate which object should be removed from the list permanently |
 | /icp/activate | (3), (4) | localization_bhv (localization package) | Boolean msg to indicate when localization needs to be stopped/activated |
 
