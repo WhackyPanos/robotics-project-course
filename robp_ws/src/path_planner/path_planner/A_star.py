@@ -63,14 +63,38 @@ class Planner_A_star(Node):
         # self.robot_radius = 0.20
         self.cost_ratio = 5
         self.config_space = None
+        self.map_info = None
+        self.occupancy_grid_msg =None
         self.goal_msg = None
     
     def goal_callback(self, msg):
         self.goal_msg = msg
         
-    def map_callback(self, config_space_msg): # Create the configurations space
-        self.config_space = config_space_msg
-
+    def map_callback(self, msg): # Create the configurations space
+        self.occupancy_grid_msg = msg 
+        self.map_info = msg.info       
+    
+    def inflate_map(self, occupancy_grid_msg):
+        grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
+        binary_grid = np.zeros_like(grid)
+        binary_grid[grid > 50] = 1
+        # Calculate kernel size based on robot radius and map resolution
+        kernel_radius = int(np.ceil(self.robot_radius / self.map_info.resolution))
+        
+        # Create circular kernel for dilation
+        y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
+        kernel = x**2 + y**2 <= kernel_radius**2
+        
+        # Dilate obstacles to create configuration space
+        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
+        self.get_logger().info(f'Configuration space created with robot radius: {self.robot_radius}m')
+    
+    def world_to_grid(self, x, y):
+        '''Converts world coordinates in [m] to grid indices.'''
+        i_x = int((x - self.map_info.origin.position.x) / self.map_info.resolution)    
+        i_y = int((y - self.map_info.origin.position.y) / self.map_info.resolution)
+        return i_x, i_y
+    
     def path_plan(self): # Called from the behavior   
         # Get current position
         try:
@@ -85,7 +109,10 @@ class Planner_A_star(Node):
             return False
         if self.goal_msg is None:
             self.get_logger().warn('Goal point not recived for path planning')
-            return False
+            return
+        
+        # Inflate map
+        self.inflate_map(self.occupancy_grid_msg)
 
         # Convert world to grid
         i_start_x, i_start_y = self.world_to_grid(start_x, start_y)
@@ -112,53 +139,35 @@ class Planner_A_star(Node):
             node_list.append(node_current.parent)
             node_current = node_current.parent
         node_list.reverse()
-        
-        full_path_msg = Path()
-        full_path_msg.header.frame_id = "map"
-        full_path_msg.header.stamp = self.get_clock().now().to_msg()
+        full_path = Path()
+        full_path.header.frame_id = "map"
+        full_path.header.stamp = self.get_clock().now().to_msg()
+        simplified_path = Path()
+        simplified_path.header.frame_id = "map"
+        simplified_path.header.stamp = self.get_clock().now().to_msg()
+        simplified_path.poses.append(self.node_to_pose(node_list[0]))  # Start with the first node
 
-        simplified_path_msg = Path()  # Create a Path message
-        simplified_path_msg.header.frame_id = "map"
-        simplified_path_msg.header.stamp = self.get_clock().now().to_msg()
+        for i, node in enumerate(node_list):
+            # Convert node to PoseStamped
+            pose = self.node_to_pose(node)
+            full_path.poses.append(pose)
 
-        # Ensure first pose is added to simplified path
-        first_pose = PoseStamped()
-        first_pose.header.frame_id = "map"
-        first_pose.header.stamp = self.get_clock().now().to_msg()
-        first_pose.pose.position.x = node_list[0].x * self.config_space.info.resolution + self.config_space.info.origin.position.x
-        first_pose.pose.position.y = node_list[0].y * self.config_space.info.resolution + self.config_space.info.origin.position.y
-        full_path_msg.poses.append(first_pose)
-        simplified_path_msg.poses.append(first_pose)
+            # Skip collinearity check for first and last nodes
+            if 0 < i < len(node_list) - 1:
+                prev = simplified_path.poses[-1].pose.position
+                next_node = node_list[i + 1]
 
-        for i in range(1, len(node_list) - 1):  
-            node = node_list[i]
-            pose = PoseStamped()
-            pose.header.frame_id = "map"
-            pose.header.stamp = self.get_clock().now().to_msg()
-            pose.pose.position.x = node.x * self.config_space.info.resolution + self.config_space.info.origin.position.x
-            pose.pose.position.y = node.y * self.config_space.info.resolution + self.config_space.info.origin.position.y
-            full_path_msg.poses.append(pose)
+                dx1, dy1 = node.x - prev.x, node.y - prev.y
+                dx2, dy2 = next_node.x - node.x, next_node.y - node.y
 
-            prev_node = node_list[i - 1]
-            next_node = node_list[i + 1]
+                # If direction changes, add to simplified path
+                if dx1 * dy2 != dy1 * dx2:
+                    simplified_path.poses.append(pose)
 
-            dx1, dy1 = node.x - prev_node.x, node.y - prev_node.y
-            dx2, dy2 = next_node.x - node.x, next_node.y - node.y
+        # Ensure last node is always included
+        simplified_path.poses.append(self.node_to_pose(node_list[-1]))
 
-            # If direction changes, add to simplified path
-            if dx1 * dy2 != dy1 * dx2:
-                simplified_path_msg.poses.append(pose)
-
-        # Ensure last pose is added to simplified path
-        last_pose = PoseStamped()
-        last_pose.header.frame_id = "map"
-        last_pose.header.stamp = self.get_clock().now().to_msg()
-        last_pose.pose.position.x = node_list[-1].x * self.config_space.info.resolution + self.config_space.info.origin.position.x
-        last_pose.pose.position.y = node_list[-1].y * self.config_space.info.resolution + self.config_space.info.origin.position.y
-        full_path_msg.poses.append(last_pose)
-        simplified_path_msg.poses.append(last_pose)
-
-        return simplified_path_msg, full_path_msg
+        return simplified_path, full_path
 
     def a_star(self, node_start, node_goal):
         
