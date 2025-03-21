@@ -5,12 +5,14 @@ import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
 from handle_objects.pick_objects import SetArm, DetectObject, SearchObjectArm, ArmIK
-from path_planner.path_planner import CarrotPlanner
 from behavior_tree.goCollect_bhv import goTo
 from rclpy.executors import MultiThreadedExecutor
 import os
-from collection_bhv import I_NextObject
+from collection_bhv import I_ObjectList
 from path_planner.motion_bhv import NavigateToGoal
+from localization.localization_transform import Localization
+from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
+
 
 
 
@@ -27,10 +29,28 @@ class CollectionBT(Node):
 
     def create_root(self):    
         # Create the root as a Sequence node (default memory=False is fine here)
-        root = py_trees.composites.Sequence(name="Root", memory= False)
-        next_object_bhv = I_NextObject(self.objs_list, self.box_list, "next_object_pick")
+        next_object_bhv = I_ObjectList(self.objs_list, "next_object_pick")
+        pub_occupancy_grid = PublishOccupancyGrid()
+        localization = Localization()
         navigate_to_goal = NavigateToGoal()
-        root.add_children([next_object_bhv, navigate_to_goal])
+        path_planner = None
+
+        """ merge behaviors with composites """
+        # Path planning and execution for picking
+        plan_and_move = py_trees.composites.Sequence(
+            name = 'plan_and_move',
+            children = [path_planner, navigate_to_goal])
+        
+        path_planning_pick = py_trees.composites.Parallel(
+            name = 'path_plan_pick', 
+            children = [pub_occupancy_grid, localization, plan_and_move],
+            policy = py_trees.common.ParallelPolicy.SuccessOnSelected([plan_and_move]))
+
+        # Pick and lift operations
+
+        # Root creation
+        root = py_trees.composites.Sequence(name="Root", memory= False)
+        root.add_children([next_object_bhv, path_planning_pick])
         return root
     
     def create_lists(self):
@@ -39,16 +59,13 @@ class CollectionBT(Node):
         with open(self.filename, 'r') as f:
             for line in f:
                 line = line.strip() # remove leading and trailing whitespaces
-                words = line.split(' ')
+                words = line.split('\t')
                 data.append(words)
-        print(data)
 
-        objs_list = [[sublist[0]] + [float(x) for x in sublist[1:]] for sublist in data if sublist[0] != 'B']
-        box_list = [[sublist[0]] + [float(x) for x in sublist[1:]] for sublist in data if sublist[0] == 'B']
+        objs_list = [[sublist[0]] + [0.01*float(x) for x in sublist[1:]] for sublist in data if sublist[0] != 'B']
+        box_list = [[sublist[0]] + [0.01*float(x) for x in sublist[1:]] for sublist in data if sublist[0] == 'B']
 
         return objs_list, box_list
-    
-
 
 
 
