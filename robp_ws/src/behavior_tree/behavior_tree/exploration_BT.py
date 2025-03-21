@@ -34,6 +34,7 @@ class ExplorationBT(Node):
         self.classify = ClassifyBT()
         self.update_map_file = MapFileBT()
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False)
+        self.path_plan = PathPlan()
 
     def create_root(self, executor):
         """
@@ -47,6 +48,7 @@ class ExplorationBT(Node):
         executor.add_node(self.object_detected)
         executor.add_node(self.classify)
         executor.add_node(self.update_map_file)
+        executor.add_node(self.path_plan)
 
         executor.add_node(self.update_map_file.map_file_node)
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
@@ -54,23 +56,23 @@ class ExplorationBT(Node):
         executor.add_node(self.goal.random_point_node)
 
 
-        third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
-        third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
+        # third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
+        # third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
 
-        decorator = py_trees.decorators.Repeat(
-            name='dec_repeat', 
-            child=third_sequence,
-            num_success=5   # 5 consecutive successes
-        )
+        # decorator = py_trees.decorators.Repeat(
+        #     name='dec_repeat', 
+        #     child=third_sequence,
+        #     num_success=5   # 5 consecutive successes
+        # )
 
-        second_sequence = py_trees.composites.Sequence(name='second_seq', memory=True)
-        second_sequence.add_children([self.new_object_detected, decorator])
+        # second_sequence = py_trees.composites.Sequence(name='second_seq', memory=True)
+        # second_sequence.add_children([self.new_object_detected, decorator])
 
-        first_selector = py_trees.composites.Selector(name='first_sel', memory=False)
-        first_selector.add_children([second_sequence, self.navigate_to_goal])
+        # first_selector = py_trees.composites.Selector(name='first_sel', memory=False)
+        # first_selector.add_children([second_sequence, self.navigate_to_goal])
 
         # Add behavior tree child nodes to the root
-        self.root.add_children([self.pub_occupancy_grid, self.goal, first_selector])
+        self.root.add_children([self.pub_occupancy_grid, self.goal, self.path_plan, self.navigate_to_goal])
 
         return self.root
 
