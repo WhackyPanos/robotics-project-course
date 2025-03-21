@@ -6,12 +6,13 @@ from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
 
 # Import classes
-from exploration_bhv import UnexploredMap, PathPlan, NavigateToGoal
+from exploration_bhv import UnexploredMap, NavigateToGoal
 from obstacle_on_path.obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
 from detection_bt.detection_bt.classify_bt import ClassifyBT
 from detection_bt.detection_bt.cluster_bt import ClusterBT
 from map_file.map_file_bt import MapFileBT
-from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
+from mapping.mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
+from path_planner.path_planner.pathPlanning_bhv import PathPlan
 
 class ExplorationBT(Node):
     def __init__(self) -> None:
