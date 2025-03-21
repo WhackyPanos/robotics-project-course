@@ -96,6 +96,8 @@ class Localization(Node):
         self.tf_broadcaster.sendTransform(t)
         self.old_stamp = t.header.stamp
 
+        # TODO: get odom pose and transform to map pose
+
 
 def main():
     """ Function to be run if localization/icp is to be run all the time"""
