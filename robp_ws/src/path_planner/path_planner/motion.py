@@ -53,12 +53,14 @@ class MotionNode(Node):
         self.is_goal = False
 
         # Setup publishers and subscribers
-        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
+        # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PointStamped, '/motion/goal', self.goal_callback, 10)
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
         self.goal_publisher = self.create_publisher(PointStamped, '/motion/goal', 10)
         self.path_publisher = self.create_publisher(Path, '/motion/path', 10)
+        self.path_reached_publisher = self.create_publisher(Bool, '/motion/path_reached', 10) ## TODO
+        self.icp_publisher = self.create_publisher(Bool, '/icp/activate', 10)
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # Parameters
@@ -83,6 +85,7 @@ class MotionNode(Node):
 
     def path_callback(self, msg:Path):
         if len(msg.poses) > 0:
+            self.path_reached_publisher.publish(Bool(data=False))
             self.path_reached = False
             self.is_path = True
             self.path = msg
@@ -94,53 +97,74 @@ class MotionNode(Node):
             pub_msg.point.z = 0.0
             self.goal_publisher.publish(pub_msg)
     
-    # Checks robot's current position and its current goal, and commands the robot to move if it hasn't reached the goal
-    def odometry_callback(self, msg: Pose2D):
-        """ Transform the odometry pose from 'odom' to 'map' and control robot movement. """
-        if not self.goal_reached_flag:
-            try:
-                # Create a PoseStamped in the odom frame
-                pose_odom = PoseStamped()
-                pose_odom.header.frame_id = "odom"
-                pose_odom.header.stamp = self.get_clock().now().to_msg()
-                pose_odom.pose.position.x = msg.x
-                pose_odom.pose.position.y = msg.y
-                pose_odom.pose.position.z = 0.0
-                pose_odom.pose.orientation.w = math.cos(msg.theta / 2)
-                pose_odom.pose.orientation.x = 0.0
-                pose_odom.pose.orientation.y = 0.0
-                pose_odom.pose.orientation.z = math.sin(msg.theta / 2)
-            except Exception as e:
-                self.get_logger().warn(f"Pose creation failed: {str(e)}")
+    # # Checks robot's current position and its current goal, and commands the robot to move if it hasn't reached the goal
+    # def odometry_callback(self, msg: Pose2D):
+    #     """ Transform the odometry pose from 'odom' to 'map' and control robot movement. """
+    #     if not self.goal_reached_flag:
+    #         try:
+    #             # Create a PoseStamped in the odom frame
+    #             pose_odom = PoseStamped()
+    #             pose_odom.header.frame_id = "odom"
+    #             pose_odom.header.stamp = self.get_clock().now().to_msg()
+    #             pose_odom.pose.position.x = msg.x
+    #             pose_odom.pose.position.y = msg.y
+    #             pose_odom.pose.position.z = 0.0
+    #             pose_odom.pose.orientation.w = math.cos(msg.theta / 2)
+    #             pose_odom.pose.orientation.x = 0.0
+    #             pose_odom.pose.orientation.y = 0.0
+    #             pose_odom.pose.orientation.z = math.sin(msg.theta / 2)
+    #         except Exception as e:
+    #             self.get_logger().warn(f"Pose creation failed: {str(e)}")
 
-            try:
-                # Lookup transform from 'map' to 'odom'
-                transform = self.tf_buffer.lookup_transform(
-                    "map",  # Target frame
-                    "odom",  # Source frame
-                    rclpy.time.Time(),  # Get the latest available transform
-                    timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
-                )
-                # Transform the pose
-                transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_odom.pose, transform)
-            except Exception as e:
-                self.get_logger().warn(f"Lookup failed: {str(e)}")
+    #         try:
+    #             # Lookup transform from 'map' to 'odom'
+    #             transform = self.tf_buffer.lookup_transform(
+    #                 "map",  # Target frame
+    #                 "odom",  # Source frame
+    #                 rclpy.time.Time(),  # Get the latest available transform
+    #                 timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
+    #             )
+    #             # Transform the pose
+    #             transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_odom.pose, transform)
+    #         except Exception as e:
+    #             self.get_logger().warn(f"Lookup failed: {str(e)}")
 
-            try:
-                # Extract transformed 2D position and heading
-                self.x_map = transformed_pose.position.x
-                self.y_map = transformed_pose.position.y
-                qz = transformed_pose.orientation.z
-                qw = transformed_pose.orientation.w
-                self.theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
+    #         try:
+    #             # Extract transformed 2D position and heading
+    #             self.x_map = transformed_pose.position.x
+    #             self.y_map = transformed_pose.position.y
+    #             qz = transformed_pose.orientation.z
+    #             qw = transformed_pose.orientation.w
+    #             self.theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
 
-                # # Proceed with goal tracking using transformed pose
-                # self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
-            except Exception as e:
-                self.get_logger().warn(f"Transform failed: {str(e)}")
+    #             # # Proceed with goal tracking using transformed pose
+    #             # self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
+    #         except Exception as e:
+    #             self.get_logger().warn(f"Transform failed: {str(e)}")
+
+    def get_robot_position(self):
+        try:
+            # Lookup transform from 'map' to 'base_link'
+            transform = self.tf_buffer.lookup_transform(
+                "map",  # Target frame
+                "base_link",  # Source frame
+                rclpy.time.Time(),  # Get the latest available transform
+                timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
+            )
+            # Extract transformed 2D position and heading
+            self.x_map = transform.transform.translation.x
+            self.y_map = transform.transform.translation.y
+            qz = transform.transform.rotation.z
+            qw = transform.transform.rotation.w
+            self.theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
+        except Exception as e:
+            self.get_logger().warn(f"Lookup failed: {str(e)}")
+            return False
+        return True
 
     def navigate_to_goal(self):
         """ Control the robot to navigate to the goal position. """
+        self.get_robot_position()
         x = self.x_map
         y = self.y_map
         theta = self.theta_map
@@ -182,8 +206,10 @@ class MotionNode(Node):
             
             elif self.is_path and len(self.path.poses) == 0:
                 self.get_logger().info('Path execution completed.')
+                self.path_reached_publisher.publish(Bool(data=True))
                 self.path_reached = True
                 self.is_path = False
+                self.icp_publisher.publish(Bool(data=False))
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
