@@ -47,7 +47,7 @@ class Nodes:
                     ok_children_list.append(node_child)
             return ok_children_list
 
-class planner_A_star(Node):
+class Planner_A_star(Node):
     def __init__(self):
         super().__init__('planner_A_star')
         self.simple_publisher = self.create_publisher(Path ,'/motion/path' , 10)
@@ -63,12 +63,6 @@ class planner_A_star(Node):
         self.config_space = None
         self.map_info = None
         self.goal_msg = None
-
-    # def world_to_grid(self, x, y):
-    #     '''Converts world coordinates in [m] to grid indices.'''
-    #     i_x = int((x - self.map_info.origin.position.x) / self.map_info.resolution)    
-    #     i_y = int((y - self.map_info.origin.position.y) / self.map_info.resolution)
-    #     return i_x, i_y
     
     def goal_callback(self, msg):
         self.goal_msg = msg
@@ -116,8 +110,6 @@ class planner_A_star(Node):
         # Convert world to grid (using inherited function)
         i_start_x, i_start_y = OccupancyGridNode.world_to_grid(start_x, start_y)
         i_goal_x, i_goal_y = OccupancyGridNode.world_to_grid(self.goal_msg.point.x, self.goal_msg.point.y)
-        #i_start_x, i_start_y = self.world_to_grid(start_x, start_y)
-        #i_goal_x, i_goal_y = self.world_to_grid(msg.point.x, msg.point.y)
 
         node_goal = Nodes(i_goal_x, i_goal_y)
         node_start = Nodes(i_start_x, i_start_y)
