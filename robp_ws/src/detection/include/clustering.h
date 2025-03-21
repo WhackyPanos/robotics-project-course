@@ -26,7 +26,7 @@
 class Clustering : public rclcpp::Node {
 public:
     Clustering();
-    bool perform_clustering();
+    bool perform_clustering(bool new_obj = true);
     
 private:
     void cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg);

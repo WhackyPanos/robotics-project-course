@@ -21,8 +21,8 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("height_filter_max", y_filter_max_, 0.075);
     this->get_parameter_or("cluster_tolerance", cluster_tolerance_, 0.05);
     this->get_parameter_or("cluster_min_size", cluster_min_size_, 100);
-    this->get_parameter_or("occupancy_margin", occupancy_margin_, 1);
-    this->get_parameter_or("occupancy_value", occupancy_value_, 1);
+    this->get_parameter_or("occupancy_margin", occupancy_margin_, 0);
+    this->get_parameter_or("occupancy_value", occupancy_value_, 0);
     this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.0);
 
     // QoS for keeping only the latest message
@@ -63,7 +63,7 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 }
 
-bool Clustering::perform_clustering()
+bool Clustering::perform_clustering(bool new_obj)
 {
     if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
         return false;
@@ -72,7 +72,7 @@ bool Clustering::perform_clustering()
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cloud_, *cloud);
 
-    // Apply filtering
+    // Apply passthrough filtering
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cloud);
     pass.setFilterFieldName("z");
@@ -97,40 +97,47 @@ bool Clustering::perform_clustering()
     ec.setInputCloud(cloud);
     ec.extract(cluster_indices);
 
+    // If no cluster found
     if (cluster_indices.empty()) return false;
 
+    // For each cluster 
     for (const auto& cluster : cluster_indices) {
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster(new pcl::PointCloud<pcl::PointXYZ>);
         for (const auto& idx : cluster.indices) {
             cloud_cluster->push_back((*cloud)[idx]);
         }
 
-        pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
-        pass.setInputCloud(cloud_cluster);
-        pass.setFilterFieldName("y");
-        pass.setFilterLimits(y_filter_min_, -0.02);
-        pass.filter(*obstacle);
+    // If new, check also for obstacle or occupation in grid
+        if(new_obj)
+        {
+            pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
+            pass.setInputCloud(cloud_cluster);
+            pass.setFilterFieldName("y");
+            pass.setFilterLimits(y_filter_min_, -0.02);
+            pass.filter(*obstacle);
 
-        if (!obstacle->empty()) continue;
+            if (!obstacle->empty()) continue;
 
-        pcl::PointXYZ centre = computeOBBPosition(cloud_cluster);
+            pcl::PointXYZ centre = computeOBBPosition(cloud_cluster);
 
-        geometry_msgs::msg::PointStamped centre_base, centre_map;
-        centre_base.header.frame_id = latest_cloud_.header.frame_id;
-        centre_base.header.stamp = latest_cloud_.header.stamp;
-        centre_base.point.x = centre.x;
-        centre_base.point.y = centre.y;
-        centre_base.point.z = centre.z;
+            geometry_msgs::msg::PointStamped centre_base, centre_map;
+            centre_base.header.frame_id = latest_cloud_.header.frame_id;
+            centre_base.header.stamp = latest_cloud_.header.stamp;
+            centre_base.point.x = centre.x;
+            centre_base.point.y = centre.y;
+            centre_base.point.z = centre.z;
 
-        try {
-            tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
-        } catch (tf2::TransformException &ex) {
-            RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
-            continue;
+            try {
+                tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
+            } catch (tf2::TransformException &ex) {
+                RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
+                continue;
+            }
+
+            if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
         }
-
-        if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
-
+    
+    //Publish found cluster and stop the robot
         cloud_cluster->width = cloud_cluster->size();
         cloud_cluster->height = 1;
         cloud_cluster->is_dense = true;
@@ -202,7 +209,7 @@ bool Clustering::is_occupied(float x, float y)
     for (int dx = -occupancy_margin_; dx <= occupancy_margin_; ++dx) {
         for (int dy = -occupancy_margin_; dy <= occupancy_margin_; ++dy) {
             int index = (my + dy) * width + (mx + dx);
-            if (index >= 0 && index < latest_map_.data.size() && latest_map_.data[index] == occupancy_value_ ) {
+            if (index >= 0 && index < latest_map_.data.size() && latest_map_.data[index] >= occupancy_value_ ) {
                 return true;
             }
         }
