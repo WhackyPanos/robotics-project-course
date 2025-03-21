@@ -17,6 +17,7 @@
   <exec_depend>ros2launch</exec_depend>
   <exec_depend>robp_phidgets</exec_depend>
   <exec_depend>rplidar_ros</exec_depend>
+  <exec_depend>topic_tools</exec_depend>
 
   <export>
     <build_type>ament_python</build_type>
