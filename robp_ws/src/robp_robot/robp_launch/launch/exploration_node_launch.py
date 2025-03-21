@@ -52,19 +52,19 @@ def generate_launch_description():
             parameters=[{
                 "cloud_topic": "/camera/camera/depth/color/points",
                 "cluster_topic": "/detection/cluster_points",
-                "map_topic": "/map",
+                "map_topic": "/occupancy_grid",
                 "twist_topic": "/cmd_vel",
                 "trigger_topic": "/detection/request",
                 "result_topic": "/detection/result",
                 "dist_filter_min": 0.0,
-                "dist_filter_max": 1.0,
+                "dist_filter_max": 0.5,
                 "height_filter_min": -0.025,
                 "height_filter_max": 0.075,
                 "cluster_tolerance": 0.05,
                 "cluster_min_size": 100,
                 "occupancy_margin": 0,
                 "occupancy_value": 0,
-                "ang_vel_threshold": 0.4
+                "ang_vel_threshold": 0.1
                 }]
             ),
         Node(
@@ -84,8 +84,8 @@ def generate_launch_description():
                 "animal_filter_max": 0.048,
                 "sphere_filter_min": 0.056,
                 "sphere_filter_max": 0.059,
-                "ang_vel_threshold": 0.1,
-                "lin_vel_threshold": 0.1,
+                "ang_vel_threshold": 0.05,
+                "lin_vel_threshold": 0.05,
                 "visualize_OBB": True
             }]
         ),

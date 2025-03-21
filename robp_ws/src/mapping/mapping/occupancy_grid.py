@@ -51,9 +51,9 @@ class OccupancyGridNode(Node):
         # Occupied by camera: 99
         
         # Camera paramters
-        self.camera_FOV = 45 # np.pi/2 # Mapping should run all the time but how?
-        self.camera_min_range = 0.3 # True value: 0.2
-        self.camera_max_range = 0.8 # True value: 3.0
+        self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
+        self.camera_min_range = 0.2 # True value: 0.2
+        self.camera_max_range = 0.6 # True value: 3.0
 
     def read_workspace(self):
         min_x = float('inf')
