@@ -1,6 +1,12 @@
 # Behavior Tree Package
 Package with the behavior trees for the Exploration and Collection phases. 
 
+Launch:
+
+``` fastdds discovery -i 0 -t 192.168.128.107 -q 42100 ```
+``` ros2 launch robp_launch exploration_hw_tf_launch.py  ```
+``` ros2 launch robp_launch collection_node_launch.py ```
+
 # Collection Phase
 #### **Important topics**
 | Topic name | Published | Subscribed from | Description
