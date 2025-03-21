@@ -5,7 +5,8 @@ import math
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Path, OccupancyGrid
-import binary
+from scipy.ndimage import binary_dilation
+
 
 
 class CheckPath(Node):
@@ -27,7 +28,8 @@ class CheckPath(Node):
             10)
 
         self.path = None
-        self.config_space = None
+        self.map = None
+        self.robot_radius = 0.2 # May need to be adjusted
 
     
     def world_to_grid(self, x, y):
@@ -57,30 +59,21 @@ class CheckPath(Node):
         if self.path is None or self.config_space is None:
             self.get_logger().info("Waiting for path or map data.")
             return False
-        
-        map = self.inflate_map(self.map)
-        
+                
         width = map.info.width
         height = map.info.height
         map_data = np.array(map.data).reshape((height, width))  
 
+        inflated_map = self.inflate_map(map_data)
+
         for index in self.path:
             x, y = index
-            if map_data[x, y] == 100:
+            if inflated_map[x, y] == 1:
                 return False
     
-    def inflate_map(self, occupancy_grid_msg): # Create the configurations space
-        # The problem with doing path palnning when there is a new map topic is 
-        # Convert occupancy grid to numpy array
-        self.map_info = occupancy_grid_msg.info # Gets info from the occupancy grid
-
-        # Create binary occupancy grid (1 for obstacles, 0 for free space)
-        grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
+    def inflate_map(self, grid): # Create the configurations space
         binary_grid = np.zeros_like(grid)
-        
-        # Threshold for obstacles (usually >50 is considered occupied)
-        binary_grid[grid > 50] = 1
-        # Robot can drive through both known and unknown space
+        binary_grid[grid == 100] = 1
         
         # Calculate kernel size based on robot radius and map resolution
         kernel_radius = int(np.ceil(self.robot_radius / self.map_info.resolution))
@@ -90,10 +83,9 @@ class CheckPath(Node):
         kernel = x**2 + y**2 <= kernel_radius**2
         
         # Dilate obstacles to create configuration space
-        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
-        self.get_logger().info(f'Configuration space created with robot radius: {self.robot_radius}m')
+        config_space = binary_dilation(binary_grid, kernel).astype(np.int8)        
         
-        return
+        return config_space
 
 
 
