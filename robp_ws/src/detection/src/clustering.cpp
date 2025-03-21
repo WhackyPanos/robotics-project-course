@@ -71,9 +71,17 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
 bool Clustering::perform_clustering(bool new_req)
 {
     RCLCPP_INFO(this->get_logger(), "Enter clustering");
-    // if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
-    //     return false;
-    // }
+    if (std::abs(angular_z_) >= ang_vel_threshold_) {
+        return false;
+    }
+
+    pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
+    pass.setInputCloud(cloud);
+    pass.setFilterFieldName("y");
+    pass.setFilterLimits(y_filter_min_, -0.02);
+    pass.filter(*obstacle);
+
+    if (!obstacle->empty()) return false;
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cloud_, *cloud);
@@ -92,6 +100,8 @@ bool Clustering::perform_clustering(bool new_req)
 
     if (cloud->empty()) return false;
     RCLCPP_INFO(this->get_logger(), "Clustering");
+
+
     // Clustering
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
     tree->setInputCloud(cloud);
