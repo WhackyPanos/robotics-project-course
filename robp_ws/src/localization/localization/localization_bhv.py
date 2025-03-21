@@ -47,6 +47,7 @@ class Localization_bhv(py_trees.behaviour.Behaviour, Node): # this class is a py
             - SUCCESS || FAILURE : your behaviour's work cycle has finished
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
+        pass
 
     def localization_activate_callback(self, msg):
         self.localization_activate = msg.data

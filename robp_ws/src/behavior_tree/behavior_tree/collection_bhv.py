@@ -32,7 +32,7 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         self.from_frame_rel = 'odom'
 
         self.robot_pos_sub = self.node.create_subscription(Pose2D, '/odom_pose', self.get_robot_pos_callback, 10)
-        self.need_next_object_sub = self.node.create_subscription(String, '/next_goal/object/need', self.need_next_object_callback, 10)
+        self.need_next_object_sub = self.node.create_subscription(String, '/next_goal/need', self.need_next_object_callback, 10)
         self.update_object_list_sub = self.node.create_subscription(PointStamped, '/next_goal/object/update', self.update_object_list_callback, 10)
 
         self.next_goal_pub = self.node.create_publisher(PointStamped,'/motion/goal', 10 )
@@ -104,7 +104,7 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
     def setup(self, **kwargs):
         self.node = kwargs["node"]
         self.picklift_sub = self.node.create_subscription(Bool, '/picklift/succeded', self.picklift_callback, 10)
-        self.next_goal = self.node.create_publisher(String, '/next_goal/object/need', 10)
+        self.next_goal = self.node.create_publisher(String, '/next_goal/need', 10)
         self.msg = String()
 
     def update(self):

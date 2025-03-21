@@ -31,7 +31,7 @@ class CollectionBT(Node):
         pub_occupancy_grid = PublishOccupancyGrid()
         localization = Localization_bhv()
         navigate_to_goal = NavigateToGoal()
-        path_planner = None
+        path_planner = None #TODO
         
         tuck_arm = SetArm('tuck_arm', [2600,12000,2000,18000,12000,12000])
         #detect_object = DetectObject()

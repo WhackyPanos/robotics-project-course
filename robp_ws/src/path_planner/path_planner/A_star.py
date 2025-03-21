@@ -11,6 +11,7 @@ from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 from mapping.mapping.occupancy_grid import OccupancyGridNode
 
+
 class Nodes:
         def __init__(self, x, y):
             self.x = x # Observe that these are occupancy grid indexes

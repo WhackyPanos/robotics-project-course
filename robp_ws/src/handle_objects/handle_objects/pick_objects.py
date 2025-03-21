@@ -3,7 +3,7 @@
 import py_trees
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension, Bool
+from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension, Bool, String
 from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from handle_objects.ik_solver import IKNode
@@ -538,6 +538,7 @@ class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a 
         super().__init__(name=name)
         #self.logger.debug("ObjTuckArm was called.")
         #self.cached_context = None
+        self.next_goal = 'Object'
     
     def setup(self, **kwargs):
             """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
@@ -557,6 +558,9 @@ class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a 
                 self.servo_angles_callback,
                 10
             )  
+            self.need_next_object_sub = self.node.create_subscription(
+                String, '/next_goal/need', 
+                self.need_next_object_callback, 10)
 
             self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
@@ -586,6 +590,8 @@ class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a 
                     break
         #print(f'Current angles position: {current_angles[1]}')
          
+    def need_next_object_callback(self, msg):
+        self.next_goal = msg.data
     def publish_msg(self):
         msg = Int16MultiArray()
         msg.layout = MultiArrayLayout(
@@ -607,31 +613,36 @@ class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a 
         print(f"delay completed")
          
     def update(self):
-        """ Behavior Tree execution step. Called whenever the node is ticked """
-
-        print(f"Placing: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
-
-        if not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
-            return py_trees.common.Status.RUNNING
-        
-        elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
-            self.publish_msg()
-            print("Publishing INITIAL tuck arm command.")
-            self.arm_moving = True
-            return py_trees.common.Status.RUNNING  # Keep running while the arm moves
-        
-        elif self.arm_started and self.arm_moving and not self.arm_tucked:
-            #self.publish_msg()
-            print("Arm moving.")
-            return py_trees.common.Status.RUNNING # Keep running while the arm moves
-        
-        elif self.arm_tucked:
-            print("Arm is in a good position")
-            self.arm_started,self.arm_tucked, self.arm_moving= False, False, False
-            return py_trees.common.Status.SUCCESS
-
+        """ Behavior Tree execution step. Called whenever the node is ticked 
+            If the next goal is to place an object, the arm will be tucked. Otherwise, we want to tick the picking behavior"""
+        if self.next_goal == 'Object':
+            return py_trees.common.Status.FAILURE
         else:
-             print("ERROR")
+
+            print(f"Placing: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
+
+            if not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
+                return py_trees.common.Status.RUNNING
+            
+            elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
+                self.publish_msg()
+                print("Publishing INITIAL tuck arm command.")
+                self.arm_moving = True
+                return py_trees.common.Status.RUNNING  # Keep running while the arm moves
+            
+            elif self.arm_started and self.arm_moving and not self.arm_tucked:
+                #self.publish_msg()
+                print("Arm moving.")
+                return py_trees.common.Status.RUNNING # Keep running while the arm moves
+            
+            elif self.arm_tucked:
+                print("Arm is in a good position")
+                self.arm_started,self.arm_tucked, self.arm_moving= False, False, False
+                return py_trees.common.Status.SUCCESS
+
+            else:
+                print("ERROR")
+        return
              
     def terminate(self, new_status: py_trees.common.Status):
         """
