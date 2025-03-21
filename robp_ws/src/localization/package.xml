@@ -19,6 +19,7 @@
   <depend>sensor_msgs</depend> 
   <depend>tf2_ros</depend> 
   <depend>tf_transformations</depend> 
+  <depend>py_trees</depend> 
 
 
   <export>

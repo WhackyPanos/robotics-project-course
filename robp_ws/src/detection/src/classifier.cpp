@@ -62,12 +62,19 @@ Classifier::Classifier() : Node("clustering", rclcpp::NodeOptions()
 
 bool Classifier::perform_classification()
 {
+<<<<<<< HEAD
     if (std::abs(angular_z_) >= ang_vel_threshold_ || std::abs(linear_x_) >= lin_vel_threshold_ || std::abs(linear_y_) >= lin_vel_threshold_) {
         return false;
     }
 
     RCLCPP_INFO(this->get_logger(), "enter classification");    
 
+=======
+    if (latest_cluster_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_ || std::abs(linear_x_) >= lin_vel_threshold_ || std::abs(linear_y_) >= lin_vel_threshold_) {
+        return false;
+    }
+
+>>>>>>> origin/collection_bt
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cluster_, *cloud);
 
@@ -87,7 +94,10 @@ bool Classifier::perform_classification()
     pass.filter(*box_filtered);
     // RCLCPP_INFO(this->get_logger(), "Box filtering: %zu", box_filtered->size());
 
+<<<<<<< HEAD
     RCLCPP_INFO(this->get_logger(), "start classification");
+=======
+>>>>>>> origin/collection_bt
     if (box_filtered->size() > box_filter_threshold_) 
     {
         classification = "Box";
@@ -144,7 +154,11 @@ bool Classifier::perform_classification()
         }
     }
 
+<<<<<<< HEAD
     RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
+=======
+    // RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
+>>>>>>> origin/collection_bt
     
     geometry_msgs::msg::PoseStamped pose;
     pose.header.stamp = latest_cluster_.header.stamp;
@@ -204,7 +218,12 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
     try {
         tf_buffer_->transform(pose, transformed_pose, "map", tf2::durationFromSec(1.0));
     } catch (tf2::TransformException &ex) {
+<<<<<<< HEAD
         RCLCPP_INFO(this->get_logger(), "Transform failed: %s", ex.what());
+=======
+        RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
+        return false;
+>>>>>>> origin/collection_bt
     }
 
     // Create a transform message
@@ -285,8 +304,11 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
 
     // Broadcast the transform
     tf_broadcaster_->sendTransform(transform_msg);
+<<<<<<< HEAD
 
     RCLCPP_INFO(this->get_logger(), "Classification successful");
+=======
+>>>>>>> origin/collection_bt
     
     return true;
 }

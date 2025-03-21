@@ -21,9 +21,15 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("height_filter_max", y_filter_max_, 0.075);
     this->get_parameter_or("cluster_tolerance", cluster_tolerance_, 0.05);
     this->get_parameter_or("cluster_min_size", cluster_min_size_, 100);
+<<<<<<< HEAD
     this->get_parameter_or("occupancy_margin", occupancy_margin_, 0);
     this->get_parameter_or("occupancy_value", occupancy_value_, 0);
     this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.2);
+=======
+    this->get_parameter_or("occupancy_margin", occupancy_margin_, 1);
+    this->get_parameter_or("occupancy_value", occupancy_value_, 1);
+    this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.0);
+>>>>>>> origin/collection_bt
 
     // QoS for keeping only the latest message
     auto qos_profile = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_sensor_data));
@@ -53,11 +59,14 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
         trigger_topic_, qos_profile, std::bind(&Clustering::trigger_callback, this, _1));
 
+<<<<<<< HEAD
     // Subscribe to trigger topic
     new_trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
         "/detection/new_request", qos_profile, std::bind(&Clustering::new_trigger_callback, this, _1));
 
 
+=======
+>>>>>>> origin/collection_bt
     // Publisher for clustering result
     result_pub_ = this->create_publisher<std_msgs::msg::Bool>(result_topic_, 10);
 
@@ -68,18 +77,30 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 }
 
+<<<<<<< HEAD
 bool Clustering::perform_clustering(bool new_req)
 {
     RCLCPP_INFO(this->get_logger(), "Enter clustering");
     // if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
     //     return false;
     // }
+=======
+bool Clustering::perform_clustering()
+{
+    if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
+        return false;
+    }
+>>>>>>> origin/collection_bt
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cloud_, *cloud);
 
+<<<<<<< HEAD
     RCLCPP_INFO(this->get_logger(), "Pass Filter");
     // Apply passthrough filtering
+=======
+    // Apply filtering
+>>>>>>> origin/collection_bt
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cloud);
     pass.setFilterFieldName("z");
@@ -91,7 +112,11 @@ bool Clustering::perform_clustering(bool new_req)
     pass.filter(*cloud);
 
     if (cloud->empty()) return false;
+<<<<<<< HEAD
     RCLCPP_INFO(this->get_logger(), "Clustering");
+=======
+
+>>>>>>> origin/collection_bt
     // Clustering
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
     tree->setInputCloud(cloud);
@@ -104,16 +129,22 @@ bool Clustering::perform_clustering(bool new_req)
     ec.setInputCloud(cloud);
     ec.extract(cluster_indices);
 
+<<<<<<< HEAD
     // If no cluster found
     if (cluster_indices.empty()) return false;
 
     // For each cluster 
+=======
+    if (cluster_indices.empty()) return false;
+
+>>>>>>> origin/collection_bt
     for (const auto& cluster : cluster_indices) {
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster(new pcl::PointCloud<pcl::PointXYZ>);
         for (const auto& idx : cluster.indices) {
             cloud_cluster->push_back((*cloud)[idx]);
         }
 
+<<<<<<< HEAD
         RCLCPP_INFO(this->get_logger(), "Cluster found");
     // If new, check also for obstacle or occupation in grid
         if(new_req)
@@ -148,6 +179,34 @@ bool Clustering::perform_clustering(bool new_req)
         }
     
     //Publish found cluster and stop the robot
+=======
+        pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
+        pass.setInputCloud(cloud_cluster);
+        pass.setFilterFieldName("y");
+        pass.setFilterLimits(y_filter_min_, -0.02);
+        pass.filter(*obstacle);
+
+        if (!obstacle->empty()) continue;
+
+        pcl::PointXYZ centre = computeOBBPosition(cloud_cluster);
+
+        geometry_msgs::msg::PointStamped centre_base, centre_map;
+        centre_base.header.frame_id = latest_cloud_.header.frame_id;
+        centre_base.header.stamp = latest_cloud_.header.stamp;
+        centre_base.point.x = centre.x;
+        centre_base.point.y = centre.y;
+        centre_base.point.z = centre.z;
+
+        try {
+            tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
+        } catch (tf2::TransformException &ex) {
+            RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
+            continue;
+        }
+
+        if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
+
+>>>>>>> origin/collection_bt
         cloud_cluster->width = cloud_cluster->size();
         cloud_cluster->height = 1;
         cloud_cluster->is_dense = true;
@@ -157,7 +216,10 @@ bool Clustering::perform_clustering(bool new_req)
         output.header.stamp = latest_cloud_.header.stamp;
         output.header.frame_id = latest_cloud_.header.frame_id;
         cluster_pub_->publish(output);
+<<<<<<< HEAD
         RCLCPP_INFO(this->get_logger(), "Publish cluster");
+=======
+>>>>>>> origin/collection_bt
 
         geometry_msgs::msg::Twist stop_msg;
         stop_msg.linear.x = stop_msg.linear.y = stop_msg.linear.z = 0.0;
@@ -176,17 +238,24 @@ void Clustering::trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
     result_msg.data = false;
 
     if (msg->data){
+<<<<<<< HEAD
             result_msg.data = perform_clustering(new_request);
+=======
+        result_msg.data = perform_clustering();
+>>>>>>> origin/collection_bt
     }
 
     result_pub_->publish(result_msg);
 }
 
+<<<<<<< HEAD
 void Clustering::new_trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
 {
     new_request = msg->data;
 }
 
+=======
+>>>>>>> origin/collection_bt
 void Clustering::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
     angular_z_ = msg->angular.z;

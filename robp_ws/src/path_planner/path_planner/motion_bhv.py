@@ -20,8 +20,12 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
         status is not RUNNING thereafter."""  
+<<<<<<< HEAD
         # self.get_logger().info("Motion behavior initialized")
         pass
+=======
+        self.get_logger().info("Motion behavior initialized")
+>>>>>>> origin/collection_bt
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
@@ -48,5 +52,9 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
             - SUCCESS || FAILURE : your behaviour's work cycle has finished
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
+<<<<<<< HEAD
         # self.get_logger().info(f"Terminating Motion behavior")
         pass
+=======
+        self.get_logger().info(f"Terminating Motion behavior")
+>>>>>>> origin/collection_bt

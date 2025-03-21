@@ -85,7 +85,10 @@ class MotionNode(Node):
 
     def path_callback(self, msg:Path):
         if len(msg.poses) > 0:
+<<<<<<< HEAD
             self.path_reached_publisher.publish(Bool(data=False))
+=======
+>>>>>>> origin/collection_bt
             self.path_reached = False
             self.is_path = True
             self.path = msg
@@ -137,6 +140,7 @@ class MotionNode(Node):
     #             qw = transformed_pose.orientation.w
     #             self.theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
 
+<<<<<<< HEAD
     #             # # Proceed with goal tracking using transformed pose
     #             # self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
     #         except Exception as e:
@@ -165,6 +169,15 @@ class MotionNode(Node):
     def navigate_to_goal(self):
         """ Control the robot to navigate to the goal position. """
         self.get_robot_position()
+=======
+                # # Proceed with goal tracking using transformed pose
+                # self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
+            except Exception as e:
+                self.get_logger().warn(f"Transform failed: {str(e)}")
+
+    def navigate_to_goal(self):
+        """ Control the robot to navigate to the goal position. """
+>>>>>>> origin/collection_bt
         x = self.x_map
         y = self.y_map
         theta = self.theta_map
@@ -206,10 +219,15 @@ class MotionNode(Node):
             
             elif self.is_path and len(self.path.poses) == 0:
                 self.get_logger().info('Path execution completed.')
+<<<<<<< HEAD
                 self.path_reached_publisher.publish(Bool(data=True))
                 self.path_reached = True
                 self.is_path = False
                 self.icp_publisher.publish(Bool(data=False))
+=======
+                self.path_reached = True
+                self.is_path = False
+>>>>>>> origin/collection_bt
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9

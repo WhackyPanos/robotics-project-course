@@ -1,6 +1,8 @@
 {
     "python.analysis.extraPaths": [
         "./handle_objects",
-        "./path_planner"
+        "./path_planner",
+        "./localization",
+        "./mapping"
     ]
 }

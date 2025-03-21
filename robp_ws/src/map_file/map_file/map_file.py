@@ -36,6 +36,10 @@ class Map_file(Node):
         # Publisher for the objects
         self.publisher = self.create_publisher(MarkerArray, '/object_positions', 10)
 
+        # BT communication
+        self.trigger_sub = self.create_subscription(Bool, "/map_file/request", self.trigger_callback, 10)
+        self.result_pub = self.create_publisher(Bool, "/map_file/result", 10)
+
         self.file = "map_file.txt"
         self.data = None
         self.map = []
@@ -44,10 +48,26 @@ class Map_file(Node):
                                 'Sphere': '2',
                                 'Animal': '3',}
 
+
+    def trigger_callback(self, msg: Bool):
+        result_msg = Bool()
+        result_msg.data = False
+
+        if(msg.data):
+            result_msg.data = self.perform_map_file_update()
+
+        self.result_pub.publish(result_msg)
+
     def map_callback(self, msg: String):
         self.data = msg.data
 
     def perform_map_file_update(self):
+<<<<<<< HEAD
+=======
+        if self.data is None:
+            return False
+        
+>>>>>>> origin/collection_bt
         data = self.data.split()
         classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 180
         new_label = self.classifications.get(classify)
