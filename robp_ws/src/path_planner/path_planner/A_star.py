@@ -53,7 +53,7 @@ class Planner_A_star(Node):
         self.simple_publisher = self.create_publisher(Path ,'/motion/path' , 10)
         self.full_publisher = self.create_publisher(Path ,'/full_path' , 10)
         self.map_subscription = self.create_subscription(OccupancyGrid, '/occupancy_grid', self.map_callback, 10)
-        self.goal_subscription = self.create_subscription(PointStamped, 'hmm', self.goal_callback, 10)
+        self.goal_subscription = self.create_subscription(PointStamped, '/goal_point', self.goal_callback, 10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
 
@@ -61,25 +61,20 @@ class Planner_A_star(Node):
         self.robot_radius = 0.20
         self.cost_ratio = 5
         self.config_space = None
-        self.map_info = None
+        #self.map_info = None
+        self.occupancy_grid_msg =None
         self.goal_msg = None
     
     def goal_callback(self, msg):
         self.goal_msg = msg
         
-    def map_callback(self, occupancy_grid_msg): # Create the configurations space
-        # The problem with doing path palnning when there is a new map topic is 
-        # Convert occupancy grid to numpy array
-        self.map_info = occupancy_grid_msg.info # Gets info from the occupancy grid
-
-        # Create binary occupancy grid (1 for obstacles, 0 for free space)
-        grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
+    def map_callback(self, msg): # Create the configurations space
+        self.occupancy_grid_msg = msg        
+    
+    def inflate_map(self, occupancy_grid_msg):
+        grid = np.array(occupancy_grid_msg.data).reshape(occupancy_grid_msg.info.height, occupancy_grid_msg.info.width)
         binary_grid = np.zeros_like(grid)
-        
-        # Threshold for obstacles (usually >50 is considered occupied)
         binary_grid[grid > 50] = 1
-        # Robot can drive through both known and unknown space
-        
         # Calculate kernel size based on robot radius and map resolution
         kernel_radius = int(np.ceil(self.robot_radius / self.map_info.resolution))
         
@@ -106,6 +101,9 @@ class Planner_A_star(Node):
         if self.goal_msg is None:
             self.get_logger().warn('Goal point not recived for path planning')
             return
+        
+        # Inflate map
+        self.inflate_map(self.occupancy_grid_msg, only_obstacle=False)
 
         # Convert world to grid (using inherited function)
         i_start_x, i_start_y = OccupancyGridNode.world_to_grid(start_x, start_y)
