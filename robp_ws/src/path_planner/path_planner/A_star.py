@@ -47,10 +47,11 @@ class Nodes:
                     ok_children_list.append(node_child)
             return ok_children_list
 
-class planner_A_star(Node):
+class Planner_A_star(Node):
     def __init__(self):
         super().__init__('planner_A_star')
-        self.publisher = self.create_publisher(Path ,'/motion/path' , 10)
+        self.simple_publisher = self.create_publisher(Path ,'/motion/path' , 10)
+        self.full_publisher = self.create_publisher(Path ,'/full_path' , 10)
         self.map_subscription = self.create_subscription(OccupancyGrid, '/occupancy_grid', self.map_callback, 10)
         self.goal_subscription = self.create_subscription(PointStamped, 'hmm', self.goal_callback, 10)
         self.tf_buffer = Buffer()
@@ -62,12 +63,6 @@ class planner_A_star(Node):
         self.config_space = None
         self.map_info = None
         self.goal_msg = None
-
-    # def world_to_grid(self, x, y):
-    #     '''Converts world coordinates in [m] to grid indices.'''
-    #     i_x = int((x - self.map_info.origin.position.x) / self.map_info.resolution)    
-    #     i_y = int((y - self.map_info.origin.position.y) / self.map_info.resolution)
-    #     return i_x, i_y
     
     def goal_callback(self, msg):
         self.goal_msg = msg
@@ -115,8 +110,6 @@ class planner_A_star(Node):
         # Convert world to grid (using inherited function)
         i_start_x, i_start_y = OccupancyGridNode.world_to_grid(start_x, start_y)
         i_goal_x, i_goal_y = OccupancyGridNode.world_to_grid(self.goal_msg.point.x, self.goal_msg.point.y)
-        #i_start_x, i_start_y = self.world_to_grid(start_x, start_y)
-        #i_goal_x, i_goal_y = self.world_to_grid(msg.point.x, msg.point.y)
 
         node_goal = Nodes(i_goal_x, i_goal_y)
         node_start = Nodes(i_start_x, i_start_y)
@@ -124,20 +117,11 @@ class planner_A_star(Node):
         node_start.h = ((i_goal_x - i_start_x)**2 + (i_goal_y - i_start_y)**2)**0.5
         node_start.f = self.cost_ratio*node_start.h + node_start.g
         
-        # Get path
-        node_list = self.a_star(node_start, node_goal)
+        # Publish path
+        simplified_path, full_path = self.a_star(node_start, node_goal)
+        self.simple_publisher.publish(simplified_path)
+        self.full_publisher.publish(full_path)
         
-        # Convert from nodes to points and publish
-        path_msg = Path()
-        for node in node_list:
-            pose = PoseStamped()
-            pose.header.frame_id = "map"
-            pose.header.stamp = self.get_clock().now().to_msg()
-            pose.pose.position.x = node.x * self.map_info.resolution + self.map_info.origin.position.x
-            pose.pose.position.y = node.y * self.map_info.resolution + self.map_info.origin.position.y
-            path_msg.poses.append(pose)
-        self.publisher.publish(path_msg)
-
     def construct_path(self, node_current):
         node_list = [node_current]
         while node_current.parent != None:
@@ -145,18 +129,31 @@ class planner_A_star(Node):
             node_current = node_current.parent
 
         node_list.reverse()
+        full_path = Path()
         simplified_path = [node_list[0]]  # Start with the first node
-        for i in range(1, len(node_list) - 1):
-            prev = simplified_path[-1]
-            curr = node_list[i]
-            next = node_list[i + 1]
-            # Check if (prev → curr) and (curr → next) are in the same direction
-            dx1, dy1 = curr.x - prev.x, curr.y - prev.y
-            dx2, dy2 = next.x - curr.x, next.y - curr.y
-            if dx1 * dy2 != dy1 * dx2:  # If directions change, keep this node
-                simplified_path.append(curr)
+
+        for i, node in enumerate(node_list):
+            # Construct full_path
+            pose = PoseStamped()
+            pose.header.frame_id = "map"
+            pose.header.stamp = self.get_clock().now().to_msg()
+            pose.pose.position.x = node.x * self.map_info.resolution + self.map_info.origin.position.x
+            pose.pose.position.y = node.y * self.map_info.resolution + self.map_info.origin.position.y
+            full_path.poses.append(pose)
+
+            # Skip first and last nodes for collinearity check
+            if 0 < i < len(node_list) - 1:
+                prev = simplified_path[-1]
+                next = node_list[i + 1]
+                dx1, dy1 = node.x - prev.x, node.y - prev.y
+                dx2, dy2 = next.x - node.x, next.y - node.y
+                
+                # If directions change, keep this node
+                if dx1 * dy2 != dy1 * dx2:
+                    simplified_path.append(node)
+
         simplified_path.append(node_list[-1])  # Always keep the last node
-        return simplified_path
+        return simplified_path, full_path
 
     def a_star(self, node_start, node_goal):
         open_dict = {}
@@ -168,9 +165,7 @@ class planner_A_star(Node):
             closed_dict[node_current.x, node_current.y] = node_current
             goal_distance = node_current.h * self.map_info.resolution
             if goal_distance < 0.1: 
-                node_list = self.construct_path(node_current)
-                return node_list
-                break
+                return self.construct_path(node_current)
 
             for node_child in node_current.get_children(node_goal, self.config_space, self.map_info, self.cost_ratio):
                 child_key = (node_child.x, node_child.y)
