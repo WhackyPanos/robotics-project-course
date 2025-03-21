@@ -19,7 +19,7 @@ class Map_file(Node):
         # Declare parameters with default values
         self.box_threshold = self.get_parameter_or('box_threshold', 20)
         self.object_threshold = self.get_parameter_or('object_threshold', 5)
-        self.msg_topic = self.get_parameter_or('msg_topic', '/detection/class')
+        self.msg_topic = self.get_parameter_or('msg_topic', '/classification/class')
 
         # Set QoS profile
         qos_profile = QoSProfile(depth=10)
@@ -48,9 +48,6 @@ class Map_file(Node):
         self.data = msg.data
 
     def perform_map_file_update(self):
-        if self.data is None:
-            return False
-
         data = self.data.split()
         classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 180
         new_label = self.classifications.get(classify)
@@ -73,7 +70,7 @@ class Map_file(Node):
                                  avg_a,
                                  votes)
                 self.update_file()
-                return
+                return True
             
         new_votes[classes.index(new_label)] += 1
         self.map.append((new_label, int(round(new_x, 0)), int(round(new_y, 0)), int(round(new_a, 0)), new_votes))
