@@ -25,21 +25,6 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("occupancy_value", occupancy_value_, 0);
     this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.2);
 
-    latest_cloud_ = sensor_msgs::msg::PointCloud2();
-    latest_cloud_.width = 0;
-    latest_cloud_.height = 0;
-    latest_cloud_.row_step = 0;
-    latest_cloud_.data.clear();  // Ensures data is empty
-
-    latest_map_ = nav_msgs::msg::OccupancyGrid();
-    latest_map_.info.width = 0;
-    latest_map_.info.height = 0;
-    latest_map_.data.clear();  // Ensures data is empty
-
-    new_request = true;
-    angular_z_ = 0.0;
-
-
     // QoS for keeping only the latest message
     auto qos_profile = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_sensor_data));
 
@@ -89,21 +74,10 @@ bool Clustering::perform_clustering(bool new_req)
     //     return false;
     // }
 
-    RCLCPP_INFO(this->get_logger(), "Pass Filter");
-
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cloud_, *cloud);
 
-    // pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
-    // pcl::PassThrough<pcl::PointXYZ> pass;
-    // pass.setInputCloud(cloud);
-    // pass.setFilterFieldName("y");
-    // pass.setFilterLimits(y_filter_min_, -0.02);
-    // pass.filter(*obstacle);
-
-    // if (!obstacle->empty()) return false;
-
-
+    RCLCPP_INFO(this->get_logger(), "Pass Filter");
     // Apply passthrough filtering
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cloud);
@@ -116,8 +90,6 @@ bool Clustering::perform_clustering(bool new_req)
     pass.filter(*cloud);
 
     if (cloud->empty()) return false;
-    
-
     RCLCPP_INFO(this->get_logger(), "Clustering");
     // Clustering
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
@@ -140,14 +112,6 @@ bool Clustering::perform_clustering(bool new_req)
         for (const auto& idx : cluster.indices) {
             cloud_cluster->push_back((*cloud)[idx]);
         }
-
-        pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
-        // pcl::PassThrough<pcl::PointXYZ> pass;
-        pass.setInputCloud(cloud_cluster);
-        pass.setFilterFieldName("y");
-        pass.setFilterLimits(y_filter_min_, -0.02);
-        pass.filter(*obstacle);
-        if (!obstacle->empty()) continue;
 
         RCLCPP_INFO(this->get_logger(), "Cluster found");
     // If new, check also for obstacle or occupation in grid
