@@ -50,10 +50,10 @@ private:
     std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 
-    double angular_z_ = 0.0;
+    double angular_z_;
     nav_msgs::msg::OccupancyGrid latest_map_;
     sensor_msgs::msg::PointCloud2 latest_cloud_;
-    bool new_request = true;
+    bool new_request;
 
     // Parameters
     std::string cloud_topic_;

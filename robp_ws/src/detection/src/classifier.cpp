@@ -24,6 +24,15 @@ Classifier::Classifier() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("visualize_OBB", visualize_OBB_, false);
     this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.0);
     this->get_parameter_or("lin_vel_threshold", lin_vel_threshold_, 0.0);
+    
+    latest_cluster_ = sensor_msgs::msg::PointCloud2();
+    latest_cluster_.width = 0;
+    latest_cluster_.height = 0;
+    latest_cluster_.row_step = 0;
+    latest_cluster_.data.clear();  // Ensures data is empty
+
+    angular_z_ = linear_x_ = linear_y_ = 0.0;
+
 
     // QoS reliable profile
     auto qos_profile = rclcpp::QoS(rclcpp::KeepLast(10)).reliable();
