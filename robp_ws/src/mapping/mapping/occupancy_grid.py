@@ -51,9 +51,9 @@ class OccupancyGridNode(Node):
         # Occupied by camera: 99
         
         # Camera paramters
-        self.camera_FOV = 45 # np.pi/2 # Mapping should run all the time but how?
-        self.camera_min_range = 0.3 # True value: 0.2
-        self.camera_max_range = 0.8 # True value: 3.0
+        self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
+        self.camera_min_range = 0.2 # True value: 0.2
+        self.camera_max_range = 0.6 # True value: 3.0
 
     def read_workspace(self):
         min_x = float('inf')
@@ -242,43 +242,6 @@ class OccupancyGridNode(Node):
                         self.grid[i_y, i_x] = 0
 
 
-        # Get the camera's position in the map frame
-        cam_x = t_cam.transform.translation.x
-        cam_y = t_cam.transform.translation.y
-        
-        # Convert quaternion to yaw angle (assuming the camera is nearly horizontal)
-        q = t_cam.transform.rotation
-        siny_cosp = 2 * (q.w * q.z + q.x * q.y)
-        cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z)
-        yaw = math.atan2(siny_cosp, cosy_cosp)
-        
-        # Sweep rays over the camera FOV (assumed centered around the optical axis)
-        num_rays = 30  # You can adjust the number of rays for resolution
-        start_angle = -self.camera_FOV / 2
-        end_angle = self.camera_FOV / 2
-        
-        for i in range(num_rays):
-            angle = start_angle + i * (end_angle - start_angle) / (num_rays - 1)
-            ray_angle = yaw + angle
-            # Compute endpoint of the ray at the camera's max range
-            end_x = cam_x + self.camera_max_range * np.cos(ray_angle) 
-            end_y = cam_y + self.camera_max_range * np.sin(ray_angle)
-            start_x = cam_x + self.camera_min_range * np.cos(ray_angle)
-            start_y = cam_x + self.camera_min_range * np.sin(ray_angle)
-            
-            start_i = self.world_to_grid(start_x, start_y)
-            end_i = self.world_to_grid(end_x, end_y)
-            cells = self.raytrace(start_i, end_i)
-            
-            for cell in cells:
-                i_x, i_y = cell
-                if 0 <= i_x < self.width and 0 <= i_y < self.height:
-                    # Mark as known by camera (free) if not already a fence/occupied by lidar
-                    if self.grid[i_y, i_x] != 100:
-                        self.grid[i_y, i_x] = 1
-        # Optionally, publish the updated grid after processing camera data.
-        self.publish_current_grid(msg)
-    
 def main():
     rclpy.init()
     node = OccupancyGridNode()

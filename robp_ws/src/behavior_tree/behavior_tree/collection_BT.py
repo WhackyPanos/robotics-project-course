@@ -114,10 +114,11 @@ def main(args=None):
     rclpy.init(args=args)
     node = CollectionBT()
     executor = MultiThreadedExecutor()
-    node.create_root(executor=executor)
+    root = node.create_root(executor=executor)
+    node.tree = py_trees_ros.trees.BehaviourTree(root=root, unicode_tree_debug=False)
     executor.add_node(node)
     node.tree.setup(timeout=10.0, node=node)
-    time.sleep(5.0)
+    time.sleep(2.0)
     node.tree.tick_tock(period_ms=400)
 
     try:
