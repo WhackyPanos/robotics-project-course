@@ -16,7 +16,8 @@ from tf2_ros import TransformException
 
 class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
     def __init__(self, obj_list, box_list ,name ='UpdateObjectList'):
-        super().__init__(name=name)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         self.obj_list = obj_list
         self.box_list = box_list
         self.robot_pos = np.array([0,0])
@@ -27,12 +28,12 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         self.node = kwargs["node"]
         # TODO: transform to map
         self.tf_buffer = Buffer()
-        self.tf_listener = TransformListener(self.tf_buffer, self.node)
+        self.tf_listener = TransformListener(self.tf_buffer, self)
         self.to_frame_rel = 'map'
         self.from_frame_rel = 'odom'
 
         self.robot_pos_sub = self.node.create_subscription(Pose2D, '/odom_pose', self.get_robot_pos_callback, 10)
-        self.need_next_object_sub = self.node.create_subscription(String, '/next_goal/need', self.need_next_object_callback, 10)
+        self.need_next_object_sub = self.node.create_subscription(String, '/next_goal/object/need', self.need_next_object_callback, 10)
         self.update_object_list_sub = self.node.create_subscription(PointStamped, '/next_goal/object/update', self.update_object_list_callback, 10)
 
         self.next_goal_pub = self.node.create_publisher(PointStamped,'/motion/goal', 10 )
@@ -99,12 +100,13 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
 
 class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
     def __init__(self, name = 'ArmTaskSucceeded'):
-        super().__init__(name = name)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         self.arm_task = 'pick' # can be either 'pick' or 'place'
     def setup(self, **kwargs):
         self.node = kwargs["node"]
         self.picklift_sub = self.node.create_subscription(Bool, '/picklift/succeded', self.picklift_callback, 10)
-        self.next_goal = self.node.create_publisher(String, '/next_goal/need', 10)
+        self.next_goal = self.node.create_publisher(String, '/next_goal/object/need', 10)
         self.msg = String()
 
     def update(self):

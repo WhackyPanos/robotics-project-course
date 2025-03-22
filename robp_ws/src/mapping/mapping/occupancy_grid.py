@@ -277,7 +277,7 @@ class OccupancyGridNode(Node):
                     if self.grid[i_y, i_x] != 100:
                         self.grid[i_y, i_x] = 1
         # Optionally, publish the updated grid after processing camera data.
-        self.publish_grid(msg)
+        self.publish_current_grid(msg)
     
 def main():
     rclpy.init()

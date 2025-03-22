@@ -12,6 +12,7 @@ from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded
 from path_planner.motion_bhv import NavigateToGoal
 from localization.localization_bhv import Localization_bhv
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
+import time
 
 
 
@@ -22,35 +23,49 @@ class CollectionBT(Node):
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
         self.objs_list, self.box_list = self.create_lists()
 
-        root = self.create_root()
-        self.tree = py_trees_ros.trees.BehaviourTree(root=root, unicode_tree_debug=False)
-
-    def create_root(self):    
-        # Create the root as a Sequence node (default memory=False is fine here)
-        next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
-        pub_occupancy_grid = PublishOccupancyGrid()
-        localization = Localization_bhv()
-        navigate_to_goal = NavigateToGoal()
-        path_planner = None #TODO
+        # Root creation
+        self.root = py_trees.composites.Sequence(name="Root", memory= False)
         
-        tuck_arm = SetArm('tuck_arm', [2600,12000,2000,18000,12000,12000])
+        self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
+        self.pub_occupancy_grid = PublishOccupancyGrid()
+        self.localization = Localization_bhv()
+        self.navigate_to_goal = NavigateToGoal()
+        self.path_planner = None #TODO
+
+        self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,18000,12000,12000])
         #detect_object = DetectObject()
-        pick_object = ArmIK()
-        lift = SetArm('lift', [10000,12000,12000,12000,12000,12000])
+        self.pick_object = ArmIK()
+        self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000])
 
-        arm_task_succeeded = ArmTaskSucceeded()
+        self.arm_task_succeeded = ArmTaskSucceeded()
 
+        self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False)
 
+    def create_root(self, executor): 
+        # Add nodes to executor
+        executor.add_node(self.next_object_bhv)
+        executor.add_node(self.navigate_to_goal)
+        executor.add_node(self.pub_occupancy_grid)
+        executor.add_node(self.localization)
+        executor.add_node(self.tuck_arm)
+        executor.add_node(self.pick_object)
+        executor.add_node(self.lift)
+        executor.add_node(self.arm_task_succeeded)
+
+        executor.add_node(self.pub_occupancy_grid.occupancy_grid)
+        executor.add_node(self.navigate_to_goal.motion_node)
+        executor.add_node(self.localization.localization_node)
+  
         """ merge behaviors with composites """
         # Path planning and execution for picking
         plan_and_move = py_trees.composites.Sequence(
             name = 'plan_and_move',
-            children = [navigate_to_goal],  #TODO: path_planner, navigate_to_goal
+            children = [self.navigate_to_goal],  #TODO: path_planner, navigate_to_goal
             memory=False)
         
         path_planning_pick = py_trees.composites.Parallel(
             name = 'path_plan_pick', 
-            children = [pub_occupancy_grid, localization, plan_and_move],
+            children = [self.pub_occupancy_grid, self.localization, plan_and_move],
             policy = py_trees.common.ParallelPolicy.SuccessOnSelected([plan_and_move]))
         
         # Arm execution: pick or place
@@ -59,11 +74,11 @@ class CollectionBT(Node):
             # Pick and lift operations
         planA = py_trees.composites.Sequence(
             name="PlanA", 
-            children = [tuck_arm, pick_object],
+            children = [self.tuck_arm, self.pick_object],
             memory = False)
         pick_and_lift = py_trees.composites.Sequence(
             name="Pick&Lift", 
-            children = [planA, lift],
+            children = [planA, self.lift],
             memory = False)
         repeat_picklift = py_trees.decorators.Retry(
             name = 'Repeat_Pick&Lift', 
@@ -75,11 +90,9 @@ class CollectionBT(Node):
             children = [place, repeat_picklift],
             memory = False)
         
+        self.root.add_children([self.next_object_bhv, path_planning_pick, pick_or_place, self.arm_task_succeeded]) 
 
-        # Root creation
-        root = py_trees.composites.Sequence(name="Root", memory= False)
-        root.add_children([next_object_bhv, path_planning_pick, pick_or_place, arm_task_succeeded]) 
-        return root
+        return self.root
     
     def create_lists(self):
         """ Function to return a list with the objects to collect, as well as the boxes"""
@@ -99,25 +112,21 @@ class CollectionBT(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-
-    # Initialize the PickBT node
     node = CollectionBT()
-
-    # Setup the behavior tree with a timeout for setup (10 seconds)
+    executor = MultiThreadedExecutor()
+    node.create_root(executor=executor)
+    executor.add_node(node)
     node.tree.setup(timeout=10.0, node=node)
-
-    # Continuously tick the behavior tree
+    time.sleep(5.0)
     node.tree.tick_tock(period_ms=400)
 
-    # Spin the node to keep it alive
     try:
-        rclpy.spin(node)  # This keeps the node alive
+         executor.spin()
     except KeyboardInterrupt:
-        pass  # Handle Ctrl+C gracefully
+        pass  
 
-
-    # Shutdown the node
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()

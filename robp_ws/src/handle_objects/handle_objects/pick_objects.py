@@ -20,9 +20,10 @@ import numpy as np
 
 
 # ----------------------------------- BEHAVIOUR 1 ---------------------------------------------------------------
-class SetArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
+class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name, angles:list ):
-        super().__init__(name=name)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         self.angles = angles
     
     def setup(self, **kwargs):
@@ -138,7 +139,8 @@ class SetArm(py_trees.behaviour.Behaviour): # this class is a py_tree node and a
 # ----------------------------------- BEHAVIOUR 2 ---------------------------------------------------------------
 class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Detect Object"):
-        super().__init__(name=name)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         #py_trees.behaviour.Behaviour.__init__(self, name)
         #Node.__init__(self, "pick_node")  # ROS 2 node initialization
         self.ik_solver = IKNode()
@@ -166,7 +168,8 @@ class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tre
 # ----------------------------------- BEHAVIOUR 3 ---------------------------------------------------------------
 class SearchObjectArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Detect Object"):
-        super().__init__(name=name)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         #py_trees.behaviour.Behaviour.__init__(self, name)
         #Node.__init__(self, "pick_node")  # ROS 2 node initialization
         self.ik_solver = IKNode()
@@ -195,7 +198,8 @@ class SearchObjectArm(py_trees.behaviour.Behaviour, Node): # this class is a py_
 # ----------------------------------- BEHAVIOUR 4---------------------------------------------------------------
 class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Move2Pick"):
-        super().__init__(name=name)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
 
         self.ik_solver = IKNode()
         self.to_frame_rel = 'arm_base_link'
@@ -533,9 +537,10 @@ class a(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and 
         """
 
 
-class Place(py_trees.behaviour.Behaviour): # this class is a py_tree node and a ros node
+class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Place"):
-        super().__init__(name=name)
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         #self.logger.debug("ObjTuckArm was called.")
         #self.cached_context = None
         self.next_goal = 'Object'
