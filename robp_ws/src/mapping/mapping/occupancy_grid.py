@@ -19,6 +19,7 @@ from sensor_msgs.msg import LaserScan, PointCloud2
 from laser_geometry import LaserProjection
 from nav_msgs.msg import OccupancyGrid
 from std_msgs.msg import Header
+from geometry_msgs.msg import Twist
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
 from scipy.ndimage import binary_dilation, binary_fill_holes
 
@@ -29,6 +30,7 @@ class OccupancyGridNode(Node):
         super().__init__('update_occupancy_grid')
         self.publisher = self.create_publisher(OccupancyGrid, '/occupancy_grid', 10) 
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
+        self.vel_subscription = self.create_subscription(Twist, '/cmd_vel', self.vel_callback, 10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection()
@@ -53,7 +55,9 @@ class OccupancyGridNode(Node):
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
         self.camera_min_range = 0.2 # True value: 0.2
-        self.camera_max_range = 0.6 # True value: 3.0
+        self.camera_max_range = 0.75 # True value: 3.0
+
+        self.angular_vel = 0.0
 
     def read_workspace(self):
         min_x = float('inf')
@@ -150,14 +154,18 @@ class OccupancyGridNode(Node):
         self.publisher.publish(occupancy_grid_msg)
         # self.get_logger().info("Published occupancy grid")
     
+    def vel_callback(self, msg):
+        self.angular_vel = msg.angular.z
+
     def listener_callback(self, msg):
         # Looks up transform from lidar link to map
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
 
-        lidar_from_frame_rel = msg.header.frame_id # Lidar link
-        lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
-        lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
+        if self.angular_vel < 0.05:
+            lidar_from_frame_rel = msg.header.frame_id # Lidar link
+            lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
+            lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
 
         # Looks up transfrom from camera_depth_optical_frame to map (uses the same time)
         camera_from_frame = 'camera_depth_optical_frame'
