@@ -2,7 +2,7 @@
 import py_trees
 import rclpy
 from rclpy.node import Node
-from A_star import Planner_A_star
+from .A_star import Planner_A_star
 
 # Note: this behiour only controls when the OccupancyGrid msg is published 
 

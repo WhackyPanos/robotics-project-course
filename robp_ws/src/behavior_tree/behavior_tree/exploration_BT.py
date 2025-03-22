@@ -13,9 +13,8 @@ from obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
 from detection_bt.classify_bt import ClassifyBT
 from detection_bt.cluster_bt import ClusterBT
 from map_file.map_file_bt import MapFileBT
-from mapping.mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
-from path_planner.path_planner.pathPlanning_bhv import PathPlan
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
+from path_planner.pathPlanning_bhv import PathPlan
 from rclpy.executors import MultiThreadedExecutor
 from localization.localization_transform import Localization
 

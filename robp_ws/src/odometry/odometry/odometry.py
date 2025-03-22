@@ -167,6 +167,7 @@ class Odometry(Node):
         t.transform.rotation.z = q[2]
         t.transform.rotation.w = q[3]
 
+
         # Send the transformation
         self._tf_broadcaster.sendTransform(t)
 
