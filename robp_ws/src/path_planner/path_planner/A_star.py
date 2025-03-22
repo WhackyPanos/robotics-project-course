@@ -9,7 +9,7 @@ from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import PointStamped
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
-#from mapping.occupancy_grid import OccupancyGridNode
+from mapping.occupancy_grid import OccupancyGridNode
 
 class Nodes:
         def __init__(self, x, y):
@@ -175,13 +175,16 @@ class Planner_A_star(Node):
         open_dict = {}
         closed_dict = {}
         open_dict[(node_start.x, node_start.y)] = node_start
+        self.get_logger().warn("Starting A* algorithm")
         while open_dict:
             self.get_logger().warn(f"Length open dict: {len(open_dict)}")
             #node_current = open_dict[min(open_dict.keys(), key=lambda k: open_dict[k].f)] # Gets the node with the lowest f score
             node_current_key = min(open_dict.keys(), key=lambda k: open_dict[k].f)
             node_current = open_dict.pop(node_current_key)
             closed_dict[node_current.x, node_current.y] = node_current
-            if node_current.x == node_goal.x and node_current.y == node_goal.y: 
+            goal_distance = node_current.h * self.map_info.resolution
+            if goal_distance < 0.1: 
+                self.get_logger().warn("Finished with A* algorithm")
                 return self.construct_path(node_current)
 
             for node_child in node_current.get_children(node_goal, self.config_space, self.cost_ratio):
