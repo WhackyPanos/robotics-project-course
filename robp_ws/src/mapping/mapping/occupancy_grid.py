@@ -20,7 +20,6 @@ from laser_geometry import LaserProjection
 from nav_msgs.msg import OccupancyGrid
 from std_msgs.msg import Header
 from geometry_msgs.msg import Twist
-from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
 from scipy.ndimage import binary_dilation, binary_fill_holes
 
@@ -38,7 +37,6 @@ class OccupancyGridNode(Node):
         self.config_space_pub = self.create_publisher(OccupancyGrid, '/config_space', 10)
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
         self.vel_subscription = self.create_subscription(Twist, '/cmd_vel', self.vel_callback, 10)
-        self.object_sub = self.create_subscription(MarkerArray, '/object_positions', self.obj_callback, 10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection()
@@ -63,7 +61,9 @@ class OccupancyGridNode(Node):
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
         self.camera_min_range = 0.2 # True value: 0.2
-        self.camera_max_range = 0.6 # True value: 3.0
+        self.camera_max_range = 0.75 # True value: 3.0
+
+        self.angular_vel = 0.0
 
     def read_workspace(self):
         min_x = float('inf')
@@ -201,7 +201,7 @@ class OccupancyGridNode(Node):
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
 
-        if abs(self.angular_vel) < 0.1:
+        if self.angular_vel < 0.05:
             lidar_from_frame_rel = msg.header.frame_id # Lidar link
             lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
             lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))

@@ -58,6 +58,10 @@ class MotionNode(Node):
         self.prev_angle_diff = 0.0
 
 
+        self.prev_time = self.get_clock().now().nanoseconds / 1e9
+        self.prev_angle_diff = 0.0
+
+
         # Setup publishers and subscribers
         # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 10)
@@ -71,7 +75,7 @@ class MotionNode(Node):
 
         # Parameters
         # ==================
-        self.linear_velocity = 0.17
+        self.linear_velocity = 0.15
         self.angular_velocity = 0.4
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.2 # TODO untested, adjust this value

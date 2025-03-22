@@ -62,15 +62,15 @@ def generate_launch_description():
                 "twist_topic": "/cmd_vel",
                 "trigger_topic": "/detection/request",
                 "result_topic": "/detection/result",
-                "dist_filter_min": 0.0,
-                "dist_filter_max": 0.5,
+                "dist_filter_min": 0.2,
+                "dist_filter_max": 0.65,
                 "height_filter_min": -0.025,
                 "height_filter_max": 0.075,
                 "cluster_tolerance": 0.05,
                 "cluster_min_size": 100,
                 "occupancy_margin": 0,
                 "occupancy_value": 0,
-                "ang_vel_threshold": 0.1
+                "ang_vel_threshold": 0.4
                 }]
             ),
         Node(
