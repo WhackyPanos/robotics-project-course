@@ -16,14 +16,42 @@ void printNumberOfPoints(const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud) {
     std::cout << "PointCloud has " << cloud->points.size() << " points." << std::endl;
 }
 
-ICP::ICP() : Node("icp_node"),
-             global_cloud_map(new pcl::PointCloud<pcl::PointXYZ>),
-             global_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>),
-             incoming_cloud_(new pcl::PointCloud<pcl::PointXYZ>),
-             first_cloud_(new pcl::PointCloud<pcl::PointXYZ>),
-             tf_listener_(tf_buffer_),
-             previous_icp_transform_(Eigen::Matrix4f::Identity())
+ICP::ICP() : Node("icp_node", rclcpp::NodeOptions()
+                .allow_undeclared_parameters(true)
+                .automatically_declare_parameters_from_overrides(true)),
+                global_cloud_map(new pcl::PointCloud<pcl::PointXYZ>),
+                global_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>),
+                incoming_cloud_(new pcl::PointCloud<pcl::PointXYZ>),
+                first_cloud_(new pcl::PointCloud<pcl::PointXYZ>),
+                tf_listener_(tf_buffer_),
+                previous_icp_transform_(Eigen::Matrix4f::Identity())
+
+
 {
+    // Retrieve parameters with get_parameter_or() 
+    // this->declare_parameter<int>("mean_k_neighbours", 30);
+    // this->declare_parameter<double>("std_dev_mul_thresh", 1.0);
+    // this->declare_parameter<double>("max_correspondence_distance", 0.05);
+    // this->declare_parameter<int>("maximum_iterations", 3000);
+    // this->declare_parameter<double>("transformation_epsilon", 1e-6);
+    // this->declare_parameter<double>("euclidean_fitness_epsilon", 1e-4);
+    // this->declare_parameter<double>("fitness_threshold", 0.5);
+    // mean_k_neighbours_ = this->get_parameter("mean_k_neighbours").as_int();
+    // std_dev_mul_thresh_ = this->get_parameter("std_dev_mul_thresh").as_double();
+    // max_correspondence_distance_ = this->get_parameter("max_correspondence_distance").as_double();
+    // maximum_iterations_ = this->get_parameter("maximum_iterations").as_int();
+    // transformation_epsilon_ = this->get_parameter("transformation_epsilon").as_double();
+    // euclidean_fitness_epsilon_ = this->get_parameter("euclidean_fitness_epsilon").as_double();
+    // fitness_threshold_ = this->get_parameter("fitness_threshold").as_double();
+
+    this->get_parameter_or("mean_k_neighbours", mean_k_neighbours_, 30);
+    this->get_parameter_or("std_dev_mul_thresh", std_dev_mul_thresh_, 1.0);
+    this->get_parameter_or("max_correspondence_distance", max_correspondence_distance_, 0.05);
+    this->get_parameter_or("maximum_iterations", maximum_iterations_, 3000);
+    this->get_parameter_or("transformation_epsilon", transformation_epsilon_, 1e-6);
+    this->get_parameter_or("euclidean_fitness_epsilon", euclidean_fitness_epsilon_, 1e-4);
+    this->get_parameter_or("fitness_threshold", fitness_threshold_, 0.5);
+
     // Subscribe to /scan topic (LaserScan)
     subscription_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
         "/scan", 10, std::bind(&ICP::scan_callback, this, std::placeholders::_1));
@@ -47,7 +75,7 @@ ICP::ICP() : Node("icp_node"),
 
 void ICP::scan_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
 {
-    RCLCPP_INFO(this->get_logger(), "Received new scan");
+    // RCLCPP_INFO(this->get_logger(), "Received new scan");
     // Convert LaserScan to pcl::PointCloud<pcl::PointXYZ> (assuming z=0)
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     for (size_t i = 0; i < msg->ranges.size(); ++i)
@@ -68,7 +96,7 @@ void ICP::scan_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
 
     // Obtain the transform from the lidar frame to the target frame (e.g., 'odom')
     geometry_msgs::msg::TransformStamped transform_msg;
-    transform_msg = tf_buffer_.lookupTransform("odom", "lidar_link", rclcpp::Time(0), rclcpp::Duration(1, 0));
+    transform_msg = tf_buffer_.lookupTransform("odom", "lidar_link", rclcpp::Time(0), rclcpp::Duration(2, 0));
     // Convert the transform to a PCL transformation matrix.
     Eigen::Isometry3d transform = tf2::transformToEigen(transform_msg.transform);
     // Transform the incoming cloud to the target frame (odom).
@@ -107,8 +135,8 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
     pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_incoming_cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_global_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor;
-    sor.setMeanK(10);  // Consider 50 nearest neighbors
-    sor.setStddevMulThresh(1.0);  // Remove points that deviate more than 1 std dev
+    sor.setMeanK(mean_k_neighbours_);  // Consider 50 nearest neighbors
+    sor.setStddevMulThresh(std_dev_mul_thresh_);  // Remove points that deviate more than 1 std dev
     // Filter incoming cloud, which is in odom frame
     sor.setInputCloud(incoming_cloud_);
     sor.filter(*filtered_incoming_cloud);
@@ -128,18 +156,18 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
     pcl::PointCloud<pcl::PointXYZ>::Ptr aligned_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>);
     icp.setInputSource(downsampled_incoming);
     icp.setInputTarget(downsampled_global_cloud_odom);
-    icp.setMaxCorrespondenceDistance(0.1);  // Adjust for your environment.
-    icp.setMaximumIterations(2000);           // Faster convergence.
-    icp.setTransformationEpsilon(1e-6);
-    icp.setEuclideanFitnessEpsilon(0.01);
+    icp.setMaxCorrespondenceDistance(max_correspondence_distance_);  //  maximum distance between corresponding points to consider during alignment
+    icp.setMaximumIterations(maximum_iterations_);           
+    icp.setTransformationEpsilon(transformation_epsilon_); // convergence threshold for the transformation
+    icp.setEuclideanFitnessEpsilon(euclidean_fitness_epsilon_); // threshold for the Euclidean error between the source and target clouds. if <0.01, ICP stops iterating
 
     // Use the previous ICP transform as the initial guess.
     icp.align(*aligned_cloud_odom, previous_icp_transform_);
     double fitness = icp.getFitnessScore();
 
-    if (icp.hasConverged() && fitness < 1)
+    if (icp.hasConverged() && fitness < fitness_threshold_)
     {
-        RCLCPP_INFO(this->get_logger(), "ICP converged with fitness score: %.4f", fitness);
+        // RCLCPP_INFO(this->get_logger(), "ICP converged with fitness score: %.4f", fitness);
 
         // Update the previous ICP transform for the next iteration. Send transform to localization node
         previous_icp_transform_ = icp.getFinalTransformation();

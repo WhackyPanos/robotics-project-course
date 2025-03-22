@@ -54,7 +54,7 @@ class Localization(Node):
 
     def localization_transform(self, msg):
         """ map -> odom transform update: retrieve "old" transform and update with with the PCL transform"""
-        self.get_logger().warn("Transform from ICP received!")
+        #self.get_logger().warn("Transform from ICP received!")
         if self.old_stamp is None:
             self.old_stamp = msg.header.stamp 
             return
@@ -96,14 +96,12 @@ class Localization(Node):
         self.tf_broadcaster.sendTransform(t)
         self.old_stamp = t.header.stamp
 
-        # TODO: get odom pose and transform to map pose
-
 
 def main():
     """ Function to be run if localization/icp is to be run all the time"""
     rclpy.init()
     node = Localization()
-    icp_time = 0.2 #every 1 s
+    icp_time = 0.1 #every 1 s
     node.create_timer(icp_time, node.icp_master)
     try:
         rclpy.spin(node)
