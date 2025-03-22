@@ -84,26 +84,29 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
 
 bool Clustering::perform_clustering(bool new_req)
 {
-    RCLCPP_INFO(this->get_logger(), "Enter clustering");
-    if (latest_cloud_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_) {
-        return false;
-    }
+    // RCLCPP_INFO(this->get_logger(), "Enter clustering");
+    // if (std::abs(angular_z_) >= ang_vel_threshold_) {
+    //     return false;
+    // }
+
+    RCLCPP_INFO(this->get_logger(), "Pass Filter");
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cloud_, *cloud);
 
-    pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
+    // pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
+    // pcl::PassThrough<pcl::PointXYZ> pass;
+    // pass.setInputCloud(cloud);
+    // pass.setFilterFieldName("y");
+    // pass.setFilterLimits(y_filter_min_, -0.02);
+    // pass.filter(*obstacle);
+
+    // if (!obstacle->empty()) return false;
+
+
+    // Apply passthrough filtering
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cloud);
-    pass.setFilterFieldName("y");
-    pass.setFilterLimits(y_filter_min_, -0.02);
-    pass.filter(*obstacle);
-
-    if (!obstacle->empty()) return false;
-
-
-    RCLCPP_INFO(this->get_logger(), "Pass Filter");
-    // Apply passthrough filtering
     pass.setFilterFieldName("z");
     pass.setFilterLimits(z_filter_min_, z_filter_max_);
     pass.filter(*cloud);
@@ -137,6 +140,14 @@ bool Clustering::perform_clustering(bool new_req)
         for (const auto& idx : cluster.indices) {
             cloud_cluster->push_back((*cloud)[idx]);
         }
+
+        pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
+        // pcl::PassThrough<pcl::PointXYZ> pass;
+        pass.setInputCloud(cloud_cluster);
+        pass.setFilterFieldName("y");
+        pass.setFilterLimits(y_filter_min_, -0.02);
+        pass.filter(*obstacle);
+        if (!obstacle->empty()) continue;
 
         RCLCPP_INFO(this->get_logger(), "Cluster found");
     // If new, check also for obstacle or occupation in grid
@@ -232,7 +243,7 @@ pcl::PointXYZ Clustering::computeOBBPosition(pcl::PointCloud<pcl::PointXYZ>::Ptr
 
 bool Clustering::is_occupied(float x, float y)
 {
-    if(latest_cloud_.data.empty()) return false;
+    // if(latest_cloud_.data.empty()) return false;
 
     int mx = static_cast<int>((x - latest_map_.info.origin.position.x) / latest_map_.info.resolution);
     int my = static_cast<int>((y - latest_map_.info.origin.position.y) / latest_map_.info.resolution);
