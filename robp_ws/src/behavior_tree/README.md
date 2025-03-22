@@ -9,6 +9,8 @@ Launch:
 
 ``` ros2 launch robp_launch collection_node_launch.py ```
 
+``` ros2 launch robp_launch arm_servo_launch.py ```
+
 # Collection Phase
 #### **Important topics**
 | Topic name | Published | Subscribed from | Description
