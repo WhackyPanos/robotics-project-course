@@ -1,7 +1,7 @@
 # Behavior Tree Package
 Package with the behavior trees for the Exploration and Collection phases. 
 
-Launch:
+While being on robp_group3 (not robp_ws), build, source and then launch:
 
 ``` fastdds discovery -i 0 -t 192.168.128.107 -q 42100 ```
 
