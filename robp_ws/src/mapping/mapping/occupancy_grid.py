@@ -20,6 +20,7 @@ from laser_geometry import LaserProjection
 from nav_msgs.msg import OccupancyGrid
 from std_msgs.msg import Header
 from geometry_msgs.msg import Twist
+from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
 from scipy.ndimage import binary_dilation, binary_fill_holes
 
@@ -37,6 +38,7 @@ class OccupancyGridNode(Node):
         self.config_space_pub = self.create_publisher(OccupancyGrid, '/config_space', 10)
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
         self.vel_subscription = self.create_subscription(Twist, '/cmd_vel', self.vel_callback, 10)
+        self.object_sub = self.create_subscription(MarkerArray, '/object_positions', self.obj_callback, 10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection()
@@ -53,10 +55,15 @@ class OccupancyGridNode(Node):
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.config_space = self.grid # Config space
         self.grid.fill(-1) # Sets all cells to unknown
+        self.config_space = self.grid
         self.geofence(vertices) # Sets a boundry for the workspace
 
-        # Inflation parameter
-        self.robot_radius = 0.2
+        self.robot_radius = 0.20
+        self.cost_ratio = 5
+        # free space from lidar: not marked
+        # free space from camera: 0
+        # Occupied by lidar: 100
+        # Occupied by camera: 99
         
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
@@ -70,7 +77,7 @@ class OccupancyGridNode(Node):
         max_x = float('-inf')
         min_y = float('inf')
         max_y = float('-inf')
-        tsv_file_path = '/home/group3-robot/robp_group3/robp_ws/src/mapping/mapping/workspace_3.tsv'
+        tsv_file_path = '/home/group3-robot/robp_group3/robp_ws/src/mapping/mapping/workspace_2_choped.tsv'
         vertices = [] # Stores verticies as (x, y) tuples
         with open(tsv_file_path, newline='') as tsvfile:
             reader = csv.reader(tsvfile, delimiter='\t') # List of lists  
@@ -160,7 +167,7 @@ class OccupancyGridNode(Node):
         kernel = x**2 + y**2 <= kernel_radius**2
         
         # Dilate obstacles to create configuration space
-        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)*100
+        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
 
         # Create an OccupancyGrid message
         config_grid_msg = OccupancyGrid()
@@ -201,7 +208,7 @@ class OccupancyGridNode(Node):
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
 
-        if self.angular_vel < 0.05:
+        if abs(self.angular_vel) == 0.0:
             lidar_from_frame_rel = msg.header.frame_id # Lidar link
             lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
             lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
@@ -315,7 +322,7 @@ class OccupancyGridNode(Node):
             # Ensure x, y are within the grid bounds
             if 0 <= i_x < self.width and 0 <= i_y < self.height:
                 self.grid[i_y][i_x] = 99  # Mark cell as objects
-        self.inflate_map()
+        # self.inflate_map()
 
 
 def main():

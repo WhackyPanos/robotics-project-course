@@ -10,19 +10,19 @@ def generate_launch_description():
     robp_launch_dir = get_package_share_directory('robp_launch')
     return launch.LaunchDescription([
 
-        # Node(
-        #     package='icp_cpp',  # The name of your package
-        #     executable='icp_node',  # The executable of your ICP node
-        #     name='icp_node',  # Optional: Name the node (if you want a custom name)
-        #     output='screen',  # This will print the output to the terminal
-        # ),
+        Node(
+            package='icp_cpp',  # The name of your package
+            executable='icp_node',  # The executable of your ICP node
+            name='icp_node',  # Optional: Name the node (if you want a custom name)
+            output='screen',  # This will print the output to the terminal
+        ),
 
-        # Node(
-        #     package='localization',  # The name of your package
-        #     executable='localization_transform',  # The executable of your ICP node
-        #     name='localization_transform',  # Optional: Name the node (if you want a custom name)
-        #     output='screen',  # This will print the output to the terminal
-        # ),
+        Node(
+            package='localization',  # The name of your package
+            executable='localization_transform',  # The executable of your ICP node
+            name='localization_transform',  # Optional: Name the node (if you want a custom name)
+            output='screen',  # This will print the output to the terminal
+        ),
 
         Node(
             package='odometry',
@@ -90,8 +90,8 @@ def generate_launch_description():
                 "animal_filter_max": 0.048,
                 "sphere_filter_min": 0.056,
                 "sphere_filter_max": 0.059,
-                "ang_vel_threshold": 0.05,
-                "lin_vel_threshold": 0.05,
+                "ang_vel_threshold": 0.0,
+                "lin_vel_threshold": 0.0,
                 "visualize_OBB": True
             }]
         ),

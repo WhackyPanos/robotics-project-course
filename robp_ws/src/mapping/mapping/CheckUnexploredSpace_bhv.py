@@ -30,12 +30,12 @@ class CheckOccupancyGrid(py_trees.behaviour.Behaviour, Node):
         """ Behavior Tree update step. Called every tick of the BT. """
         if self.map_explored:
             return py_trees.common.Status.SUCCESS
-        else: return py_trees.common.Status.RUNNING
+        else: return py_trees.common.Status.FAILURE
     
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """
 
-    def map_callback(self, msg:OccupancyGrid, threshold = 5):
+    def map_callback(self, msg:OccupancyGrid, threshold = 10):
         # Get the data from the occupancy grid message
         grid_data = np.array(msg.data).reshape(msg.info.height, msg.info.width)
 
