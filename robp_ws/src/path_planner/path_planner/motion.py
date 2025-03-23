@@ -70,7 +70,7 @@ class MotionNode(Node):
 
         # Parameters
         # ==================
-        self.linear_velocity = 0.15
+        self.linear_velocity = 0.17
         self.angular_velocity = 0.4
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.2 # TODO untested, adjust this value
@@ -185,8 +185,8 @@ class MotionNode(Node):
 
         if x is None or y is None or theta is None: return False
 
-        distance = math.sqrt((goal_x - x)**2 + (goal_y - y)**2)
-        angle = math.atan2(goal_y - y, goal_x - x)
+        distance = math.sqrt((self.goal_position.x - x)**2 + (self.goal_position.y - y)**2)
+        angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
         # Normalize angle difference to range [-pi, pi]
         angle_diff = math.atan2(math.sin(angle - theta), math.cos(angle - theta))
         # angle_diff = angle - theta
