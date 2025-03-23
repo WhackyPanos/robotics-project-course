@@ -16,18 +16,24 @@ from detection_bt.cluster_bt import ClusterBT
 from map_file.map_file_bt import MapFileBT
 # from path_planner.path_planner.pathPlanning_bhv import PathPlan
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
+from mapping.CheckUnexploredSpace_bhv import CheckOccupancyGrid
 # from localization.localization_transform import Localization
 
 class ExplorationBT(Node):
     def __init__(self) -> None:
         super().__init__('behavior_tree_exploration')
         # Create the root as a Sequence node
-        self.root = py_trees.composites.Sequence(name="Root", memory=True)
+        self.root = py_trees.composites.Parallel(
+            name="Stop Tree Parallel",
+            policy=py_trees.common.ParallelPolicy.SuccessOnOne()
+        )
+
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False)
 
         self.goal = PointGenerator()
         self.navigate_to_goal = NavigateToGoal()
         self.pub_occupancy_grid = PublishOccupancyGrid()
+        self.check_occupancy_grid = CheckOccupancyGrid()
         self.obstacle_on_path_detected = ObstacleOnPath()
         self.new_object_detected = ClusterBT(new_request=True)
         self.object_detected = ClusterBT(new_request=False)
@@ -42,6 +48,7 @@ class ExplorationBT(Node):
         executor.add_node(self.goal)
         executor.add_node(self.navigate_to_goal)
         executor.add_node(self.pub_occupancy_grid)
+        executor.add_node(self.check_occupancy_grid)
         executor.add_node(self.new_object_detected)
         executor.add_node(self.object_detected)
         executor.add_node(self.classify)
@@ -77,12 +84,19 @@ class ExplorationBT(Node):
             condition=self.object_detected_condition  # Condition to check if new_object_detected was successful
         )
 
-        # Sequence: Decorator will only run if new_object_detected is successful
+        fail_is_success = py_trees.decorators.FailureIsSuccess(name='fail2success', child=object_detected_guard)
+
         second_sequence = py_trees.composites.Sequence(name="second_seq", memory=True)
-        second_sequence.add_children([first_parallel, object_detected_guard])
+        second_sequence.add_children([first_parallel, fail_is_success])
+
+        first_sequence = py_trees.composites.Sequence(name='first_seq', memory=True)
+        first_sequence.add_children([self.pub_occupancy_grid, self.goal, second_sequence, self.check_occupancy_grid])
+
+        timer = py_trees.timers.Timer(name='timer', duration=300.0)
+        # timer_dec = py_trees.decorators.RunningIsFailure(name='timer_dec', child=timer) # Failure until timer finishes
 
         # Add behavior tree child nodes to the root
-        self.root.add_children([self.pub_occupancy_grid, self.goal, second_sequence])
+        self.root.add_children([timer, first_sequence])
 
         return self.root
     

@@ -52,7 +52,7 @@ class Planner_A_star(Node):
         super().__init__('planner_A_star')
         self.simple_publisher = self.create_publisher(Path ,'/motion/path' , 10)
         self.full_publisher = self.create_publisher(Path ,'/full_path' , 10)
-        self.map_subscription = self.create_subscription(OccupancyGrid, '/occupancy_grid', self.map_callback, 10)
+        self.map_subscription = self.create_subscription(OccupancyGrid, '/config_space', self.map_callback, 10)
         self.goal_subscription = self.create_subscription(PointStamped, '/goal_point', self.goal_callback, 10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
