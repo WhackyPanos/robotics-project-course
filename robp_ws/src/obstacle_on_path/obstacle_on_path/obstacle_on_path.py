@@ -5,7 +5,6 @@ import math
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Path, OccupancyGrid
-from scipy.ndimage import binary_dilation
 
 
 class CheckPath(Node):
@@ -22,13 +21,12 @@ class CheckPath(Node):
 
         self.create_subscription(
             OccupancyGrid, 
-            '/occupancy_grid',  
+            '/config_space',  
             self.map_callback, 
             10)
 
         self.path = None
-        self.map = None
-        self.robot_radius = 0.2 # May need to be adjusted
+        self.config_space = None
 
     def path_callback(self, msg: Path):
         # Store latest path msg
@@ -38,39 +36,23 @@ class CheckPath(Node):
 
     def map_callback(self, msg: OccupancyGrid):
         # Store latest map msg
-        self.map = msg
+        self.config_space = msg
 
     def behaviour(self):
-        if self.path is None or self.map is None:
+        if self.path is None or self.config_space is None:
             self.get_logger().info("Waiting for path or map data.")
             return False
                 
-        width = map.info.width
-        height = map.info.height
-        map_data = np.array(map.data).reshape((height, width))  
+        config_space = self.config_space
 
-        inflated_map = self.inflate_map(map_data)
+        width = config_space.info.width
+        height = config_space.info.height
+        map_data = np.array(config_space.data).reshape((height, width))  
 
         for index in self.path:
             x, y = index
-            if inflated_map[x, y] == 1:
+            if map_data[x, y] == 1: 
                 return False
-    
-    def inflate_map(self, grid): # Create the configurations space
-        binary_grid = np.zeros_like(grid)
-        binary_grid[grid == 100] = 1
-        
-        # Calculate kernel size based on robot radius and map resolution
-        kernel_radius = int(np.ceil(self.robot_radius / self.map_info.resolution))
-        
-        # Create circular kernel for dilation
-        y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
-        kernel = x**2 + y**2 <= kernel_radius**2
-        
-        # Dilate obstacles to create configuration space
-        config_space = binary_dilation(binary_grid, kernel).astype(np.int8)        
-        
-        return config_space
 
 
 # def main():
