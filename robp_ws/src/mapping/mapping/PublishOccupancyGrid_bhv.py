@@ -27,7 +27,7 @@ class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
         """ Behavior Tree update step. Called every tick of the BT. """
         self.occupancy_grid.publish_current_grid()
         return py_trees.common.Status.SUCCESS
-
+    
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """
         self.get_logger().info(f"Terminating PublishOccupancyGridBT")

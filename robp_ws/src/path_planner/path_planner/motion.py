@@ -69,7 +69,7 @@ class MotionNode(Node):
 
         # Parameters
         # ==================
-        self.linear_velocity = 0.15
+        self.linear_velocity = 0.17
         self.angular_velocity = 0.4
         self.goal_threshold = 0.05
         self.kp = 1.5
@@ -177,7 +177,9 @@ class MotionNode(Node):
 
         distance = math.sqrt((self.goal_position.x - x)**2 + (self.goal_position.y - y)**2)
         angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
-        angle_diff = angle - theta
+        # Normalize angle difference to range [-pi, pi]
+        angle_diff = math.atan2(math.sin(angle - theta), math.cos(angle - theta))
+        # angle_diff = angle - theta
         cur_time = self.get_clock().now().nanoseconds / 1e9
         self.elapsed_time = cur_time - self.prev_time
         
