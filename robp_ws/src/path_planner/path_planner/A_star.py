@@ -9,7 +9,7 @@ from scipy.ndimage import binary_dilation
 from geometry_msgs.msg import PointStamped
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
-from mapping.mapping.occupancy_grid import OccupancyGridNode
+from mapping.occupancy_grid import OccupancyGridNode
 
 class Nodes:
         def __init__(self, x, y):
