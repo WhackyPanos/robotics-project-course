@@ -62,8 +62,8 @@ class Localization(Node):
         # retrieve old transform (with correct timestamp) see documentation https://docs.ros.org/en/jade/api/tf/html/python/tf_python.html
         try:
             t_old = self.tf_buffer.lookup_transform(
-                self.to_frame_rel,
-                self.from_frame_rel,
+                self.to_frame_rel,  # Target frame
+                self.from_frame_rel, # Source frame
                 self.old_stamp)
         except TransformException as ex:
             self.get_logger().info(

@@ -71,8 +71,7 @@ class Odometry(Node):
         self.count = 0
 
         # Retrieve transform and if it's null, publish a new one
-        self.publish_initial_transform()
-        self.transform_timer = self.create_timer(0.001, self.publish_transform_until_localization)
+        self.transform_timer = self.create_timer(0.25, self.publish_transform_until_localization)
 
     def publish_initial_transform(self):
         t = TransformStamped()
@@ -92,21 +91,22 @@ class Odometry(Node):
         t.transform.rotation.w = 1.0  # Identity rotation
 
         #self.get_logger().info('Publishing initial map to odom frame (in odom node)')
+        #self.get_logger().info('Sending transform (odom node)')
         self.tf_broadcaster_init.sendTransform(t)
 
 
     def publish_transform_until_localization(self):
         #self.get_logger().info('Checking if localization published transform')
         transform = self.tf_buffer.lookup_transform(
-            "odom",  # Target frame
-            "map",  # Source frame
+            'map',  # Target frame
+            'odom',  # Source frame
             rclpy.time.Time(seconds=0.0),  # Get the latest available transform
             timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
         )
-        if transform.transform.translation.x or transform.transform.translation.y != 0.0:
-            pass
-        else:
-            self.publish_initial_transform()
+        # if transform.transform.translation.x or transform.transform.translation.y != 0.0:
+        #     pass
+        # else:
+        #     self.publish_initial_transform()
         return
 
     def localization_transform_trigger(self, msg):
