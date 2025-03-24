@@ -78,9 +78,9 @@ private:
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
     std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
     
-    double angular_z_ = 0.0;
-    double linear_x_ = 0.0;
-    double linear_y_ = 0.0;
+    double angular_z_;
+    double linear_x_;
+    double linear_y_;
     sensor_msgs::msg::PointCloud2 latest_cluster_;
 
     // Parameters
