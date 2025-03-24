@@ -47,15 +47,6 @@ private:
 
     // Store the previous ICP transform as the initial guess for the next iteration.
     Eigen::Matrix4f previous_icp_transform_;
-
-    // Parameters
-    int mean_k_neighbours_;
-    double std_dev_mul_thresh_;
-    double max_correspondence_distance_;
-    int maximum_iterations_;
-    double transformation_epsilon_;
-    double euclidean_fitness_epsilon_;
-    double fitness_threshold_;
 };
 
 #endif  // ICP_HPP

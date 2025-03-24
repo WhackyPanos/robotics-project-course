@@ -31,7 +31,7 @@ class CollectionBT(Node):
         self.root = py_trees.composites.Sequence(name="Root", memory= False)
         
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
-        #self.pub_occupancy_grid = PublishOccupancyGrid()
+        self.pub_occupancy_grid = PublishOccupancyGrid()
         self.localization = Localization_bhv()
         self.navigate_to_goal = NavigateToGoal()
         self.path_planner = None #TODO
@@ -47,14 +47,14 @@ class CollectionBT(Node):
         # Add nodes to executor
         executor.add_node(self.next_object_bhv)
         executor.add_node(self.navigate_to_goal)
-        #executor.add_node(self.pub_occupancy_grid)
+        executor.add_node(self.pub_occupancy_grid)
         executor.add_node(self.localization)
         executor.add_node(self.tuck_arm)
         executor.add_node(self.pick_object)
         executor.add_node(self.lift)
         executor.add_node(self.arm_task_succeeded)
 
-        #executor.add_node(self.pub_occupancy_grid.occupancy_grid)
+        executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
         executor.add_node(self.localization.localization_node)
 
@@ -69,7 +69,7 @@ class CollectionBT(Node):
         
         self.path_planning_pick = py_trees.composites.Parallel(
             name = 'path_plan_pick', 
-            children = [ self.localization, plan_and_move], # self.pub_occupancy_grid is missing for now
+            children = [self.pub_occupancy_grid, self.localization, plan_and_move],
             policy = py_trees.common.ParallelPolicy.SuccessOnSelected([plan_and_move]))
         
         # Arm execution: pick or place
@@ -87,7 +87,7 @@ class CollectionBT(Node):
         self.repeat_picklift = py_trees.decorators.Retry(
             name = 'Repeat_Pick&Lift', 
             child = self.pick_and_lift, 
-            num_failures = -1)
+            num_failures = 2)
             # selector between them
         self.pick_or_place = py_trees.composites.Selector(
             name = 'Pick_or_Place', 
@@ -132,7 +132,7 @@ def main(args=None):
     executor.add_node(node)
     node.tree.setup(timeout=10.0, node=node)
     time.sleep(2.0)
-    node.tree.tick_tock(period_ms=50)
+    node.tree.tick_tock(period_ms=400)
 
     try:
         executor.spin()

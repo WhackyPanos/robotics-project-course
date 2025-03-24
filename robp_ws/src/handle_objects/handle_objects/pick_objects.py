@@ -18,8 +18,6 @@ from geometry_msgs.msg import PoseStamped, Pose, PointStamped
 from math import pi, acos, atan2, atan, cos, sin, sqrt
 import numpy as np 
 
-#Arm movement: started = False, moving = False, tucked = False
-# Arm movement: started = True, moving = True, tucked = False
 
 # ----------------------------------- BEHAVIOUR 1 ---------------------------------------------------------------
 class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
@@ -104,6 +102,8 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
          
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
+
+        print(f"Arm lifting: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
         if self.done:
             return py_trees.common.Status.SUCCESS
         elif not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
@@ -115,17 +115,15 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             return py_trees.common.Status.RUNNING  # Keep running while the arm moves
         
         elif self.arm_started and self.arm_moving and not self.arm_tucked:
+            #self.publish_msg()
             return py_trees.common.Status.RUNNING # Keep running while the arm moves
         
         elif self.arm_tucked:
             self.arm_started,self.arm_tucked, self.arm_moving, self.done= False, False, False, True
-            self.node.get_logger().info(f"Tucking SUCCEEDED")
             return py_trees.common.Status.SUCCESS
 
         else:
-            self.node.get_logger().error(f"ERROR: state not defined")
-            return py_trees.common.Status.FAILURE # Keep running while the arm moves
-
+             print("ERROR")
              
     def terminate(self, new_status: py_trees.common.Status):
         """
@@ -255,75 +253,75 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
          
     def update(self):
-        """ Behavior Tree execution step. Called whenever the node is ticked """
-        #self.node.get_logger().info('TICKING INVERSE KINEMATICS')
-        if self.done:
-            return py_trees.common.Status.SUCCESS
-        elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
-            self.object_transform() # tranform object position from map frame to arm base frame
-            self.node.get_logger().info(f"Trying to reach {[self.x, self.y, self.z]}")
-            # target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
-            # for j,IG in enumerate(self.initial_guesses):
-            #     for i, thresh in enumerate(self.thresholds):
-            #         result, angles = self.ik_solver.solve_ik(target_pose, IG, thresh, 100000)
-            #         if result >= 0:
-            #             # publish corrected angles in the servo_pos topic. this function already shows message in terminal
-            #             out_limits = self.publish_angles(angles)
-            #             if not out_limits:
-            #                 self.arm_moving = True
-            #                 return py_trees.common.Status.RUNNING
-            #             else:
-            #                 break
-            #         else:
-            #             self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
-            #     self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
-            self.node.get_logger().warn(f"COULD NOT GET SOLUTION, trying plan B")
+            """ Behavior Tree execution step. Called whenever the node is ticked """
 
-            # if everything fails, try a simpler approach
-            msg = self.pick_planB(self.x, self.y, self.z)
-            if msg is not None:
+            if self.done:
+                return py_trees.common.Status.SUCCESS
+            elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
+                self.object_transform() # tranform object position from map frame to arm base frame
+                self.node.get_logger().info(f"Trying to reach {[self.x, self.y, self.z]}")
+                # target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
+                # for j,IG in enumerate(self.initial_guesses):
+                #     for i, thresh in enumerate(self.thresholds):
+                #         result, angles = self.ik_solver.solve_ik(target_pose, IG, thresh, 100000)
+                #         if result >= 0:
+                #             # publish corrected angles in the servo_pos topic. this function already shows message in terminal
+                #             out_limits = self.publish_angles(angles)
+                #             if not out_limits:
+                #                 self.arm_moving = True
+                #                 return py_trees.common.Status.RUNNING
+                #             else:
+                #                 break
+                #         else:
+                #             self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
+                #     self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
+                self.node.get_logger().warn(f"COULD NOT GET SOLUTION, trying plan B")
+
+                # if everything fails, try a simpler approach
+                msg = self.pick_planB(self.x, self.y, self.z)
+                if msg is not None:
+                    self.ota_publisher_.publish(msg)
+                    #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
+                    self.arm_moving = True
+                    self.node.get_logger().warn(f"Message published, arm is moving")
+                    return py_trees.common.Status.RUNNING
+                # TODO: if pick and search fails, a message has to be published. That can happen here or in the arm camera
+                else:
+                    self.picklift_pub.publish(Bool(data=False))
+                    return py_trees.common.Status.FAILURE
+            
+            # if arm is moving but not in grasp position, return keep running
+            elif self.arm_moving and not self.arm_tucked:
+                self.node.get_logger().warn(f"Arm is still  moving")
+                return py_trees.common.Status.RUNNING 
+            
+            # if arm is in grasp position,  start grasping 
+            elif self.arm_tucked and not self.object_grasped and not self.arm_moving:
+                self.node.get_logger().info(f"Arm Moving = {self.arm_moving}, Arm Tucked = {self.arm_tucked} and grasped = {self.object_grasped}")
+                msg = Int16MultiArray()
+                msg.layout = MultiArrayLayout(
+                    dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
+                    data_offset=0)  
+                times = [self.obj_tuck_arm_time] * 6
+                self.desired_servo_angles[0] = 10000 #close gripper
+                msg.data = self.desired_servo_angles + times
                 self.ota_publisher_.publish(msg)
                 #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
                 self.arm_moving = True
-                self.node.get_logger().warn(f"Message published, arm is moving")
                 return py_trees.common.Status.RUNNING
-            # TODO: if pick and search fails, a message has to be published. That can happen here or in the arm camera
+            
+            elif self.arm_tucked and not self.object_grasped and self.arm_moving:
+                return py_trees.common.Status.RUNNING 
+            
+            # if object is grasped, return success
+            elif self.object_grasped:
+                self.node.get_logger().info(f"Sucess, lifting arm now")
+                self.done = True
+                self.picklift_pub.publish(Bool(data=True))
+                return py_trees.common.Status.SUCCESS
+            
             else:
-                self.picklift_pub.publish(Bool(data=False))
-                return py_trees.common.Status.FAILURE
-        
-        # if arm is moving but not in grasp position, return keep running
-        elif self.arm_moving and not self.arm_tucked:
-            self.node.get_logger().warn(f"Arm is still  moving")
-            return py_trees.common.Status.RUNNING 
-        
-        # if arm is in grasp position,  start grasping 
-        elif self.arm_tucked and not self.object_grasped and not self.arm_moving:
-            self.node.get_logger().info(f"Arm Moving = {self.arm_moving}, Arm Tucked = {self.arm_tucked} and grasped = {self.object_grasped}")
-            msg = Int16MultiArray()
-            msg.layout = MultiArrayLayout(
-                dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
-                data_offset=0)  
-            times = [self.obj_tuck_arm_time] * 6
-            self.desired_servo_angles[0] = 10000 #close gripper
-            msg.data = self.desired_servo_angles + times
-            self.ota_publisher_.publish(msg)
-            #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
-            self.arm_moving = True
-            return py_trees.common.Status.RUNNING
-        
-        elif self.arm_tucked and not self.object_grasped and self.arm_moving:
-            return py_trees.common.Status.RUNNING 
-        
-        # if object is grasped, return success
-        elif self.object_grasped:
-            self.node.get_logger().info(f"Sucess, lifting arm now")
-            self.done = True
-            self.picklift_pub.publish(Bool(data=True))
-            return py_trees.common.Status.SUCCESS
-        
-        else:
-            return py_trees.common.Status.RUNNING  
+                return py_trees.common.Status.RUNNING  
             
     def terminate(self, new_status: py_trees.common.Status):
         """
@@ -352,8 +350,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.node.get_logger().info(
                 f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
             return
-        
-        self.node.get_logger().info("TRANSFORM RETRIEVED, let´s transform")
         
         # do transformation   
         object_MF = PointStamped()
@@ -625,7 +621,6 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         """ Behavior Tree execution step. Called whenever the node is ticked 
             If the next goal is to place an object, the arm will be tucked. Otherwise, we want to tick the picking behavior"""
         if self.next_goal == 'Object':
-            #self.node.get_logger().info('IT´S NOT THE TIME POR PLACING, TRYING PICKING')
             return py_trees.common.Status.FAILURE
         else:
 

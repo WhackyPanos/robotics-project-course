@@ -10,8 +10,7 @@ import numpy as np
 from math import sqrt
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
-from tf2_ros import TransformException, TransformBroadcaster
-from geometry_msgs.msg import TransformStamped
+from tf2_ros import TransformException
 
 
 
@@ -27,6 +26,7 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
            a parallel checking for a valid policy configuration after children have been added or removed"""
         self.node = kwargs["node"]
+        # TODO: transform to map
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.to_frame_rel = 'map'
@@ -50,15 +50,13 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             distances = np.array([sqrt((self.robot_pos[0]-obj[1])**2 + (self.robot_pos[1]-obj[2])**2) for obj in points_list])
             closest_obj = self.obj_list[np.argmin(distances)]
 
-            # publish goal point (object to pick) and reset string flag 
+            # publish goal point (object to pick)
             msg = PointStamped()
             msg.point.x = closest_obj[1]
             msg.point.y = closest_obj[2]
             msg.header.stamp = self.node.get_clock().now().to_msg()
             msg.header.frame_id = 'map'
-            #self.get_logger().info('Publishing new goal')
             self.next_goal_pub.publish(msg)
-            self.need_next_object = None #TODO: UNCOMMENT THIS, OTHERWISE COLLECTION WILL NOT WORK
         return py_trees.common.Status.SUCCESS
 
 

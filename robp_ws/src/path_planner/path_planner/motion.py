@@ -67,7 +67,7 @@ class MotionNode(Node):
         # ==================
         self.linear_velocity = 0.2
         self.angular_velocity = 0.4
-        self.goal_threshold = 0.10 #TODO: the robot doesn't seem to respect it that much when tesing
+        self.goal_threshold = 0.05
         self.kp = 1.5
         self.ki = 0.015
         self.kd = 0.5
@@ -79,7 +79,7 @@ class MotionNode(Node):
         self.goal_position = msg.point
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        #self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
+        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -196,10 +196,10 @@ class MotionNode(Node):
             self.vel_cmd.linear.x = 0.0
             self.cmd_vel_publisher.publish(self.vel_cmd)
             self.goal_reached_publisher.publish(Bool(data=True))
-            self.goal_reached_flag = True 
+            self.goal_reached_flag = True
             self.get_logger().info('Goal reached: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
-            self.icp_publisher.publish(Bool(data=False)) #TODO(francisco): i am using points, hence i need this here as well
-            #self.is_goal = False #TODO: Francisco changed because this bhv wouldn't return succes then
+            
+            self.is_goal = False
             if self.is_path and len(self.path.poses) > 1:
                 self.path.poses.pop(0)
                 self.path_publisher.publish(self.path)

@@ -16,12 +16,11 @@ class Localization_bhv(py_trees.behaviour.Behaviour, Node): # this class is a py
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
         a parallel checking for a valid policy configuration after children have been added or removed"""
         self.node = kwargs["node"]
-        self.icp_time = 0.1 #every 1 s
+        self.icp_time = 0.2 #every 1 s
         self.node.create_subscription(
             Bool, "/icp/activate", self.localization_activate_callback, 10)
         self.localization_activate = True
         self.localization_timer = None
-        self.localization_activated = False
 
 
     def initialise(self):
@@ -32,18 +31,14 @@ class Localization_bhv(py_trees.behaviour.Behaviour, Node): # this class is a py
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
-        if self.localization_activate and not self.localization_activated:
+        if self.localization_activate:
             self.localization_timer = self.node.create_timer(self.icp_time, self.localization_node.icp_master)
-            self.localization_activated = True
-            return py_trees.common.Status.RUNNING
-        elif self.localization_activate and self.localization_activated:
             return py_trees.common.Status.RUNNING
         else:
             try:
                 self.localization_timer.cancel()
             except:
                 pass
-            self.localization_activated = False
             return py_trees.common.Status.SUCCESS
 
     

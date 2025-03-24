@@ -22,7 +22,6 @@ setup(
         'console_scripts': [
             #'ekf = localization.ekf:main',
             'localization_transform = localization.localization_transform:main',
-            'stop_static = localization.stop_static:main',
         ],
     },
 )
