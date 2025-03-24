@@ -24,7 +24,8 @@ ICP::ICP() : Node("icp_node", rclcpp::NodeOptions()
                 incoming_cloud_(new pcl::PointCloud<pcl::PointXYZ>),
                 first_cloud_(new pcl::PointCloud<pcl::PointXYZ>),
                 tf_listener_(tf_buffer_),
-                previous_icp_transform_(Eigen::Matrix4f::Identity())
+                previous_icp_transform_(Eigen::Matrix4f::Identity()),
+                last_stamp_(rclcpp::Time(0)) // Initialize with time 0
 
 
 {
@@ -75,6 +76,8 @@ ICP::ICP() : Node("icp_node", rclcpp::NodeOptions()
 
 void ICP::scan_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
 {
+    // Store timestamp from incoming LaserScan message
+    last_stamp_ = msg->header.stamp;
     // RCLCPP_INFO(this->get_logger(), "Received new scan");
     // Convert LaserScan to pcl::PointCloud<pcl::PointXYZ> (assuming z=0)
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
@@ -129,7 +132,7 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
 
     // Create msg to be published so we get the correct timestamp
     geometry_msgs::msg::TransformStamped transform_msg;
-    transform_msg.header.stamp = this->get_clock()->now();
+    transform_msg.header.stamp = last_stamp_;  // Use the timestamp from the latest point cloud
 
     // Apply Statistical Outlier Removal to incoming and global clouds
     pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_incoming_cloud(new pcl::PointCloud<pcl::PointXYZ>);

@@ -71,7 +71,8 @@ class Odometry(Node):
         self.count = 0
 
         # Retrieve transform and if it's null, publish a new one
-        self.transform_timer = self.create_timer(0.5, self.publish_transform_until_localization)
+        self.publish_initial_transform()
+        self.transform_timer = self.create_timer(0.001, self.publish_transform_until_localization)
 
     def publish_initial_transform(self):
         t = TransformStamped()
@@ -95,7 +96,7 @@ class Odometry(Node):
 
 
     def publish_transform_until_localization(self):
-        self.get_logger().info('Checking if localization published transform')
+        #self.get_logger().info('Checking if localization published transform')
         transform = self.tf_buffer.lookup_transform(
             "odom",  # Target frame
             "map",  # Source frame

@@ -38,6 +38,8 @@ private:
     pcl::PointCloud<pcl::PointXYZ>::Ptr global_cloud_odom;  // Global map in odom (updated during ICP)
     pcl::PointCloud<pcl::PointXYZ>::Ptr incoming_cloud_;  // Incoming scan point cloud
     pcl::PointCloud<pcl::PointXYZ>::Ptr first_cloud_;     // First point cloud for loop closure
+    rclcpp::Time last_stamp_;  // Store the timestamp of the latest point cloud
+    
 
     // tf2 Buffer and Listener for transforming point clouds
     tf2_ros::Buffer tf_buffer_{this->get_clock()};
