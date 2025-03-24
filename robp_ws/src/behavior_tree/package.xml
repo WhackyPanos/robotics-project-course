@@ -17,6 +17,7 @@
   <depend>path_planner</depend>
   <depend>geometry_msgs</depend>
   <depend>localization</depend>
+  <depend>tf2_ros</depend>
 
  
  

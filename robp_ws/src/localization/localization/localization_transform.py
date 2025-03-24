@@ -93,6 +93,7 @@ class Localization(Node):
         t.transform.rotation.z = q[3]
 
         # Send the transformation
+        self.get_logger().info(f'Publishing transform between map and odom (localization node)')
         self.tf_broadcaster.sendTransform(t)
         self.old_stamp = t.header.stamp
 

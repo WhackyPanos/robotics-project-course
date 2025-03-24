@@ -13,6 +13,8 @@ from path_planner.motion_bhv import NavigateToGoal
 from localization.localization_bhv import Localization_bhv
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
 import time
+from tf2_ros import TransformBroadcaster
+from geometry_msgs.msg import TransformStamped
 
 
 
@@ -22,6 +24,8 @@ class CollectionBT(Node):
         relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
         self.objs_list, self.box_list = self.create_lists()
+        self.tf_broadcaster = TransformBroadcaster(self)
+        #self.publish_initial_transform()
   
         # root and behaviors creation
         self.root = py_trees.composites.Sequence(name="Root", memory= False)
@@ -108,6 +112,14 @@ class CollectionBT(Node):
         box_list = [[sublist[0]] + [0.01*float(x) for x in sublist[1:]] for sublist in data if sublist[0] == 'B']
 
         return objs_list, box_list
+    
+    def publish_initial_transform(self):
+        t = TransformStamped()
+        t.header.stamp = rclpy.time.Time(seconds=0).to_msg()
+        t.header.frame_id = 'map'
+        t.child_frame_id = 'odom'
+        self.get_logger().info('Publishing initial map to odom frame (in collection_bt node)')
+        self.tf_broadcaster.sendTransform(t)
 
 
 
