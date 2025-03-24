@@ -14,7 +14,7 @@ from obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
 from detection_bt.classify_bt import ClassifyBT
 from detection_bt.cluster_bt import ClusterBT
 from map_file.map_file_bt import MapFileBT
-# from path_planner.path_planner.pathPlanning_bhv import PathPlan
+from path_planner.pathPlanning_bhv import PathPlan
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
 from mapping.CheckUnexploredSpace_bhv import CheckOccupancyGrid
 # from localization.localization_transform import Localization
@@ -39,6 +39,7 @@ class ExplorationBT(Node):
         self.object_detected = ClusterBT(new_request=False)
         self.classify = ClassifyBT()
         self.update_map_file = MapFileBT()
+        self.path_plan = PathPlan()
 
     def create_root(self, executor):
         """
@@ -58,7 +59,7 @@ class ExplorationBT(Node):
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
         executor.add_node(self.goal.random_point_node)
-
+        executor.add_node(self.path_plan)
 
         third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
         third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
@@ -89,7 +90,7 @@ class ExplorationBT(Node):
         second_sequence.add_children([first_parallel, fail_is_success])
 
         first_sequence = py_trees.composites.Sequence(name='first_seq', memory=True)
-        first_sequence.add_children([self.pub_occupancy_grid, self.goal, second_sequence, self.check_occupancy_grid])
+        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan,  second_sequence, self.check_occupancy_grid])
 
         timer = py_trees.timers.Timer(name='timer', duration=300.0)
         # timer_dec = py_trees.decorators.RunningIsFailure(name='timer_dec', child=timer) # Failure until timer finishes
