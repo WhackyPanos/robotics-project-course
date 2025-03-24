@@ -5,12 +5,11 @@ import heapq
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid, Path
 from geometry_msgs.msg import PoseStamped
-from scipy.ndimage import binary_dilation
+#from scipy.ndimage import binary_dilation
 from geometry_msgs.msg import PointStamped
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
-from mapping.occupancy_grid import OccupancyGridNode
-from mapping.occupancy_grid import OccupancyGridNode
+#from mapping.occupancy_grid import OccupancyGridNode
 
 class Nodes:
         def __init__(self, x, y):
@@ -24,23 +23,23 @@ class Nodes:
         def __lt__(self, other):
             return self.f < other.f
 
-        def is_ok(self, config_space, map_info):
+        def is_ok(self, config_space):
             # Check if within map bounds
-            if (self.x < 0 or self.x >= map_info.width or 
-                self.y < 0 or self.y >= map_info.height):
+            if (self.x < 0 or self.x >= config_space.info.width or 
+                self.y < 0 or self.y >= config_space.info.height):
                 return False
             
             # Check if in free space or unknown (0) rather than obstacle (1)
             return config_space[self.y][self.x] == 0
 
-        def get_children(self, node_goal, config_space, map_info, cost_ratio):
+        def get_children(self, node_goal, config_space, cost_ratio):
             ok_children_list = []
             step_size = 1
             directions = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
 
             children_list = [Nodes(self.x + dx * step_size, self.y + dy * step_size) for dx, dy in directions]
             for node_child in children_list:
-                if node_child.is_ok(config_space, map_info):
+                if node_child.is_ok(config_space):
                     node_child.g = self.g + ((self.x - node_child.x)**2 + (self.y - node_child.y)**2)**0.5 
                     node_child.h = ((node_goal.x - node_child.x)**2 + (node_goal.y - node_child.y)**2)**0.5
                     node_child.f = cost_ratio*node_child.h + node_child.g
@@ -62,36 +61,18 @@ class Planner_A_star(Node):
         self.robot_radius = 0.20
         self.cost_ratio = 5
         self.config_space = None
-        self.map_info = None
-        self.occupancy_grid_msg =None
         self.goal_msg = None
     
     def goal_callback(self, msg):
         self.goal_msg = msg
         
     def map_callback(self, msg): # Create the configurations space
-        self.occupancy_grid_msg = msg 
-        self.map_info = msg.info       
-    
-    def inflate_map(self, occupancy_grid_msg):
-        grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
-        binary_grid = np.zeros_like(grid)
-        binary_grid[grid > 50] = 1
-        # Calculate kernel size based on robot radius and map resolution
-        kernel_radius = int(np.ceil(self.robot_radius / self.map_info.resolution))
-        
-        # Create circular kernel for dilation
-        y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
-        kernel = x**2 + y**2 <= kernel_radius**2
-        
-        # Dilate obstacles to create configuration space
-        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
-        self.get_logger().info(f'Configuration space created with robot radius: {self.robot_radius}m')
+        self.config_space = msg       
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
-        i_x = int((x - self.map_info.origin.position.x) / self.map_info.resolution)    
-        i_y = int((y - self.map_info.origin.position.y) / self.map_info.resolution)
+        i_x = int((x - self.config_space.info.origin.position.x) / self.config_space.info.resolution)    
+        i_y = int((y - self.config_space.info.origin.position.y) / self.config_space.info.resolution)
         return i_x, i_y
     
     def path_plan(self): # Called from the behavior   
@@ -103,15 +84,12 @@ class Planner_A_star(Node):
         except Exception as e:
             self.get_logger().warn(f"Lookup failed: {str(e)}")
             return
-        if self.map_info is None:
-            self.get_logger().warn('Occuapncy grid not recived for path planning')
+        if self.config_space is None:
+            self.get_logger().warn('Configuration space not recived for path planning')
             return
         if self.goal_msg is None:
             self.get_logger().warn('Goal point not recived for path planning')
             return
-        
-        # Inflate map
-        self.inflate_map(self.occupancy_grid_msg)
 
         # Convert world to grid (using inherited function)
         i_start_x, i_start_y = self.world_to_grid(start_x, start_y)
@@ -173,12 +151,11 @@ class Planner_A_star(Node):
         while open_dict:
             node_current = open_dict[min(open_dict.keys(), key=lambda k: open_dict[k].f)] # Gets the node with the lowest f score
             closed_dict[node_current.x, node_current.y] = node_current
-            goal_distance = node_current.h * self.map_info.resolution
-            if goal_distance < 0.1: 
+            if node_start == node_goal: 
                 self.get_logger().warn("Finished with A* algorithm")
                 return self.construct_path(node_current)
 
-            for node_child in node_current.get_children(node_goal, self.config_space, self.map_info, self.cost_ratio):
+            for node_child in node_current.get_children(node_goal, self.config_space, self.cost_ratio):
                 child_key = (node_child.x, node_child.y)
                 if child_key in closed_dict:
                     continue
