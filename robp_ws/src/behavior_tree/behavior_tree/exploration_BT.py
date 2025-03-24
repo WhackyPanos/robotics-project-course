@@ -61,13 +61,15 @@ class ExplorationBT(Node):
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
         executor.add_node(self.goal.random_point_node)
-        executor.add_node(self.path_plan)
 
-        # decorator = py_trees.decorators.Repeat(
-        #     name='dec_repeat', 
-        #     child=third_sequence,
-        #     num_success=5   # 5 consecutive successes
-        # )
+        third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
+        third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
+
+        decorator = py_trees.decorators.Repeat(
+            name='dec_repeat', 
+            child=third_sequence,
+            num_success=5   # 5 consecutive successes
+        )
 
         # second_sequence = py_trees.composites.Sequence(name='second_seq', memory=True)
         # second_sequence.add_children([self.new_object_detected, decorator])
@@ -92,7 +94,7 @@ class ExplorationBT(Node):
         second_sequence.add_children([first_parallel, fail_is_success])
 
         first_sequence = py_trees.composites.Sequence(name='first_seq', memory=True)
-        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan,  second_sequence, self.check_occupancy_grid])
+        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan, second_sequence, self.check_occupancy_grid])
 
         timer = py_trees.timers.Timer(name='timer', duration=300.0)
         # timer_dec = py_trees.decorators.RunningIsFailure(name='timer_dec', child=timer) # Failure until timer finishes
@@ -102,7 +104,6 @@ class ExplorationBT(Node):
 
         return self.root
     
-
     
     # Check for eternal guard if the new_object_detected behavior has succeeded
     def object_detected_condition(self):
