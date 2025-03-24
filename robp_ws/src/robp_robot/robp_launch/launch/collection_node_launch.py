@@ -27,7 +27,7 @@ def generate_launch_description():
 
         Node(
             package='tf2_ros',
-            executable='static_transform_publisher',
+            executable='transform_publisher',
             arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
         ),
 
