@@ -32,7 +32,7 @@ class CollectionBT(Node):
         
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
         self.pub_occupancy_grid = PublishOccupancyGrid()
-        self.localization = Localization_bhv()
+        #self.localization = Localization_bhv()
         self.navigate_to_goal = NavigateToGoal()
         self.path_planner = None #TODO
 
@@ -48,7 +48,7 @@ class CollectionBT(Node):
         executor.add_node(self.next_object_bhv)
         executor.add_node(self.navigate_to_goal)
         executor.add_node(self.pub_occupancy_grid)
-        executor.add_node(self.localization)
+        #executor.add_node(self.localization)
         executor.add_node(self.tuck_arm)
         executor.add_node(self.pick_object)
         executor.add_node(self.lift)
@@ -56,7 +56,7 @@ class CollectionBT(Node):
 
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
-        executor.add_node(self.localization.localization_node)
+        #executor.add_node(self.localization.localization_node)
 
 
     def create_tree(self): 
@@ -69,7 +69,7 @@ class CollectionBT(Node):
         
         self.path_planning_pick = py_trees.composites.Parallel(
             name = 'path_plan_pick', 
-            children = [self.pub_occupancy_grid, self.localization, plan_and_move],
+            children = [plan_and_move], #self.localization, self.pub_occupancy_grid, 
             policy = py_trees.common.ParallelPolicy.SuccessOnSelected([plan_and_move]))
         
         # Arm execution: pick or place

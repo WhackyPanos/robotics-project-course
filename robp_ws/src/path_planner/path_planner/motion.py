@@ -43,6 +43,7 @@ class MotionNode(Node):
         self.vel_cmd.linear.z = 0.0
         self.vel_cmd.angular.x = 0.0
         self.vel_cmd.angular.y = 0.0
+        self.prev_time = self.get_clock().now().nanoseconds / 1e9
 
         self.x_map = None
         self.y_map = None

@@ -163,19 +163,15 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
 
         // Get transform between map and odom
         geometry_msgs::msg::TransformStamped map_transform_msg;
-        bool transformation_ready = false;
-        while (transformation_ready == false) {
-            try
-            {
-                map_transform_msg = tf_buffer_.lookupTransform("map", "odom", transform_msg.header.stamp, rclcpp::Duration(2, 0)); //target frame, parent frame
-                transformation_ready = true;
-            }
-            catch(...)
-            {
-                RCLCPP_WARN(this->get_logger(), "Transform not available yet");
-                continue;
-            }       
+        try
+        {
+            map_transform_msg = tf_buffer_.lookupTransform("map", "odom", transform_msg.header.stamp, rclcpp::Duration(1, 0)); //target frame, parent frame
         }
+        catch(...)
+        {
+            map_transform_msg = tf_buffer_.lookupTransform("map", "odom", tf2::TimePointZero); //target frame, parent frame
+        }       
+        
 
         // Update global point cloud in odom frame
         *global_cloud_odom += *aligned_cloud_odom;

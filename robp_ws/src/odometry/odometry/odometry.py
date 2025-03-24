@@ -103,10 +103,10 @@ class Odometry(Node):
             rclpy.time.Time(seconds=0.0),  # Get the latest available transform
             timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
         )
-        # if transform.transform.translation.x or transform.transform.translation.y != 0.0:
-        #     pass
-        # else:
-        #     self.publish_initial_transform()
+        if transform.transform.translation.x != 0.0 or transform.transform.translation.y != 0.0:
+            pass
+        else:
+            self.publish_initial_transform()
         return
 
     def localization_transform_trigger(self, msg):
@@ -175,10 +175,10 @@ class Odometry(Node):
         self._yaw = self._yaw + delta_theta # TODO: Fill in
         
         #stamp = self.get_clock().now() # TODO: Fill in
-        stamp = msg.header.stamp
+        self.stamp = msg.header.stamp
 
-        self.broadcast_transform(stamp, self._x, self._y, self._yaw)
-        self.publish_path(stamp, self._x, self._y, self._yaw)
+        self.broadcast_transform(self.stamp, self._x, self._y, self._yaw)
+        self.publish_path(self.stamp, self._x, self._y, self._yaw)
 
         # publishing 2D pose
         self.pose_msg.x = self._x
@@ -273,3 +273,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

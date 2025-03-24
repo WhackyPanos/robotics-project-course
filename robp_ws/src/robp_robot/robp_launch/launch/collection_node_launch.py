@@ -10,10 +10,10 @@ def generate_launch_description():
     robp_launch_dir = get_package_share_directory('robp_launch')
     return launch.LaunchDescription([
 
-        Node(
-            package='odometry',
-            executable='odometry'
-        ),
+        # Node(
+        #     package='odometry',
+        #     executable='odometry'
+        # ),
 
         Node(
             package='behavior_tree',
@@ -25,10 +25,10 @@ def generate_launch_description():
             executable='twist2duty'
         ),
 
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
-        ),
+        # Node(
+        #     package='tf2_ros',
+        #     executable='static_transform_publisher',
+        #     arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
+        # ),
 
     ])
