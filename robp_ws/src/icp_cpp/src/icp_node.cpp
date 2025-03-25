@@ -109,6 +109,7 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
     // Create msg to be published so we get the correct timestamp
     geometry_msgs::msg::TransformStamped transform_msg;
     transform_msg.header.stamp = last_stamp_;  // Use the timestamp from the latest point cloud
+    transform_msg.header.stamp = this->get_clock()->now();
 
     // Apply Statistical Outlier Removal to incoming and global clouds
     pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_incoming_cloud(new pcl::PointCloud<pcl::PointXYZ>);

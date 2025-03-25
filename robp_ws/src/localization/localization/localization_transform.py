@@ -64,11 +64,14 @@ class Localization(Node):
             t_old = self.tf_buffer.lookup_transform(
                 self.to_frame_rel,  # Target frame
                 self.from_frame_rel, # Source frame
-                self.old_stamp)
+                self.old_stamp, )
         except TransformException as ex:
             self.get_logger().info(
-                f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
-            return
+                f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}. Using most recent transforms')
+            t_old = self.tf_buffer.lookup_transform(
+            self.to_frame_rel,  # Target frame
+            self.from_frame_rel, # Source frame
+            rclpy.time.Time(seconds=0))
         
         # create and broadcast new transform
         t = TransformStamped()
