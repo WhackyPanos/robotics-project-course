@@ -12,11 +12,11 @@ ObjectSegmentation::ObjectSegmentation() : Node("object_segmentation", rclcpp::N
     this->get_parameter_or("point_obj_topic", point_obj_topic_, std::string("/arm_camera/points"));
     this->get_parameter_or("trigger_topic", trigger_topic_, std::string("/arm_camera/request"));
     this->get_parameter_or("result_topic", result_topic_, std::string("/arm_camera/result"));   
-    this->get_parameter_or("Z_camera", Zc_, 0.245);
-    this->get_parameter_or("max_obj_size", max_obj_size_, 10000);
-    this->get_parameter_or("min_obj_distance", min_obj_distance_, 45.0);
+    this->get_parameter_or("Z_camera", Zc_, 0.2);
+    this->get_parameter_or("max_obj_size", max_obj_size_, 5000);
+    this->get_parameter_or("min_obj_distance", min_obj_distance_, 50.0);
     this->get_parameter_or("max_k", max_k_, 6);
-    this->get_parameter_or("visualization", visualization_, true);
+    this->get_parameter_or("visualization", visualization_, false);
 
     // Define intrinsic matrix K
     camera_matrix_ = (cv::Mat_<double>(3, 3) << 
@@ -73,17 +73,6 @@ bool ObjectSegmentation::perform_segmentation(){
     // Convert ROS Image to OpenCV format
     cv::Mat image = cv_bridge::toCvCopy(latest_img_, "bgr8")->image;
 
-    // Get image dimensions
-    int y_max = image.rows;  
-    int cutoff = static_cast<int>(0.7 * y_max);
-
-    // Set pixels above the cutoff to gray
-    for (int y = cutoff; y < y_max; ++y) {
-        for (int x = 0; x < image.cols; ++x) {
-            image.at<cv::Vec3b>(y, x) = cv::Vec3b(128, 128, 128);
-        }
-    }
-
     // Apply Gaussian Blur to reduce noise
     cv::Mat blurred;
     cv::GaussianBlur(image, blurred, cv::Size(5, 5), 8.0);
@@ -101,31 +90,15 @@ bool ObjectSegmentation::perform_segmentation(){
     ab_channels = ab_channels.reshape(1, image.rows * image.cols);
     ab_channels.convertTo(ab_channels, CV_32F);
 
-    // Apply CLAHE to normalize brightness
-    cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE(2.0, cv::Size(8, 8));
-    clahe->apply(l, l);
-
 
     int best_k = find_k(ab_channels);
-    // RCLCPP_INFO(this->get_logger(), "Best K: %d", best_k);
-
 
     // Apply K-Means with the chosen K
     cv::kmeans(ab_channels, best_k, labels, 
                 cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 100, 0.2), 
                 10, cv::KMEANS_RANDOM_CENTERS, centers);
 
-    // Assign each pixel to its cluster's color
-    labels = labels.reshape(1, image.rows);
-    centers.convertTo(centers, CV_8U);
-    cv::Mat segmented_ab(image.rows, image.cols, CV_8UC2);
-    for (int i = 0; i < image.rows; i++) {
-        for (int j = 0; j < image.cols; j++) {
-            int cluster_idx = labels.at<int>(i, j);
-            segmented_ab.at<cv::Vec2b>(i, j) = cv::Vec2b(centers.at<uchar>(cluster_idx, 0),
-                                                            centers.at<uchar>(cluster_idx, 1));
-        }  
-    }
+    
 
     // Compute cluster positions and sizes
     std::vector<cv::Point> sum_cluster_positions(best_k, cv::Point(0, 0));
@@ -144,7 +117,6 @@ bool ObjectSegmentation::perform_segmentation(){
     std::vector<int> obj_sizes;
 
     for (int i = 0; i < best_k; i++) {
-        RCLCPP_INFO(this->get_logger(), "Cluster size: %d", cluster_sizes[i]);
         if (cluster_sizes[i] <= max_obj_size_) {
             sum_obj_positions.push_back(sum_cluster_positions[i]);
             obj_sizes.push_back(cluster_sizes[i]);
@@ -192,22 +164,31 @@ bool ObjectSegmentation::perform_segmentation(){
     }
 
     if(merged_obj_positions.size()==0) return false;
-    // RCLCPP_INFO(this->get_logger(), "Number of cluster: %ld", merged_obj_positions.size());
 
     if (visualization_) {
         for (const auto &pos : merged_obj_positions) {
             // Draw the markers
-            cv::drawMarker(image, pos, cv::Scalar(0, 0, 255), cv::MARKER_CROSS, 10, 2);
+            if(visualization_){
+                cv::drawMarker(image, pos, cv::Scalar(0, 0, 255), cv::MARKER_CROSS, 10, 2);
+            }
             
             RCLCPP_INFO(this->get_logger(), "Cluster Center at pixels (%d, %d)", pos.x, pos.y);
         }
-
-        // Create uniform L channel
-        cv::Mat l_uniform = cv::Mat::ones(l.size(), CV_8U) * 128;
+        // Assign each pixel to its cluster's color
+        labels = labels.reshape(1, image.rows);
+        centers.convertTo(centers, CV_8U);
+        cv::Mat segmented_ab(image.rows, image.cols, CV_8UC2);
+        for (int i = 0; i < image.rows; i++) {
+            for (int j = 0; j < image.cols; j++) {
+                int cluster_idx = labels.at<int>(i, j);
+                segmented_ab.at<cv::Vec2b>(i, j) = cv::Vec2b(centers.at<uchar>(cluster_idx, 0),
+                                                                centers.at<uchar>(cluster_idx, 1));
+            }  
+        }
 
         // Merge back LAB and convert to BGR
         cv::Mat segmented_lab, segmented_image;
-        cv::merge(std::vector<cv::Mat>{l_uniform, segmented_ab}, segmented_lab);
+        cv::merge(std::vector<cv::Mat>{l, segmented_ab}, segmented_lab);
         cv::cvtColor(segmented_lab, segmented_image, cv::COLOR_Lab2BGR);
 
         // Publish the segmented image
@@ -217,35 +198,66 @@ bool ObjectSegmentation::perform_segmentation(){
         image_lab_pub_->publish(*lab_msg);
     }
 
-    image_to_camera(merged_obj_positions);
-    
-    return true;
+    return image_to_world(merged_obj_positions);
 }
 
 
-void ObjectSegmentation::image_to_camera(std::vector<cv::Point>& obj_positions)
+bool ObjectSegmentation::image_to_world(std::vector<cv::Point>& obj_positions)
 {  
-    // Publish pose array
-    geometry_msgs::msg::PoseArray pose_array_msg;
-    pose_array_msg.header.stamp = latest_img_->header.stamp;
-    pose_array_msg.header.frame_id = latest_img_->header.frame_id;
+    geometry_msgs::msg::TransformStamped transform_stamped;
+    std::string camera_frame = latest_img_->header.frame_id;
+    auto msg_stamp = latest_img_->header.stamp;
+
+    try {
+        transform_stamped = tf_buffer_->lookupTransform("map", camera_frame, msg_stamp, tf2::durationFromSec(1.0));
+
+    } catch (tf2::TransformException &ex) {
+        RCLCPP_WARN(this->get_logger(), "TF lookup failed: %s", ex.what());
+        return false;
+    }
+
+    std::vector<geometry_msgs::msg::Point> world_positions;
 
     for (const auto &pos : obj_positions) {
 
-        // Convert image coordinates (u, v) to camera coordinates (X_c, Y_c, Z_c)
+        // Step 1: Convert image coordinates (u, v) to camera coordinates (X_c, Y_c, Z_c)
         cv::Mat pixel_homogeneous = (cv::Mat_<double>(3, 1) << pos.x, pos.y, 1.0);
         cv::Mat camera_coords = camera_matrix_.inv() * pixel_homogeneous * Zc_;
 
-        geometry_msgs::msg::Pose pose;
-        pose.position.x = camera_coords.at<double>(0, 0);
-        pose.position.y = camera_coords.at<double>(1, 0);
-        pose.position.z = Zc_;
+        geometry_msgs::msg::PointStamped camera_point, world_point;
+        camera_point.header.frame_id = camera_frame;
+        camera_point.header.stamp = msg_stamp;
+        camera_point.point.x = camera_coords.at<double>(0, 0);
+        camera_point.point.y = camera_coords.at<double>(1, 0);
+        camera_point.point.z = Zc_;
 
-        // Add camera point to suitable message array
+        try {
+            // Transform point from camera frame to world (map) frame
+            tf2::doTransform(camera_point, world_point, transform_stamped);
+        } catch (tf2::TransformException &ex) {
+            RCLCPP_WARN(this->get_logger(), "TF transform failed: %s", ex.what());
+            continue;
+        }
+
+        // Add world point to suitable message array
+        world_positions.push_back(world_point.point);
+    }
+
+    // Publish pose array
+    geometry_msgs::msg::PoseArray pose_array_msg;
+    pose_array_msg.header.stamp = msg_stamp;
+    pose_array_msg.header.frame_id = "map";
+
+    for (const auto& pt : world_positions) {
+        geometry_msgs::msg::Pose pose;
+        pose.position.x = pt.x;
+        pose.position.y = pt.y;
+        pose.position.z = pt.z;
         pose_array_msg.poses.push_back(pose);
     }
 
     world_points_pub_->publish(pose_array_msg);
+    return true;
 }
 
 int ObjectSegmentation::find_k(cv::Mat& ab_channel)
