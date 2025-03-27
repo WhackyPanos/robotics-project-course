@@ -2,7 +2,7 @@ import numpy as np
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
-from geometry_msgs.msg import PointStamped
+from geometry_msgs.msg import PointStamped, PoseStamped
 from random import uniform
 
 class RandomPoint(Node):
@@ -14,7 +14,7 @@ class RandomPoint(Node):
         self.grid_subscription = self.create_subscription(OccupancyGrid, '/occupancy_grid', self.grid_callback, 10)
 
         # Publisher
-        self.publisher = self.create_publisher(PointStamped, '/motion/goal', 10)
+        self.publisher = self.create_publisher(PoseStamped, '/motion/goal', 10)
         
         # Map attributes
         self.map_data = None
@@ -59,12 +59,16 @@ class RandomPoint(Node):
             y_desired = uniform(self.map_origin_y, self.map_origin_y + self.map_height * self.map_resolution)
             
             if self.is_valid_point(x_desired, y_desired):
-                pub_msg = PointStamped()
+                pub_msg = PoseStamped()
                 pub_msg.header.stamp = self.get_clock().now().to_msg()
                 pub_msg.header.frame_id = "map"
-                pub_msg.point.x = x_desired
-                pub_msg.point.y = y_desired
-                pub_msg.point.z = 0.0
+                pub_msg.pose.position.x = x_desired
+                pub_msg.pose.position.y = y_desired
+                pub_msg.pose.position.z = 0.0
+                pub_msg.pose.orientation.x = 0.0
+                pub_msg.pose.orientation.y = 0.0
+                pub_msg.pose.orientation.z = 0.0
+                pub_msg.pose.orientation.w = 1.0
                 self.get_logger().info(f"Publishing new goal: x={x_desired:.2f}, y={y_desired:.2f}")
                 self.publisher.publish(pub_msg)
                 return True
