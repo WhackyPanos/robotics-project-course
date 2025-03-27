@@ -27,6 +27,7 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
         """ Behavior Tree execution step. Called whenever the node is ticked """
         if self.motion_node.is_path:
             if self.motion_node.path_reached:
+                self.motion_node.is_path = False
                 return py_trees.common.Status.SUCCESS
             else:
                 return py_trees.common.Status.RUNNING if self.motion_node.navigate_to_goal() else py_trees.common.Status.FAILURE
