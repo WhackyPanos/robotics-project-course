@@ -55,15 +55,10 @@ class OccupancyGridNode(Node):
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.config_space = self.grid # Config space
         self.grid.fill(-1) # Sets all cells to unknown
-        self.config_space = self.grid
         self.geofence(vertices) # Sets a boundry for the workspace
 
-        self.robot_radius = 0.20
-        self.cost_ratio = 5
-        # free space from lidar: not marked
-        # free space from camera: 0
-        # Occupied by lidar: 100
-        # Occupied by camera: 99
+        # Inflation parameter
+        self.robot_radius = 0.3
         
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
@@ -208,7 +203,7 @@ class OccupancyGridNode(Node):
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
 
-        if abs(self.angular_vel) == 0.0:
+        if abs(self.angular_vel) < 0.05:
             lidar_from_frame_rel = msg.header.frame_id # Lidar link
             lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
             lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
@@ -322,7 +317,7 @@ class OccupancyGridNode(Node):
             # Ensure x, y are within the grid bounds
             if 0 <= i_x < self.width and 0 <= i_y < self.height:
                 self.grid[i_y][i_x] = 99  # Mark cell as objects
-        # self.inflate_map()
+        self.inflate_map()
 
 
 def main():

@@ -57,17 +57,16 @@ class CheckPath(Node):
         if self.path is None or self.config_space is None:
             self.get_logger().info("Waiting for path or map data.")
             return False
-                
-        config_space = self.config_space
 
-        width = config_space.info.width
-        height = config_space.info.height
-        map_data = np.array(config_space.data).reshape((height, width))  
+        width = self.config_space.info.width
+        height = self.config_space.info.height
+        map_data = np.array(self.config_space.data).reshape((height, width))  
 
         for index in self.path:
             x, y = index
-            if map_data[x, y] == 1: 
+            if map_data[y, x] == 1: 
                 return False
+        return True
 
 
 
