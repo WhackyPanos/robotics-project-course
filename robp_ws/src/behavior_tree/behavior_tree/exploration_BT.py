@@ -105,25 +105,6 @@ class ExplorationBT(Node):
     def object_detected_condition(self):
         return self.new_object_detected.status == py_trees.common.Status.SUCCESS
 
-        # second_sequence = py_trees.composites.Sequence(name='second_seq')
-        # second_sequence.add_children([new_object_detected, classify, update_map_file])
-
-        # second_selector = py_trees.composites.Selector(name='second_sel')
-        # second_selector.add_children([obstacle_on_path_detected, second_sequence])
-
-        # first_parallel = py_trees.composites.Parallel(name='first_parallel')
-        # first_parallel.add_children([second_selector, update_occupnacy_grid])
-
-        # first_selector = py_trees.composites.Selector(name='first_sel')
-        # first_selector.add_children([first_parallel, navigate_to_goal])
-
-        # first_sequence = py_trees.composites.Sequence(name='first_seq')
-        # first_sequence.add_children([path_plan, first_selector])
-
-        # root.add_children([pub_occupancy_grid, goal, navigate_to_goal])
-        
-        # return root
-
 
 
 def main(args=None):

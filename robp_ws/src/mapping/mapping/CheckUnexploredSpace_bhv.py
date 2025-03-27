@@ -35,7 +35,7 @@ class CheckOccupancyGrid(py_trees.behaviour.Behaviour, Node):
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """
 
-    def map_callback(self, msg:OccupancyGrid, threshold = 10):
+    def map_callback(self, msg:OccupancyGrid, threshold = 5):
         # Get the data from the occupancy grid message
         grid_data = np.array(msg.data).reshape(msg.info.height, msg.info.width)
 
