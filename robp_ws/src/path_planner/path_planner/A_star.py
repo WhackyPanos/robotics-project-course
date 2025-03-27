@@ -58,7 +58,7 @@ class Planner_A_star(Node):
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
 
         # Initizialize
-        self.robot_radius = 0.20
+        # self.robot_radius = 0.20
         self.cost_ratio = 5
         self.config_space = None
         self.map_info = None
@@ -67,29 +67,29 @@ class Planner_A_star(Node):
     def goal_callback(self, msg):
         self.goal_msg = msg
         
-    def map_callback(self, occupancy_grid_msg): # Create the configurations space
-        # The problem with doing path palnning when there is a new map topic is 
-        # Convert occupancy grid to numpy array
-        self.map_info = occupancy_grid_msg.info # Gets info from the occupancy grid
+    def map_callback(self, config_space_msg): # Create the configurations space
+        
+        self.map_info = config_space_msg.info # Gets info from the occupancy grid
+        self.config_space = np.array(config_space_msg.data).reshape(self.map_info.height, self.map_info.width)
 
-        # Create binary occupancy grid (1 for obstacles, 0 for free space)
-        grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
-        binary_grid = np.zeros_like(grid)
+        # # Create binary occupancy grid (1 for obstacles, 0 for free space)
+        # grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
+        # binary_grid = np.zeros_like(grid)
         
-        # Threshold for obstacles (usually >50 is considered occupied)
-        binary_grid[grid > 50] = 1
-        # Robot can drive through both known and unknown space
+        # # Threshold for obstacles (usually >50 is considered occupied)
+        # binary_grid[grid > 50] = 1
+        # # Robot can drive through both known and unknown space
         
-        # Calculate kernel size based on robot radius and map resolution
-        kernel_radius = int(np.ceil(self.robot_radius / self.map_info.resolution))
+        # # Calculate kernel size based on robot radius and map resolution
+        # kernel_radius = int(np.ceil(self.robot_radius / self.map_info.resolution))
         
-        # Create circular kernel for dilation
-        y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
-        kernel = x**2 + y**2 <= kernel_radius**2
+        # # Create circular kernel for dilation
+        # y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
+        # kernel = x**2 + y**2 <= kernel_radius**2
         
-        # Dilate obstacles to create configuration space
-        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
-        self.get_logger().info(f'Configuration space created with robot radius: {self.robot_radius}m')
+        # # Dilate obstacles to create configuration space
+        # self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
+        # self.get_logger().info(f'Configuration space created with robot radius: {self.robot_radius}m')
 
     def path_plan(self): # Called from the behavior   
         # Get current position
