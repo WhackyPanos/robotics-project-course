@@ -4,12 +4,14 @@
 The package `path_planner.py` is now deprecated and replaced by `motion.py`.
 
 ## General Info 
-This is the (local) path planner that I have been working on. The idea is that you publish a _PointStamped_ message to `/motion/goal` and the system will pick it up and start navigating to it. It doensn't offer any 'shortest route' planning, it just takes the hypotenuse from the robot's current location to the goal and starts navigating to it. 
+This is the (local) path planner that I have been working on. The idea is that you publish a *[!!]* _PoseStamped_ *[!!]*  message to `/motion/goal` and the system will pick it up and start navigating to it. It doensn't offer any 'shortest route' planning, it just takes the hypotenuse from the robot's current location to the goal and starts navigating to it. 
 
 It also provides the option of publishing a _Path_ message to the `/motion/path` topic, with the specified path the robot has to follow.
 
+In both cases, once the travel move is complete, the robot will rotate about itself until it reaches its final target yaw, given in the above stated message.
+
 ## How to use
-To use the system, you may include the node in any launch file and just publish a point to the `/motion/goal` topic. When it reaches its goal, then a 'True' message is published on the `/motion/goal_reached` topic. 
+To use the system, you may include the node in any launch file and just publish a *pose* to the `/motion/goal` topic. When it reaches its goal, then a 'True' message is published on the `/motion/goal_reached` topic. 
 
 For convenience, we have created a couple of test nodes. First is the `point_generator`, which samples a random point in a given bounding box and navigates to it, and the `point_publisher_test` which moves around a couple predetermined points. 
 

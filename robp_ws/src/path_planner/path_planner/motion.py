@@ -58,10 +58,10 @@ class MotionNode(Node):
 
         # Setup publishers and subscribers
         # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
-        self.create_subscription(PointStamped, '/motion/goal', self.goal_callback, 10)
+        self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 10)
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
-        self.goal_publisher = self.create_publisher(PointStamped, '/motion/goal', 10)
+        self.goal_publisher = self.create_publisher(PoseStamped, '/motion/goal', 10)
         self.path_publisher = self.create_publisher(Path, '/motion/path', 10)
         self.path_reached_publisher = self.create_publisher(Bool, '/motion/path_reached', 10) ## TODO
         self.icp_publisher = self.create_publisher(Bool, '/icp/activate', 10)
@@ -71,6 +71,8 @@ class MotionNode(Node):
         # ==================
         self.linear_velocity = 0.17
         self.angular_velocity = 0.4
+        self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
+        self.angular_velocity_fine = 0.2 # TODO untested, adjust this value
         self.goal_threshold = 0.05
         self.kp = 1.5
         self.ki = 0.015
@@ -78,12 +80,12 @@ class MotionNode(Node):
         # ==================
 
     # Checks when new goal is received
-    def goal_callback(self, msg:PointStamped):
+    def goal_callback(self, msg:PoseStamped):
         self.is_goal = True
-        self.goal_position = msg.point
+        self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
+        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -166,17 +168,24 @@ class MotionNode(Node):
             return False
         return True
 
-    def navigate_to_goal(self):
+    def navigate_to_goal(self, fine=False):
         """ Control the robot to navigate to the goal position. """
         self.get_robot_position()
         x = self.x_map
         y = self.y_map
         theta = self.theta_map
 
+        goal_x = self.goal_position.pose.position.x
+        goal_y = self.goal_position.pose.position.y
+
+        qz = self.goal_position.pose.orientation.z
+        qw = self.goal_position.pose.orientation.w
+        self.angle_goal = 2 * math.atan2(qz, qw)
+
         if x is None or y is None or theta is None: return False
 
-        distance = math.sqrt((self.goal_position.x - x)**2 + (self.goal_position.y - y)**2)
-        angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
+        distance = math.sqrt((goal_x - x)**2 + (goal_y - y)**2)
+        angle = math.atan2(goal_y - y, goal_x - x)
         # Normalize angle difference to range [-pi, pi]
         angle_diff = math.atan2(math.sin(angle - theta), math.cos(angle - theta))
         # angle_diff = angle - theta
@@ -187,15 +196,15 @@ class MotionNode(Node):
             iError = angle_diff * self.elapsed_time
             dError = (angle_diff - self.prev_angle_diff)/self.elapsed_time
             output = self.kp*angle_diff + self.ki*iError + self.kd*dError
-            if output > self.angular_velocity:
-                output = self.angular_velocity
-            elif output < -self.angular_velocity:
-                output = -self.angular_velocity
+            if output > self.angular_velocity if not fine else self.angular_velocity_fine:
+                output = self.angular_velocity if not fine else self.angular_velocity_fine
+            elif output < -self.angular_velocity if not fine else self.angular_velocity_fine:
+                output = -self.angular_velocity if not fine else self.angular_velocity_fine
             self.vel_cmd.angular.z = output
             if angle_diff > math.pi/7 or angle_diff < -math.pi/7: # TODO adjust this value
                 self.vel_cmd.linear.x = 0.0
             else:
-                self.vel_cmd.linear.x = self.linear_velocity
+                self.vel_cmd.linear.x = self.linear_velocity if not fine else self.linear_velocity_fine
             self.cmd_vel_publisher.publish(self.vel_cmd)
         else:
             self.vel_cmd.angular.z = 0.0
@@ -203,7 +212,7 @@ class MotionNode(Node):
             self.cmd_vel_publisher.publish(self.vel_cmd)
             self.goal_reached_publisher.publish(Bool(data=True))
             self.goal_reached_flag = True
-            self.get_logger().info('Goal reached: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
+            self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
             
             self.is_goal = False
             if self.is_path and len(self.path.poses) > 1:
@@ -216,11 +225,34 @@ class MotionNode(Node):
                 self.path_reached = True
                 self.is_path = False
                 self.icp_publisher.publish(Bool(data=False))
+                self.adjust_yaw(self.angle_goal)            
+            else:
+                self.adjust_yaw(self.angle_goal)
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
 
         return True
+    
+    def adjust_yaw(self, angle):
+        while True:
+            self.get_robot_position()
+            x = self.x_map
+            y = self.y_map
+            theta = self.theta_map
+
+            angle_diff = angle - theta
+            if abs(angle_diff) < 0.05:
+                break
+            if angle_diff > 0:
+                self.vel_cmd.angular.z = self.angular_velocity_fine
+            else:
+                self.vel_cmd.angular.z = -self.angular_velocity_fine
+            self.vel_cmd.linear.x = 0.0
+            self.cmd_vel_publisher.publish(self.vel_cmd)
+            
+        self.vel_cmd.angular.z = 0.0
+        self.cmd_vel_publisher.publish(self.vel_cmd)
 
 def main(args=None):
     rclpy.init(args=args)
