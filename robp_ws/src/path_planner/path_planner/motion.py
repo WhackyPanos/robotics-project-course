@@ -86,7 +86,7 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.y))
+        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -185,8 +185,8 @@ class MotionNode(Node):
 
         if x is None or y is None or theta is None: return False
 
-        distance = math.sqrt((self.goal_position.x - x)**2 + (self.goal_position.y - y)**2)
-        angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
+        distance = math.sqrt((goal_x - x)**2 + (goal_y - y)**2)
+        angle = math.atan2(goal_y - y, goal_x - x)
         # Normalize angle difference to range [-pi, pi]
         angle_diff = math.atan2(math.sin(angle - theta), math.cos(angle - theta))
         # angle_diff = angle - theta
