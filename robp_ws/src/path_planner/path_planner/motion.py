@@ -205,7 +205,7 @@ class MotionNode(Node):
             self.goal_reached_flag = True
             self.get_logger().info('Goal reached: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
             
-            self.is_goal = False
+            # self.is_goal = False
             if self.is_path and len(self.path.poses) > 1:
                 self.path.poses.pop(0)
                 self.path_publisher.publish(self.path)
@@ -214,7 +214,7 @@ class MotionNode(Node):
                 self.get_logger().info('Path execution completed.')
                 self.path_reached_publisher.publish(Bool(data=True))
                 self.path_reached = True
-                self.is_path = False
+                # self.is_path = False
                 self.icp_publisher.publish(Bool(data=False))
         
         self.prev_angle_diff = angle_diff
