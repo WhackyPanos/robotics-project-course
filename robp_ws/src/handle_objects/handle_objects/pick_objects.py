@@ -40,11 +40,6 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                 durability=DurabilityPolicy.VOLATILE,    # No history saved for late subscribers
                 depth=100  # Stores up to 10 messages before dropping old ones
                 )
-
-            self.ota_publisher_ = self.node.create_publisher(
-                msg_type = Int16MultiArray,
-                topic = '/multi_servo_cmd_sub',
-                qos_profile = qos_profile) # ota = object_tuck_arm
             
             self.servo_angles_subscriber_ = self.node.create_subscription(
                 JointState,
@@ -52,6 +47,13 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                 self.servo_angles_callback,
                 10
             )  
+
+
+            self.ota_publisher_ = self.node.create_publisher(
+                msg_type = Int16MultiArray,
+                topic = '/multi_servo_cmd_sub',
+                qos_profile = qos_profile) # ota = object_tuck_arm
+            
             self.obj_tuck_arm_time = 2000 # in ms            
              
 
@@ -66,7 +68,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.desired_servo_angles[1] = self.angles[1] 
             self.desired_servo_angles[0] = self.angles[0] 
 
-            self.angle_threshold = 100 #1 degree  
+            self.angle_threshold = 120 #1 degree  
 
     def servo_angles_callback(self, msg):
         current_angles = msg.position
@@ -80,6 +82,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                     self.arm_moving = True
                     break
         #print(f'Current angles position: {current_angles[1]}')
+
          
     def publish_msg(self):
         msg = Int16MultiArray()
@@ -207,7 +210,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
         self.thresholds = [10**-4,10**-3,10**-2]
         self.initial_guesses = [[0,0,0,0,0,0]]
-        self.angle_threshold = 80
+        self.angle_threshold = 100
         self.current_angles, self.desired_servo_angles = None, None
 
         # joint limits in the arm domain
@@ -215,8 +218,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
 
         # joint limits in normal domain
-        self.lb_q = [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
-        self.ub_q = [120.0,60.0,90.0,90.0,120.0,0.0]
+        self.lb_q = [-120.0,-85.0,-90.0,-90.0,-120.0,0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
+        self.ub_q = [120.0,85.0,90.0,90.0,120.0,0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
 
         self.obj_tuck_arm_time = 3000 # in ms   
 
@@ -237,6 +240,11 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.tf_listener = TransformListener(self.tf_buffer, self.node)
 
         self.servo_angles_subscriber_ = self.node.create_subscription(JointState,'/servo_pos_publisher',self.servo_angles_callback,10)   
+        self.next_goal_pub = self.node.create_subscription(
+                PointStamped,
+                '/motion/goal', 
+                self.get_next_goal_callback,
+                10 )
 
         self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
@@ -288,6 +296,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 # TODO: if pick and search fails, a message has to be published. That can happen here or in the arm camera
                 else:
                     self.picklift_pub.publish(Bool(data=False))
+                    self.node.get_logger().warn(f"IK FAILED")
                     return py_trees.common.Status.FAILURE
             
             # if arm is moving but not in grasp position, return keep running
@@ -338,6 +347,10 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.ready2move = True
         self.timer.cancel()
 
+    def get_next_goal_callback(self, msg):
+        self.X = msg.point.x
+        self.Y = msg.point.y
+
     def object_transform(self):
         # get transform from map frame to frame of the arm base
         time = rclpy.time.Time() #retrieve most recent transform ig
@@ -358,8 +371,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         object_MF.point.y = self.Y
         object_MF.point.z = 0.0         
         object_ABF = tf2_geometry_msgs.do_transform_point(object_MF, t)
-        self.x = object_ABF.point.x
-        self.y = object_ABF.point.y
+        self.x = 0.20# TODO: update later object_ABF.point.x
+        self.y = 0.05# TODO: object_ABF.point.y
         self.z = object_ABF.point.z
         
         # define target with kdl instance
@@ -444,7 +457,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         # we will iterate with different orientations for the 1st link. 
         count = 0
-        for i in range(90,25,-2):
+        for i in range(90,25,-1):
             # Initiate constants
             good_flag = True
             height = 93*(10**-3)
@@ -475,7 +488,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             for j in range(len(q)):
                 if q[j] < self.lb_q[j] or q[j] > self.ub_q[j]:
                     good_flag = False
-                    self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = {q[j+1]})")
+                    #self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = {q[j+1]})")
             if good_flag == True:
                 if count == 0: # skip one more step to avoid joint limits
                     count +=1

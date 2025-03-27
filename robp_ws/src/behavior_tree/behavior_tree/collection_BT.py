@@ -29,34 +29,39 @@ class CollectionBT(Node):
   
         # root and behaviors creation
         self.root = py_trees.composites.Sequence(name="Root", memory= False)
-        
-        self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
-        self.pub_occupancy_grid = PublishOccupancyGrid()
-        #self.localization = Localization_bhv()
-        self.navigate_to_goal = NavigateToGoal()
-        self.path_planner = None #TODO
 
         self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,18000,12000,12000])
         #detect_object = DetectObject()
         self.pick_object = ArmIK()
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000])
+        
+        self.pub_occupancy_grid = PublishOccupancyGrid()
+        #self.localization = Localization_bhv()
+        self.navigate_to_goal = NavigateToGoal()
+        self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
+        self.path_planner = None #TODO
+
+
 
         self.arm_task_succeeded = ArmTaskSucceeded()
 
     def create_executor(self, executor):
         # Add nodes to executor
-        executor.add_node(self.next_object_bhv)
-        executor.add_node(self.navigate_to_goal)
-        executor.add_node(self.pub_occupancy_grid)
-        #executor.add_node(self.localization)
         executor.add_node(self.tuck_arm)
         executor.add_node(self.pick_object)
         executor.add_node(self.lift)
         executor.add_node(self.arm_task_succeeded)
+    
+        executor.add_node(self.next_object_bhv)
+        executor.add_node(self.navigate_to_goal)
+        executor.add_node(self.pub_occupancy_grid)
+        #executor.add_node(self.localization)
+
 
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
-        #executor.add_node(self.localization.localization_node)
+        #executor.add_node(self.localizatio
+        # n.localization_node)
 
 
     def create_tree(self): 

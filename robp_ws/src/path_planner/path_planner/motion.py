@@ -68,7 +68,7 @@ class MotionNode(Node):
         # ==================
         self.linear_velocity = 0.2
         self.angular_velocity = 0.4
-        self.goal_threshold = 0.05
+        self.goal_threshold = 0.20
         self.kp = 1.5
         self.ki = 0.015
         self.kd = 0.5
@@ -172,9 +172,12 @@ class MotionNode(Node):
 
         if x is None or y is None or theta is None: return False
 
+        self.get_logger().warn(f"MOVING TOWARDS {self.goal_position} and we are at {x, y}")
+
         distance = math.sqrt((self.goal_position.x - x)**2 + (self.goal_position.y - y)**2)
         angle = math.atan2(self.goal_position.y - y, self.goal_position.x - x)
         angle_diff = angle - theta
+        angle_diff = math.atan2(math.sin(angle-theta), math.cos(angle-theta))
         cur_time = self.get_clock().now().nanoseconds / 1e9
         self.elapsed_time = cur_time - self.prev_time
         
@@ -200,7 +203,7 @@ class MotionNode(Node):
             self.goal_reached_flag = True
             self.get_logger().info('Goal reached: x={}, y={}'.format(self.goal_position.x, self.goal_position.y))
             
-            self.is_goal = False
+            #self.is_goal = False
             if self.is_path and len(self.path.poses) > 1:
                 self.path.poses.pop(0)
                 self.path_publisher.publish(self.path)

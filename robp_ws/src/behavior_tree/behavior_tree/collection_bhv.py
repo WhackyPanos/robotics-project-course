@@ -57,6 +57,8 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             msg.header.stamp = self.node.get_clock().now().to_msg()
             msg.header.frame_id = 'map'
             self.next_goal_pub.publish(msg)
+
+            self.need_next_object = None
         return py_trees.common.Status.SUCCESS
 
 
