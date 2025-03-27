@@ -30,7 +30,7 @@ class CheckOccupancyGrid(py_trees.behaviour.Behaviour, Node):
         """ Behavior Tree update step. Called every tick of the BT. """
         if self.map_explored:
             return py_trees.common.Status.SUCCESS
-        else: return py_trees.common.Status.FAILURE
+        else: return py_trees.common.Status.RUNNING
     
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """

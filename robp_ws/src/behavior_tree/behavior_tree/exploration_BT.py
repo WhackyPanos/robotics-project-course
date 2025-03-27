@@ -23,11 +23,8 @@ from mapping.CheckUnexploredSpace_bhv import CheckOccupancyGrid
 class ExplorationBT(Node):
     def __init__(self) -> None:
         super().__init__('behavior_tree_exploration')
-        # Create the root as a Sequence node
-        self.root = py_trees.composites.Parallel(
-            name="Stop Tree Parallel",
-            policy=py_trees.common.ParallelPolicy.SuccessOnOne()
-        )
+        # Create the root
+        self.root  = py_trees.composites.Selector(name='tree_sel', memory=False)
 
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False)
 
@@ -75,11 +72,11 @@ class ExplorationBT(Node):
         # second_sequence.add_children([self.new_object_detected, decorator])
 
         # Parallel Node: Runs both detection and navigation simultaneously, success on one
-        first_parallel = py_trees.composites.Parallel(
+        second_parallel = py_trees.composites.Parallel(
             name="parallel_detect_navigate",
             policy=py_trees.common.ParallelPolicy.SuccessOnOne()
         )
-        first_parallel.add_children([self.new_object_detected, self.navigate_to_goal])
+        second_parallel.add_children([self.new_object_detected, self.navigate_to_goal])
 
         # EternalGuard: Ensures that the decorator only runs if new_object_detected is successful
         object_detected_guard = py_trees.decorators.EternalGuard(
@@ -91,16 +88,22 @@ class ExplorationBT(Node):
         fail_is_success = py_trees.decorators.FailureIsSuccess(name='fail2success', child=object_detected_guard)
 
         second_sequence = py_trees.composites.Sequence(name="second_seq", memory=True)
-        second_sequence.add_children([first_parallel, fail_is_success])
+        second_sequence.add_children([second_parallel, fail_is_success])
 
         first_sequence = py_trees.composites.Sequence(name='first_seq', memory=True)
-        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan, second_sequence, self.check_occupancy_grid])
+        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan,  second_sequence])
 
-        timer = py_trees.timers.Timer(name='timer', duration=300.0)
-        # timer_dec = py_trees.decorators.RunningIsFailure(name='timer_dec', child=timer) # Failure until timer finishes
+        timer = CustomTimer(name='timer', duration=300.0)
+
+        first_parallel = py_trees.composites.Parallel(
+            name="Stop Tree Parallel",
+            policy=py_trees.common.ParallelPolicy.SuccessOnOne()
+        )
+
+        first_parallel.add_children([timer, self.check_occupancy_grid])
 
         # Add behavior tree child nodes to the root
-        self.root.add_children([timer, first_sequence])
+        self.root.add_children([first_parallel, first_sequence])
 
         return self.root
     
