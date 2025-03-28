@@ -4,7 +4,7 @@ import py_trees
 import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
-from geometry_msgs.msg import Pose2D, PointStamped
+from geometry_msgs.msg import Pose2D, PointStamped, PoseStamped
 from std_msgs.msg import Bool, String
 import numpy as np
 from math import sqrt
@@ -36,7 +36,7 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         self.need_next_object_sub = self.node.create_subscription(String, '/next_goal/object/need', self.need_next_object_callback, 10)
         self.update_object_list_sub = self.node.create_subscription(PointStamped, '/next_goal/object/update', self.update_object_list_callback, 10)
 
-        self.next_goal_pub = self.node.create_publisher(PointStamped,'/motion/goal', 10 )
+        self.next_goal_pub = self.node.create_publisher(PoseStamped,'/motion/goal', 10 )
         self.need_next_object = 'Object' # at the beginning, we want to pick objects
 
     def update(self):
@@ -51,9 +51,9 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             closest_obj = self.obj_list[np.argmin(distances)]
 
             # publish goal point (object to pick)
-            msg = PointStamped()
-            msg.point.x = closest_obj[1]
-            msg.point.y = closest_obj[2]
+            msg = PoseStamped()
+            msg.pose.position.x = closest_obj[1]
+            msg.pose.position.y = closest_obj[2]
             msg.header.stamp = self.node.get_clock().now().to_msg()
             msg.header.frame_id = 'map'
             self.next_goal_pub.publish(msg)

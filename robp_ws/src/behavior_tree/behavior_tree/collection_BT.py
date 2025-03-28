@@ -15,6 +15,7 @@ from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
 import time
 from tf2_ros import TransformBroadcaster
 from geometry_msgs.msg import TransformStamped
+from detection_bt.arm_segmentation_bt import ArmSegmentationBT
 
 
 
@@ -24,14 +25,15 @@ class CollectionBT(Node):
         relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
         self.objs_list, self.box_list = self.create_lists()
+        self.get_logger().info(f"Bla {self.objs_list, self.box_list}")
         self.tf_broadcaster = TransformBroadcaster(self)
         #self.publish_initial_transform()
   
         # root and behaviors creation
         self.root = py_trees.composites.Sequence(name="Root", memory= False)
 
-        self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,18000,12000,12000])
-        #detect_object = DetectObject()
+        self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,20000,12000,12000])
+        self.detect_object = ArmSegmentationBT()
         self.pick_object = ArmIK()
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000])
         
@@ -50,6 +52,7 @@ class CollectionBT(Node):
         executor.add_node(self.tuck_arm)
         executor.add_node(self.pick_object)
         executor.add_node(self.lift)
+        executor.add_node(self.detect_object)
         executor.add_node(self.arm_task_succeeded)
     
         executor.add_node(self.next_object_bhv)
@@ -83,7 +86,7 @@ class CollectionBT(Node):
             # Pick and lift operations
         planA = py_trees.composites.Sequence(
             name="PlanA", 
-            children = [self.tuck_arm, self.pick_object],
+            children = [self.tuck_arm, self.detect_object, self.pick_object],
             memory = False)
         self.pick_and_lift = py_trees.composites.Sequence(
             name="Pick&Lift", 
@@ -137,7 +140,7 @@ def main(args=None):
     executor.add_node(node)
     node.tree.setup(timeout=10.0, node=node)
     time.sleep(2.0)
-    node.tree.tick_tock(period_ms=400)
+    node.tree.tick_tock(period_ms=100)
 
     try:
         executor.spin()

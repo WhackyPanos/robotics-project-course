@@ -14,7 +14,7 @@ from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 import tf2_geometry_msgs
-from geometry_msgs.msg import PoseStamped, Pose, PointStamped
+from geometry_msgs.msg import PoseStamped, Pose, PointStamped, PoseArray
 from math import pi, acos, atan2, atan, cos, sin, sqrt
 import numpy as np 
 
@@ -208,6 +208,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.to_frame_rel = 'arm_base_link'
         self.from_frame_rel = 'map'
         self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
+        self.X_arm_cam, self.Y_arm_cam = [],  []
         self.thresholds = [10**-4,10**-3,10**-2]
         self.initial_guesses = [[0,0,0,0,0,0]]
         self.angle_threshold = 100
@@ -240,11 +241,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.tf_listener = TransformListener(self.tf_buffer, self.node)
 
         self.servo_angles_subscriber_ = self.node.create_subscription(JointState,'/servo_pos_publisher',self.servo_angles_callback,10)   
-        self.next_goal_pub = self.node.create_subscription(
-                PointStamped,
-                '/motion/goal', 
-                self.get_next_goal_callback,
-                10 )
+        self.next_goal_pub = self.node.create_subscription(PoseStamped, '/motion/goal',  self.get_next_goal_callback,10 )
+        self.next_goal_pub = self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 )
 
         self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
@@ -261,8 +259,9 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
          
     def update(self):
-            """ Behavior Tree execution step. Called whenever the node is ticked """
-
+        """ Behavior Tree execution step. Called whenever the node is ticked """
+        self.node.get_logger().info(f"Objects in arm camera frame {[self.X_arm_cam, self.Y_arm_cam]}")
+        for i in range(len(self.X_arm_cam)):
             if self.done:
                 return py_trees.common.Status.SUCCESS
             elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
@@ -298,12 +297,12 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     self.picklift_pub.publish(Bool(data=False))
                     self.node.get_logger().warn(f"IK FAILED")
                     return py_trees.common.Status.FAILURE
-            
+
             # if arm is moving but not in grasp position, return keep running
             elif self.arm_moving and not self.arm_tucked:
                 self.node.get_logger().warn(f"Arm is still  moving")
                 return py_trees.common.Status.RUNNING 
-            
+
             # if arm is in grasp position,  start grasping 
             elif self.arm_tucked and not self.object_grasped and not self.arm_moving:
                 self.node.get_logger().info(f"Arm Moving = {self.arm_moving}, Arm Tucked = {self.arm_tucked} and grasped = {self.object_grasped}")
@@ -318,19 +317,21 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
                 self.arm_moving = True
                 return py_trees.common.Status.RUNNING
-            
+
             elif self.arm_tucked and not self.object_grasped and self.arm_moving:
                 return py_trees.common.Status.RUNNING 
-            
+
             # if object is grasped, return success
             elif self.object_grasped:
                 self.node.get_logger().info(f"Sucess, lifting arm now")
                 self.done = True
                 self.picklift_pub.publish(Bool(data=True))
                 return py_trees.common.Status.SUCCESS
-            
+
             else:
                 return py_trees.common.Status.RUNNING  
+
+        return py_trees.common.Status.FAILURE
             
     def terminate(self, new_status: py_trees.common.Status):
         """
@@ -348,8 +349,14 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.timer.cancel()
 
     def get_next_goal_callback(self, msg):
-        self.X = msg.point.x
-        self.Y = msg.point.y
+        self.X = msg.pose.position.x
+        self.Y = msg.pose.position.y
+
+    def get_next_goal_arm_cam_callback(self, msg):
+        for pose in msg.poses:
+            self.X_arm_cam.append(pose.position.x)
+            self.Y_arm_cam.append(pose.position.y)
+
 
     def object_transform(self):
         # get transform from map frame to frame of the arm base

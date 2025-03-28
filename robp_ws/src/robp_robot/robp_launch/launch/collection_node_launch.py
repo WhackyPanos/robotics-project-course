@@ -26,6 +26,11 @@ def generate_launch_description():
         ),
 
         Node(
+            package='arm_cam',
+            executable='object_segmentation_node'
+        ),
+
+        Node(
             package='tf2_ros',
             executable='static_transform_publisher',
             arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
