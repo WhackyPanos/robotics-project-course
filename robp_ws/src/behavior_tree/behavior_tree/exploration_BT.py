@@ -53,11 +53,15 @@ class ExplorationBT(Node):
         executor.add_node(self.classify)
         executor.add_node(self.update_map_file)
         executor.add_node(self.path_plan)
+        executor.add_node(self.obstacle_on_path_detected)
 
         executor.add_node(self.update_map_file.map_file_node)
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
         executor.add_node(self.goal.random_point_node)
+        executor.add_node(self.path_plan.path_planner)
+        executor.add_node(self.obstacle_on_path_detected.check_path)
+        
 
         third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
         third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
@@ -76,7 +80,7 @@ class ExplorationBT(Node):
             name="parallel_detect_navigate",
             policy=py_trees.common.ParallelPolicy.SuccessOnOne()
         )
-        second_parallel.add_children([self.new_object_detected, self.navigate_to_goal])
+        second_parallel.add_children([self.obstacle_on_path_detected, self.new_object_detected, self.navigate_to_goal])
 
         # EternalGuard: Ensures that the decorator only runs if new_object_detected is successful
         object_detected_guard = py_trees.decorators.EternalGuard(

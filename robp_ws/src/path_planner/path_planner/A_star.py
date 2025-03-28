@@ -29,10 +29,8 @@ class Nodes:
                 self.y < 0 or self.y >= config_space.info.height):
                 return False
             
-            config_space_data = np.array(config_space.data).reshape((config_space.info.height, config_space.info.width))
-            
             # Check if in free space or unknown (0) rather than occupied (100)
-            return config_space_data[self.y][self.x] == 0
+            return config_space[self.y][self.x] == 0
 
         def get_children(self, node_goal, config_space, cost_ratio):
             ok_children_list = []
@@ -133,18 +131,24 @@ class Planner_A_star(Node):
             node_list.append(node_current.parent)
             node_current = node_current.parent
         node_list.reverse()
-        full_path = Path()
-        full_path.header.frame_id = "map"
-        full_path.header.stamp = self.get_clock().now().to_msg()
-        simplified_path = Path()
-        simplified_path.header.frame_id = "map"
-        simplified_path.header.stamp = self.get_clock().now().to_msg()
-        simplified_path.poses.append(self.node_to_pose(node_list[0]))  # Start with the first node
+        
+        full_path_msg = Path()
+        full_path_msg.header.frame_id = "map"
+        full_path_msg.header.stamp = self.get_clock().now().to_msg()
+
+        simplified_path = [node_list[0]]  # Start with the first node
+        simplified_path_msg = Path()  # Create a Path message
+        simplified_path_msg.header.frame_id = "map"
+        simplified_path_msg.header.stamp = self.get_clock().now().to_msg()
 
         for i, node in enumerate(node_list):
-            # Convert node to PoseStamped
-            pose = self.node_to_pose(node)
-            full_path.poses.append(pose)
+            # Construct full_path
+            pose = PoseStamped()
+            pose.header.frame_id = "map"
+            pose.header.stamp = self.get_clock().now().to_msg()
+            pose.pose.position.x = node.x * self.map_info.resolution + self.map_info.origin.position.x
+            pose.pose.position.y = node.y * self.map_info.resolution + self.map_info.origin.position.y
+            full_path_msg.poses.append(pose)
 
             # Skip collinearity check for first and last nodes
             if 0 < i < len(node_list) - 1:
@@ -161,7 +165,18 @@ class Planner_A_star(Node):
         # Ensure last node is always included
         simplified_path.poses.append(self.node_to_pose(node_list[-1]))
 
-        return simplified_path, full_path
+        simplified_path.append(node_list[-1])  # Always keep the last node
+            
+        # Convert simplified path to a Path message
+        for node in simplified_path:
+            pose = PoseStamped()
+            pose.header.frame_id = "map"
+            pose.header.stamp = self.get_clock().now().to_msg()
+            pose.pose.position.x = node.x * self.map_info.resolution + self.map_info.origin.position.x
+            pose.pose.position.y = node.y * self.map_info.resolution + self.map_info.origin.position.y
+            simplified_path_msg.poses.append(pose)
+
+        return simplified_path_msg, full_path_msg
 
     def a_star(self, node_start, node_goal):
         
@@ -169,15 +184,13 @@ class Planner_A_star(Node):
         open_dict = {}
         closed_dict = {}
         open_dict[(node_start.x, node_start.y)] = node_start
-        self.get_logger().warn("Starting A* algorithm")
         while open_dict:
             self.get_logger().warn(f"Length open dict: {len(open_dict)}")
             #node_current = open_dict[min(open_dict.keys(), key=lambda k: open_dict[k].f)] # Gets the node with the lowest f score
             node_current_key = min(open_dict.keys(), key=lambda k: open_dict[k].f)
             node_current = open_dict.pop(node_current_key)
             closed_dict[node_current.x, node_current.y] = node_current
-            if node_start == node_goal: 
-                self.get_logger().warn("Finished with A* algorithm")
+            if node_current.x == node_goal.x and node_current.y == node_goal.y: 
                 return self.construct_path(node_current)
 
             for node_child in node_current.get_children(node_goal, self.config_space, self.cost_ratio):
@@ -196,12 +209,12 @@ class Planner_A_star(Node):
                     open_dict[child_key] = node_child
         
         self.get_logger().warn("No valid path found (open_dict empty)")
-        return None, None
+        return []
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
-        i_x = int((x - self.config_space.info.origin.position.x) / self.config_space.info.resolution)    
-        i_y = int((y - self.config_space.info.origin.position.y) / self.config_space.info.resolution)
+        i_x = int((x - self.map_info.origin.position.x) / self.map_info.resolution)    
+        i_y = int((y - self.map_info.origin.position.y) / self.map_info.resolution)
         return i_x, i_y
                     
 # def main():

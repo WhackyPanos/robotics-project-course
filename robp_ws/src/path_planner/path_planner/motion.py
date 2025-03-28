@@ -218,7 +218,7 @@ class MotionNode(Node):
             self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
             
             # self.is_goal = False
-            if self.is_path and len(self.path.poses) > 1:
+            if self.is_path and len(self.path.poses) >= 1:
                 self.path.poses.pop(0)
                 self.path_publisher.publish(self.path)
             
