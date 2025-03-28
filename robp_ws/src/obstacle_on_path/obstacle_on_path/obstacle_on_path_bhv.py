@@ -25,9 +25,9 @@ class ObstacleOnPath(py_trees.behaviour.Behaviour, Node):
         clear_path = self.check_path.behaviour()
         self.get_logger().info("Checking if the path is clear of obstacles.")
         if clear_path:
-            return py_trees.common.Status.SUCCESS
+            return py_trees.common.Status.RUNNING
         else:
-            return py_trees.common.Status.FAILURE
+            return py_trees.common.Status.SUCCESS
 
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """
