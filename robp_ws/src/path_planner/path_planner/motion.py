@@ -249,7 +249,7 @@ class MotionNode(Node):
             theta = self.theta_map
 
             angle_diff = angle - theta
-            if abs(angle_diff) < 0.05:
+            if abs(angle_diff) < 0.1:
                 break
             if angle_diff > 0:
                 self.vel_cmd.angular.z = self.angular_velocity_fine
