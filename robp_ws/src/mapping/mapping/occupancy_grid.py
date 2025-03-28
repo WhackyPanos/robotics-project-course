@@ -58,7 +58,7 @@ class OccupancyGridNode(Node):
         self.geofence(vertices) # Sets a boundry for the workspace
 
         # Inflation parameter
-        self.robot_radius = 0.3
+        self.robot_radius = 0.25
         
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
@@ -162,7 +162,7 @@ class OccupancyGridNode(Node):
         kernel = x**2 + y**2 <= kernel_radius**2
         
         # Dilate obstacles to create configuration space
-        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)
+        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)*100
 
         # Create an OccupancyGrid message
         config_grid_msg = OccupancyGrid()

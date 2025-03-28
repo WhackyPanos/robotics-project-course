@@ -28,11 +28,20 @@ class CheckPath(Node):
         self.path = None
         self.config_space = None
 
+    
+    def world_to_grid(self, x, y):
+        '''Converts world coordinates in [m] to grid indices.'''
+        i_x = int((x - self.map_info.origin.position.x) / self.map_info.resolution)    
+        i_y = int((y - self.map_info.origin.position.y) / self.map_info.resolution)
+        return i_x, i_y
+    
+    
     def path_callback(self, msg: Path):
         # Store latest path msg
         self.path = []
         for pose in msg.poses:
-            self.path.append((pose.pose.position.x, pose.pose.position.y))
+            i_x, i_y = self.world_to_grid(pose.pose.position.x, pose.pose.position.y) # Converts to gird indexes
+            self.path.append((i_x, i_y)) 
 
     def map_callback(self, msg: OccupancyGrid):
         # Store latest map msg
@@ -49,7 +58,7 @@ class CheckPath(Node):
 
         for index in self.path:
             x, y = index
-            if map_data[y, x] == 1: 
+            if map_data[y, x] == 100: 
                 return False
         return True
 

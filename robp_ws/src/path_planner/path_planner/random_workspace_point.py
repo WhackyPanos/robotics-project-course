@@ -32,7 +32,7 @@ class RandomPoint(Node):
         self.map_origin_y = 0.0
 
         #Robot's pose
-        self.robot = None
+        self.robot_x = self.robot_y = self.robot_yaw = None
 
 
     def grid_callback(self, msg):
@@ -63,15 +63,15 @@ class RandomPoint(Node):
             quaternion = (orientation.x, orientation.y, orientation.z, orientation.w)
             roll, pitch, yaw = euler_from_quaternion(quaternion)
 
-            self.robot.x = x
-            self.robot.y = y
-            self.robot.yaw = yaw
+            self.robot_x = x
+            self.robot_y = y
+            self.robot_yaw = yaw
 
         except tf2_ros.TransformException as ex:
             self.get_logger().warn(f"Transform lookup failed: {ex}")
 
     def is_valid_point(self, x, y):
-        """ Checks if a point is free in config_space (1) and unexplored in occupancy_grid (-1). """
+        """ Checks if a point is free in config_space (0) and unexplored in occupancy_grid (-1). """
         grid_x = int((x - self.map_origin_x) / self.map_resolution)
         grid_y = int((y - self.map_origin_y) / self.map_resolution)
 
@@ -82,11 +82,11 @@ class RandomPoint(Node):
 
     def generate_new_point(self):
         """ Generates a random valid point in unexplored free space and publishes it. """
-        if self.map_data is None or self.space_data is None:
+        if self.map_data is None:
             self.get_logger().warn("Map or config space data not available yet!")
             return False
         self.get_robot_pose()
-        if self.robot is None:
+        if self.robot_x is None or self.robot_y is None or self.robot_yaw is None: 
             self.get_logger().warn("Robot pose not available yet!")
             return False
             
@@ -94,20 +94,20 @@ class RandomPoint(Node):
         best_score = -float("inf")  # We maximize this score
 
         # Unit vector representing the robot's forward direction
-        robot_dx = np.cos(self.robot.yaw)
-        robot_dy = np.sin(self.robot.yaw)
+        robot_dx = np.cos(self.robot_yaw)
+        robot_dy = np.sin(self.robot_yaw)
 
-        for _ in range(200):  # Limit attempts to avoid infinite loops
+        for _ in range(1000):  # Limit attempts to avoid infinite loops
             x_candidate = uniform(self.map_origin_x, self.map_origin_x + self.map_width * self.map_resolution)
             y_candidate = uniform(self.map_origin_y, self.map_origin_y + self.map_height * self.map_resolution)
 
             if self.is_valid_point(x_candidate, y_candidate):
-                dx = x_candidate - self.robot.x
-                dy = y_candidate - self.robot.y
+                dx = x_candidate - self.robot_x
+                dy = y_candidate - self.robot_y
 
                 distance = np.hypot(dx, dy)
-                # if distance < 1:  # Avoid picking a point too close to the robot
-                #     continue
+                if distance < 0.5:  # Avoid picking a point too close to the robot
+                    continue
 
                 # Normalize the candidate direction vector
                 candidate_dx = dx / distance
