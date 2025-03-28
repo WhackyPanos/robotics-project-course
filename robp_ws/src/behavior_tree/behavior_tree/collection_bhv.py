@@ -113,6 +113,7 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         # Note: hope the behavior tick is slower than the subscriber callback, might need changes
+        self.node.get_logger().info(f"Next thing to go to is {self.msg.data} and we are in the {self.arm_task} task")
         self.next_goal.publish(self.msg)
         return py_trees.common.Status.FAILURE
 
