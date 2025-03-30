@@ -227,15 +227,15 @@ class MotionNode(Node):
                 self.path_reached = True
                 self.is_path = False
                 self.icp_publisher.publish(Bool(data=False))
-                if self.do_yaw: self.adjust_yaw(self.angle_goal)
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
+                if self.do_yaw: self.adjust_yaw(self.angle_goal)
             else:
-                if self.do_yaw: self.adjust_yaw(self.angle_goal)
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
+                if self.do_yaw: self.adjust_yaw(self.angle_goal)
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
