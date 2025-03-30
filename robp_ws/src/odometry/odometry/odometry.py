@@ -42,14 +42,18 @@ class Odometry(Node):
             Imu, '/imu/data_raw', self.imu_callback, 10)
         
         
-        self.init_imu_yaw = None
-        self.prev_imu_yaw = None
-        #self.yaw_buffer = deque(maxlen=10)
+        
 
         # 2D pose
         self._x = 0.0
         self._y = 0.0
         self._yaw = 0.0
+        self.delta_theta = 0.0
+
+        # Imu
+        self.prev_imu_yaw = None
+        self.imu_yaw = None
+        self.imu_offset = np.pi/1800 # 0.1 degrees
 
         # keep encoder ticks
         self.past_ticks_left = 0
@@ -59,23 +63,17 @@ class Odometry(Node):
 
 
     def imu_callback(self, msg: Imu):
-        alpha = 0.5  # Weight for bias to past or new value of angle 
-
         quat = msg.orientation
-        _, _, temp_imu_yaw = euler_from_quaternion([quat.x, quat.y, quat.z, quat.w])
-
-        # Sets initaial angle to 0
-        if self.init_imu_yaw is None:
-            self.init_imu_yaw = temp_imu_yaw
-        temp_imu_yaw = self.init_imu_yaw - temp_imu_yaw
-
+        _, _, imu_yaw = euler_from_quaternion([quat.x, quat.y, quat.z, quat.w])
+        self.imu_yaw = imu_yaw
+        
         # temp_imu_yaw = - temp_imu_yaw # Comment out if you uncomment above code
 
-        if self.prev_imu_yaw is not None:
-            self._yaw = alpha * temp_imu_yaw + (1 - alpha) * self.prev_imu_yaw
-        else:
-            self._yaw = temp_imu_yaw
-        self.prev_imu_yaw = self._yaw
+        # if self.prev_imu_yaw is not None:
+        #     self._yaw = alpha * temp_imu_yaw + (1 - alpha) * self.prev_imu_yaw
+        # else:
+        #     self._yaw = temp_imu_yaw
+        # self.prev_imu_yaw = self._yaw
 
 
 
@@ -98,23 +96,32 @@ class Odometry(Node):
         base = 0.3125  # TODO: Fill in
         K = 2*np.pi/ticks_per_rev
 
+
+        # Imu stuff:
+        if self.prev_imu_yaw is None:
+            self.delta_theta = 0.0
+        else:
+            self.delta_theta = self.prev_imu_yaw - self.imu_yaw
+        self.prev_imu_yaw = self.imu_yaw
+        self._yaw = self._yaw + self.delta_theta
+
         # Ticks since last message
         self.current_ticks_left = msg.encoder_left
         self.current_ticks_right = msg.encoder_right
         delta_ticks_left = self.current_ticks_left - self.past_ticks_left
         delta_ticks_right = self.current_ticks_right - self.past_ticks_right
 
-        if self._yaw is None:
-            self.get_logger().info(f'Waiting for IMU data')
-            return
+        # if self._yaw is None:
+        #     self.get_logger().info(f'Waiting for IMU data')
+        #     return
 
         # TODO: Fill in
         D = wheel_radius/2 * K * (delta_ticks_right + delta_ticks_left)
-        delta_theta = wheel_radius/base * K * (delta_ticks_right - delta_ticks_left)
+        # delta_theta = wheel_radius/base * K * (delta_ticks_right - delta_ticks_left)
 
+        # self._yaw = self._yaw + self.delta_theta # TODO: Fill in
         self._x = self._x + D * np.cos(self._yaw) # TODO: Fill in
         self._y = self._y + D * np.sin(self._yaw) # TODO: Fill in
-        self._yaw = self._yaw + delta_theta # TODO: Fill in
         
         #stamp = self.get_clock().now() # TODO: Fill in
         stamp = msg.header.stamp

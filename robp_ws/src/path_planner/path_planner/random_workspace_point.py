@@ -8,13 +8,14 @@ import tf2_ros
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 from tf_transformations import euler_from_quaternion
+from scipy.ndimage import binary_dilation
 
 class RandomPoint(Node):
     def __init__(self):
         super().__init__('random_point')
         
         # Subscriptions
-        self.space_subscription = self.create_subscription(OccupancyGrid, '/config_space', self.space_callback, 10)
+        # self.space_subscription = self.create_subscription(OccupancyGrid, '/config_space', self.space_callback, 10)
         self.grid_subscription = self.create_subscription(OccupancyGrid, '/occupancy_grid', self.grid_callback, 10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
@@ -23,8 +24,8 @@ class RandomPoint(Node):
         self.publisher = self.create_publisher(PointStamped, '/goal_point', 10)
         
         # Map attributes
+        self.config_space_data = None
         self.map_data = None
-        self.space_data = None
         self.map_width = 0
         self.map_height = 0
         self.map_resolution = 1.0
@@ -33,6 +34,24 @@ class RandomPoint(Node):
 
         #Robot's pose
         self.robot_x = self.robot_y = self.robot_yaw = None
+        self.robot_radius = 0.35
+
+    def inflate_map(self):
+        binary_grid = np.zeros_like(self.map_data)
+        
+        # Threshold for obstacles (usually >50 is considered occupied)
+        binary_grid[self.map_data > 50] = 1
+        # Robot can drive through both known and unknown space
+        
+        # Calculate kernel size based on robot radius and map resolution
+        kernel_radius = int(np.ceil(self.robot_radius / self.map_resolution))
+        
+        # Create circular kernel for dilation
+        y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
+        kernel = x**2 + y**2 <= kernel_radius**2
+        
+        # Dilate obstacles to create configuration space
+        self.config_space_data = binary_dilation(binary_grid, kernel).astype(np.int8)
 
 
     def grid_callback(self, msg):
@@ -44,9 +63,9 @@ class RandomPoint(Node):
         self.map_origin_x = msg.info.origin.position.x
         self.map_origin_y = msg.info.origin.position.y
 
-    def space_callback(self, msg):
-        """ Stores configuration space (1 = occupied, 0 = free). """
-        self.space_data = np.array(msg.data).reshape((msg.info.height, msg.info.width))
+    # def space_callback(self, msg):
+    #     """ Stores configuration space (1 = occupied, 0 = free). """
+    #     self.space_data = np.array(msg.data).reshape((msg.info.height, msg.info.width))
 
     def get_robot_pose(self):
         """ Retrieves the robot's current pose in the 'map' frame. """
@@ -77,7 +96,7 @@ class RandomPoint(Node):
 
         if 0 <= grid_x < self.map_width and 0 <= grid_y < self.map_height:
             # Ensure point is in free space (config_space == 0) and not explored (occupancy_grid == -1)
-            return self.space_data[grid_y, grid_x] == 0 and self.map_data[grid_y, grid_x] == -1
+            return self.config_space_data[grid_y, grid_x] == 0 and self.map_data[grid_y, grid_x] == -1
         return False
 
     def generate_new_point(self):
@@ -89,7 +108,8 @@ class RandomPoint(Node):
         if self.robot_x is None or self.robot_y is None or self.robot_yaw is None: 
             self.get_logger().warn("Robot pose not available yet!")
             return False
-            
+        
+        self.inflate_map()
         best_point = None
         best_score = -float("inf")  # We maximize this score
 
