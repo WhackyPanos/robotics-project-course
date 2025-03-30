@@ -58,7 +58,7 @@ class MotionNode(Node):
         self.path_reached = False
         self.is_path = False
         self.is_goal = False
-        self.do_yaw = True
+        self.do_yaw = False
 
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
