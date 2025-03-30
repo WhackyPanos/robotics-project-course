@@ -31,9 +31,15 @@ class CheckPath(Node):
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
-        i_x = int((x - self.map_info.origin.position.x) / self.map_info.resolution)    
-        i_y = int((y - self.map_info.origin.position.y) / self.map_info.resolution)
+        resolution = self.config_space.info.resolution
+        origin_x = self.config_space.info.origin.position.x
+        origin_y = self.config_space.info.origin.position.y
+
+        i_x = int((x - origin_x) / resolution)    
+        i_y = int((y - origin_y) / resolution)
+        
         return i_x, i_y
+
     
     
     def path_callback(self, msg: Path):
