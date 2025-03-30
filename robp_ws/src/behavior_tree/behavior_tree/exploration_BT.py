@@ -8,6 +8,7 @@ from rclpy.executors import MultiThreadedExecutor
 import time
 
 # Import classes
+from .customTimer_BT import CustomTimer
 from path_planner.random_point_bhv import PointGenerator
 from path_planner.motion_bhv import NavigateToGoal
 from obstacle_on_path.obstacle_on_path_bhv  import ObstacleOnPath
@@ -22,11 +23,8 @@ from mapping.CheckUnexploredSpace_bhv import CheckOccupancyGrid
 class ExplorationBT(Node):
     def __init__(self) -> None:
         super().__init__('behavior_tree_exploration')
-        # Create the root as a Sequence node
-        self.root = py_trees.composites.Parallel(
-            name="Stop Tree Parallel",
-            policy=py_trees.common.ParallelPolicy.SuccessOnOne()
-        )
+        # Create the root
+        self.root  = py_trees.composites.Selector(name='tree_sel', memory=False)
 
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False)
 
@@ -55,11 +53,15 @@ class ExplorationBT(Node):
         executor.add_node(self.classify)
         executor.add_node(self.update_map_file)
         executor.add_node(self.path_plan)
+        executor.add_node(self.obstacle_on_path_detected)
 
         executor.add_node(self.update_map_file.map_file_node)
         executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
         executor.add_node(self.goal.random_point_node)
+        executor.add_node(self.path_plan.path_planner)
+        executor.add_node(self.obstacle_on_path_detected.check_path)
+        
 
         third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
         third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
@@ -71,11 +73,11 @@ class ExplorationBT(Node):
         )
 
         # Parallel Node: Runs both detection and navigation simultaneously, success on one
-        first_parallel = py_trees.composites.Parallel(
+        second_parallel = py_trees.composites.Parallel(
             name="parallel_detect_navigate",
             policy=py_trees.common.ParallelPolicy.SuccessOnOne()
         )
-        first_parallel.add_children([self.new_object_detected, self.navigate_to_goal])
+        second_parallel.add_children([self.obstacle_on_path_detected, self.new_object_detected, self.navigate_to_goal])
 
         # EternalGuard: Ensures that the decorator only runs if new_object_detected is successful
         object_detected_guard = py_trees.decorators.EternalGuard(
@@ -87,16 +89,22 @@ class ExplorationBT(Node):
         fail_is_success = py_trees.decorators.FailureIsSuccess(name='fail2success', child=object_detected_guard)
 
         second_sequence = py_trees.composites.Sequence(name="second_seq", memory=True)
-        second_sequence.add_children([first_parallel, fail_is_success])
+        second_sequence.add_children([second_parallel, fail_is_success])
 
         first_sequence = py_trees.composites.Sequence(name='first_seq', memory=True)
-        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan, second_sequence, self.check_occupancy_grid])
+        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan,  second_sequence])
 
-        timer = py_trees.timers.Timer(name='timer', duration=300.0)
-        # timer_dec = py_trees.decorators.RunningIsFailure(name='timer_dec', child=timer) # Failure until timer finishes
+        timer = CustomTimer(name='timer', duration=300.0)
+
+        first_parallel = py_trees.composites.Parallel(
+            name="Stop Tree Parallel",
+            policy=py_trees.common.ParallelPolicy.SuccessOnOne()
+        )
+
+        first_parallel.add_children([timer, self.check_occupancy_grid])
 
         # Add behavior tree child nodes to the root
-        self.root.add_children([timer, first_sequence])
+        self.root.add_children([first_parallel, first_sequence])
 
         return self.root
     
@@ -104,25 +112,6 @@ class ExplorationBT(Node):
     # Check for eternal guard if the new_object_detected behavior has succeeded
     def object_detected_condition(self):
         return self.new_object_detected.status == py_trees.common.Status.SUCCESS
-
-        # second_sequence = py_trees.composites.Sequence(name='second_seq')
-        # second_sequence.add_children([new_object_detected, classify, update_map_file])
-
-        # second_selector = py_trees.composites.Selector(name='second_sel')
-        # second_selector.add_children([obstacle_on_path_detected, second_sequence])
-
-        # first_parallel = py_trees.composites.Parallel(name='first_parallel')
-        # first_parallel.add_children([second_selector, update_occupnacy_grid])
-
-        # first_selector = py_trees.composites.Selector(name='first_sel')
-        # first_selector.add_children([first_parallel, navigate_to_goal])
-
-        # first_sequence = py_trees.composites.Sequence(name='first_seq')
-        # first_sequence.add_children([path_plan, first_selector])
-
-        # root.add_children([pub_occupancy_grid, goal, navigate_to_goal])
-        
-        # return root
 
 
 
