@@ -58,10 +58,6 @@ class MotionNode(Node):
         self.prev_angle_diff = 0.0
 
 
-        self.prev_time = self.get_clock().now().nanoseconds / 1e9
-        self.prev_angle_diff = 0.0
-
-
         # Setup publishers and subscribers
         # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 10)
@@ -232,9 +228,15 @@ class MotionNode(Node):
                 self.path_reached = True
                 # self.is_path = False
                 self.icp_publisher.publish(Bool(data=False))
-                self.adjust_yaw(self.angle_goal)            
+                if self.do_yaw: self.adjust_yaw(self.angle_goal)
+                self.vel_cmd.angular.z = 0.0
+                self.vel_cmd.linear.x = 0.0
+                self.cmd_vel_publisher.publish(self.vel_cmd)
             else:
-                self.adjust_yaw(self.angle_goal)
+                if self.do_yaw: self.adjust_yaw(self.angle_goal)
+                self.vel_cmd.angular.z = 0.0
+                self.vel_cmd.linear.x = 0.0
+                self.cmd_vel_publisher.publish(self.vel_cmd)
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
