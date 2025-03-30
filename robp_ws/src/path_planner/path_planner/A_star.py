@@ -67,9 +67,9 @@ class Planner_A_star(Node):
         self.goal_msg = msg
         
     def map_callback(self, config_space_msg): # Create the configurations space
-        
-        self.map_info = config_space_msg.info # Gets info from the occupancy grid
-        self.config_space = np.array(config_space_msg.data).reshape(self.map_info.height, self.map_info.width)
+        self.config_space = config_space_msg
+        #self.map_info = config_space_msg.info # Gets info from the occupancy grid
+        #self.config_space = np.array(config_space_msg.data).reshape(self.map_info.height, self.map_info.width)
 
         # # Create binary occupancy grid (1 for obstacles, 0 for free space)
         # grid = np.array(occupancy_grid_msg.data).reshape(self.map_info.height, self.map_info.width)
