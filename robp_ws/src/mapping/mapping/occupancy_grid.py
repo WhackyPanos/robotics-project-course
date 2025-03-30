@@ -58,7 +58,7 @@ class OccupancyGridNode(Node):
         self.geofence(vertices) # Sets a boundry for the workspace
 
         # Inflation parameter
-        self.robot_radius = 0.25
+        self.robot_radius = 0.2
         
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
@@ -72,7 +72,7 @@ class OccupancyGridNode(Node):
         max_x = float('-inf')
         min_y = float('inf')
         max_y = float('-inf')
-        tsv_file_path = '/home/group3-robot/robp_group3/robp_ws/src/mapping/mapping/workspace_2_choped.tsv'
+        tsv_file_path = '/home/group3-robot/robp_group3/robp_ws/src/mapping/mapping/workspace_3.tsv'
         vertices = [] # Stores verticies as (x, y) tuples
         with open(tsv_file_path, newline='') as tsvfile:
             reader = csv.reader(tsvfile, delimiter='\t') # List of lists  
@@ -203,7 +203,7 @@ class OccupancyGridNode(Node):
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
 
-        if abs(self.angular_vel) < 0.05:
+        if abs(self.angular_vel) < 0.1:
             lidar_from_frame_rel = msg.header.frame_id # Lidar link
             lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
             lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))

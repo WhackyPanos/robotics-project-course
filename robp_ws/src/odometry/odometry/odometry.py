@@ -49,6 +49,7 @@ class Odometry(Node):
         #   PointCloud2, "/icp/global_point_cloud", self.localization_transform_trigger, qos_profile = 10)
         
         
+        
 
         # 2D pose
         self._x = 0.0

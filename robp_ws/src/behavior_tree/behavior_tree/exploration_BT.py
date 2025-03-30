@@ -95,7 +95,7 @@ class ExplorationBT(Node):
         second_sequence.add_children([second_parallel, fail_is_success])
 
         first_sequence = py_trees.composites.Sequence(name='first_seq', memory=True)
-        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan,  second_sequence])
+        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan, second_sequence])
 
         timer = CustomTimer(name='timer', duration=300.0)
 
@@ -138,7 +138,7 @@ def main(args=None):
     time.sleep(5.0)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=100)
+    node.tree.tick_tock(period_ms=50)
 
     # Continuously tick the behavior tree
     try:
