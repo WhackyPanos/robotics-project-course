@@ -26,6 +26,7 @@ setup(
             'point_publisher_test = path_planner.point_publisher_test:main',
             'path_execution = path_planner.path_execution:main',
             'path_test = path_planner.path_test:main',
+            'motion_debug = path_planner.motion_debug:main',
         ],
     },
 )

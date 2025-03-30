@@ -8,6 +8,13 @@ import tf2_geometry_msgs
 from geometry_msgs.msg import Point, Pose2D, Twist, PoseStamped, PointStamped
 from nav_msgs.msg import Path
 from std_msgs.msg import Bool
+
+"""
+Panos: This is just for DEBUGGING! The real motion node is in motion.py.
+I just needed a way to avoid the behaviour tree for my tests...
+"""
+
+
 """
 This node is used to control the robot's motion to navigate to a goal position.
 PID controller was implemented to control the robot's angular velocity to reach the goal position.
@@ -58,7 +65,7 @@ class MotionNode(Node):
 
 
         # Setup publishers and subscribers
-        # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
+        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 10)
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
@@ -152,6 +159,10 @@ class MotionNode(Node):
     #             # self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
     #         except Exception as e:
     #             self.get_logger().warn(f"Transform failed: {str(e)}")
+
+    def odometry_callback(self, msg: Pose2D):
+        if not self.goal_reached_flag:
+            self.navigate_to_goal()
 
     def get_robot_position(self):
         try:
@@ -250,6 +261,7 @@ class MotionNode(Node):
             theta = self.theta_map
 
             angle_diff = angle - theta
+            self.get_logger().info(f"Adjusting yaw, angle_diff: {angle_diff}")
             if abs(angle_diff) < 0.1:
                 break
             if angle_diff > 0:
