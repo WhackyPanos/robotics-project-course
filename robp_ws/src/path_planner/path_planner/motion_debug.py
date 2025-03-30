@@ -8,6 +8,13 @@ import tf2_geometry_msgs
 from geometry_msgs.msg import Point, Pose2D, Twist, PoseStamped, PointStamped
 from nav_msgs.msg import Path
 from std_msgs.msg import Bool
+
+"""
+Panos: This is just for DEBUGGING! The real motion node is in motion.py.
+I just needed a way to avoid the behaviour tree for my tests...
+"""
+
+
 """
 This node is used to control the robot's motion to navigate to a goal position.
 PID controller was implemented to control the robot's angular velocity to reach the goal position.
@@ -43,7 +50,6 @@ class MotionNode(Node):
         self.vel_cmd.linear.z = 0.0
         self.vel_cmd.angular.x = 0.0
         self.vel_cmd.angular.y = 0.0
-        self.prev_time = self.get_clock().now().nanoseconds / 1e9
 
         self.x_map = None
         self.y_map = None
@@ -59,7 +65,7 @@ class MotionNode(Node):
 
 
         # Setup publishers and subscribers
-        # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
+        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 10)
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
@@ -154,12 +160,16 @@ class MotionNode(Node):
     #         except Exception as e:
     #             self.get_logger().warn(f"Transform failed: {str(e)}")
 
+    def odometry_callback(self, msg: Pose2D):
+        if not self.goal_reached_flag:
+            self.navigate_to_goal()
+
     def get_robot_position(self):
         try:
             # Lookup transform from 'map' to 'base_link'
             transform = self.tf_buffer.lookup_transform(
-                'map',  # Target frame
-                'base_link',  # Source frame
+                "map",  # Target frame
+                "base_link",  # Source frame
                 rclpy.time.Time(),  # Get the latest available transform
                 timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
             )
@@ -217,7 +227,7 @@ class MotionNode(Node):
             self.goal_reached_flag = True
             self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
             
-            #self.is_goal = False
+            self.is_goal = False
             if self.is_path and len(self.path.poses) > 1:
                 self.path.poses.pop(0)
                 self.path_publisher.publish(self.path)
@@ -251,6 +261,7 @@ class MotionNode(Node):
             theta = self.theta_map
 
             angle_diff = angle - theta
+            self.get_logger().info(f"Adjusting yaw, angle_diff: {angle_diff}")
             if abs(angle_diff) < 0.1:
                 break
             if angle_diff > 0:
