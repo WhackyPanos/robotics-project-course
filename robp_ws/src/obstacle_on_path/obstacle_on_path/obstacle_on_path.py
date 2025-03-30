@@ -7,7 +7,6 @@ from rclpy.node import Node
 from nav_msgs.msg import Path, OccupancyGrid
 
 
-
 class CheckPath(Node):
 
     def __init__(self):
@@ -62,7 +61,6 @@ class CheckPath(Node):
             if map_data[y, x] == 100: 
                 return False
         return True
-
 
 
 # def main():
