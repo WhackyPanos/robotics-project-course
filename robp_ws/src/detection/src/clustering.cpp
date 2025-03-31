@@ -12,7 +12,7 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("cloud_topic", cloud_topic_, std::string("/camera/camera/depth/color/points"));
     this->get_parameter_or("cluster_topic", cluster_topic_, std::string("/detection/cluster_points"));
     this->get_parameter_or("twist_topic", twist_topic_, std::string("/cmd_vel"));
-    this->get_parameter_or("map_topic", map_topic_, std::string("/map"));
+    this->get_parameter_or("map_topic", map_topic_, std::string("/occupancy_grid"));
     this->get_parameter_or("trigger_topic", trigger_topic_, std::string("/detection/request"));
     this->get_parameter_or("result_topic", result_topic_, std::string("/detection/result"));    
     this->get_parameter_or("dist_filter_min", z_filter_min_, 0.0);
@@ -94,15 +94,6 @@ bool Clustering::perform_clustering(bool new_req)
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cloud_, *cloud);
 
-    // pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
-    // pcl::PassThrough<pcl::PointXYZ> pass;
-    // pass.setInputCloud(cloud);
-    // pass.setFilterFieldName("y");
-    // pass.setFilterLimits(y_filter_min_, -0.02);
-    // pass.filter(*obstacle);
-
-    // if (!obstacle->empty()) return false;
-
 
     // Apply passthrough filtering
     pcl::PassThrough<pcl::PointXYZ> pass;
@@ -142,7 +133,6 @@ bool Clustering::perform_clustering(bool new_req)
         }
 
         pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
-        // pcl::PassThrough<pcl::PointXYZ> pass;
         pass.setInputCloud(cloud_cluster);
         pass.setFilterFieldName("y");
         pass.setFilterLimits(y_filter_min_, -0.02);
@@ -248,6 +238,7 @@ bool Clustering::is_occupied(float x, float y)
     int mx = static_cast<int>((x - latest_map_.info.origin.position.x) / latest_map_.info.resolution);
     int my = static_cast<int>((y - latest_map_.info.origin.position.y) / latest_map_.info.resolution);
     int width = latest_map_.info.width;
+    RCLCPP_INFO(this->get_logger(), "Check Occupation at (%d, %d).", mx,my);
     
     for (int dx = -occupancy_margin_; dx <= occupancy_margin_; ++dx) {
         for (int dy = -occupancy_margin_; dy <= occupancy_margin_; ++dy) {
