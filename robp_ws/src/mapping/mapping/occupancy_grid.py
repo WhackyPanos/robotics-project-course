@@ -22,10 +22,10 @@ from std_msgs.msg import Header
 from geometry_msgs.msg import Twist
 from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
-from scipy.ndimage import binary_dilation, binary_fill_holes
+from scipy.ndimage import binary_dilation, binary_fill_holes, binary_erosion, b
 
 # free space from lidar: not marked
-# free space from camera: 0
+# free space from camera: 0 
 # Occupied by lidar: 100
 # Occupied by camera: 99
 
@@ -235,12 +235,12 @@ class OccupancyGridNode(Node):
         filtered_scan.angle_increment = msg.angle_increment
         filtered_scan.time_increment = msg.time_increment
         filtered_scan.scan_time = msg.scan_time
-        filtered_scan.range_min = msg.range_min
+        filtered_scan.range_min = max(msg.range_min, 0.2)
         filtered_scan.range_max = min(msg.range_max, 3.0)  # Limit max range to 5m
         filtered_scan.intensities = msg.intensities
 
         # Filter out points beyond 5 meters
-        filtered_scan.ranges = [r if r <= 3.0 else float('inf') for r in msg.ranges]
+        filtered_scan.ranges = [r if r <= 3.0 and r >= 0.2 else float('inf') for r in msg.ranges]
                     
 
         # Project LaserScan to PointCloud2

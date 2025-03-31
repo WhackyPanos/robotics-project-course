@@ -128,7 +128,7 @@ class Planner_A_star(Node):
         first_pose.pose.position.x = node_list[0].x * self.config_space.info.resolution + self.config_space.info.origin.position.x
         first_pose.pose.position.y = node_list[0].y * self.config_space.info.resolution + self.config_space.info.origin.position.y
         full_path_msg.poses.append(first_pose)
-        simplified_path_msg.poses.append(first_pose)
+        # simplified_path_msg.poses.append(first_pose)
 
         for i in range(1, len(node_list) - 1):  
             node = node_list[i]
