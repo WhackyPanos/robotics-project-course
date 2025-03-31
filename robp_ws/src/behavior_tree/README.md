@@ -7,21 +7,18 @@ rm -rf build install log
 colcon build --package-skip detection
 source install/setup.bash
 ```
+# Collection Phase
 
 While being on robp_group3 (not robp_ws), build, source and then launch:
 
 ``` fastdds discovery -i 0 -t 192.168.128.107 -q 42100 ```
 
-``` ros2 launch robp_launch exploration_hw_tf_launch.py  ```
+``` ros2 launch robp_launch collection_hw_tf_launch.py  ```
 
 ``` ros2 launch robp_launch arm_servo_launch.py ```
 
-``` ros2 run odometry odometry ```
-
 ``` ros2 launch robp_launch collection_node_launch.py ```
 
-
-# Collection Phase
 #### **Important topics**
 | Topic name | Published | Subscribed from | Description
 | --- | ---| --- | --- |
