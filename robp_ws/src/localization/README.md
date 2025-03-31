@@ -13,7 +13,14 @@ The transform comes from the icp package and this package is responsible for com
 | /icp/transform | TransformStamped | icp_node.cpp -> icp_cpp pkg | localization_transform.py | Transformation between two point clouds
 | /icp/type | String | localization_transform |  icp_node.cpp -> icp_cpp pkg| The msg can be "Normal" or "LoopClosure"
 | /icp/global_point_cloud | PointCloud2 | icp_node.cpp -> icp_cpp pkg |  rviz2 | pointCloud for visualization purposes
-| /icp/activate | Bool | (1) |  localization_bhv | The boolean message will indicate if localization is needed or not, which is managed by the behavior.
+| /icp/activate | Bool | (1) |  localization_bhv | The boolean message will indicate if localization is needed or not, which is managed by the behavior
+
+---
+colcon build --symlink-install --packages-skip usb_cam 
+source install/setup.bash
+
+ros2 bag play --read-ahead-queue-size 100 -l -r 1.0 --clock 100 --start-paused ~/aREPO/robp_group3/robp_ws/bag/lidar_dynamic/lidar_dynamic.mcap 
+
 
 ---
 (1) Ideally, it should be published by the motion behavior when the point is reached, ie, when the robot stops completely and return SUCCESS. It should publish a FALSE message so the localization is not performed why the robot is standing still. Besides, the picking and placing behaviors should publish a TRUE message (when these behaviors return SUCCESS, the robot will start moving and localization should be re-initiated).
