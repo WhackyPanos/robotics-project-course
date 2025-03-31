@@ -30,7 +30,7 @@ from scipy.ndimage import binary_dilation, binary_fill_holes, binary_erosion
 # Occupied by camera: 99
 
 class OccupancyGridNode(Node):
-    def __init__(self):
+    def __init__(self): 
 
         # Initializes
         super().__init__('update_occupancy_grid')
@@ -55,6 +55,7 @@ class OccupancyGridNode(Node):
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.config_space = self.grid # Config space
         self.grid.fill(-1) # Sets all cells to unknown
+        self.geofence_mask = None # Geofence mask to check if lidar points are inside the workspace
         self.geofence(vertices) # Sets a boundry for the workspace
 
         # Inflation parameter
@@ -69,7 +70,6 @@ class OccupancyGridNode(Node):
 
         # Obstacle tracking dictionary
         self.lidar_obstacles = {}  # {(x, y): timestamp}
-
 
     def read_workspace(self):
         min_x = float('inf')
@@ -92,18 +92,9 @@ class OccupancyGridNode(Node):
 
     def geofence(self, vertices):
 
-        # for i in range(len(vertices)):
-        #     x0, y0 = vertices[i]
-        #     x1, y1 = vertices[ (i+1) % len(vertices)] 
-        #     start = self.world_to_grid(x0, y0)
-        #     end = self.world_to_grid(x1, y1)
-        #     cells = self.raytrace(start, end)
-        #     for cell in cells:
-        #         (i_x, i_y) = cell
-        #         self.grid[i_y, i_x] = 100
-
         # Create an empty mask
         mask = np.zeros((self.height, self.width), dtype=bool)
+        self.geofence_mask = np.zeros((self.height, self.width), dtype=bool)
         
         # Rasterize the geofence boundary
         for i in range(len(vertices)):
@@ -118,11 +109,13 @@ class OccupancyGridNode(Node):
         
         # Fill inside the geofence
         filled_mask = binary_fill_holes(mask)
-        #self.grid[filled_mask] = -1  # Mark inside as unknown (-1)
 
-        # Fill outside the geofence
-        self.grid[mask] = 100 # Mark border fence as occupied (100)
-        self.grid[~filled_mask] = 100 # Mark outside as occupied (100)
+        # Mask with both border and outside of border
+        self.geofence_mask[mask] = True
+        self.geofence_mask[~filled_mask] = True
+
+        # Marks the occupancy grid 
+        self.grid[self.geofence_mask] = 100 
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
@@ -258,7 +251,8 @@ class OccupancyGridNode(Node):
         for point in sensor_msgs_py.point_cloud2.read_points(cloud_map, field_names=("x", "y"), skip_nans=True):
             x, y = self.world_to_grid(point[0], point[1])
             if 0 <= x < self.width and 0 <= y < self.height:
-                self.lidar_obstacles[(x, y)] = current_time
+                if not self.geofence_mask[y, x]:  # Only add points if its not part of the geofence mask
+                    self.lidar_obstacles[(x, y)] = current_time
 
         to_remove = []
         for (x, y), timestamp in self.lidar_obstacles.items():
