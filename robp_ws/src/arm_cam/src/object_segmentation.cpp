@@ -6,13 +6,16 @@ ObjectSegmentation::ObjectSegmentation() : Node("object_segmentation", rclcpp::N
                                         .allow_undeclared_parameters(true)
                                         .automatically_declare_parameters_from_overrides(true)) 
 {
+    //0.137 in x
+    //0.0 in y
+    
 
     // Retrieve parameters with get_parameter_or()
     this->get_parameter_or("image_topic", image_topic_, std::string("/arm_camera/filtered/image_raw"));
     this->get_parameter_or("point_obj_topic", point_obj_topic_, std::string("/arm_camera/points"));
-    this->get_parameter_or("trigger_topic", trigger_topic_, std::string("/arm_camera/request"));
-    this->get_parameter_or("result_topic", result_topic_, std::string("/arm_camera/result"));   
-    this->get_parameter_or("Z_camera", Zc_, 0.245);
+    this->get_parameter_or("trigger_topic", trigger_topic_, std::string("/arm_cam/request"));
+    this->get_parameter_or("result_topic", result_topic_, std::string("/arm_cam/result"));   
+    this->get_parameter_or("Z_camera", Zc_, 0.235);
     this->get_parameter_or("max_obj_size", max_obj_size_, 10000);
     this->get_parameter_or("min_obj_distance", min_obj_distance_, 45.0);
     this->get_parameter_or("max_k", max_k_, 6);
@@ -107,7 +110,7 @@ bool ObjectSegmentation::perform_segmentation(){
 
 
     int best_k = find_k(ab_channels);
-    // RCLCPP_INFO(this->get_logger(), "Best K: %d", best_k);
+    RCLCPP_INFO(this->get_logger(), "Best K: %d", best_k);
 
 
     // Apply K-Means with the chosen K
@@ -192,7 +195,7 @@ bool ObjectSegmentation::perform_segmentation(){
     }
 
     if(merged_obj_positions.size()==0) return false;
-    // RCLCPP_INFO(this->get_logger(), "Number of cluster: %ld", merged_obj_positions.size());
+    RCLCPP_INFO(this->get_logger(), "Number of cluster: %ld", merged_obj_positions.size());
 
     if (visualization_) {
         for (const auto &pos : merged_obj_positions) {

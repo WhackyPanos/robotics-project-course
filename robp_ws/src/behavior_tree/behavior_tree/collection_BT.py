@@ -87,7 +87,7 @@ class CollectionBT(Node):
         planA = py_trees.composites.Sequence(
             name="PlanA", 
             children = [self.tuck_arm, self.detect_object, self.pick_object],
-            memory = False)
+            memory = True)
         self.pick_and_lift = py_trees.composites.Sequence(
             name="Pick&Lift", 
             children = [planA, self.lift],

@@ -211,16 +211,16 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.X_arm_cam, self.Y_arm_cam = [],  []
         self.thresholds = [10**-4,10**-3,10**-2]
         self.initial_guesses = [[0,0,0,0,0,0]]
-        self.angle_threshold = 100
+        self.angle_threshold = 200
         self.current_angles, self.desired_servo_angles = None, None
 
         # joint limits in the arm domain
-        self.lb_angles = [0.0,0.0,30.0,30.0,60.0,0.0]
+        self.lb_angles = [0.0, 0.0,  30.0, 30.0, 60.0, 0.0]
         self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
 
         # joint limits in normal domain
-        self.lb_q = [-120.0,-85.0,-90.0,-90.0,-120.0,0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
-        self.ub_q = [120.0,85.0,90.0,90.0,120.0,0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
+        self.lb_q = [-120.0,-85.0,-105.0,-105.0,-120.0, 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
+        self.ub_q = [ 120.0, 85.0, 105.0, 105.0, 120.0, 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
 
         self.obj_tuck_arm_time = 3000 # in ms   
 
@@ -266,7 +266,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 return py_trees.common.Status.SUCCESS
             elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
                 self.object_transform() # tranform object position from map frame to arm base frame
-                self.node.get_logger().info(f"Trying to reach {[self.x, self.y, self.z]}")
                 # target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
                 # for j,IG in enumerate(self.initial_guesses):
                 #     for i, thresh in enumerate(self.thresholds):
@@ -284,8 +283,9 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 #     self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
                 self.node.get_logger().warn(f"COULD NOT GET SOLUTION, trying plan B")
 
-                # if everything fails, try a simpler approach
-                msg = self.pick_planB(self.x, self.y, self.z)
+                # if everything fails, try a simpler approach. Transform from arm camera to arm base
+                msg = self.pick_planB(-self.Y_arm_cam[0] + 0.137 , -self.X_arm_cam[0] + 0.0, -0.087)
+                self.node.get_logger().info(f"Trying to reach {[-self.Y_arm_cam[0] + 0.137, -self.X_arm_cam[0] + 0.0, -0.087]}")
                 if msg is not None:
                     self.ota_publisher_.publish(msg)
                     #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
@@ -464,7 +464,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         # we will iterate with different orientations for the 1st link. 
         count = 0
-        for i in range(90,25,-1):
+        for i in range(900,150,-5): #decidegrees
+            angle = i/10
             # Initiate constants
             good_flag = True
             height = 93*(10**-3)
@@ -475,8 +476,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             q = [0.0, 0.0, 0.0, 0.0] #joint angles, from base to last y joint, respectively
 
             # Account for the geometry (different frame)
-            new_z = -(abs(z) + height+ l0*sin(i*pi/180))
-            new_x = sqrt(x**2 + y**2)-l0*cos(i*pi/180)
+            new_z = -(abs(z) + height+ l0*sin(angle*pi/180))
+            new_x = sqrt(x**2 + y**2)-l0*cos(angle*pi/180)
             theta = atan2(y,x) #orientation of the arm base
 
             # Compute & assign angles
@@ -487,7 +488,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                #self.node.get_logger().info(f" x = {new_x} and z = {new_z} not reacheable ({abs(new_z), self.a, self.b, l0*sin(i*pi/180)})")
                 continue           
             q[0] = theta*180/pi
-            q[1] = 90 - i
+            q[1] = 90 - angle
             q[2] = (atan2(new_z, new_x) - atan2(l2*sin(q2), l1 + l2*cos(q2)))*180/pi
             q[3] = q2*180/pi
 
