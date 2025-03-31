@@ -22,7 +22,7 @@ from std_msgs.msg import Header
 from geometry_msgs.msg import Twist
 from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
-from scipy.ndimage import binary_dilation, binary_fill_holes, binary_erosion, b
+from scipy.ndimage import binary_dilation, binary_fill_holes, binary_erosion
 
 # free space from lidar: not marked
 # free space from camera: 0 
@@ -66,6 +66,10 @@ class OccupancyGridNode(Node):
         self.camera_max_range = 0.75 # True value: 3.0
 
         self.angular_vel = 0.0
+
+        # Obstacle tracking dictionary
+        self.lidar_obstacles = {}  # {(x, y): timestamp}
+
 
     def read_workspace(self):
         min_x = float('inf')
@@ -245,24 +249,33 @@ class OccupancyGridNode(Node):
 
         # Project LaserScan to PointCloud2
         cloud = self.proj.projectLaser(filtered_scan)
-
         cloud_map = do_transform_cloud(cloud, t_lidar)
+        
+        now = self.get_clock().now()
+        current_time = now.seconds_nanoseconds()[0] + now.seconds_nanoseconds()[1] / 1e9 
+        
 
         for point in sensor_msgs_py.point_cloud2.read_points(cloud_map, field_names=("x", "y"), skip_nans=True):
-            object_index = self.world_to_grid(point[0], point[1])
-            
-            # # Lidar raytracing
-            # cells = self.raytrace(robot_index, object_index)msg
-            # for cell in cells:
-            #     i_x, i_y = cell
-            #     if 0 <= i_x < self.width and 0 <= i_y < self.height:
-            #         self.grid[i_y, i_x] = 0 # Mark as unoccupied
-            
-            # Mark endpoint as occupied (if within bounds)
-            if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
-                self.grid[object_index[1], object_index[0]] = 100  # occupied
+            x, y = self.world_to_grid(point[0], point[1])
+            if 0 <= x < self.width and 0 <= y < self.height:
+                self.lidar_obstacles[(x, y)] = current_time
 
-            # self.publish_current_grid(msg) # Will be replaced by behavior
+        to_remove = []
+        for (x, y), timestamp in self.lidar_obstacles.items():
+            elapsed_time = (current_time - timestamp) # Elapsed time will be 0.1 seconds since the lidar updates at 10hz 
+            new_value = max(0, int(100 - elapsed_time))
+
+            if new_value == 0:
+                to_remove.append((x, y))
+                self.grid[y, x] = -1
+            else:
+                self.grid[y, x] = new_value  # Update the grid with decayed value
+        
+        for key in to_remove:
+            del self.lidar_obstacles[key]
+
+
+        self.publish_current_grid()
     
     def camera_transform_callback(self, future, msg):
         try:
