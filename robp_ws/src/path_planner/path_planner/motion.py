@@ -86,7 +86,7 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
+        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.y))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
