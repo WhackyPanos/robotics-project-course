@@ -16,6 +16,8 @@
 #include "tf2_ros/buffer.h"
 #include "tf2_eigen/tf2_eigen.hpp"
 #include <pcl/filters/statistical_outlier_removal.h>
+#include <iostream>
+#include <builtin_interfaces/msg/time.hpp>
 
 
 
@@ -47,6 +49,16 @@ private:
 
     // Store the previous ICP transform as the initial guess for the next iteration.
     Eigen::Matrix4f previous_icp_transform_;
+
+        // Parameters
+
+    int KNN_N_neighbours_;
+    double std_dev_mul_thresh_;
+    double max_correspondence_distance_;
+    int maximum_iterations_;
+    double transformation_epsilon_;
+    double euclidean_fitness_epsilon_;
+    double icp_fitness_threshold_;
 };
 
 #endif  // ICP_HPP

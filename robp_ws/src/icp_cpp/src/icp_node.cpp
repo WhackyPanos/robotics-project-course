@@ -26,9 +26,18 @@ ICP::ICP() : Node("icp_node", rclcpp::NodeOptions()
                 tf_listener_(tf_buffer_),
                 previous_icp_transform_(Eigen::Matrix4f::Identity()),
                 last_stamp_(rclcpp::Time(0)) // Initialize with time 0
-
-
+                
 {
+    // Retrieve parameters with get_parameter_or()
+    this->get_parameter_or("KNN_N_neighbours", KNN_N_neighbours_, 10);
+    this->get_parameter_or("std_dev_mul_thresh", std_dev_mul_thresh_, 1.0);
+    this->get_parameter_or("max_correspondence_distance", max_correspondence_distance_, 0.1);
+    this->get_parameter_or("maximum_iterations", maximum_iterations_, 2000);
+    this->get_parameter_or("transformation_epsilon", transformation_epsilon_, 1e-6);
+    this->get_parameter_or("euclidean_fitness_epsilon", euclidean_fitness_epsilon_, 0.01);
+    this->get_parameter_or("icp_fitness_threshold", icp_fitness_threshold_, 1.0);
+
+
     // Subscribe to /scan topic (LaserScan)
     subscription_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
         "/scan", 10, std::bind(&ICP::scan_callback, this, std::placeholders::_1));

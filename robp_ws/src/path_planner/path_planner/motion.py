@@ -87,7 +87,7 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
+        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.y))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -236,7 +236,7 @@ class MotionNode(Node):
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if self.do_yaw: self.adjust_yaw(self.angle_goal)
+                #if self.do_yaw: self.adjust_yaw(self.angle_goal) #TODO: improve adjust yaw
         
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
@@ -250,7 +250,8 @@ class MotionNode(Node):
             y = self.y_map
             theta = self.theta_map
 
-            angle_diff = angle - theta
+            angle_diff = math.atan2(math.sin(angle - theta), math.cos(angle - theta))
+            self.get_logger().info(f'Angle difference is {angle_diff}')
             if abs(angle_diff) < 0.1:
                 break
             if angle_diff > 0:
@@ -262,6 +263,7 @@ class MotionNode(Node):
             
         self.vel_cmd.angular.z = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
+        return
 
 def main(args=None):
     rclpy.init(args=args)

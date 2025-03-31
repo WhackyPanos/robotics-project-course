@@ -37,7 +37,7 @@ class CollectionBT(Node):
         self.pick_object = ArmIK()
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000])
         
-        self.pub_occupancy_grid = PublishOccupancyGrid()
+        #self.pub_occupancy_grid = PublishOccupancyGrid()
         #self.localization = Localization_bhv()
         self.navigate_to_goal = NavigateToGoal()
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
@@ -57,11 +57,11 @@ class CollectionBT(Node):
     
         executor.add_node(self.next_object_bhv)
         executor.add_node(self.navigate_to_goal)
-        executor.add_node(self.pub_occupancy_grid)
+        #executor.add_node(self.pub_occupancy_grid)
         #executor.add_node(self.localization)
 
 
-        executor.add_node(self.pub_occupancy_grid.occupancy_grid)
+        #executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
         #executor.add_node(self.localizatio
         # n.localization_node)

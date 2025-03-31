@@ -71,6 +71,10 @@ class Odometry(Node):
         self.tf_broadcaster_init = TransformBroadcaster(self)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
+
+        self.parent = 'odom'
+        self.child = 'map'
+        
         self.publish_initial_transform()
         self.count = 0
 
@@ -80,8 +84,8 @@ class Odometry(Node):
     def publish_initial_transform(self):
         t = TransformStamped()
         t.header.stamp = self.get_clock().now().to_msg() #rclpy.time.Time(seconds=0).to_msg()
-        t.header.frame_id = 'map'
-        t.child_frame_id = 'odom'
+        t.header.frame_id = self.parent
+        t.child_frame_id = self.child
 
         # Set translation to zero
         t.transform.translation.x = 0.0
@@ -94,16 +98,16 @@ class Odometry(Node):
         t.transform.rotation.z = 0.0
         t.transform.rotation.w = 1.0  # Identity rotation
 
-        #self.get_logger().info('Publishing initial map to odom frame (in odom node)')
-        #self.get_logger().info('Sending transform (odom node)')
+        self.get_logger().info('Publishing initial map to odom frame (in odom node)')
+        self.get_logger().info('Sending transform (odom node)')
         self.tf_broadcaster_init.sendTransform(t)
 
 
     def publish_transform_until_localization(self):
         #self.get_logger().info('Checking if localization published transform')
         transform = self.tf_buffer.lookup_transform(
-            'map',  # Target frame
-            'odom',  # Source frame
+            self.child,  # Target frame
+            self.parent,  # Source frame
             rclpy.time.Time(seconds=0.0),  # Get the latest available transform
             timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
         )

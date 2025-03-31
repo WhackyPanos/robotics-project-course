@@ -10,6 +10,7 @@ from tf2_ros.transform_listener import TransformListener
 from tf_transformations import quaternion_from_euler, euler_from_quaternion, quaternion_multiply, quaternion_matrix
 from tf2_ros import TransformException
 import numpy as np
+from math import acos, pi
 
 
 class Localization(Node):
@@ -39,9 +40,10 @@ class Localization(Node):
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.tf_broadcaster = TransformBroadcaster(self)
-        self.to_frame_rel = 'map'
-        self.from_frame_rel = 'odom'
+        self.to_frame_rel = 'odom'
+        self.from_frame_rel = 'map'
         self.old_stamp = None
+        self.old_q = [1,0,0,0]
 
         self.icp_msg = String()
         
@@ -62,22 +64,22 @@ class Localization(Node):
         # retrieve old transform (with correct timestamp) see documentation https://docs.ros.org/en/jade/api/tf/html/python/tf_python.html
         try:
             t_old = self.tf_buffer.lookup_transform(
-                self.to_frame_rel,  # Target frame
-                self.from_frame_rel, # Source frame
+                'map',  # Target frame
+                'odom', # Source frame
                 self.old_stamp, )
         except TransformException as ex:
             self.get_logger().info(
                 f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}. Using most recent transforms')
             t_old = self.tf_buffer.lookup_transform(
-            self.to_frame_rel,  # Target frame
-            self.from_frame_rel, # Source frame
+                'map',  # Target frame
+                'odom', # Source frame
             rclpy.time.Time(seconds=0))
         
         # create and broadcast new transform
         t = TransformStamped()
         t.header.stamp = msg.header.stamp 
-        t.header.frame_id = self.from_frame_rel 
-        t.child_frame_id = self.to_frame_rel
+        t.header.frame_id = 'odom'
+        t.child_frame_id = 'map'
 
         # Correct translation composition: apply old rotation to the new translation
         delta_t = np.array([msg.transform.translation.x, msg.transform.translation.y, msg.transform.translation.z])
@@ -90,6 +92,7 @@ class Localization(Node):
 
         q = quaternion_multiply([t_old.transform.rotation.w, t_old.transform.rotation.x, t_old.transform.rotation.y, t_old.transform.rotation.z],
                                 [msg.transform.rotation.w, msg.transform.rotation.x, msg.transform.rotation.y, msg.transform.rotation.z])
+        if np.dot(q, self.old_q) < 0: q = [-coord for coord in q]
         t.transform.rotation.w = q[0]
         t.transform.rotation.x = q[1]
         t.transform.rotation.y = q[2]
@@ -98,6 +101,7 @@ class Localization(Node):
         # Send the transformation
         self.get_logger().info(f'Publishing transform between map and odom (localization node)')
         self.tf_broadcaster.sendTransform(t)
+        self.old_q = q
         self.old_stamp = t.header.stamp
 
         # TODO: get odom pose and transform to map pose
