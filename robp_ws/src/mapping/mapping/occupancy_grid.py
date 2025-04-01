@@ -22,7 +22,7 @@ from std_msgs.msg import Header
 from geometry_msgs.msg import Twist
 from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
-from scipy.ndimage import binary_dilation, binary_fill_holes, binary_erosion
+from scipy.ndimage import binary_dilation, binary_fill_holes, convolve
 
 # free space from lidar: not marked
 # free space from camera: 0 
@@ -328,6 +328,21 @@ class OccupancyGridNode(Node):
                 self.grid[i_y][i_x] = 100  # Mark cell as objects
         self.inflate_map()
 
+    # def rm_loners(self):
+    #     """Should remove lone occupied (lidar) cells, not working"""
+    #     mask = (self.grid == 100)
+    #     kernel = np.array([[0, 1, 0],
+    #                        [1, 0, 1],
+    #                        [0, 1, 0]], dtype=int)
+    #     nr_neighbors = convolve(mask.astype(int), kernel, mode='constant', cval=100)
+    #     mask2 = (nr_neighbors >= 6)
+    #     new_grid = self.grid.copy()
+    #     new_grid[(mask.astype(int)) & mask2.astype(int)] == -1
+    #     mask3 = (mask.astype(int)) & mask2.astype(int)
+    #     num = np.sum(mask3.astype(int))
+    #     self.get_logger().info(f'number of 100: {np.sum(mask.astype(int))}, number of loners: {np.sum(mask2.astype(int))}, number of matches: {num}')
+
+    #     self.grid = new_grid
 
 def main():
     rclpy.init()
