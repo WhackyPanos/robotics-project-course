@@ -29,8 +29,8 @@ class Nodes:
                 self.y < 0 or self.y >= config_space.info.height):
                 return False
             
-            if self.parent == None: # All children of the start node will be ok to avoid getting stuck when starting
-                return True
+            # if self.parent == None: # All children of the start node will be ok to avoid getting stuck when starting
+            #     return True
 
             config_space_data = np.array(config_space.data).reshape((config_space.info.height, config_space.info.width))
             

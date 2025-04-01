@@ -25,17 +25,6 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("occupancy_value", occupancy_value_, 0);
     this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.2);
 
-    latest_cloud_ = sensor_msgs::msg::PointCloud2();
-    latest_cloud_.width = 0;
-    latest_cloud_.height = 0;
-    latest_cloud_.row_step = 0;
-    latest_cloud_.data.clear();  // Ensures data is empty
-
-    latest_map_ = nav_msgs::msg::OccupancyGrid();
-    latest_map_.info.width = 0;
-    latest_map_.info.height = 0;
-    latest_map_.data.clear();  // Ensures data is empty
-
     new_request = true;
     angular_z_ = 0.0;
 
@@ -84,15 +73,15 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
 
 bool Clustering::perform_clustering(bool new_req)
 {
-    // RCLCPP_INFO(this->get_logger(), "Enter clustering");
-    // if (std::abs(angular_z_) >= ang_vel_threshold_) {
-    //     return false;
-    // }
+    if (!latest_cloud_) {
+        RCLCPP_WARN(this->get_logger(), "No cloud received yet.");
+        return false;
+    }
 
     RCLCPP_INFO(this->get_logger(), "Pass Filter");
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::fromROSMsg(latest_cloud_, *cloud);
+    pcl::fromROSMsg(*latest_cloud_, *cloud);
 
 
     // Apply passthrough filtering
@@ -148,8 +137,8 @@ bool Clustering::perform_clustering(bool new_req)
             pcl::PointXYZ centre = computeOBBPosition(cloud_cluster);
 
             geometry_msgs::msg::PointStamped centre_base, centre_map;
-            centre_base.header.frame_id = latest_cloud_.header.frame_id;
-            centre_base.header.stamp = latest_cloud_.header.stamp;
+            centre_base.header.frame_id = latest_cloud_->header.frame_id;
+            centre_base.header.stamp = latest_cloud_->header.stamp;
             centre_base.point.x = centre.x;
             centre_base.point.y = centre.y;
             centre_base.point.z = centre.z;
@@ -171,8 +160,8 @@ bool Clustering::perform_clustering(bool new_req)
 
         sensor_msgs::msg::PointCloud2 output;
         pcl::toROSMsg(*cloud_cluster, output);
-        output.header.stamp = latest_cloud_.header.stamp;
-        output.header.frame_id = latest_cloud_.header.frame_id;
+        output.header.stamp = latest_cloud_->header.stamp;
+        output.header.frame_id = latest_cloud_->header.frame_id;
         cluster_pub_->publish(output);
         RCLCPP_INFO(this->get_logger(), "Publish cluster");
 
@@ -210,12 +199,12 @@ void Clustering::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
 }
 
 void Clustering::map_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg) {
-    latest_map_ = *msg;
+    latest_map_ = msg;
 }
 
 void Clustering::cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
 
-    latest_cloud_ = *msg;
+    latest_cloud_ = msg;
 }
 
 pcl::PointXYZ Clustering::computeOBBPosition(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
@@ -233,17 +222,30 @@ pcl::PointXYZ Clustering::computeOBBPosition(pcl::PointCloud<pcl::PointXYZ>::Ptr
 
 bool Clustering::is_occupied(float x, float y)
 {
-    // if(latest_cloud_.data.empty()) return false;
+    if (!latest_map_) {
+        RCLCPP_WARN(this->get_logger(), "No map received yet.");
+        return false;
+    }
 
-    int mx = static_cast<int>((x - latest_map_.info.origin.position.x) / latest_map_.info.resolution);
-    int my = static_cast<int>((y - latest_map_.info.origin.position.y) / latest_map_.info.resolution);
-    int width = latest_map_.info.width;
-    RCLCPP_INFO(this->get_logger(), "Check Occupation at (%d, %d).", mx,my);
-    
+    int width = latest_map_->info.width;
+    int height = latest_map_->info.height;
+    int mx = static_cast<int>((x - latest_map_->info.origin.position.x) / latest_map_->info.resolution);
+    int my = static_cast<int>((y - latest_map_->info.origin.position.y) / latest_map_->info.resolution);
+
     for (int dx = -occupancy_margin_; dx <= occupancy_margin_; ++dx) {
         for (int dy = -occupancy_margin_; dy <= occupancy_margin_; ++dy) {
-            int index = (my + dy) * width + (mx + dx);
-            if (latest_map_.data[index] >= occupancy_value_ ) {
+            int nx = mx + dx;
+            int ny = my + dy;
+
+            // Prevent out-of-bounds access
+            if (nx < 0 || nx >= width || ny < 0 || ny >= height) {
+                continue;
+            }
+
+            int index = ny * width + nx;
+            RCLCPP_INFO(this->get_logger(), "Occupation at (%d, %d) = %d.", nx, ny, latest_map_->data[index]);
+
+            if (latest_map_->data[index] >= occupancy_value_) {
                 return true;
             }
         }

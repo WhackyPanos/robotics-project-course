@@ -17,7 +17,7 @@ class ObstacleOnPath(py_trees.behaviour.Behaviour, Node):
 
     def initialise(self):
         """ Called when the behavior starts (on the first tick). """
-        self.get_logger().info("Starting to check path for obstacles.")
+        # self.get_logger().info("Starting to check path for obstacles.")
 
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """

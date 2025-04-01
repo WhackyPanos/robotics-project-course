@@ -71,7 +71,7 @@ class MotionNode(Node):
 
         # Parameters
         # ==================
-        self.linear_velocity = 0.15
+        self.linear_velocity = 0.1
         self.angular_velocity = 0.35
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.2 # TODO untested, adjust this value
@@ -87,7 +87,7 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
+        # self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -215,7 +215,7 @@ class MotionNode(Node):
         else:
             self.goal_reached_publisher.publish(Bool(data=True))
             self.goal_reached_flag = True
-            self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
+            # self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
             
             # self.is_goal = False
             if self.is_path and len(self.path.poses) >= 1:
@@ -223,7 +223,7 @@ class MotionNode(Node):
                 self.path_publisher.publish(self.path)
             
             elif self.is_path and len(self.path.poses) == 0:
-                self.get_logger().info('Path execution completed.')
+                # self.get_logger().info('Path execution completed.')
                 self.path_reached_publisher.publish(Bool(data=True))
                 self.path_reached = True
                 # self.is_path = False
