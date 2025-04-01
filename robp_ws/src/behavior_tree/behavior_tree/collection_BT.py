@@ -35,7 +35,7 @@ class CollectionBT(Node):
         self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,20000,12000,12000])
         self.detect_object = ArmSegmentationBT()
         self.pick_object = ArmIK()
-        self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000])
+        self.lift = SetArm('lift', [10400,12000,12000,12000,12000,12000])
         
         #self.pub_occupancy_grid = PublishOccupancyGrid()
         #self.localization = Localization_bhv()

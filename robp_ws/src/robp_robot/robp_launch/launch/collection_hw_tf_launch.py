@@ -10,11 +10,11 @@ def generate_launch_description():
     robp_launch_dir = get_package_share_directory('robp_launch')
     return launch.LaunchDescription([
 
-        # Node(
-        #     package='tf2_ros',
-        #     executable='static_transform_publisher',
-        #     arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
-        # ),
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
+        ),
 
         IncludeLaunchDescription(
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/lidar_launch.yaml'))
@@ -41,6 +41,5 @@ def generate_launch_description():
             executable='odometry'
         ),
 
-MUDAR LOCALIZATION (TRANSFORMS)
 
     ])
