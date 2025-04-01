@@ -35,6 +35,7 @@ private:
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr publisher_;      // Publisher for transformed point cloud
     rclcpp::Publisher<geometry_msgs::msg::TransformStamped>::SharedPtr transform_publisher_;  // Publisher for transformation
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr global_point_cloud_publisher_;  // Publisher for global map
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr global_point_cloud_publisher_odom_;  // Publisher for global map
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr global_cloud_map;  // Global map in map (updated during ICP)
     pcl::PointCloud<pcl::PointXYZ>::Ptr global_cloud_odom;  // Global map in odom (updated during ICP)

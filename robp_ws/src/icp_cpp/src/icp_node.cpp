@@ -53,6 +53,8 @@ ICP::ICP() : Node("icp_node", rclcpp::NodeOptions()
     // Publisher for the global point cloud (for visualization in RViz2)
     global_point_cloud_publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(
         "/icp/global_point_cloud", 10);
+    global_point_cloud_publisher_odom_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(
+        "/icp/global_point_cloud_odom", 10);
 
     // Subscription to decide ICP type (normal vs. loop closure)
     icp_type_subscription_ = this->create_subscription<std_msgs::msg::String>(
@@ -90,7 +92,7 @@ void ICP::scan_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
     // Transform the incoming cloud to the target frame (odom).
     pcl::transformPointCloud(*cloud, *cloud, transform.matrix());
     // Store the incoming (transformed) cloud for ICP processing.
-    *incoming_cloud_ = *cloud;
+    *incoming_cloud_ += *cloud;
     //printNumberOfPoints(cloud);
 
 }
@@ -124,16 +126,16 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
     pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_incoming_cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_global_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor;
-    sor.setMeanK(10);  // Consider 50 nearest neighbors
-    sor.setStddevMulThresh(1.0);  // Remove points that deviate more than 1 std dev
+    sor.setMeanK(KNN_N_neighbours_);  // Consider 50 nearest neighbors
+    sor.setStddevMulThresh(std_dev_mul_thresh_);  // Remove points that deviate more than 1 std dev
     // Filter incoming cloud, which is in odom frame
     sor.setInputCloud(incoming_cloud_);
     sor.filter(*filtered_incoming_cloud);
     // Filter global cloud -> not sure if it is that necessary
     sor.setInputCloud(global_cloud_odom);
     sor.filter(*filtered_global_cloud_odom);
-    
-    
+
+ 
     // Downsample both the incoming scan and the global map to improve ICP performance.
     pcl::PointCloud<pcl::PointXYZ>::Ptr downsampled_incoming(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PointCloud<pcl::PointXYZ>::Ptr downsampled_global_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>);
@@ -145,16 +147,16 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
     pcl::PointCloud<pcl::PointXYZ>::Ptr aligned_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>);
     icp.setInputSource(downsampled_incoming);
     icp.setInputTarget(downsampled_global_cloud_odom);
-    icp.setMaxCorrespondenceDistance(0.1);  // Adjust for your environment.
-    icp.setMaximumIterations(2000);           // Faster convergence.
-    icp.setTransformationEpsilon(1e-6);
-    icp.setEuclideanFitnessEpsilon(0.01);
-
+    icp.setMaxCorrespondenceDistance(max_correspondence_distance_);  // Adjust for your environment.
+    icp.setMaximumIterations(maximum_iterations_);           // Faster convergence.
+    icp.setTransformationEpsilon(transformation_epsilon_);
+    icp.setEuclideanFitnessEpsilon(euclidean_fitness_epsilon_);
+    
     // Use the previous ICP transform as the initial guess.
     icp.align(*aligned_cloud_odom, previous_icp_transform_);
     double fitness = icp.getFitnessScore();
 
-    if (icp.hasConverged() && fitness < 1)
+    if (icp.hasConverged() && fitness < icp_fitness_threshold_)
     {
         RCLCPP_INFO(this->get_logger(), "ICP converged with fitness score: %.4f", fitness);
 
@@ -204,6 +206,16 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
         global_msg.header.frame_id = "map";
         global_msg.header.stamp = transform_msg.header.stamp; //this->get_clock()->now();
         global_point_cloud_publisher_->publish(global_msg);
+
+        // Publish the updated global point cloud (in odom frame) for visualization.
+        sensor_msgs::msg::PointCloud2 global_msg_odom;
+        pcl::toROSMsg(*global_cloud_odom, global_msg_odom);
+        global_msg_odom.header.frame_id = "odom";
+        global_msg_odom.header.stamp = transform_msg.header.stamp; //this->get_clock()->now();
+        global_point_cloud_publisher_->publish(global_msg_odom);
+        printNumberOfPoints(global_cloud_odom);
+
+         incoming_cloud_->clear();
 
     }
     else

@@ -45,8 +45,8 @@ class Odometry(Node):
         self.create_subscription(
             Imu, '/imu/data_raw', self.imu_callback, 10)
         
-        self.localization_transform_trigger = self.create_subscription(
-            PointCloud2, "/icp/global_point_cloud", self.localization_transform_trigger, qos_profile = 10)
+        #self.localization_transform_trigger = self.create_subscription(
+        #   PointCloud2, "/icp/global_point_cloud", self.localization_transform_trigger, qos_profile = 10)
         
         
 
@@ -75,11 +75,11 @@ class Odometry(Node):
         self.parent = 'odom'
         self.child = 'map'
         
-        self.publish_initial_transform()
-        self.count = 0
+        #self.publish_initial_transform()
+        #self.count = 0
 
         # Retrieve transform and if it's null, publish a new one
-        self.transform_timer = self.create_timer(0.25, self.publish_transform_until_localization)
+        #self.transform_timer = self.create_timer(0.25, self.publish_transform_until_localization)
 
     def publish_initial_transform(self):
         t = TransformStamped()

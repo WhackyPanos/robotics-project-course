@@ -21,7 +21,7 @@ source install/setup.bash
 
 ros2 bag play --read-ahead-queue-size 100 -l -r 1.0 --clock 100 --start-paused ~/aREPO/robp_group3/robp_ws/bag/lidar_dynamic/lidar_dynamic.mcap 
 
-
+ros2 run tf2_ros tf2_echo odom map
 ---
 (1) Ideally, it should be published by the motion behavior when the point is reached, ie, when the robot stops completely and return SUCCESS. It should publish a FALSE message so the localization is not performed why the robot is standing still. Besides, the picking and placing behaviors should publish a TRUE message (when these behaviors return SUCCESS, the robot will start moving and localization should be re-initiated).
 
