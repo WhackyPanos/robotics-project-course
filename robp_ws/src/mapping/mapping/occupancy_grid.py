@@ -329,19 +329,13 @@ class OccupancyGridNode(Node):
         self.inflate_map()
 
     # def rm_loners(self):
-    #     """Should remove lone occupied (lidar) cells, not working"""
     #     mask = (self.grid == 100)
     #     kernel = np.array([[0, 1, 0],
     #                        [1, 0, 1],
-    #                        [0, 1, 0]], dtype=int)
-    #     nr_neighbors = convolve(mask.astype(int), kernel, mode='constant', cval=100)
-    #     mask2 = (nr_neighbors >= 6)
+    #                        [0, 1, 0]])
+    #     nr_neighbors = convolve(mask, kernel)
     #     new_grid = self.grid.copy()
-    #     new_grid[(mask.astype(int)) & mask2.astype(int)] == -1
-    #     mask3 = (mask.astype(int)) & mask2.astype(int)
-    #     num = np.sum(mask3.astype(int))
-    #     self.get_logger().info(f'number of 100: {np.sum(mask.astype(int))}, number of loners: {np.sum(mask2.astype(int))}, number of matches: {num}')
-
+    #     new_grid[mask & (nr_neighbors == 0)] = -1
     #     self.grid = new_grid
 
 def main():
