@@ -50,9 +50,9 @@ class Localization(Node):
         self.icp_msg = String()
 
         # publish identity transformation while ICP does not work
-        self.publish_initial_transform()
-        self.count = 0
-        self.transform_timer = self.create_timer(0.1, self.publish_transform_until_localization)
+        # self.publish_initial_transform()
+        # self.count = 0
+        # self.transform_timer = self.create_timer(0.1, self.publish_transform_until_localization)
 
         
     def icp_master(self):
@@ -60,8 +60,8 @@ class Localization(Node):
         icp_stype = 'Normal' #change later
         self.icp_msg.data = icp_stype
         self.icp_master_publisher.publish(self.icp_msg)
-         self.get_logger().info('Killing map -> odom "static" transformn')
-        self.transform_timer.cancel()
+        self.get_logger().info('Killing map -> odom "static" transformn')
+        #self.transform_timer.cancel()
             
 
     def localization_transform(self, msg):
@@ -108,29 +108,29 @@ class Localization(Node):
         if self.old_q is None:
             self.old_q = q
 
-        if np.linalg.norm(np.array(self.old_q) - np.array(q)) > 0.1: 
-            #q = [-coord for coord in q]
-            #self.get_logger().info(f"TRANSFORMATION IS WRONG, IGNORING IT: old = {self.old_q}, new ={q}")
-            self.get_logger().info(f"TRANSFORMATION IS WRONG, IGNORING IT")
-        else:
-            t.transform.rotation.w = q[0]
-            t.transform.rotation.x = q[1]
-            t.transform.rotation.y = q[2]
-            t.transform.rotation.z = q[3]
+        # if np.linalg.norm(np.array(self.old_q) - np.array(q)) > 0.1: 
+        #     #q = [-coord for coord in q]
+        #     #self.get_logger().info(f"TRANSFORMATION IS WRONG, IGNORING IT: old = {self.old_q}, new ={q}")
+        #     self.get_logger().info(f"TRANSFORMATION IS WRONG, IGNORING IT")
+        # else:
+        t.transform.rotation.w = q[0]
+        t.transform.rotation.x = q[1]
+        t.transform.rotation.y = q[2]
+        t.transform.rotation.z = q[3]
 
-            # Send the transformation
-            self.get_logger().info(f'Publishing transform between map and odom (localization node)')
-            self.tf_broadcaster.sendTransform(t)
-            self.old_q = q
-            self.old_stamp = t.header.stamp
+        # Send the transformation
+        self.get_logger().info(f'Publishing transform between map and odom (localization node)')
+        self.tf_broadcaster.sendTransform(t)
+        self.old_q = q
+        self.old_stamp = t.header.stamp
 
         # TODO: get odom pose and transform to map pose
 
     def publish_initial_transform(self):
         t = TransformStamped()
         t.header.stamp = self.get_clock().now().to_msg() #rclpy.time.Time(seconds=0).to_msg()
-        t.header.frame_id = self.parent
-        t.child_frame_id = self.child
+        t.header.frame_id = "odom"
+        t.child_frame_id = "map"
 
         # Set translation to zero
         t.transform.translation.x = 0.0
@@ -150,8 +150,8 @@ class Localization(Node):
     def publish_transform_until_localization(self):
         #self.get_logger().info('Checking if localization published transform')
         transform = self.tf_buffer.lookup_transform(
-            self.child,  # Target frame
-            self.parent,  # Source frame
+            "map",  # Target frame
+            "odom",  # Source frame
             rclpy.time.Time(seconds=0.0),  # Get the latest available transform
             timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
         )
