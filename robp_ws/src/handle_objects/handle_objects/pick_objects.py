@@ -68,7 +68,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.desired_servo_angles[1] = self.angles[1] 
             self.desired_servo_angles[0] = self.angles[0] 
 
-            self.angle_threshold = 120 #1 degree  
+            self.angle_threshold = 150 #1 degree  
 
     def servo_angles_callback(self, msg):
         current_angles = msg.position
@@ -95,8 +95,8 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         self.ota_publisher_.publish(msg)
 
     def initialise(self):
-
         self.timer = self.node.create_timer(3, self.timer_callback)
+        return py_trees.common.Status.RUNNING
         
     def timer_callback(self):
         self.arm_started = True
@@ -106,7 +106,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
 
-        print(f"Arm lifting: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
+        self.node.get_logger().warn(f"Arm movement: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
         if self.done:
             return py_trees.common.Status.SUCCESS
         elif not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
@@ -211,7 +211,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.X_arm_cam, self.Y_arm_cam = [],  []
         self.thresholds = [10**-4,10**-3,10**-2]
         self.initial_guesses = [[0,0,0,0,0,0]]
-        self.angle_threshold = 200
+        self.angle_threshold = 160
         self.current_angles, self.desired_servo_angles = None, None
 
         # joint limits in the arm domain
@@ -222,7 +222,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.lb_q = [-120.0,-85.0,-105.0,-105.0,-120.0, 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
         self.ub_q = [ 120.0, 85.0, 105.0, 105.0, 120.0, 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
 
-        self.obj_tuck_arm_time = 3000 # in ms   
+        self.obj_tuck_arm_time = 3000 # in ms
+        self.obj_grasp_time = 5000   
 
 
     def setup(self, **kwargs):
@@ -255,83 +256,78 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         """ When is this called? The first time your behaviour is ticked and anytime the
           status is not RUNNING thereafter."""  
         """ Wait x seconds to initiate arm movement (and publish object position later on)"""
+        self.done = False #TODO: review
         self.timer = self.node.create_timer(1, self.init_arm_movement)
 
          
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
         self.node.get_logger().info(f"Objects in arm camera frame {[self.X_arm_cam, self.Y_arm_cam]}")
-        for i in range(len(self.X_arm_cam)):
-            if self.done:
-                return py_trees.common.Status.SUCCESS
-            elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
-                self.object_transform() # tranform object position from map frame to arm base frame
-                # target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
-                # for j,IG in enumerate(self.initial_guesses):
-                #     for i, thresh in enumerate(self.thresholds):
-                #         result, angles = self.ik_solver.solve_ik(target_pose, IG, thresh, 100000)
-                #         if result >= 0:
-                #             # publish corrected angles in the servo_pos topic. this function already shows message in terminal
-                #             out_limits = self.publish_angles(angles)
-                #             if not out_limits:
-                #                 self.arm_moving = True
-                #                 return py_trees.common.Status.RUNNING
-                #             else:
-                #                 break
-                #         else:
-                #             self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
-                #     self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
-                self.node.get_logger().warn(f"COULD NOT GET SOLUTION, trying plan B")
-
-                # if everything fails, try a simpler approach. Transform from arm camera to arm base
-                msg = self.pick_planB(-self.Y_arm_cam[0] + 0.137 , -self.X_arm_cam[0] + 0.0, -0.087)
-                self.node.get_logger().info(f"Trying to reach {[-self.Y_arm_cam[0] + 0.137, -self.X_arm_cam[0] + 0.0, -0.087]}")
-                if msg is not None:
-                    self.ota_publisher_.publish(msg)
-                    #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
-                    self.arm_moving = True
-                    self.node.get_logger().warn(f"Message published, arm is moving")
-                    return py_trees.common.Status.RUNNING
-                # TODO: if pick and search fails, a message has to be published. That can happen here or in the arm camera
-                else:
-                    self.picklift_pub.publish(Bool(data=False))
-                    self.node.get_logger().warn(f"IK FAILED")
-                    return py_trees.common.Status.FAILURE
-
-            # if arm is moving but not in grasp position, return keep running
-            elif self.arm_moving and not self.arm_tucked:
-                self.node.get_logger().warn(f"Arm is still  moving")
-                return py_trees.common.Status.RUNNING 
-
-            # if arm is in grasp position,  start grasping 
-            elif self.arm_tucked and not self.object_grasped and not self.arm_moving:
-                self.node.get_logger().info(f"Arm Moving = {self.arm_moving}, Arm Tucked = {self.arm_tucked} and grasped = {self.object_grasped}")
-                msg = Int16MultiArray()
-                msg.layout = MultiArrayLayout(
-                    dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
-                    data_offset=0)  
-                times = [self.obj_tuck_arm_time] * 6
-                self.desired_servo_angles[0] = 10000 #close gripper
-                msg.data = self.desired_servo_angles + times
+        if self.done:
+            return py_trees.common.Status.SUCCESS
+        elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
+            # if everything fails, try a simpler approach. Transform from arm camera to arm base
+            zz = -0.0775
+            xx = 0.120
+            yy = 0.01
+            msg = self.pick_planB(-self.Y_arm_cam[0] + xx , -self.X_arm_cam[0] + yy, zz)
+            self.node.get_logger().info(f"Trying to reach {[-self.Y_arm_cam[0] + xx, -self.X_arm_cam[0] + 0.0, zz]}")
+            if msg is not None:
                 self.ota_publisher_.publish(msg)
                 #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
                 self.arm_moving = True
+                self.node.get_logger().warn(f"Message published, arm is moving")
                 return py_trees.common.Status.RUNNING
-
-            elif self.arm_tucked and not self.object_grasped and self.arm_moving:
-                return py_trees.common.Status.RUNNING 
-
-            # if object is grasped, return success
-            elif self.object_grasped:
-                self.node.get_logger().info(f"Sucess, lifting arm now")
-                self.done = True
-                self.picklift_pub.publish(Bool(data=True))
-                return py_trees.common.Status.SUCCESS
-
             else:
-                return py_trees.common.Status.RUNNING  
+                # try new objects in the list. If it is empty, it failed
+                self.X_arm_cam.pop(0)
+                self.Y_arm_cam.pop(0)
 
-        return py_trees.common.Status.FAILURE
+                if len(self.X_arm_cam) == 0:
+                    self.picklift_pub.publish(Bool(data=False))  # TODO: if pick and search fails, a message has to be published. That can happen here or in the arm camera
+                    self.node.get_logger().warn(f"IK FAILED")
+                    return py_trees.common.Status.FAILURE
+                else:
+                    self.arm_moving = False
+                    msg = None
+                    self.node.get_logger().warn(f"CHOOSING ANOTHER OBJEC")
+                    return py_trees.common.Status.RUNNING
+
+
+        # if arm is moving but not in grasp position, return keep running
+        elif self.arm_moving and not self.arm_tucked:
+            self.node.get_logger().warn(f"Arm is still  moving")
+            return py_trees.common.Status.RUNNING 
+
+        # if arm is in grasp position,  start grasping 
+        elif self.arm_tucked and not self.object_grasped and not self.arm_moving:
+            self.node.get_logger().info(f"Arm Moving = {self.arm_moving}, Arm Tucked = {self.arm_tucked} and grasped = {self.object_grasped}")
+            msg = Int16MultiArray()
+            msg.layout = MultiArrayLayout(
+                dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
+                data_offset=0)  
+            times = [self.obj_grasp_time] * 6
+            self.desired_servo_angles[0] = 10900 #close gripper
+            msg.data = self.desired_servo_angles + times
+            self.ota_publisher_.publish(msg)
+            #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
+            self.arm_moving = True
+            return py_trees.common.Status.RUNNING
+
+        elif self.arm_tucked and not self.object_grasped and self.arm_moving:
+            return py_trees.common.Status.RUNNING 
+
+        # if object is grasped, return success
+        elif self.object_grasped:
+            self.node.get_logger().info(f"Success, lifting arm now")
+            self.done = True
+            self.picklift_pub.publish(Bool(data=True))
+            self.X_arm_cam.pop(0)
+            self.Y_arm_cam.pop(0)
+            return py_trees.common.Status.SUCCESS
+
+        else:
+            return py_trees.common.Status.RUNNING  
             
     def terminate(self, new_status: py_trees.common.Status):
         """
@@ -400,7 +396,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     break
 
         elif self.arm_moving and self.arm_tucked and not self.object_grasped:
-            self.desired_servo_angles[0] = 10000
+            self.desired_servo_angles[0] = 10900
             self.object_grasped = True
             self.arm_moving = False
             for i in range(1, len(self.current_angles)) :
@@ -469,9 +465,9 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             # Initiate constants
             good_flag = True
             height = 93*(10**-3)
-            l0 = 101*(10**-3)
+            l0 = 98.9*(10**-3) #101
             l1 = 95*(10**-3)
-            l2 = 168*(10**-3)+ 0.0  #1cm to account for object height and avoid colliding with ground
+            l2 = 156*(10**-3)+ 0.0  #1cm to account for object height and avoid colliding with ground  168
             
             q = [0.0, 0.0, 0.0, 0.0] #joint angles, from base to last y joint, respectively
 
@@ -682,3 +678,25 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             #print(f"New status is {new_status}")
 
  # -----------------------------------------------------------------------------------------------------------------------
+
+
+""""
+IK
+
+                self.object_transform() # tranform object position from map frame to arm base frame
+                # target_pose = kdl.Frame(kdl.Rotation.RPY(0, 0, 0), kdl.Vector(self.x, self.y, self.z))
+                # for j,IG in enumerate(self.initial_guesses):
+                #     for i, thresh in enumerate(self.thresholds):
+                #         result, angles = self.ik_solver.solve_ik(target_pose, IG, thresh, 100000)
+                #         if result >= 0:
+                #             # publish corrected angles in the servo_pos topic. this function already shows message in terminal
+                #             out_limits = self.publish_angles(angles)
+                #             if not out_limits:
+                #                 self.arm_moving = True
+                #                 return py_trees.common.Status.RUNNING
+                #             else:
+                #                 break
+                #         else:
+                #             self.node.get_logger().info(f"IK Solver failed for {thresh}, trying bigger error threshold!")
+                #     self.node.get_logger().info(f"IK Solver failed for all thresholds, trying different initial guess!")
+                self.node.get_logger().warn(f"COULD NOT GET SOLUTION, trying plan B")"""

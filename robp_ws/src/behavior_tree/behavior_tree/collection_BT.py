@@ -91,7 +91,7 @@ class CollectionBT(Node):
         self.pick_and_lift = py_trees.composites.Sequence(
             name="Pick&Lift", 
             children = [planA, self.lift],
-            memory = False)
+            memory = True)
         self.repeat_picklift = py_trees.decorators.Retry(
             name = 'Repeat_Pick&Lift', 
             child = self.pick_and_lift, 
