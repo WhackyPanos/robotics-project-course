@@ -61,7 +61,7 @@ class Localization(Node):
         self.icp_msg.data = icp_stype
         self.icp_master_publisher.publish(self.icp_msg)
         self.get_logger().info('Killing map -> odom "static" transformn')
-        #self.transform_timer.cancel()
+        self.transform_timer.cancel()
             
 
     def localization_transform(self, msg):
