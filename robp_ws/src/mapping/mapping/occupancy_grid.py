@@ -26,8 +26,8 @@ from scipy.ndimage import binary_dilation, binary_fill_holes, binary_erosion
 
 # free space from lidar: not marked
 # free space from camera: 0 
-# Occupied by lidar: 100
-# Occupied by camera: 99
+# Occupied by lidar: 99
+# Occupied by camera: 100
 
 class OccupancyGridNode(Node):
     def __init__(self): 
@@ -70,6 +70,8 @@ class OccupancyGridNode(Node):
 
         # Obstacle tracking dictionary
         self.lidar_obstacles = {}  # {(x, y): timestamp}
+
+        self.publish_current_grid()
 
     def read_workspace(self):
         min_x = float('inf')
@@ -233,7 +235,7 @@ class OccupancyGridNode(Node):
         filtered_scan.time_increment = msg.time_increment
         filtered_scan.scan_time = msg.scan_time
         filtered_scan.range_min = max(msg.range_min, 0.2)
-        filtered_scan.range_max = min(msg.range_max, 3.0)  # Limit max range to 5m
+        filtered_scan.range_max = min(msg.range_max, 3.0)  # Limit max range to 3m
         filtered_scan.intensities = msg.intensities
 
         # Filter out points beyond 5 meters
@@ -257,7 +259,7 @@ class OccupancyGridNode(Node):
         to_remove = []
         for (x, y), timestamp in self.lidar_obstacles.items():
             elapsed_time = (current_time - timestamp) # Elapsed time will be 0.1 seconds since the lidar updates at 10hz 
-            new_value = max(0, int(100 - elapsed_time))
+            new_value = max(0, int(99 - elapsed_time))
 
             if new_value == 0:
                 to_remove.append((x, y))
@@ -269,7 +271,7 @@ class OccupancyGridNode(Node):
             del self.lidar_obstacles[key]
 
 
-        self.publish_current_grid()
+        # self.publish_current_grid() 
     
     def camera_transform_callback(self, future, msg):
         try:
@@ -313,7 +315,7 @@ class OccupancyGridNode(Node):
                 i_x, i_y = cell
                 if 0 <= i_x < self.width and 0 <= i_y < self.height:
                     # Mark as known by camera (free) if not already a fence/occupied by lidar
-                    if self.grid[i_y, i_x] < 99:
+                    if self.grid[i_y, i_x] < 50:
                         self.grid[i_y, i_x] = 0
 
     #TODO: Might want to remove old detections first
@@ -323,7 +325,7 @@ class OccupancyGridNode(Node):
 
             # Ensure x, y are within the grid bounds
             if 0 <= i_x < self.width and 0 <= i_y < self.height:
-                self.grid[i_y][i_x] = 99  # Mark cell as objects
+                self.grid[i_y][i_x] = 100  # Mark cell as objects
         self.inflate_map()
 
 

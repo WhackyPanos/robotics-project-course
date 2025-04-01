@@ -20,7 +20,7 @@ class PointGenerator(py_trees.behaviour.Behaviour, Node): # this class is a py_t
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
         status is not RUNNING thereafter."""  
-        self.get_logger().info("Random point behavior initialized")
+        # self.get_logger().info("Random point behavior initialized")
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
@@ -33,4 +33,4 @@ class PointGenerator(py_trees.behaviour.Behaviour, Node): # this class is a py_t
             - SUCCESS || FAILURE : your behaviour's work cycle has finished
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
-        self.get_logger().info(f"Terminating random point behavior")
+        # self.get_logger().info(f"Terminating random point behavior")

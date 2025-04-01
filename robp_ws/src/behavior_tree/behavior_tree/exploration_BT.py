@@ -77,7 +77,7 @@ class ExplorationBT(Node):
             name="parallel_detect_navigate",
             policy=py_trees.common.ParallelPolicy.SuccessOnOne()
         )
-        second_parallel.add_children([self.obstacle_on_path_detected, self.new_object_detected, self.navigate_to_goal])
+        second_parallel.add_children([self.new_object_detected, self.obstacle_on_path_detected, self.navigate_to_goal])
 
         # EternalGuard: Ensures that the decorator only runs if new_object_detected is successful
         object_detected_guard = py_trees.decorators.EternalGuard(
@@ -92,7 +92,7 @@ class ExplorationBT(Node):
         second_sequence.add_children([second_parallel, fail_is_success])
 
         first_sequence = py_trees.composites.Sequence(name='first_seq', memory=True)
-        first_sequence.add_children([self.pub_occupancy_grid, self.goal, self.path_plan, second_sequence])
+        first_sequence.add_children([self.goal, self.path_plan, second_sequence, self.pub_occupancy_grid])
 
         timer = CustomTimer(name='timer', duration=300.0)
 
@@ -132,10 +132,10 @@ def main(args=None):
 
     # Setup the behavior tree with a timeout for setup (10 seconds)
     node.tree.setup(timeout=10.0, node=node)
-    time.sleep(5.0)
+    time.sleep(2.0)
 
     # Continuously tick the behavior tree
-    node.tree.tick_tock(period_ms=50)
+    node.tree.tick_tock(period_ms=10)
 
     # Continuously tick the behavior tree
     try:

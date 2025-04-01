@@ -21,7 +21,7 @@ class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
 
     def initialise(self):
         """ Called when the behavior starts (on the first tick). """
-        self.get_logger().info("Publish occupancy grid behavior initialized")
+        # self.get_logger().info("Publish occupancy grid behavior initialized")
 
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
@@ -30,4 +30,4 @@ class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
     
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """
-        self.get_logger().info(f"Terminating PublishOccupancyGridBT")
+        # self.get_logger().info(f"Terminating PublishOccupancyGridBT")

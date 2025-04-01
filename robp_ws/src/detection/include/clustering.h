@@ -51,8 +51,8 @@ private:
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 
     double angular_z_;
-    nav_msgs::msg::OccupancyGrid latest_map_;
-    sensor_msgs::msg::PointCloud2 latest_cloud_;
+    std::shared_ptr<nav_msgs::msg::OccupancyGrid> latest_map_;
+    std::shared_ptr<sensor_msgs::msg::PointCloud2> latest_cloud_;
     bool new_request;
 
     // Parameters
