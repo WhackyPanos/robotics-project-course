@@ -245,7 +245,9 @@ class MotionNode(Node):
     
     def adjust_yaw(self, angle):
         while True:
-            self.get_robot_position()
+            rclpy.spin_once(self)
+            if not self.get_robot_position():
+                continue
             x = self.x_map
             y = self.y_map
             theta = self.theta_map
@@ -261,6 +263,31 @@ class MotionNode(Node):
             self.cmd_vel_publisher.publish(self.vel_cmd)
             
         self.vel_cmd.angular.z = 0.0
+        self.cmd_vel_publisher.publish(self.vel_cmd)
+    
+    """
+    Reverse the robot for a given distance.
+    The robot will move backward at the "fine" linear velocity.
+    Keep in mind that the robot's orientation will not change during this process,
+    and no obstacle avoidance is performed.
+    """
+    def reverse(self, distance):
+        duration = distance / self.linear_velocity_fine
+        start_time = self.get_clock().now().nanoseconds / 1e9
+
+        while True:
+            rclpy.spin_once(self)
+            current_time = self.get_clock().now().nanoseconds / 1e9
+            elapsed_time = current_time - start_time
+
+            if elapsed_time >= duration:
+                break
+
+            self.vel_cmd.linear.x = -self.linear_velocity_fine
+            self.vel_cmd.angular.z = 0.0
+            self.cmd_vel_publisher.publish(self.vel_cmd)
+
+        self.vel_cmd.linear.x = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
 
 def main(args=None):
