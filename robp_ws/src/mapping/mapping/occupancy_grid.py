@@ -22,8 +22,7 @@ from std_msgs.msg import Header
 from geometry_msgs.msg import Twist
 from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
-from scipy.ndimage import binary_dilation, binary_fill_holes
-from scipy.signal import convolve
+from scipy.ndimage import binary_dilation, binary_fill_holes, convolve
 
 # free space from lidar: not marked
 # free space from camera: 0 
@@ -336,7 +335,7 @@ class OccupancyGridNode(Node):
         kernel = np.array([[0, 1, 0],
                            [1, 0, 1],
                            [0, 1, 0]])
-        nr_neighbors = convolve(mask, kernel, mode='same')
+        nr_neighbors = convolve(mask, kernel)
         new_grid = self.grid.copy()
         new_grid[mask & (nr_neighbors == 0)] = -1
         self.grid = new_grid
