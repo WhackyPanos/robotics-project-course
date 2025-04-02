@@ -8,7 +8,7 @@ from handle_objects.pick_objects import SetArm, DetectObject, SearchObjectArm, A
 from behavior_tree.goCollect_bhv import goTo
 from rclpy.executors import MultiThreadedExecutor
 import os
-from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded
+from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded, Adjust
 from path_planner.motion_bhv import NavigateToGoal
 from localization.localization_bhv import Localization_bhv
 from mapping.PublishOccupancyGrid_bhv import PublishOccupancyGrid
@@ -30,20 +30,24 @@ class CollectionBT(Node):
         #self.publish_initial_transform()
   
         # root and behaviors creation
-        self.root = py_trees.composites.Sequence(name="Root", memory= False)
+        self.root = py_trees.composites.Sequence(name="Root", memory= True)
 
-        self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,20000,12000,12000])
+        # self.place_tuck_arm = SetArm('place_tuck_arm', [1000,12000,12000,12000,8000,12000], 500)
+        # self.place_open_gripper = SetArm('place_open_gripper', [2600,12000,12000,12000,8000,12000], 1000)
+        # self.place_lift = SetArm('place_lift', [2600,12000,12000,12000,12000,12000], 200)
+
+        self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,20000,12000,12000], 200)
         self.detect_object = ArmSegmentationBT()
         self.pick_object = ArmIK()
-        self.lift = SetArm('lift', [10400,12000,12000,12000,12000,12000])
+        self.lift = SetArm('lift', [10400,12000,12000,12000,12000,12000], 200)
+        self.adjust = Adjust()
+        self.place = Place()
         
         #self.pub_occupancy_grid = PublishOccupancyGrid()
         #self.localization = Localization_bhv()
         self.navigate_to_goal = NavigateToGoal()
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
         self.path_planner = None #TODO
-
-
 
         self.arm_task_succeeded = ArmTaskSucceeded()
 
@@ -54,6 +58,8 @@ class CollectionBT(Node):
         executor.add_node(self.lift)
         executor.add_node(self.detect_object)
         executor.add_node(self.arm_task_succeeded)
+        executor.add_node(self.adjust)
+        executor.add_node(self.place)
     
         executor.add_node(self.next_object_bhv)
         executor.add_node(self.navigate_to_goal)
@@ -81,28 +87,30 @@ class CollectionBT(Node):
             policy = py_trees.common.ParallelPolicy.SuccessOnSelected([plan_and_move]))
         
         # Arm execution: pick or place
-            # place
-        self.place = Place()
             # Pick and lift operations
+        self.pick_or_adjust = py_trees.composites.Selector(
+            name = 'Pick_or_Adjust', 
+            children = [self.pick_object, self.adjust], #TODO: if working fine, make this sequence with adjust first
+            memory = True)
         planA = py_trees.composites.Sequence(
             name="PlanA", 
-            children = [self.tuck_arm, self.detect_object, self.pick_object],
+            children = [self.tuck_arm, self.detect_object, self.pick_or_adjust],
             memory = True)
-        self.pick_and_lift = py_trees.composites.Sequence(
-            name="Pick&Lift", 
-            children = [planA, self.lift],
-            memory = True)
-        self.repeat_picklift = py_trees.decorators.Retry(
-            name = 'Repeat_Pick&Lift', 
-            child = self.pick_and_lift, 
-            num_failures = 2)
+        # self.pick_and_lift = py_trees.composites.Sequence(
+        #     name="Pick&Lift", 
+        #     children = [planA, self.lift],
+        #     memory = True)
+        # self.repeat_picklift = py_trees.decorators.Retry(
+        #     name = 'Repeat_Pick&Lift', 
+        #     child = self.pick_and_lift, 
+        #     num_failures = 2)
             # selector between them
         self.pick_or_place = py_trees.composites.Selector(
             name = 'Pick_or_Place', 
-            children = [self.place,self.repeat_picklift],
+            children = [self.place,planA], # self.repeat_picklift
             memory = False)
 
-        self.root.add_children([self.next_object_bhv, self.path_planning_pick, self.pick_or_place, self.arm_task_succeeded])
+        self.root.add_children([self.next_object_bhv, self.path_planning_pick, self.pick_or_place, self.lift, self.arm_task_succeeded])
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False) 
 
         return 
