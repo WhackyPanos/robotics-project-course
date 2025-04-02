@@ -8,13 +8,6 @@ import tf2_geometry_msgs
 from geometry_msgs.msg import Point, Pose2D, Twist, PoseStamped, PointStamped
 from nav_msgs.msg import Path
 from std_msgs.msg import Bool
-
-"""
-Panos: This is just for DEBUGGING! The real motion node is in motion.py.
-I just needed a way to avoid the behaviour tree for my tests...
-"""
-
-
 """
 This node is used to control the robot's motion to navigate to a goal position.
 PID controller was implemented to control the robot's angular velocity to reach the goal position.
@@ -65,7 +58,7 @@ class MotionNode(Node):
 
 
         # Setup publishers and subscribers
-        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
+        # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 10)
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
@@ -77,8 +70,8 @@ class MotionNode(Node):
 
         # Parameters
         # ==================
-        self.linear_velocity = 0.17
-        self.angular_velocity = 0.4
+        self.linear_velocity = 0.1
+        self.angular_velocity = 0.35
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.2 # TODO untested, adjust this value
         self.goal_threshold = 0.05
@@ -93,7 +86,7 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
+        # self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -160,10 +153,6 @@ class MotionNode(Node):
     #         except Exception as e:
     #             self.get_logger().warn(f"Transform failed: {str(e)}")
 
-    def odometry_callback(self, msg: Pose2D):
-        if not self.goal_reached_flag:
-            self.navigate_to_goal()
-
     def get_robot_position(self):
         try:
             # Lookup transform from 'map' to 'base_link'
@@ -225,24 +214,23 @@ class MotionNode(Node):
         else:
             self.goal_reached_publisher.publish(Bool(data=True))
             self.goal_reached_flag = True
-            self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
+            # self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
             
-            self.is_goal = False
-            if self.is_path and len(self.path.poses) > 1:
+            # self.is_goal = False
+            if self.is_path and len(self.path.poses) >= 1:
                 self.path.poses.pop(0)
                 self.path_publisher.publish(self.path)
             
             elif self.is_path and len(self.path.poses) == 0:
-                self.get_logger().info('Path execution completed.')
+                # self.get_logger().info('Path execution completed.')
                 self.path_reached_publisher.publish(Bool(data=True))
                 self.path_reached = True
-                self.is_path = False
+                # self.is_path = False
                 self.icp_publisher.publish(Bool(data=False))
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
                 if self.do_yaw: self.adjust_yaw(self.angle_goal)
-
             else:
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
@@ -256,13 +244,14 @@ class MotionNode(Node):
     
     def adjust_yaw(self, angle):
         while True:
-            self.get_robot_position()
+            rclpy.spin_once(self)
+            if not self.get_robot_position():
+                continue
             x = self.x_map
             y = self.y_map
             theta = self.theta_map
 
             angle_diff = angle - theta
-            self.get_logger().info(f"Adjusting yaw, angle_diff: {angle_diff}")
             if abs(angle_diff) < 0.1:
                 break
             if angle_diff > 0:
@@ -273,6 +262,31 @@ class MotionNode(Node):
             self.cmd_vel_publisher.publish(self.vel_cmd)
             
         self.vel_cmd.angular.z = 0.0
+        self.cmd_vel_publisher.publish(self.vel_cmd)
+    
+    """
+    Reverse the robot for a given distance.
+    The robot will move backward at the "fine" linear velocity.
+    Keep in mind that the robot's orientation will not change during this process,
+    and no obstacle avoidance is performed.
+    """
+    def reverse(self, distance):
+        duration = distance / self.linear_velocity_fine
+        start_time = self.get_clock().now().nanoseconds / 1e9
+
+        while True:
+            rclpy.spin_once(self)
+            current_time = self.get_clock().now().nanoseconds / 1e9
+            elapsed_time = current_time - start_time
+
+            if elapsed_time >= duration:
+                break
+
+            self.vel_cmd.linear.x = -self.linear_velocity_fine
+            self.vel_cmd.angular.z = 0.0
+            self.cmd_vel_publisher.publish(self.vel_cmd)
+
+        self.vel_cmd.linear.x = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
 
 def main(args=None):
