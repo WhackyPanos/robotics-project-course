@@ -58,7 +58,7 @@ class MotionNode(Node):
 
 
         # Setup publishers and subscribers
-        # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
+        self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
         self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 10)
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
@@ -70,7 +70,7 @@ class MotionNode(Node):
 
         # Parameters
         # ==================
-        self.linear_velocity = 0.1
+        self.linear_velocity = 0.2
         self.angular_velocity = 0.35
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.2 # TODO untested, adjust this value
@@ -86,7 +86,7 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        # self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
+        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -153,6 +153,10 @@ class MotionNode(Node):
     #         except Exception as e:
     #             self.get_logger().warn(f"Transform failed: {str(e)}")
 
+    def odometry_callback(self, msg: Pose2D):
+        if not self.goal_reached_flag:
+            self.navigate_to_goal()
+
     def get_robot_position(self):
         try:
             # Lookup transform from 'map' to 'base_link'
@@ -214,7 +218,7 @@ class MotionNode(Node):
         else:
             self.goal_reached_publisher.publish(Bool(data=True))
             self.goal_reached_flag = True
-            # self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
+            self.get_logger().info('Goal reached: x={}, y={}'.format(goal_x, goal_y))
             
             # self.is_goal = False
             if self.is_path and len(self.path.poses) >= 1:
@@ -243,6 +247,8 @@ class MotionNode(Node):
         return True
     
     def adjust_yaw(self, angle):
+        self.get_logger().info('Performing yaw adjustment')
+
         while True:
             rclpy.spin_once(self)
             if not self.get_robot_position():
@@ -255,14 +261,15 @@ class MotionNode(Node):
             if abs(angle_diff) < 0.1:
                 break
             if angle_diff > 0:
-                self.vel_cmd.angular.z = self.angular_velocity_fine
+                self.vel_cmd.angular.z = self.angular_velocity
             else:
-                self.vel_cmd.angular.z = -self.angular_velocity_fine
+                self.vel_cmd.angular.z = -self.angular_velocity
             self.vel_cmd.linear.x = 0.0
             self.cmd_vel_publisher.publish(self.vel_cmd)
             
         self.vel_cmd.angular.z = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
+        self.get_logger().info('Done!')
     
     """
     Reverse the robot for a given distance.
@@ -273,6 +280,7 @@ class MotionNode(Node):
     def reverse(self, distance):
         duration = distance / self.linear_velocity_fine
         start_time = self.get_clock().now().nanoseconds / 1e9
+        
 
         while True:
             rclpy.spin_once(self)
