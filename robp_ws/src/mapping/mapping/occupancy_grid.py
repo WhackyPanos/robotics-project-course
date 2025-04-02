@@ -22,7 +22,8 @@ from std_msgs.msg import Header
 from geometry_msgs.msg import Twist
 from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
-from scipy.ndimage import binary_dilation, binary_fill_holes, convolve
+from scipy.ndimage import binary_dilation, binary_fill_holes
+from scipy.signal import convolve
 
 # free space from lidar: not marked
 # free space from camera: 0 
@@ -147,6 +148,7 @@ class OccupancyGridNode(Node):
 
 
     def inflate_map(self):
+        # self.rm_loners()   # We might need this for path planning. The config space updates quicker than the map gets published and doesn't take loners into account. 
         binary_grid = np.zeros_like(self.grid)
         
         # Threshold for obstacles (usually >50 is considered occupied)
@@ -328,15 +330,43 @@ class OccupancyGridNode(Node):
                 self.grid[i_y][i_x] = 100  # Mark cell as objects
         self.inflate_map()
 
+    def rm_loners(self):
+        """Removes lidar occupied cells (50<=(cell value)<=99) without any neighbors"""
+        mask = (self.grid >= 50) & (self.grid <= 99)
+        kernel = np.array([[0, 1, 0],
+                           [1, 0, 1],
+                           [0, 1, 0]])
+        nr_neighbors = convolve(mask, kernel, mode='same')
+        new_grid = self.grid.copy()
+        new_grid[mask & (nr_neighbors == 0)] = -1
+        self.grid = new_grid
+
     # def rm_loners(self):
-    #     mask = (self.grid == 100)
-    #     kernel = np.array([[0, 1, 0],
-    #                        [1, 0, 1],
-    #                        [0, 1, 0]])
-    #     nr_neighbors = convolve(mask, kernel)
-    #     new_grid = self.grid.copy()
-    #     new_grid[mask & (nr_neighbors == 0)] = -1
-    #     self.grid = new_grid
+    #     nr_occupied_by_lidar = 0
+    #     nr_lone = 0
+    #     for y in range(self.height):
+    #         for x in range(self.width):
+    #             if self.grid[y, x] >= 50 and self.grid[y, x] <= 99:
+    #                 nr_occupied_by_lidar += 1
+    #                 nr_neighbors = 0
+    #                 if x-1 >= 0:
+    #                     if self.grid[y,x-1] >= 50 and self.grid[y,x-1] >= 99:
+    #                         nr_neighbors += 1
+    #                 if x+1 <= self.width-1:
+    #                     if self.grid[y,x+1] >= 50 and self.grid[y,x+1] <= 99:
+    #                         nr_neighbors += 1
+    #                 if y-1 >= 0:
+    #                     if self.grid[y-1,x] >= 50 and self.grid[y-1,x] <= 99:
+    #                         nr_neighbors += 1
+    #                 if y+1 <= self.height-1:
+    #                     if self.grid[y+1,x] >= 50 and self.grid[y+1,x] <= 99:
+    #                         nr_neighbors += 1
+    #                 #self.get_logger().info(f'nr neighbors {nr_neighbors}')
+    #                 if nr_neighbors == 0:
+    #                     self.grid[y,x] = -1
+    #                     nr_lone += 1
+    #     self.get_logger().info(f'jjjjjjjjjjjjjjjjjjj{nr_occupied_by_lidar}, {nr_lone}')
+
 
 def main():
     rclpy.init()
