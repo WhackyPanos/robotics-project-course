@@ -117,7 +117,7 @@ class RandomPoint(Node):
         robot_dx = np.cos(self.robot_yaw)
         robot_dy = np.sin(self.robot_yaw)
 
-        for _ in range(1000):  # Limit attempts to avoid infinite loops
+        for _ in range(200):  # Limit attempts to avoid infinite loops
             x_candidate = uniform(self.map_origin_x, self.map_origin_x + self.map_width * self.map_resolution)
             y_candidate = uniform(self.map_origin_y, self.map_origin_y + self.map_height * self.map_resolution)
 

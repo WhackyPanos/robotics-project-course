@@ -84,12 +84,12 @@ bool Classifier::perform_classification()
     obb = computeOBB(cloud);
     double dist = obb.position.z;
 
-    // Eigen::Vector4f min_pt, max_pt;
-    // pcl::getMinMax3D(*cloud, min_pt, max_pt);
+    Eigen::Vector4f min_pt, max_pt;
+    pcl::getMinMax3D(*cloud, min_pt, max_pt);
     
-    // float max_y = min_pt[1]; // Topmost y (highest point)
-    // float min_y = max_pt[1]; // Bottommost y (lowest point)
-    // std::cout << "Depth: " << obb.position.z << "max_y: " << max_y << ", min_y: " << min_y << std::endl;
+    float max_y = min_pt[1]; // Topmost y (highest point)
+    float min_y = max_pt[1]; // Bottommost y (lowest point)
+    std::cout << "Depth: " << obb.position.z << "max_y: " << max_y << ", min_y: " << min_y << std::endl;
 
     // Filter based on height values
     pcl::PassThrough<pcl::PointXYZ> pass;
@@ -101,14 +101,14 @@ bool Classifier::perform_classification()
     pass.filter(*box_filtered);
 
     // RCLCPP_INFO(this->get_logger(), "start classification");
-    if (box_filtered->size() > 0) 
+    if (box_filtered->size() > box_filter_threshold_) 
     {
         classification = "Box";
     }
     else 
     {
         double animal_filter_height = interpolate(animal_filter_min_, animal_filter_max_, dist);
-        pass.setFilterLimits(animal_filter_height, animal_filter_height + 0.005);
+        pass.setFilterLimits(animal_filter_height, animal_filter_height + 0.003);
         pass.filter(*animal_filtered);
         
         if(animal_filtered->size()>0)
@@ -118,7 +118,7 @@ bool Classifier::perform_classification()
         else
         {               
             double sphere_filter_height = interpolate(sphere_filter_min_, sphere_filter_max_, dist);
-            pass.setFilterLimits(sphere_filter_height, sphere_filter_height + 0.005);
+            pass.setFilterLimits(sphere_filter_height, sphere_filter_height + 0.003);
             pass.filter(*sphere_filtered);
 
             if(sphere_filtered->size()>0)
@@ -196,21 +196,21 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
         RCLCPP_INFO(this->get_logger(), "Transform failed: %s", ex.what());
     }
 
-    // Create a transform message
-    geometry_msgs::msg::TransformStamped transform_msg;
-    transform_msg.header.stamp = stamp;
-    transform_msg.header.frame_id = "map";
-    transform_msg.child_frame_id = label;
+    // // Create a transform message
+    // geometry_msgs::msg::TransformStamped transform_msg;
+    // transform_msg.header.stamp = stamp;
+    // transform_msg.header.frame_id = "map";
+    // transform_msg.child_frame_id = label;
 
-    // Populate transform message with the transformed pose
-    transform_msg.transform.translation.x = transformed_pose.pose.position.x;
-    transform_msg.transform.translation.y = transformed_pose.pose.position.y;
-    transform_msg.transform.translation.z = transformed_pose.pose.position.z;
+    // // Populate transform message with the transformed pose
+    // transform_msg.transform.translation.x = transformed_pose.pose.position.x;
+    // transform_msg.transform.translation.y = transformed_pose.pose.position.y;
+    // transform_msg.transform.translation.z = transformed_pose.pose.position.z;
 
-    transform_msg.transform.rotation.x = transformed_pose.pose.orientation.x;
-    transform_msg.transform.rotation.y = transformed_pose.pose.orientation.y;
-    transform_msg.transform.rotation.z = transformed_pose.pose.orientation.z;
-    transform_msg.transform.rotation.w = transformed_pose.pose.orientation.w;
+    // transform_msg.transform.rotation.x = transformed_pose.pose.orientation.x;
+    // transform_msg.transform.rotation.y = transformed_pose.pose.orientation.y;
+    // transform_msg.transform.rotation.z = transformed_pose.pose.orientation.z;
+    // transform_msg.transform.rotation.w = transformed_pose.pose.orientation.w;
 
     std_msgs::msg::String detection_msg;
     std::ostringstream ss;
@@ -272,10 +272,10 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
     detection_msg.data = ss.str();
     class_pub_->publish(detection_msg);
 
-    // Broadcast the transform
-    tf_broadcaster_->sendTransform(transform_msg);
+    // // Broadcast the transform
+    // tf_broadcaster_->sendTransform(transform_msg);
 
-    RCLCPP_INFO(this->get_logger(), "Classification successful");
+    // RCLCPP_INFO(this->get_logger(), "Classification successful");
     
     return true;
 }
