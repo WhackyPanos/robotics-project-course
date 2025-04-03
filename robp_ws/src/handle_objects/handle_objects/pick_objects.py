@@ -215,21 +215,43 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.X_arm_cam, self.Y_arm_cam = [],  []
         self.thresholds = [10**-4,10**-3,10**-2]
         self.initial_guesses = [[0,0,0,0,0,0]]
-        self.angle_threshold = 200
         self.current_angles, self.desired_servo_angles = None, None
-        self.closed_gripper_angle = 10200 #TODO: check this value
         self.fail_count = 0
-
         # joint limits in the arm domain
         self.lb_angles = [0.0, 0.0,  30.0, 30.0, 60.0, 0.0]
         self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
-
         # joint limits in normal domain
-        self.lb_q = [-120.0,-85.0,-105.0,-105.0,-120.0, 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
-        self.ub_q = [ 120.0, 85.0, 105.0, 105.0, 120.0, 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
+        self.lb_q = [-120.0,-90.0,-105.0,-105.0,-120.0, 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
+        self.ub_q = [ 120.0, 90.0, 105.0, 105.0, 120.0, 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
+
+        # ----------------------------- Gripper Parameters ------------------------------------------
+        # -------------------------------------------------------------------------------------------
+        """ max gripper angle with object = 9850, 9624 (plushy)
+            max gripper angle without object = 9950 """
+        self.angle_threshold = 190 # threshold for joint angles in IK
+        self.closed_gripper_angle = 10000 # gripper angle to grasp object
+        self.gripper_threshold = 500 # threshold to detect if something was grasped
+        self.open_gripper_angle = 1000 # gripper angle when reaching for object
+        self.time_to_wait_for_gripper_angle = 2 # [s]
+        self.init_time_check_gripper_angle = None
+        self.curr_time_check_gripper_angle = None
+        self.joint3_compensation = -2500 # compemsation for joint 3 (below wrist). was -2000 in MS3 video
+        self.skipped_solutions = 1
 
         self.obj_tuck_arm_time = 3000 # in ms
-        self.obj_grasp_time = 5000   
+        self.obj_grasp_time = 2000  
+
+        # ----------------------- Inverse kinematics parameters -------------------------------------
+        # -------------------------------------------------------------------------------------------
+        self.height = 93*(10**-3)
+        self.l0 = 101*(10**-3) #101
+        self.l1 = 95*(10**-3) # 95
+        self.l2 = 158*(10**-3)+ 0.0  #1cm to account for object height and avoid colliding with ground  168
+        self.xx = 0.137 + 0.02 # compensation for the joint 3 compensation
+        self.yy = 0.0 # positive is to left in robot perspective
+        self.zz = -0.06
+        # -------------------------------------------------------------------------------------------
+        # -------------------------------------------------------------------------------------------
 
 
     def setup(self, **kwargs):
@@ -271,17 +293,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
         self.current_angles, self.desired_servo_angles = None, None
         self.timer = self.node.create_timer(1, self.init_arm_movement)
-
-        # ----------------------- Inverse kinematics parameters -------------------------------------
-        self.height = 93*(10**-3)
-        self.l0 = 100*(10**-3) #101
-        self.l1 = 95*(10**-3)
-        self.l2 = 168*(10**-3)+ 0.0  #1cm to account for object height and avoid colliding with ground  168
-        self.xx = 0.10
-        self.yy = 0.0
-        self.zz = -0.075
-        # -------------------------------------------------------------------------------------------
-
 
          
     def update(self):
@@ -332,7 +343,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.desired_servo_angles[0] = self.closed_gripper_angle 
             msg.data = self.desired_servo_angles + times
             self.ota_publisher_.publish(msg)
-            self.move_timer = self.node.create_timer(8.0, self.wait_for_movement)
+            self.move_timer = self.node.create_timer((self.obj_grasp_time/1000) + 4 , self.wait_for_movement)
             self.arm_moving = True
             return py_trees.common.Status.RUNNING
 
@@ -341,11 +352,23 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         # if object is grasped, return success
         elif self.object_grasped:
-            self.node.get_logger().info(f"Success, lifting arm now")
-            self.done = True
-            self.X_arm_cam.pop(0)
-            self.Y_arm_cam.pop(0)
-            return py_trees.common.Status.SUCCESS
+            self.curr_time_check_gripper_angle = self.get_clock().now().nanoseconds / 1e9
+            if self.curr_time_check_gripper_angle - self.init_time_check_gripper_angle < self.time_to_wait_for_gripper_angle:
+                return py_trees.common.Status.RUNNING 
+            else:
+                self.node.get_logger().warn(f"Timer finished, dt = {self.curr_time_check_gripper_angle - self.init_time_check_gripper_angle}, checking gripper")
+                if abs(self.desired_servo_angles[0] -self.current_angles[0]) < self.gripper_threshold:
+                    self.picklift_pub.publish(Bool(data=False))
+                    self.node.get_logger().warn(f"NOTHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
+                else:
+                    self.picklift_pub.publish(Bool(data=True))
+                    self.node.get_logger().warn(f"SOMETHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
+
+                self.node.get_logger().info(f"Lifting arm now")
+                self.done = True
+                self.X_arm_cam.pop(0)
+                self.Y_arm_cam.pop(0)
+                return py_trees.common.Status.SUCCESS
 
         else:
             return py_trees.common.Status.RUNNING  
@@ -368,13 +391,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
     def wait_for_movement(self):
         self.object_grasped = True
         self.arm_moving = False
+        self.init_time_check_gripper_angle = self.get_clock().now().nanoseconds / 1e9
         self.move_timer.cancel()
-        if abs(self.desired_servo_angles[0] -self.current_angles[0]) < 300: #TODO: adjust this threshold
-            self.picklift_pub.publish(Bool(data=False))
-            self.node.get_logger().warn(f"NOTHING GRASPED")
-        else:
-            self.picklift_pub.publish(Bool(data=True))
-            self.node.get_logger().warn(f"SOMETHING GRASPED")
         
 
 
@@ -399,7 +417,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.arm_moving = False
             for i in range(1, len(self.current_angles)) :
                 if abs(self.desired_servo_angles[i] -self.current_angles[i]) > self.angle_threshold:
-                    self.node.get_logger().info(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -self.current_angles[i])} in joint {i+1}")
+                    #self.node.get_logger().info(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -self.current_angles[i])} in joint {i+1}")
                     self.arm_tucked = False
                     self.arm_moving = True
                     break
@@ -458,7 +476,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         # we will iterate with different orientations for the 1st link. 
         count = 0
-        for i in range(900,50,-20): #decidegrees
+        for i in range(900, 0, -1): #decidegrees. Before, was range(900,0,-20)
             angle = i/10
             # Initiate constants
             good_flag = True           
@@ -487,7 +505,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     good_flag = False
                     #self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = {q[j+1]})")
             if good_flag == True:
-                if count == 0: # skip one more step to avoid joint limits
+                if count == self.skipped_solutions -1: # skip  to avoid joint limits
                     count +=1
                     continue
                 # create the msg to publish, in case it is valid
@@ -502,13 +520,13 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
                 # tranform from regular domain to arm domain
                 self.desired_servo_angles = [12000]*6
-                self.desired_servo_angles[0] = 2600
+                self.desired_servo_angles[0] = self.open_gripper_angle
 
                 # update with plan_b
                 self.desired_servo_angles[5] = self.desired_servo_angles[5] + int(100*q[0])   
                 self.desired_servo_angles[4] = self.desired_servo_angles[4] + int(-100*q[1])  
                 self.desired_servo_angles[3] = self.desired_servo_angles[3] + int(-100*q[2])
-                self.desired_servo_angles[2] = self.desired_servo_angles[2] + int(-100*q[3])          
+                self.desired_servo_angles[2] = self.desired_servo_angles[2] + int(-100*q[3]) + self.joint3_compensation         
                 msg.data = self.desired_servo_angles + times
                 return msg
             
@@ -573,7 +591,7 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.arm_moving = False
             for i in range(1, len(current_angles)) :
                 if abs(self.desired_servo_angles[i] -current_angles[i]) > self.angle_threshold:
-                    print(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -current_angles[i])}")
+                    #print(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -current_angles[i])}")
                     self.arm_tucked = False
                     self.arm_moving = True
                     break

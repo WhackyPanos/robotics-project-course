@@ -18,7 +18,14 @@ While being on robp_group3 (not robp_ws), build, source and then launch:
 
 ``` ros2 launch robp_launch arm_servo_launch.py ```
 
-``` ros2 launch robp_launch collection_node_launch.py ```
+``` ros2 launch robp_launch collection_node_launch.py ``
+
+Debug:
+
+ros2 topic echo /servo_pos_publisher 
+
+ros2 topic echo /multi_servo_cmd_sub 
+
 
 #### **Important topics**
 | Topic name | Published | Subscribed from | Description
