@@ -64,7 +64,7 @@ class CheckPath(Node):
 
         for index in self.path:
             x, y = index
-            if map_data[y, x] == 100: 
+            if map_data[y, x] >= 99: 
                 return False
         return True
 

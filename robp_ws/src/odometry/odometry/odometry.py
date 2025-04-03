@@ -191,7 +191,7 @@ class Odometry(Node):
         # TODO: Fill in
         D = wheel_radius/2 * K * (delta_ticks_right + delta_ticks_left)
         # delta_theta = wheel_radius/base * K * (delta_ticks_right - delta_ticks_left)
-        self._yaw += self.prev_imu_yaw - self.imu_yaw + math.pi/(180*500)
+        self._yaw += self.prev_imu_yaw - self.imu_yaw + math.pi/(180*450)
         self.prev_imu_yaw = self.imu_yaw
         self._x = self._x + D * np.cos(self._yaw) # TODO: Fill in
         self._y = self._y + D * np.sin(self._yaw) # TODO: Fill in

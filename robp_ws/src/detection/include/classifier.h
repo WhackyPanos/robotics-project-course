@@ -59,6 +59,8 @@ private:
         const OBBData &obb);
     // Computes oriented bounding box
     OBBData computeOBB(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
+    // Function to interpolate filter limits based on distance
+    double interpolate(double min_val, double max_val, double dist);
     // Computes average curvature of the point cloud
     double computeCurvature(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
     size_t sphereSegment(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
@@ -81,7 +83,7 @@ private:
     double angular_z_;
     double linear_x_;
     double linear_y_;
-    sensor_msgs::msg::PointCloud2 latest_cluster_;
+    std::shared_ptr<sensor_msgs::msg::PointCloud2> latest_cluster_;
 
     // Parameters
     std::string classification;
@@ -90,6 +92,8 @@ private:
     std::string classification_topic_;
     std::string trigger_topic_;
     std::string result_topic_;
+    double z_filter_min_;
+    double z_filter_max_; 
     double box_filter_min_;
     double box_filter_max_;
     int box_filter_threshold_;

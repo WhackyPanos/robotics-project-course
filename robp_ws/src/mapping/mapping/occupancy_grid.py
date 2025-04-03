@@ -59,12 +59,12 @@ class OccupancyGridNode(Node):
         self.geofence(vertices) # Sets a boundry for the workspace
 
         # Inflation parameter
-        self.robot_radius = 0.2
+        self.robot_radius = 0.3
         
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
         self.camera_min_range = 0.2 # True value: 0.2
-        self.camera_max_range = 0.82 # True value: 3.0
+        self.camera_max_range = 1.1 # True value: 3.0
 
         self.angular_vel = 0.0
 
@@ -147,22 +147,33 @@ class OccupancyGridNode(Node):
 
 
     def inflate_map(self):
-        # self.rm_loners()   # We might need this for path planning. The config space updates quicker than the map gets published and doesn't take loners into account. 
+        self.rm_loners()   # We might need this for path planning. The config space updates quicker than the map gets published and doesn't take loners into account. 
+        
         binary_grid = np.zeros_like(self.grid)
-        
+        border_grid = np.zeros_like(self.grid)
+
         # Threshold for obstacles (usually >50 is considered occupied)
-        binary_grid[self.grid > 50] = 1
-        # Robot can drive through both known and unknown space
+        binary_grid[(self.grid > 50) & (~self.geofence_mask)] = 1
+        border_grid[self.geofence_mask] = 1
         
-        # Calculate kernel size based on robot radius and map resolution
-        kernel_radius = int(np.ceil(self.robot_radius / self.resolution))
-        
-        # Create circular kernel for dilation
-        y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
-        kernel = x**2 + y**2 <= kernel_radius**2
-        
-        # Dilate obstacles to create configuration space
-        self.config_space = binary_dilation(binary_grid, kernel).astype(np.int8)*100
+        # Define different kernel sizes
+        large_radius = int(np.ceil(self.robot_radius / self.resolution))  # Larger for workspace
+        small_radius = large_radius // 3  # Smaller for borders
+
+        # Create circular kernels
+        y_large, x_large = np.ogrid[-large_radius:large_radius+1, -large_radius:large_radius+1]
+        kernel_large = x_large**2 + y_large**2 <= large_radius**2
+
+        y_small, x_small = np.ogrid[-small_radius:small_radius+1, -small_radius:small_radius+1]
+        kernel_small = x_small**2 + y_small**2 <= small_radius**2
+
+        # Apply dilation to the entire grid
+        inflated_grid = binary_dilation(binary_grid, kernel_large)
+        inflated_border = binary_dilation(border_grid, kernel_small)
+
+        # Combine the two results
+        self.config_space = ((inflated_grid | inflated_border) * 99).astype(np.int8)
+
 
         # Create an OccupancyGrid message
         config_grid_msg = OccupancyGrid()
@@ -203,7 +214,7 @@ class OccupancyGridNode(Node):
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
 
-        if abs(self.angular_vel) < 0.1:
+        if abs(self.angular_vel) < 0.2:
             lidar_from_frame_rel = msg.header.frame_id # Lidar link
             lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
             lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
@@ -260,7 +271,7 @@ class OccupancyGridNode(Node):
         to_remove = []
         for (x, y), timestamp in self.lidar_obstacles.items():
             elapsed_time = (current_time - timestamp) # Elapsed time will be 0.1 seconds since the lidar updates at 10hz 
-            new_value = max(0, int(99 - elapsed_time))
+            new_value = max(0, int(99 - 10*elapsed_time))
 
             if new_value == 0:
                 to_remove.append((x, y))
@@ -345,8 +356,8 @@ class OccupancyGridNode(Node):
         self.inflate_map()
 
     def rm_loners(self):
-        """Removes lidar occupied cells (50<=(cell value)<=99) without any neighbors"""
-        mask = (self.grid >= 50) & (self.grid <= 99)
+        """Removes lidar occupied cells (0<=(cell value)<=99) without any neighbors"""
+        mask = (self.grid > 0) & (self.grid < 100)
         kernel = np.array([[0, 1, 0],
                            [1, 0, 1],
                            [0, 1, 0]])

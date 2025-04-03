@@ -165,12 +165,12 @@ class Planner_A_star(Node):
 
     def a_star(self, node_start, node_goal):
         
-        self.get_logger().warn("Enters A*")
+        # self.get_logger().warn("Enters A*")
         open_dict = {}
         closed_dict = {}
         open_dict[(node_start.x, node_start.y)] = node_start
         while open_dict:
-            self.get_logger().warn(f"Length open dict: {len(open_dict)}")
+            # self.get_logger().warn(f"Length open dict: {len(open_dict)}")
             #node_current = open_dict[min(open_dict.keys(), key=lambda k: open_dict[k].f)] # Gets the node with the lowest f score
             node_current_key = min(open_dict.keys(), key=lambda k: open_dict[k].f)
             node_current = open_dict.pop(node_current_key)
@@ -190,7 +190,7 @@ class Planner_A_star(Node):
                         node_open.f = node_child.f
                         node_open.parent = node_child.parent
                 else:
-                    self.get_logger().warn("Add nodes to open dict")
+                    # self.get_logger().warn("Add nodes to open dict")
                     open_dict[child_key] = node_child
         
         self.get_logger().warn("No valid path found (open_dict empty)")

@@ -25,7 +25,7 @@ class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
-        self.occupancy_grid.rm_loners()
+        # self.occupancy_grid.rm_loners()
         self.occupancy_grid.publish_current_grid()
         return py_trees.common.Status.SUCCESS
     
