@@ -63,12 +63,14 @@ class ExplorationBT(Node):
         executor.add_node(self.obstacle_on_path_detected.check_path)
         
 
-        third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
-        third_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
+        fourth_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
+        fourth_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
+
+        short_wait = py_trees.timers.Timer("Timer", duration=5)
 
         decorator = py_trees.decorators.Repeat(
             name='dec_repeat', 
-            child=third_sequence,
+            child=fourth_sequence,
             num_success=5   # 5 consecutive successes
         )
 
@@ -82,10 +84,13 @@ class ExplorationBT(Node):
         )
         second_parallel.add_children([self.new_object_detected, self.obstacle_on_path_detected, self.navigate_to_goal])
 
+        third_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
+        third_sequence.add_children([short_wait, decorator])
+
         # EternalGuard: Ensures that the decorator only runs if new_object_detected is successful
         object_detected_guard = py_trees.decorators.EternalGuard(
             name="object_detected_guard", 
-            child=decorator,                          # The decorator should only execute if the condition is met
+            child=third_sequence,                     # The decorator should only execute if the condition is met
             condition=self.object_detected_condition  # Condition to check if new_object_detected was successful
         )
 

@@ -78,7 +78,7 @@ bool Clustering::perform_clustering(bool new_req)
         return false;
     }
 
-    RCLCPP_INFO(this->get_logger(), "Pass Filter");
+    // RCLCPP_INFO(this->get_logger(), "Pass Filter");
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(*latest_cloud_, *cloud);
@@ -98,7 +98,9 @@ bool Clustering::perform_clustering(bool new_req)
     if (cloud->empty()) return false;
     
 
-    RCLCPP_INFO(this->get_logger(), "Clustering");
+    // RCLCPP_INFO(this->get_logger(), "Clustering");
+
+
     // Clustering
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
     tree->setInputCloud(cloud);
@@ -128,7 +130,7 @@ bool Clustering::perform_clustering(bool new_req)
         pass.filter(*obstacle);
         if (!obstacle->empty()) continue;
 
-        RCLCPP_INFO(this->get_logger(), "Cluster found");
+        // RCLCPP_INFO(this->get_logger(), "Cluster found");
     // If new, check also for obstacle or occupation in grid
         if(new_req)
         {
@@ -149,7 +151,7 @@ bool Clustering::perform_clustering(bool new_req)
                 RCLCPP_INFO(this->get_logger(), "Transform failed: %s", ex.what());
                 continue;
             }
-            RCLCPP_INFO(this->get_logger(), "Check occupation");
+            // RCLCPP_INFO(this->get_logger(), "Check occupation");
             if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
         }
     
@@ -163,7 +165,7 @@ bool Clustering::perform_clustering(bool new_req)
         output.header.stamp = latest_cloud_->header.stamp;
         output.header.frame_id = latest_cloud_->header.frame_id;
         cluster_pub_->publish(output);
-        RCLCPP_INFO(this->get_logger(), "Publish cluster");
+        // RCLCPP_INFO(this->get_logger(), "Publish cluster");
 
         geometry_msgs::msg::Twist stop_msg;
         stop_msg.linear.x = stop_msg.linear.y = stop_msg.linear.z = 0.0;

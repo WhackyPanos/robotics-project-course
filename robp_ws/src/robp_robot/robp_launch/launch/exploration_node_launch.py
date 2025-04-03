@@ -62,7 +62,7 @@ def generate_launch_description():
                 "height_filter_max": 0.075,
                 "cluster_tolerance": 0.05,
                 "cluster_min_size": 100,
-                "occupancy_margin": 1,
+                "occupancy_margin": 0,
                 "occupancy_value": 0,
                 "ang_vel_threshold": 0.4
                 }]
@@ -79,9 +79,9 @@ def generate_launch_description():
                 "result_topic_": "/classification/result",
                 "dist_filter_min": 0.2,
                 "dist_filter_max": 1.0,
-                "box_filter_min": 0.0,
+                "box_filter_min": -0.003,
                 "box_filter_max": -0.013,
-                "box_filter_threshold": 10,
+                "box_filter_threshold": 50,
                 "animal_filter_min": 0.045,
                 "animal_filter_max": 0.033,
                 "sphere_filter_min": 0.056,
