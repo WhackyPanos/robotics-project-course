@@ -135,7 +135,7 @@ def main(args=None):
 
     # Setup the behavior tree with a timeout for setup (10 seconds)
     node.tree.setup(timeout=10.0, node=node)
-    time.sleep(2.0)
+    time.sleep(3.0)
 
     # Continuously tick the behavior tree
     node.tree.tick_tock(period_ms=10)

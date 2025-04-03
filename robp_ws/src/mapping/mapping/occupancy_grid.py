@@ -64,7 +64,7 @@ class OccupancyGridNode(Node):
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
         self.camera_min_range = 0.2 # True value: 0.2
-        self.camera_max_range = 0.75 # True value: 3.0
+        self.camera_max_range = 0.82 # True value: 3.0
 
         self.angular_vel = 0.0
 
@@ -236,11 +236,11 @@ class OccupancyGridNode(Node):
         filtered_scan.time_increment = msg.time_increment
         filtered_scan.scan_time = msg.scan_time
         filtered_scan.range_min = max(msg.range_min, 0.2)
-        filtered_scan.range_max = min(msg.range_max, 3.0)  # Limit max range to 3m
+        filtered_scan.range_max = min(msg.range_max, 2.0)  # Limit max range to 2m
         filtered_scan.intensities = msg.intensities
 
         # Filter out points beyond 5 meters
-        filtered_scan.ranges = [r if r <= 3.0 and r >= 0.2 else float('inf') for r in msg.ranges]
+        filtered_scan.ranges = [r if r <= 2.0 and r >= 0.2 else float('inf') for r in msg.ranges]
                     
 
         # Project LaserScan to PointCloud2
@@ -326,7 +326,22 @@ class OccupancyGridNode(Node):
 
             # Ensure x, y are within the grid bounds
             if 0 <= i_x < self.width and 0 <= i_y < self.height:
-                self.grid[i_y][i_x] = 100  # Mark cell as objects
+                # Mark the main cell as an object
+                self.grid[i_y][i_x] = 100
+
+                # Check if msg.frame_id is 'B' before marking adjacent cells
+                if marker.header.frame_id == 'B':
+                    # Define four possible directions: (dy, dx)
+                    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
+
+                    for dy, dx in directions:
+                        for step in range(1, 3):  # Expand 1 step and 2 steps
+                            adj_y, adj_x = i_y + step * dy, i_x + step * dx
+
+                            # Ensure we don't go out of bounds
+                            if 0 <= adj_y < self.height and 0 <= adj_x < self.width:
+                                self.grid[adj_y][adj_x] = 100  # Mark adjacent cell as an object
+                  
         self.inflate_map()
 
     def rm_loners(self):

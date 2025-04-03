@@ -170,6 +170,10 @@ class Odometry(Node):
         run 'ros2 interface show robp_interfaces/msg/Encoders' in a terminal.
         """
 
+        if self.imu_yaw is None:
+            self.get_logger().warning("Wait for IMU data!")
+            return
+
         # The kinematic parameters for the differential configuration
         dt = 50 / 1000
         ticks_per_rev = 48 * 64
