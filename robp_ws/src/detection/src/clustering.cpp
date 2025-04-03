@@ -247,7 +247,7 @@ bool Clustering::is_occupied(float x, float y)
             int index = ny * width + nx;
             RCLCPP_INFO(this->get_logger(), "Occupation at (%d, %d) = %d.", nx, ny, latest_map_->data[index]);
 
-            if (latest_map_->data[index] >= occupancy_value_) {
+            if (latest_map_->data[index] == occupancy_value_ || latest_map_->data[index] == 100) {
                 return true;
             }
         }

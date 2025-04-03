@@ -34,7 +34,7 @@ class RandomPoint(Node):
 
         #Robot's pose
         self.robot_x = self.robot_y = self.robot_yaw = None
-        self.robot_radius = 0.35
+        self.robot_radius = 0.3
 
     def inflate_map(self):
         binary_grid = np.zeros_like(self.map_data)

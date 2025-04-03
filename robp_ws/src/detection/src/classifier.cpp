@@ -71,11 +71,11 @@ Classifier::Classifier() : Node("clustering", rclcpp::NodeOptions()
 
 bool Classifier::perform_classification()
 {
-    if (std::abs(angular_z_) >= ang_vel_threshold_ || std::abs(linear_x_) >= lin_vel_threshold_ || std::abs(linear_y_) >= lin_vel_threshold_) {
-        return false;
-    }
+    // if (std::abs(angular_z_) >= ang_vel_threshold_ || std::abs(linear_x_) >= lin_vel_threshold_ || std::abs(linear_y_) >= lin_vel_threshold_) {
+    //     return false;
+    // }
 
-    RCLCPP_INFO(this->get_logger(), "enter classification");    
+    // RCLCPP_INFO(this->get_logger(), "enter classification");    
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(latest_cluster_, *cloud);
