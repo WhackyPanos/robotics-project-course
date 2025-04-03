@@ -3,7 +3,7 @@
 import py_trees
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension, Bool, String
+from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension, Bool, String, Int16
 from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from handle_objects.ik_solver import IKNode
@@ -14,7 +14,7 @@ from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 import tf2_geometry_msgs
-from geometry_msgs.msg import PoseStamped, Pose, PointStamped, PoseArray
+from geometry_msgs.msg import PoseStamped, Pose, PointStamped, PoseArray, Pose2D
 from math import pi, acos, atan2, atan, cos, sin, sqrt
 import numpy as np 
 
@@ -143,8 +143,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.arm_tucked == True # not really necessary
             #print(f"New status is {new_status}")
 
-# ----------------------------------- BEHAVIOUR 2 ---------------------------------------------------------------
-class DetectObject(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
+
     def __init__(self, name="Detect Object"):
         py_trees.behaviour.Behaviour.__init__(self, name=name)
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
@@ -177,9 +176,8 @@ class SearchObjectArm(py_trees.behaviour.Behaviour, Node): # this class is a py_
     def __init__(self, name="Detect Object"):
         py_trees.behaviour.Behaviour.__init__(self, name=name)
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
-        #py_trees.behaviour.Behaviour.__init__(self, name)
-        #Node.__init__(self, "pick_node")  # ROS 2 node initialization
-        self.ik_solver = IKNode()
+
+
 
     def setup(self, **kwargs):
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
@@ -223,6 +221,11 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         # joint limits in normal domain
         self.lb_q = [-120.0,-90.0,-105.0,-105.0,-120.0, 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
         self.ub_q = [ 120.0, 90.0, 105.0, 105.0, 120.0, 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
+
+        # ------------------------------- Wrist Parameters ------------------------------------------
+        self.max_rotation = 90
+        self.angle_step= 30 
+        # -------------------------------------------------------------------------------------------
 
         # ----------------------------- Gripper Parameters ------------------------------------------
         # -------------------------------------------------------------------------------------------
@@ -273,6 +276,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.servo_angles_subscriber_ = self.node.create_subscription(JointState,'/servo_pos_publisher',self.servo_angles_callback,10)   
         self.next_goal_pub = self.node.create_subscription(PoseStamped, '/motion/goal',  self.get_next_goal_callback,10 )
         self.next_goal_pub = self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 )
+        self.count_grasping_failures_sub = self.node.create_subscriber(
+            Int16,'/picklift/count_grasping_failures',  self.count_grasping_failures_callback,10)
 
         self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
@@ -394,6 +399,26 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.init_time_check_gripper_angle = self.get_clock().now().nanoseconds / 1e9
         self.move_timer.cancel()
         
+    def count_grasping_failures_callback(self, msg):
+        self.fail_count = msg.data
+
+    def adjust_retry(self):
+        if self.fail_count != 0:
+            wrist_adjustments_count = 0
+            # adjust wrist rotation "randomly"
+            while True:
+                self.desired_servo_angles[1] += self.angle_step*100
+                if not(self.desired_servo_angles[1] < self.lb_q[1] or self.desired_servo_angles[1] > self.ub_q[1]):
+                    break
+                else:
+                    self.desired_servo_angles[1] = 12000
+                    self.angle_step *= -1
+                wrist_adjustments_count += 1
+                if wrist_adjustments_count > 10:
+                    self.desired_servo_angles[1] = 12000
+                    break
+        # adjust rotation of the 3 servo (below wrist)
+        #self.desired_servo_angles[2] =
 
 
     def get_next_goal_callback(self, msg):
@@ -422,56 +447,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     self.arm_moving = True
                     break
         
-    def publish_angles(self, ik_angles):
-        """ Publish corrected angles to the arm after having computing inverse kinematics"""
-        # retrieve current angles (supposedly arm is stretched) and compute corrected angles to publish
-        init_angles = np.multiply(0.01,np.array(self.current_angles)) # from servo sensors, pass from cdeg to deg
-        desired_angles = self.wrap_angle((180/pi)*np.array(ik_angles[::-1]), "degrees") # convert ik_angles to angles bw -180 and 180        
-        res_angles = init_angles + np.multiply(ik_angles[::-1], [1,1,-1,1,-1,1]) # CHECK THIS VECTOR AGAIN
-        pub_angles, out_limits = self.check_limits(res_angles, self.lb_angles, self.ub_angles)
-
-        self.node.get_logger().info(f"Current angles are {init_angles}") 
-        self.node.get_logger().info(f"IK angles after wrapping are {desired_angles}")
-        self.node.get_logger().info(f"Resulting angles {res_angles}")
-
-        msg = Int16MultiArray()
-        msg.layout = MultiArrayLayout(
-            dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
-            data_offset=0
-        )      
-        times = [self.obj_tuck_arm_time] * 6
-        self.desired_servo_angles = [int(angle*100) for angle in pub_angles]
-        msg.data = self.desired_servo_angles + times
-        msg.data[0] = 2600 #keep gripper open
-        
-
-        if not out_limits:
-            self.node.get_logger().info(f" Angles will be published with ik_solver = {self.desired_servo_angles}")
-            self.ota_publisher_.publish(msg)
-            #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
-        else:
-            self.node.get_logger().info(f" Angles out of limits, trying again ")
-            
-        return out_limits
-
-    def wrap_angle(self, angles, units: str):
-        if units == "radians":
-            return [(angle + pi) % (2 * pi) - pi for angle in angles]
-        else:
-            return [(angle + 180) % 360 - 180 for angle in angles]
-        
-    def check_limits(self, angles, lb, ub):
-        final_angles = angles
-        out_limits = False
-        for i,x in enumerate(angles):
-            if x<lb[i]:
-                final_angles[i] = lb[i]+1
-                out_limits = True
-            elif x>ub[i]:
-                final_angles[i] = ub[i]-1
-                out_limits = True
-        return final_angles, out_limits
-
     def pick_planB(self, x, y, z):  
 
         # we will iterate with different orientations for the 1st link. 
@@ -526,7 +501,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 self.desired_servo_angles[5] = self.desired_servo_angles[5] + int(100*q[0])   
                 self.desired_servo_angles[4] = self.desired_servo_angles[4] + int(-100*q[1])  
                 self.desired_servo_angles[3] = self.desired_servo_angles[3] + int(-100*q[2])
-                self.desired_servo_angles[2] = self.desired_servo_angles[2] + int(-100*q[3]) + self.joint3_compensation         
+                self.desired_servo_angles[2] = self.desired_servo_angles[2] + int(-100*q[3]) + self.joint3_compensation 
+                self.adjust_retry()        
                 msg.data = self.desired_servo_angles + times
                 return msg
             
@@ -562,11 +538,14 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 JointState,
                 '/servo_pos_publisher',
                 self.servo_angles_callback,
-                10
-            )  
+                10)  
             self.need_next_object_sub = self.node.create_subscription(
                 String, '/next_goal/object/need', 
                 self.need_next_object_callback, 10)
+            self._pose_pub = self.create_publisher(
+                Pose2D, '/odom_pose', self.odometry_yaw_callback, 10)
+            self.create_subscription(
+                PoseStamped, '/motion/goal', self.goal_callback, 10)
             
             self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
@@ -582,47 +561,23 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.desired_servo_angles[0] = 10000 # gripper is different
             self.desired_servo_angles[4] = 6500 # 
             self.desired_servo_angles[2] = 8000 # 
-            self.angle_threshold = 200 #1 degree  
+            self.angle_threshold = 200 #1 degree 
 
-    def servo_angles_callback(self, msg):
-        current_angles = msg.position
-        if self.arm_started and self.arm_moving:
-            self.arm_tucked = True
-            self.arm_moving = False
-            for i in range(1, len(current_angles)) :
-                if abs(self.desired_servo_angles[i] -current_angles[i]) > self.angle_threshold:
-                    #print(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -current_angles[i])}")
-                    self.arm_tucked = False
-                    self.arm_moving = True
-                    break
-        #print(f'Current angles position: {current_angles[1]}')
-         
-    def need_next_object_callback(self, msg):
-        self.next_goal = msg.data
-        self.get_logger().info(f"Placing received {msg.data} as next stuff")
-    def publish_msg(self):
-        msg = Int16MultiArray()
-        msg.layout = MultiArrayLayout(
-            dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
-            data_offset=0
-        )      
-        times = [self.obj_tuck_arm_time] * 6
-        msg.data = self.desired_servo_angles + times
-        self.ota_publisher_.publish(msg)
+            # stuff related to the orientation of the arm base
+            self.current_yaw = 0 
+            self.box_map = PointStamped()
+            self.box_map.header.frame_id = 'map'
+            self.tf_buffer = Buffer()
+            self.tf_listener = TransformListener(self.tf_buffer)
+            self.box_x, self.box_y = None, None
+
 
     def initialise(self):
         self.arm_moving = False
         self.arm_tucked = False
         self.timer = self.node.create_timer(3, self.timer_callback)
         
-    def timer_callback(self):
-        self.arm_started = True
-        self.timer.cancel()
-        print(f"delay completed")
-
-    def open_gripper_callback(self):
-        self.gripper_opened = True
-         
+        
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked 
             If the next goal is to place an object, the arm will be tucked. Otherwise, we want to tick the picking behavior"""
@@ -675,6 +630,62 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.arm_tucked == True # not really necessary
             #print(f"New status is {new_status}")
 
+    def timer_callback(self):
+        self.arm_started = True
+        self.timer.cancel()
+        print(f"delay completed")
+
+    def odometry_yaw_callback(self, msg):
+        self.current_yaw = msg.theta
+
+    def goal_callback(self, msg):
+        self.box_x = msg.pose.position.x
+        self.box_y = msg.pose.position.y
+
+    def desired_arm_base_angle(self):
+        self.box_map.header.stamp = rclpy.time.Time().to_msg()
+        self.box_map.header.frame_id = 'map'
+        self.box_map.point.x = self.box_x
+        self.box_map.point.y = self.box_y
+        self.box_arm_base = self.tf_buffer.transform(self.box_map, 'arm_base_link', timeout=rclpy.duration.Duration(seconds=1.0))
+
+        return atan2(self.box_arm_base.point.y, self.box_arm_base.point.x) # TODO: check signal
+
+    def open_gripper_callback(self):
+        self.gripper_opened = True
+
+    def servo_angles_callback(self, msg):
+        current_angles = msg.position
+        if self.arm_started and self.arm_moving:
+            self.arm_tucked = True
+            self.arm_moving = False
+            for i in range(1, len(current_angles)) :
+                if abs(self.desired_servo_angles[i] -current_angles[i]) > self.angle_threshold:
+                    #print(f"Arm still moving, error of {abs(self.desired_servo_angles[i] -current_angles[i])}")
+                    self.arm_tucked = False
+                    self.arm_moving = True
+                    break
+        #print(f'Current angles position: {current_angles[1]}')
+         
+    def need_next_object_callback(self, msg):
+        self.next_goal = msg.data
+        self.get_logger().info(f"Placing received {msg.data} as next stuff")
+    def publish_msg(self):
+        msg = Int16MultiArray()
+        msg.layout = MultiArrayLayout(
+            dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
+            data_offset=0)    
+          
+        # Compute necessary orientation of arm base
+        desired_yaw = self.desired_arm_base_angle()
+        error = 180*(desired_yaw - self.current_yaw)/pi #TODO: wrap angles, check limits and uncomment below
+        #self.desired_servo_angles[5] += error*100
+        self.get_logger().info(f'Arm base should rotate {error} degrees')
+
+        # publish msg
+        times = [self.obj_tuck_arm_time] * 6
+        msg.data = self.desired_servo_angles + times
+        self.ota_publisher_.publish(msg)
  # -----------------------------------------------------------------------------------------------------------------------
 
 
@@ -726,3 +737,53 @@ IK
         
     #     # define target with kdl instance
     #     self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
+
+    # def publish_angles(self, ik_angles):
+    #     """ Publish corrected angles to the arm after having computing inverse kinematics"""
+    #     # retrieve current angles (supposedly arm is stretched) and compute corrected angles to publish
+    #     init_angles = np.multiply(0.01,np.array(self.current_angles)) # from servo sensors, pass from cdeg to deg
+    #     desired_angles = self.wrap_angle((180/pi)*np.array(ik_angles[::-1]), "degrees") # convert ik_angles to angles bw -180 and 180        
+    #     res_angles = init_angles + np.multiply(ik_angles[::-1], [1,1,-1,1,-1,1]) # CHECK THIS VECTOR AGAIN
+    #     pub_angles, out_limits = self.check_limits(res_angles, self.lb_angles, self.ub_angles)
+
+    #     self.node.get_logger().info(f"Current angles are {init_angles}") 
+    #     self.node.get_logger().info(f"IK angles after wrapping are {desired_angles}")
+    #     self.node.get_logger().info(f"Resulting angles {res_angles}")
+
+    #     msg = Int16MultiArray()
+    #     msg.layout = MultiArrayLayout(
+    #         dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
+    #         data_offset=0
+    #     )      
+    #     times = [self.obj_tuck_arm_time] * 6
+    #     self.desired_servo_angles = [int(angle*100) for angle in pub_angles]
+    #     msg.data = self.desired_servo_angles + times
+    #     msg.data[0] = 2600 #keep gripper open
+        
+
+    #     if not out_limits:
+    #         self.node.get_logger().info(f" Angles will be published with ik_solver = {self.desired_servo_angles}")
+    #         self.ota_publisher_.publish(msg)
+    #         #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
+    #     else:
+    #         self.node.get_logger().info(f" Angles out of limits, trying again ")
+            
+    #     return out_limits
+
+    # def wrap_angle(self, angles, units: str):
+    #     if units == "radians":
+    #         return [(angle + pi) % (2 * pi) - pi for angle in angles]
+    #     else:
+    #         return [(angle + 180) % 360 - 180 for angle in angles]
+        
+    # def check_limits(self, angles, lb, ub):
+    #     final_angles = angles
+    #     out_limits = False
+    #     for i,x in enumerate(angles):
+    #         if x<lb[i]:
+    #             final_angles[i] = lb[i]+1
+    #             out_limits = True
+    #         elif x>ub[i]:
+    #             final_angles[i] = ub[i]-1
+    #             out_limits = True
+    #     return final_angles, out_limits

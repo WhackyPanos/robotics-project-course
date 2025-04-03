@@ -5,7 +5,7 @@ import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
 from geometry_msgs.msg import Pose2D, PointStamped, PoseStamped
-from std_msgs.msg import Bool, String
+from std_msgs.msg import Bool, String, Int16
 import numpy as np
 from math import sqrt, cos, sin, pi, sqrt, atan2
 from tf2_ros.buffer import Buffer
@@ -121,23 +121,49 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
         self.picklift_sub = self.node.create_subscription(Bool, '/picklift/succeded', self.picklift_callback, 10)
         self.next_goal = self.node.create_publisher(String, '/next_goal/object/need', 10)
         self.update_obj_list_pub = self.node.create_publisher(Bool,'/next_goal/object/update', 10)
-        self.msg = String()
+        self.next_goal_msg = String()
+        self.count_grasping_failures_pub = self.node.create_publisher(
+            Int16,'/picklift/count_grasping_failures', 10)
+        self.n_fails_msg = Int16()
+        self.count_grasping_failures_pub = 0
+        self.n_fails_msg.data = self.count_grasping_failures_pub
+        self.count_grasping_failures_pub.publish(self.n_fails_msg)
+
+        # -------------------------- Picking Parameter(s) ------------------
+        self.max_grasping_failures = 5
+        # ------------------------------------------------------------------
 
     def update(self):
         # Note: hope the behavior tick is slower than the subscriber callback, might need changes
-        self.node.get_logger().info(f"Next thing to go to is {self.msg.data} and we are in the {self.arm_task} task")
-        self.next_goal.publish(self.msg)
+        self.node.get_logger().info(f"Next thing to go to is {self.next_goal_msg.data} and we are in the {self.arm_task} task")
+        self.next_goal.publish(self.next_goal_msg)
         return py_trees.common.Status.FAILURE
 
     def picklift_callback(self, msg):
-        if not msg.data: # pick_lift failed, remove object from list and try same movement (pick object or place on box)
-            self.msg.data = 'Object' if self.arm_task == 'pick' else 'Box'
-            pass
-        else: # pick lift succeeded, remove object from list and try placing now
-            self.msg.data = 'Box' if self.arm_task == 'pick' else 'Object'
-            self.arm_task = 'place' if self.msg.data == 'Box' else 'pick'
-            pass
-        self.update_obj_list_pub.publish(Bool(data=True)) #remove closest object from objects list
+        """ 
+        If pick_lift failed, remove object from list (publish True) and try same movement (pick object or place 
+        on box) as long as we've already tried n times. Otherwise, don't remove object from the list so we can try again.
+        If succeeds, remove object from list and switch to placing now"""
+        if not msg.data: # pick_lift failed
+            self.next_goal_msg.data = 'Object' if self.arm_task == 'pick' else 'Box'
+            if self.count_grasping_failures_pub <= self.max_grasping_failures:
+                self.count_grasping_failures_pub += 1
+                self.n_fails_msg.data = self.count_grasping_failures_pub
+                self.count_grasping_failures_pub.publish(self.n_fails_msg)
+                self.update_obj_list_pub.publish(Bool(data=True)) 
+            else:
+                self.count_grasping_failures_pub = 0
+                self.n_fails_msg.data = self.count_grasping_failures_pub
+                self.count_grasping_failures_pub.publish(self.n_fails_msg)
+                self.update_obj_list_pub.publish(Bool(data=False))
+        else: # pick lift succeeded
+            self.count_grasping_failures_pub = 0
+            self.n_fails_msg.data = self.count_grasping_failures_pub
+            self.count_grasping_failures_pub.publish(self.n_fails_msg)
+
+            self.next_goal_msg.data = 'Box' if self.arm_task == 'pick' else 'Object'
+            self.arm_task = 'place' if self.next_goal_msg.data == 'Box' else 'pick'
+            self.update_obj_list_pub.publish(Bool(data=True)) 
         return
     
 class Adjust(py_trees.behaviour.Behaviour, Node):
@@ -203,7 +229,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
             return False
         else:
             self.curr_time = self.get_clock().now().nanoseconds / 1e9
-            if self.curr_time - self.init < delta_t:
+            if self.curr_time - self.init_time < delta_t:
                 self.node.get_logger().info(f"Adjusting yaw")
                 return False
             else:
