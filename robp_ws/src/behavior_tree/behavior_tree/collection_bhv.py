@@ -125,8 +125,8 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
         self.count_grasping_failures_pub = self.node.create_publisher(
             Int16,'/picklift/count_grasping_failures', 10)
         self.n_fails_msg = Int16()
-        self.count_grasping_failures_pub = 0
-        self.n_fails_msg.data = self.count_grasping_failures_pub
+        self.count_grasping_failures = 0
+        self.n_fails_msg.data = self.count_grasping_failures
         self.count_grasping_failures_pub.publish(self.n_fails_msg)
 
         # -------------------------- Picking Parameter(s) ------------------
@@ -135,7 +135,7 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         # Note: hope the behavior tick is slower than the subscriber callback, might need changes
-        self.node.get_logger().info(f"Next thing to go to is {self.next_goal_msg.data} and we are in the {self.arm_task} task")
+        self.node.get_logger().info(f"NEXT thing to go to is {self.next_goal_msg.data} and we are in the {self.arm_task} task. Number of failures in this objects = {self.count_grasping_failures}")
         self.next_goal.publish(self.next_goal_msg)
         return py_trees.common.Status.FAILURE
 
@@ -146,19 +146,19 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
         If succeeds, remove object from list and switch to placing now"""
         if not msg.data: # pick_lift failed
             self.next_goal_msg.data = 'Object' if self.arm_task == 'pick' else 'Box'
-            if self.count_grasping_failures_pub <= self.max_grasping_failures:
-                self.count_grasping_failures_pub += 1
-                self.n_fails_msg.data = self.count_grasping_failures_pub
+            if self.count_grasping_failures <= self.max_grasping_failures:
+                self.count_grasping_failures += 1
+                self.n_fails_msg.data = self.count_grasping_failures
                 self.count_grasping_failures_pub.publish(self.n_fails_msg)
                 self.update_obj_list_pub.publish(Bool(data=True)) 
             else:
-                self.count_grasping_failures_pub = 0
-                self.n_fails_msg.data = self.count_grasping_failures_pub
+                self.count_grasping_failures = 0
+                self.n_fails_msg.data = self.count_grasping_failures
                 self.count_grasping_failures_pub.publish(self.n_fails_msg)
                 self.update_obj_list_pub.publish(Bool(data=False))
         else: # pick lift succeeded
-            self.count_grasping_failures_pub = 0
-            self.n_fails_msg.data = self.count_grasping_failures_pub
+            self.count_grasping_failures = 0
+            self.n_fails_msg.data = self.count_grasping_failures
             self.count_grasping_failures_pub.publish(self.n_fails_msg)
 
             self.next_goal_msg.data = 'Box' if self.arm_task == 'pick' else 'Object'

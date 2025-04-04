@@ -21,7 +21,8 @@ import numpy as np
 
 # ----------------------------------- BEHAVIOUR 1 ---------------------------------------------------------------
 class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
-    def __init__(self, name, angles:list, threshold):
+    def __init__(self, name, angles, threshold):
+        #super().__init__(self, name = name)
         py_trees.behaviour.Behaviour.__init__(self, name=name)
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         self.angles = angles
@@ -143,34 +144,6 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.arm_tucked == True # not really necessary
             #print(f"New status is {new_status}")
 
-
-    def __init__(self, name="Detect Object"):
-        py_trees.behaviour.Behaviour.__init__(self, name=name)
-        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
-        #py_trees.behaviour.Behaviour.__init__(self, name)
-        #Node.__init__(self, "pick_node")  # ROS 2 node initialization
-        self.ik_solver = IKNode()
-
-    def setup(self, **kwargs):
-        """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
-           a parallel checking for a valid policy configuration after children have been added or removed"""
-        self.node = kwargs['node']
-        
-        
-    def initialise(self):
-        """ When is this called? The first time your behaviour is ticked and anytime the
-          status is not RUNNING thereafter."""    
-         
-    def update(self):
-            """ Behavior Tree execution step. Called whenever the node is ticked """
-
-    def terminate(self, new_status: py_trees.common.Status):
-        """
-        Minimal termination implementation.
-        When is this called? Whenever your behaviour switches to a non-running state.
-            - SUCCESS || FAILURE : your behaviour's work cycle has finished
-            - INVALID : a higher priority branch has interrupted, or shutting down
-        """
 # ----------------------------------- BEHAVIOUR 3 ---------------------------------------------------------------
 class SearchObjectArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Detect Object"):
@@ -276,7 +249,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.servo_angles_subscriber_ = self.node.create_subscription(JointState,'/servo_pos_publisher',self.servo_angles_callback,10)   
         self.next_goal_pub = self.node.create_subscription(PoseStamped, '/motion/goal',  self.get_next_goal_callback,10 )
         self.next_goal_pub = self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 )
-        self.count_grasping_failures_sub = self.node.create_subscriber(
+        self.count_grasping_failures_sub = self.node.create_subscription(
             Int16,'/picklift/count_grasping_failures',  self.count_grasping_failures_callback,10)
 
         self.ota_publisher_ = self.node.create_publisher(
@@ -542,7 +515,7 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.need_next_object_sub = self.node.create_subscription(
                 String, '/next_goal/object/need', 
                 self.need_next_object_callback, 10)
-            self._pose_pub = self.create_publisher(
+            self._pose_pub = self.create_subscription(
                 Pose2D, '/odom_pose', self.odometry_yaw_callback, 10)
             self.create_subscription(
                 PoseStamped, '/motion/goal', self.goal_callback, 10)
@@ -568,7 +541,7 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.box_map = PointStamped()
             self.box_map.header.frame_id = 'map'
             self.tf_buffer = Buffer()
-            self.tf_listener = TransformListener(self.tf_buffer)
+            self.tf_listener = TransformListener(self.tf_buffer, self)
             self.box_x, self.box_y = None, None
 
 

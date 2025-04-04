@@ -41,7 +41,7 @@ def generate_launch_description():
 
         Node(
             package='behavior_tree',
-            executable='collection_BT'
+            executable='collection_BT' #collection_BT or collection_BT_no_move
         ),
 
         Node(

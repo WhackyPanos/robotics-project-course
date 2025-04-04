@@ -4,7 +4,7 @@ import py_trees
 import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
-from handle_objects.pick_objects import SetArm,SearchObjectArm, ArmIK, Place
+from handle_objects.pick_objects import SearchObjectArm, ArmIK, Place, SetArm
 from behavior_tree.goCollect_bhv import goTo
 from rclpy.executors import MultiThreadedExecutor
 import os
@@ -45,7 +45,6 @@ class CollectionBT(Node):
         
         #self.pub_occupancy_grid = PublishOccupancyGrid()
         #self.localization = Localization_bhv()
-        self.navigate_to_goal = NavigateToGoal()
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
         self.path_planner = None #TODO
 
@@ -62,30 +61,20 @@ class CollectionBT(Node):
         executor.add_node(self.place)
     
         executor.add_node(self.next_object_bhv)
-        executor.add_node(self.navigate_to_goal)
+
         #executor.add_node(self.pub_occupancy_grid)
         #executor.add_node(self.localization)
 
 
         #executor.add_node(self.pub_occupancy_grid.occupancy_grid)
-        executor.add_node(self.navigate_to_goal.motion_node)
+
         #executor.add_node(self.localizatio
         # n.localization_node)
 
 
     def create_tree(self): 
         """ merge behaviors with composites """
-        # Path planning and execution for picking
-        plan_and_move = py_trees.composites.Sequence(
-            name = 'plan_and_move',
-            children = [self.navigate_to_goal],  #TODO: path_planner, navigate_to_goal
-            memory=False)
-        
-        self.path_planning_pick = py_trees.composites.Parallel(
-            name = 'path_plan_pick', 
-            children = [plan_and_move], #self.localization, self.pub_occupancy_grid, 
-            policy = py_trees.common.ParallelPolicy.SuccessOnSelected([plan_and_move]))
-        
+       
         # Arm execution: pick or place
             # Pick and lift operations
         self.pick_or_adjust = py_trees.composites.Selector(
@@ -110,7 +99,7 @@ class CollectionBT(Node):
             children = [self.place,planA], # self.repeat_picklift
             memory = False)
 
-        self.root.add_children([self.next_object_bhv, self.path_planning_pick, self.pick_or_place, self.lift, self.arm_task_succeeded])
+        self.root.add_children([self.next_object_bhv, self.pick_or_place, self.lift, self.arm_task_succeeded])
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False) 
 
         return 
@@ -162,4 +151,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-

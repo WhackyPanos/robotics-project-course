@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
             'goCollect_bhv = behavior_tree.goCollect_bhv:main',
             'exploration_BT = behavior_tree.exploration_BT:main',
-            'collection_BT = behavior_tree.collection_BT:main'
+            'collection_BT = behavior_tree.collection_BT:main',
+            'collection_BT_no_move = behavior_tree.collection_BT_no_move:main'
         ],
     },
 )
