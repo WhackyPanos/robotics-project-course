@@ -11,21 +11,21 @@ source install/setup.bash
 
 While being on robp_group3 (not robp_ws), build, source and then launch:
 
-
 ``` fastdds discovery -i 0 -t 192.168.128.107 -q 42100 ```
 
 ``` ros2 launch robp_launch collection_hw_tf_launch.py  ```
 
 ``` ros2 launch robp_launch arm_servo_launch.py ```
 
-``` ros2 launch robp_launch collection_node_launch.py ``
+``` ros2 launch robp_launch collection_node_launch.py ```
 
 Debug:
 
-ros2 topic echo /servo_pos_publisher 
+``` ros2 topic echo /servo_pos_publisher ```
 
-ros2 topic echo /multi_servo_cmd_sub 
+``` ros2 topic echo /multi_servo_cmd_sub ```
 
+If build fails (which happens often), go to the reame in the main page!
 
 #### **Important topics**
 | Topic name | Published | Subscribed from | Description
