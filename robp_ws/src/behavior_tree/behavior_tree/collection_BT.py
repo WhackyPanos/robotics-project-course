@@ -4,7 +4,7 @@ import py_trees
 import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
-from handle_objects.pick_objects import SetArm, DetectObject, SearchObjectArm, ArmIK, Place
+from handle_objects.pick_objects import SetArm, SearchObjectArm, ArmIK, Place
 from behavior_tree.goCollect_bhv import goTo
 from rclpy.executors import MultiThreadedExecutor
 import os
