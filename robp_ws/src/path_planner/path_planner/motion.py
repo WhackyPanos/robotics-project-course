@@ -75,7 +75,7 @@ class MotionNode(Node):
         self.angular_velocity = 0.35
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.2 # TODO untested, adjust this value
-        self.goal_threshold = 0.05
+        self.goal_threshold = 0.18 # WARNING: in collection this value cannot be constant
         self.kp = 1.5
         self.ki = 0.015
         self.kd = 0.5
@@ -87,7 +87,8 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        # self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
+        self.get_logger().info("New goal received in motion node")
+        #self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -237,7 +238,6 @@ class MotionNode(Node):
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
                 if self.do_yaw: self.adjust_yaw(self.angle_goal)
-        
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
 
@@ -253,7 +253,7 @@ class MotionNode(Node):
             theta = self.theta_map
 
             angle_diff = angle - theta
-            if abs(angle_diff) < 0.1:
+            if abs(angle_diff) < 10: #TODO: change threshold
                 break
             if angle_diff > 0:
                 self.vel_cmd.angular.z = self.angular_velocity_fine
@@ -261,7 +261,7 @@ class MotionNode(Node):
                 self.vel_cmd.angular.z = -self.angular_velocity_fine
             self.vel_cmd.linear.x = 0.0
             self.cmd_vel_publisher.publish(self.vel_cmd)
-            
+            self.get_logger().info(f"Angle difference = {angle_diff}")
         self.vel_cmd.angular.z = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
     

@@ -38,20 +38,19 @@ def generate_launch_description():
         #         "transform_lookup_timeout": 2.0
         #     }]
         # ),
+        Node(
+            package='arm_cam',
+            executable='object_segmentation_node'
+        ),
 
         Node(
             package='behavior_tree',
-            executable='collection_BT' #collection_BT or collection_BT_no_move
+            executable='collection_BT' #collection_BT or collection_BT_no_move, but no_move it is not working
         ),
 
         Node(
             package='joystick_teleop',
             executable='twist2duty'
-        ),
-
-        Node(
-            package='arm_cam',
-            executable='object_segmentation_node'
         ),
 
 

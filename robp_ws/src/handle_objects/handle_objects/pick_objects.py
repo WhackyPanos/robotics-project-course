@@ -55,10 +55,12 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                 msg_type = Int16MultiArray,
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = qos_profile) # ota = object_tuck_arm
+            self.picklift_pub = self.node.create_publisher(Bool, '/picklift/succeded', 10)
             
             self.obj_tuck_arm_time = 2000 # in ms            
              
-
+            self.current_angles = None
+            self.gripper_threshold = 400 # threshold to detect if something was grasped
             self.desired_servo_angles = [12000]*6
             self.desired_servo_angles[0] = 10000 # gripper is different
             
@@ -72,13 +74,13 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
 
 
     def servo_angles_callback(self, msg):
-        current_angles = msg.position
+        self.current_angles = msg.position
         if self.arm_started and self.arm_moving:
             self.arm_tucked = True
             self.arm_moving = False
-            for i in range(1, len(current_angles)) :
-                if abs(self.desired_servo_angles[i] -current_angles[i]) > self.angle_threshold:
-                    print(f"Arm still moving (hard-coded movement), error of {abs(self.desired_servo_angles[i] -current_angles[i])}")
+            for i in range(1, len(self.current_angles)) :
+                if abs(self.desired_servo_angles[i] - self.current_angles[i]) > self.angle_threshold:
+                    print(f"Arm still moving (hard-coded movement), error of {abs(self.desired_servo_angles[i] - self.current_angles[i])}")
                     self.arm_tucked = False
                     self.arm_moving = True
                     break
@@ -128,6 +130,13 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         
         elif self.arm_tucked:
             self.arm_started,self.arm_tucked, self.arm_moving, self.done= False, False, False, True
+            if self.name == 'lift':
+                if abs(self.desired_servo_angles[0] -self.current_angles[0]) < self.gripper_threshold:
+                    self.picklift_pub.publish(Bool(data=False))
+                    self.node.get_logger().warn(f"NOTHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
+                else:
+                    self.picklift_pub.publish(Bool(data=True))
+                    self.node.get_logger().warn(f"SOMETHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
             return py_trees.common.Status.SUCCESS
 
         else:
@@ -183,17 +192,12 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.to_frame_rel = 'arm_base_link'
         self.from_frame_rel = 'map'
         self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
+        self.X_planB, self.Y_planB = None, None
         self.X_arm_cam, self.Y_arm_cam = [],  []
         self.thresholds = [10**-4,10**-3,10**-2]
         self.initial_guesses = [[0,0,0,0,0,0]]
         self.current_angles, self.desired_servo_angles = None, None
         self.fail_count = 0
-        # joint limits in the arm domain
-        self.lb_angles = [0.0, 0.0,  30.0, 30.0, 60.0, 0.0]
-        self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
-        # joint limits in normal domain
-        self.lb_q = [-120.0,-90.0,-105.0,-105.0,-120.0, 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
-        self.ub_q = [ 120.0, 90.0, 105.0, 105.0, 120.0, 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
 
         # ------------------------------- Wrist Parameters ------------------------------------------
         self.max_rotation = 90
@@ -206,12 +210,11 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             max gripper angle without object = 9950 """
         self.angle_threshold = 190 # threshold for joint angles in IK
         self.closed_gripper_angle = 10000 # gripper angle to grasp object
-        self.gripper_threshold = 500 # threshold to detect if something was grasped
         self.open_gripper_angle = 1000 # gripper angle when reaching for object
-        self.time_to_wait_for_gripper_angle = 2 # [s]
+        self.time_to_wait_for_gripper_angle = 0.1 # [s]
         self.init_time_check_gripper_angle = None
         self.curr_time_check_gripper_angle = None
-        self.joint3_compensation = -2500 # compemsation for joint 3 (below wrist). was -2000 in MS3 video
+        self.joint3_compensation = 0 # compemsation for joint 3 (below wrist). was -2000 in MS3 video
         self.skipped_solutions = 1
 
         self.obj_tuck_arm_time = 3000 # in ms
@@ -220,12 +223,30 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         # ----------------------- Inverse kinematics parameters -------------------------------------
         # -------------------------------------------------------------------------------------------
         self.height = 93*(10**-3)
-        self.l0 = 101*(10**-3) #101
-        self.l1 = 95*(10**-3) # 95
-        self.l2 = 158*(10**-3)+ 0.0  #1cm to account for object height and avoid colliding with ground  168
+        self.l0 = 120*(10**-3) #101
+        self.l1 = 94*(10**-3) # 95
+        self.l2 = 162*(10**-3)+ 0.0  #1cm to account for object height and avoid colliding with ground  168
+
         self.xx = 0.137 + 0.02 # compensation for the joint 3 compensation
         self.yy = 0.0 # positive is to left in robot perspective
-        self.zz = -0.06
+        self.zz = -0.070
+
+        # angles in decidegrees
+        self.joint_5_start_angle = 300 
+        self.joint_5_end_angle = 900
+        self.joint_5_step = 5
+
+        self.X_test = 0.18
+        self.Y_test = 0.05
+
+        # joint limits in the arm domain
+        # self.lb_angles = [0.0, 0.0,  30.0, 30.0, 60.0, 0.0]
+        # self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
+
+        # joint limits in normal domain
+        margin = 3
+        self.lb_q = [-120.0,-60.0 + margin ,-90 + margin ,-90 + margin ,-120.0 + margin , 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
+        self.ub_q = [ 120.0, 60.0 - margin , 90 - margin , 90 - margin , 120.0 - margin , 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
         # -------------------------------------------------------------------------------------------
         # -------------------------------------------------------------------------------------------
 
@@ -256,7 +277,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 msg_type = Int16MultiArray,
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = 10) # ota = object_tuck_arm
-        self.picklift_pub = self.node.create_publisher(Bool, '/picklift/succeded', 10)
               
         
     def initialise(self):
@@ -280,8 +300,13 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             return py_trees.common.Status.SUCCESS
         elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
             # if everything fails, try a simpler approach. Transform from arm camera to arm base
+            if len(self.Y_arm_cam) == 0: #arm_segmentation is shit, use other stuff
+                self.object_transform()
+                self.node.get_logger().warn(f"Using transform from map instead")
+                self.X_arm_cam.append(-self.Y_planB + self.yy)
+                self.Y_arm_cam.append(-self.X_planB + self.xx)
             msg = self.pick_planB(-self.Y_arm_cam[0] + self.xx , -self.X_arm_cam[0] + self.yy, self.zz)
-            self.node.get_logger().info(f"Trying to reach {[-self.Y_arm_cam[0] + self.xx, -self.X_arm_cam[0] + 0.0, self.zz]}")
+            #self.node.get_logger().info(f"Trying to reach {[-self.Y_arm_cam[0] + self.xx, -self.X_arm_cam[0] + 0.0, self.zz]}")
             if msg is not None:
                 self.ota_publisher_.publish(msg)
                 #self.move_timer = self.node.create_timer(self.obj_tuck_arm_time/1000 + 3.0, self.wait_for_movement)
@@ -334,14 +359,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             if self.curr_time_check_gripper_angle - self.init_time_check_gripper_angle < self.time_to_wait_for_gripper_angle:
                 return py_trees.common.Status.RUNNING 
             else:
-                self.node.get_logger().warn(f"Timer finished, dt = {self.curr_time_check_gripper_angle - self.init_time_check_gripper_angle}, checking gripper")
-                if abs(self.desired_servo_angles[0] -self.current_angles[0]) < self.gripper_threshold:
-                    self.picklift_pub.publish(Bool(data=False))
-                    self.node.get_logger().warn(f"NOTHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
-                else:
-                    self.picklift_pub.publish(Bool(data=True))
-                    self.node.get_logger().warn(f"SOMETHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
-
+                #self.node.get_logger().warn(f"Timer finished, dt = {self.curr_time_check_gripper_angle - self.init_time_check_gripper_angle}")
                 self.node.get_logger().info(f"Lifting arm now")
                 self.done = True
                 self.X_arm_cam.pop(0)
@@ -421,10 +439,10 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     break
         
     def pick_planB(self, x, y, z):  
-
+        self.get_logger().info(f" Object is in {round(x*100, 2), round(y*100, 2), round(z*100, 2)} in arm_base link")
         # we will iterate with different orientations for the 1st link. 
         count = 0
-        for i in range(900, 0, -1): #decidegrees. Before, was range(900,0,-20)
+        for i in range(self.joint_5_start_angle, self.joint_5_end_angle, self.joint_5_step): #decidegrees. Before, was range(900,0,-20)
             angle = i/10
             # Initiate constants
             good_flag = True           
@@ -484,6 +502,33 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.node.get_logger().error("Plan B did not work, returning FAILURE")
         return msg
 
+    def object_transform(self):
+        # get transform from map frame to frame of the arm base
+        time = rclpy.time.Time() #retrieve most recent transform ig
+        try:
+            t = self.tf_buffer.lookup_transform(
+                'arm_base_link',
+                'map',
+                time)
+        except TransformException as ex:
+            self.node.get_logger().info(
+                f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
+            return
+        
+        # do transformation   
+        object_MF = PointStamped()
+        object_MF.header.frame_id = 'map'
+        object_MF.point.x = self.X
+        object_MF.point.y = self.Y
+        object_MF.point.z = 0.0         
+        object_ABF = tf2_geometry_msgs.do_transform_point(object_MF, t)
+        self.X_planB = object_ABF.point.x 
+        self.Y_planB = object_ABF.point.y 
+        self.z = object_ABF.point.z
+
+        # TODO: hardcoded now, remove later 
+        self.X_planB = self.X_test
+        self.Y_planB = self.Y_test
 
 class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Place"):
@@ -642,7 +687,7 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
          
     def need_next_object_callback(self, msg):
         self.next_goal = msg.data
-        self.get_logger().info(f"Placing received {msg.data} as next stuff")
+        self.get_logger().info(f"Placing node received '{msg.data}' as next goal")
     def publish_msg(self):
         msg = Int16MultiArray()
         msg.layout = MultiArrayLayout(
@@ -652,13 +697,17 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         # Compute necessary orientation of arm base
         desired_yaw = self.desired_arm_base_angle()
         error = 180*(desired_yaw - self.current_yaw)/pi #TODO: wrap angles, check limits and uncomment below
-        #self.desired_servo_angles[5] += error*100
-        self.get_logger().info(f'Arm base should rotate {error} degrees')
+        normalized_error = max(-120, min(120, ((error + 180) % 360) - 180))
+        #self.desired_servo_angles[5] += normalized_error*100
+        self.get_logger().info(f'Arm base should rotate {normalized_error} degrees')
 
         # publish msg
         times = [self.obj_tuck_arm_time] * 6
         msg.data = self.desired_servo_angles + times
         self.ota_publisher_.publish(msg)
+
+
+
  # -----------------------------------------------------------------------------------------------------------------------
 
 
@@ -684,29 +733,7 @@ IK
                 self.node.get_logger().warn(f"COULD NOT GET SOLUTION, trying plan B")"""
 
 
-    # def object_transform(self):
-    #     # get transform from map frame to frame of the arm base
-    #     time = rclpy.time.Time() #retrieve most recent transform ig
-    #     try:
-    #         t = self.tf_buffer.lookup_transform(
-    #             self.to_frame_rel,
-    #             self.from_frame_rel,
-    #             time)
-    #     except TransformException as ex:
-    #         self.node.get_logger().info(
-    #             f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
-    #         return
-        
-    #     # do transformation   
-    #     object_MF = PointStamped()
-    #     object_MF.header.frame_id = 'map'
-    #     object_MF.point.x = self.X
-    #     object_MF.point.y = self.Y
-    #     object_MF.point.z = 0.0         
-    #     object_ABF = tf2_geometry_msgs.do_transform_point(object_MF, t)
-    #     self.x = 0.20# TODO: update later object_ABF.point.x
-    #     self.y = 0.05# TODO: object_ABF.point.y
-    #     self.z = object_ABF.point.z
+
         
     #     # define target with kdl instance
     #     self.node.get_logger().info(f'Object ({self.X, self.Y}) in map -> ({self.x,self.y,self.z}) in arm_base')
