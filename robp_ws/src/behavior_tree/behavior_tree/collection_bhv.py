@@ -38,7 +38,7 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         self.need_next_object_sub = self.node.create_subscription(String, '/next_goal/object/need', self.need_next_object_callback, 10)
         self.update_object_list_sub = self.node.create_subscription(Bool, '/next_goal/object/update', self.update_object_list_callback, 10)
 
-        self.next_goal_pub = self.node.create_publisher(PoseStamped,'/motion/goal', 10 )
+        self.next_goal_pub = self.node.create_publisher(PoseStamped,'/goal_point', 10 )
         self.need_next_object = 'Object' # at the beginning, we want to pick objects
 
         self.timer_finished = False
@@ -58,10 +58,10 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             closest_obj = points_list[np.argmin(distances)]
 
             # publish goal point (object to pick)
-            msg = PoseStamped()
-            msg.pose.position.x = closest_obj[1]
-            msg.pose.position.y = closest_obj[2]
-            self.node.get_logger().info(f"Closest stuff: {msg.pose.position.x , msg.pose.position.y}")
+            msg = PointStamped() 
+            msg.point.x = closest_obj[1]
+            msg.point.y = closest_obj[2]
+            self.node.get_logger().info(f"Closest stuff: {msg.point.x , msg.point.y}")
             msg.header.stamp = self.node.get_clock().now().to_msg()
             msg.header.frame_id = 'map'
             self.next_goal_pub.publish(msg)
