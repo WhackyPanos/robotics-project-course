@@ -2,11 +2,9 @@
 import py_trees
 import rclpy
 from rclpy.node import Node
-from A_star import Planner_A_star
+from .A_star import Planner_A_star
 
-# Note: this behiour only controls when the OccupancyGrid msg is published 
-
-class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
+class PathPlan(py_trees.behaviour.Behaviour, Node):
     def __init__(self, name="PathPlannerBT", node=None):
         #super().__init__(name=name)
         py_trees.behaviour.Behaviour.__init__(self, name=name)
@@ -24,8 +22,7 @@ class PublishOccupancyGrid(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
-        self.path_planner.path_plan()
-        return py_trees.common.Status.SUCCESS
+        return py_trees.common.Status.SUCCESS if self.path_planner.path_plan() else py_trees.common.Status.FAILURE
 
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """

@@ -44,7 +44,8 @@ class Odometry(Node):
         
         self.init_imu_yaw = None
         self.prev_imu_yaw = None
-        #self.yaw_buffer = deque(maxlen=10)
+        self.imu_yaw = None
+        self.yaw_buffer = deque(maxlen=5)
 
         # 2D pose
         self._x = 0.0
@@ -64,32 +65,51 @@ class Odometry(Node):
         quat = msg.orientation
         _, _, temp_imu_yaw = euler_from_quaternion([quat.x, quat.y, quat.z, quat.w])
 
-        # Sets initaial angle to 0
-        if self.init_imu_yaw is None:
-            self.init_imu_yaw = temp_imu_yaw
-        temp_imu_yaw = self.init_imu_yaw - temp_imu_yaw
+        # # Sets initaial angle to 0
+        # if self.init_imu_yaw is None:
+        #     self.init_imu_yaw = temp_imu_yaw
+        # temp_imu_yaw = self.init_imu_yaw - temp_imu_yaw
 
         # temp_imu_yaw = - temp_imu_yaw # Comment out if you uncomment above code
 
-        if self.prev_imu_yaw is not None:
-            self._yaw = alpha * temp_imu_yaw + (1 - alpha) * self.prev_imu_yaw
-        else:
-            self._yaw = temp_imu_yaw
-        self.prev_imu_yaw = self._yaw
+        # if self.prev_imu_yaw is not None:
+        #     self._yaw = alpha * temp_imu_yaw + (1 - alpha) * self.prev_imu_yaw
+        # else:
+        #     self._yaw = temp_imu_yaw
+
+        # # Store in the buffer
+        # self.yaw_buffer.append(temp_imu_yaw)
+
+        # # Compute the moving average
+        # self._yaw = np.mean(self.yaw_buffer)
+
+        # # Compute weighted moving average
+        # weights = np.linspace(0.2, 1.0, len(self.yaw_buffer))  # Increasing weights
+        # weights /= weights.sum()  # Normalize weights
+
+        # self._yaw = np.dot(weights, list(self.yaw_buffer))  # Weighted sum
+
+        # self.prev_imu_yaw = self._yaw
+
+        if self.prev_imu_yaw is None:
+            self.prev_imu_yaw = temp_imu_yaw
+
+        self.imu_yaw = temp_imu_yaw
 
 
 
     def encoder_callback(self, msg: Encoders):
         """Takes encoder readings and updates the odometry.
-
         This function is called every time the encoders are updated (i.e., when a message is published on the '/motor/encoders' topic).
-
         Your task is to update the odometry based on the encoder data in 'msg'. You are allowed to add/change things outside this function.
-
         Keyword arguments:
         msg -- An encoders ROS message. To see more information about it 
         run 'ros2 interface show robp_interfaces/msg/Encoders' in a terminal.
         """
+
+        if self.imu_yaw is None:
+            self.get_logger().warning("Wait for IMU data!")
+            return
 
         # The kinematic parameters for the differential configuration
         dt = 50 / 1000
@@ -104,17 +124,15 @@ class Odometry(Node):
         delta_ticks_left = self.current_ticks_left - self.past_ticks_left
         delta_ticks_right = self.current_ticks_right - self.past_ticks_right
 
-        if self._yaw is None:
-            self.get_logger().info(f'Waiting for IMU data')
-            return
 
         # TODO: Fill in
         D = wheel_radius/2 * K * (delta_ticks_right + delta_ticks_left)
-        delta_theta = wheel_radius/base * K * (delta_ticks_right - delta_ticks_left)
-
+        # delta_theta = wheel_radius/base * K * (delta_ticks_right - delta_ticks_left)
+        self._yaw += self.prev_imu_yaw - self.imu_yaw + math.pi/(180*450)
+        self.prev_imu_yaw = self.imu_yaw
         self._x = self._x + D * np.cos(self._yaw) # TODO: Fill in
         self._y = self._y + D * np.sin(self._yaw) # TODO: Fill in
-        self._yaw = self._yaw + delta_theta # TODO: Fill in
+        # self._yaw = self._yaw + delta_theta # TODO: Fill in
         
         #stamp = self.get_clock().now() # TODO: Fill in
         stamp = msg.header.stamp
@@ -136,10 +154,8 @@ class Odometry(Node):
 
     def broadcast_transform(self, stamp, x, y, yaw):
         """Takes a 2D pose and broadcasts it as a ROS transform.
-
         Broadcasts a 3D transform with z, roll, and pitch all zero. 
         The transform is stamped with the current time and is between the frames 'odom' -> 'base_link'.
-
         Keyword arguments:
         stamp -- timestamp of the transform
         x -- x coordinate of the 2D pose
@@ -172,7 +188,6 @@ class Odometry(Node):
 
     def publish_path(self, stamp, x, y, yaw):
         """Takes a 2D pose appends it to the path and publishes the whole path.
-
         Keyword arguments:
         stamp -- timestamp of the transform
         x -- x coordinate of the 2D pose

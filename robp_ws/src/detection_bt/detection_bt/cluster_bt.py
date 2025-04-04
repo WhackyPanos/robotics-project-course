@@ -37,7 +37,13 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
         """ Check clustering result and return status. """
         if self.cluster_found is None:
             return py_trees.common.Status.RUNNING
-        return py_trees.common.Status.SUCCESS if self.cluster_found else py_trees.common.Status.FAILURE
+        elif self.cluster_found:
+            return py_trees.common.Status.SUCCESS
+        else:
+            if self.new_req:
+                self.initialise()
+                return py_trees.common.Status.RUNNING
+            else: return py_trees.common.Status.FAILURE
 
     def terminate(self, new_status: py_trees.common.Status):
         pass

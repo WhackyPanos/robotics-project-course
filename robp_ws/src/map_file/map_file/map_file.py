@@ -8,7 +8,9 @@ from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
 
 from std_msgs.msg import String, Bool
 from visualization_msgs.msg import Marker, MarkerArray
-from geometry_msgs.msg import Point, Pose
+from geometry_msgs.msg import TransformStamped
+from tf2_ros import TransformBroadcaster
+from tf_transformations import quaternion_from_euler, euler_from_quaternion
 
 
 class Map_file(Node):
@@ -35,6 +37,7 @@ class Map_file(Node):
 
         # Publisher for the objects
         self.publisher = self.create_publisher(MarkerArray, '/object_positions', 10)
+        self.tf_pub = TransformBroadcaster(self)
 
         # BT communication
         self.trigger_sub = self.create_subscription(Bool, "/map_file/request", self.trigger_callback, 10)
@@ -47,6 +50,7 @@ class Map_file(Node):
                                 'Cube': '1',
                                 'Sphere': '2',
                                 'Animal': '3',}
+        self.rev_classifications = {v: k for k, v in self.classifications.items()}
 
 
     def trigger_callback(self, msg: Bool):
@@ -59,7 +63,8 @@ class Map_file(Node):
         self.result_pub.publish(result_msg)
 
     def map_callback(self, msg: String):
-        self.data = msg.data
+        self.data = msg.data   
+
 
     def perform_map_file_update(self):
         data = self.data.split()
@@ -116,6 +121,31 @@ class Map_file(Node):
                 msg.markers.append(marker)
         
         self.publisher.publish(msg)
+        self.broadcast_transforms()
+
+    def broadcast_transforms(self):
+        """Broadcasts transforms for each object in the map."""
+        for idx, (label, x, y, a, _) in enumerate(self.map):
+            
+            transform = TransformStamped()
+            transform.header.stamp = self.get_clock().now().to_msg()
+            transform.header.frame_id = "map"
+            transform.child_frame_id = f"{self.rev_classifications.get(label)}_{idx}"
+
+            # Set position
+            transform.transform.translation.x = x / 100.0  # Convert back to meters
+            transform.transform.translation.y = y / 100.0
+            transform.transform.translation.z = 0.0  # Assuming it's on a 2D plane
+
+            # Convert angle `a` to quaternion (for rotation around Z-axis)
+            q = quaternion_from_euler(0, 0, np.deg2rad(a))
+            transform.transform.rotation.x = q[0]
+            transform.transform.rotation.y = q[1]
+            transform.transform.rotation.z = q[2]
+            transform.transform.rotation.w = q[3]
+
+            # Broadcast transform
+            self.tf_pub.sendTransform(transform)
 
 
 def main():

@@ -13,7 +13,9 @@ Classifier::Classifier() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("twist_topic", twist_topic_, std::string("/cmd_vel"));
     this->get_parameter_or("classification_topic", classification_topic_, std::string("/classification/class"));
     this->get_parameter_or("trigger_topic", trigger_topic_, std::string("/classification/request"));
-    this->get_parameter_or("result_topic", result_topic_, std::string("/classification/result"));   
+    this->get_parameter_or("result_topic", result_topic_, std::string("/classification/result"));
+    this->get_parameter_or("dist_filter_min", z_filter_min_, 0.0);
+    this->get_parameter_or("dist_filter_max", z_filter_max_, 1.0);   
     this->get_parameter_or("box_filter_min", box_filter_min_, 0.0);
     this->get_parameter_or("box_filter_max", box_filter_max_, 0.008);
     this->get_parameter_or("box_filter_threshold", box_filter_threshold_, 50);
@@ -24,6 +26,9 @@ Classifier::Classifier() : Node("clustering", rclcpp::NodeOptions()
     this->get_parameter_or("visualize_OBB", visualize_OBB_, false);
     this->get_parameter_or("ang_vel_threshold", ang_vel_threshold_, 0.0);
     this->get_parameter_or("lin_vel_threshold", lin_vel_threshold_, 0.0);
+    
+    angular_z_ = linear_x_ = linear_y_ = 0.0;
+
 
     // QoS reliable profile
     auto qos_profile = rclcpp::QoS(rclcpp::KeepLast(10)).reliable();
@@ -61,22 +66,14 @@ Classifier::Classifier() : Node("clustering", rclcpp::NodeOptions()
 }
 
 bool Classifier::perform_classification()
-{
-<<<<<<< HEAD
-    if (std::abs(angular_z_) >= ang_vel_threshold_ || std::abs(linear_x_) >= lin_vel_threshold_ || std::abs(linear_y_) >= lin_vel_threshold_) {
+{    
+    if (!latest_cluster_) {
+        RCLCPP_WARN(this->get_logger(), "No cloud received yet.");
         return false;
     }
 
-    RCLCPP_INFO(this->get_logger(), "enter classification");    
-
-=======
-    if (latest_cluster_.data.empty() || std::abs(angular_z_) >= ang_vel_threshold_ || std::abs(linear_x_) >= lin_vel_threshold_ || std::abs(linear_y_) >= lin_vel_threshold_) {
-        return false;
-    }
-
->>>>>>> origin/collection_bt
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::fromROSMsg(latest_cluster_, *cloud);
+    pcl::fromROSMsg(*latest_cluster_, *cloud);
 
     // Initialize variables for classification
     pcl::PointCloud<pcl::PointXYZ>::Ptr box_filtered (new pcl::PointCloud<pcl::PointXYZ>);
@@ -85,62 +82,44 @@ bool Classifier::perform_classification()
 
     OBBData obb;
     obb = computeOBB(cloud);
+    double dist = obb.position.z;
+
+    Eigen::Vector4f min_pt, max_pt;
+    pcl::getMinMax3D(*cloud, min_pt, max_pt);
+    
+    float max_y = min_pt[1]; // Topmost y (highest point)
+    float min_y = max_pt[1]; // Bottommost y (lowest point)
+    std::cout << "Depth: " << obb.position.z << "max_y: " << max_y << ", min_y: " << min_y << std::endl;
 
     // Filter based on height values
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cloud);
     pass.setFilterFieldName("y");
-    pass.setFilterLimits(box_filter_min_, box_filter_max_);
-    pass.filter(*box_filtered);
-    // RCLCPP_INFO(this->get_logger(), "Box filtering: %zu", box_filtered->size());
 
-<<<<<<< HEAD
-    RCLCPP_INFO(this->get_logger(), "start classification");
-=======
->>>>>>> origin/collection_bt
+    double box_filter_height = interpolate(box_filter_min_, box_filter_max_, dist);
+    pass.setFilterLimits(box_filter_height, box_filter_height + 0.01);
+    pass.filter(*box_filtered);
+
+    // RCLCPP_INFO(this->get_logger(), "start classification");
     if (box_filtered->size() > box_filter_threshold_) 
     {
         classification = "Box";
     }
     else 
     {
-        pass.setFilterLimits(animal_filter_min_, animal_filter_max_);
+        double animal_filter_height = interpolate(animal_filter_min_, animal_filter_max_, dist);
+        pass.setFilterLimits(animal_filter_height, animal_filter_height + 0.003);
         pass.filter(*animal_filtered);
-        // RCLCPP_INFO(this->get_logger(), "Animal filtering: %zu", animal_filtered->size());
+        
         if(animal_filtered->size()>0)
         {
             classification = "Animal";
         }
         else
-        {   
-            // std::vector<float> diameters = computeSliceDiameters(cloud, 10);
-            // std::cout << "Diameters: ";
-            // for (float d : diameters) {
-            //     std::cout << d << " ";
-            // }
-            // std::cout << std::endl;
-
-            // bool sphere = true;
-            // for (size_t i = 1; i < diameters.size(); i++) {
-            //     if (diameters[i] - diameters[i-1] < 0 && i < diameters.size() / 2) {
-            //         sphere = false;
-            //         break; 
-            //     }
-            //     // if (diameters[i] > diameters[i - 1] && i > diameters.size() / 2) {
-            //     //     sphere = false;  // Should decrease in second half
-            //     // }
-            // }
-
-            // Eigen::Vector4f min_pt, max_pt;
-            // pcl::getMinMax3D(*cloud, min_pt, max_pt);
-            
-            // float max_y = min_pt[1]; // Topmost y (highest point)
-            // float min_y = max_pt[1]; // Bottommost y (lowest point)
-            // std::cout << "max_y: " << max_y << ", min_y: " << min_y << std::endl;
-
-            pass.setFilterLimits(sphere_filter_min_, sphere_filter_max_);
+        {               
+            double sphere_filter_height = interpolate(sphere_filter_min_, sphere_filter_max_, dist);
+            pass.setFilterLimits(sphere_filter_height, sphere_filter_height + 0.003);
             pass.filter(*sphere_filtered);
-            // RCLCPP_INFO(this->get_logger(), "Sphere filtering: %zu", sphere_filtered->size());
 
             if(sphere_filtered->size()>0)
             {
@@ -154,15 +133,11 @@ bool Classifier::perform_classification()
         }
     }
 
-<<<<<<< HEAD
     RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
-=======
-    // RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
->>>>>>> origin/collection_bt
     
     geometry_msgs::msg::PoseStamped pose;
-    pose.header.stamp = latest_cluster_.header.stamp;
-    pose.header.frame_id = latest_cluster_.header.frame_id;
+    pose.header.stamp = latest_cluster_->header.stamp;
+    pose.header.frame_id = latest_cluster_->header.frame_id;
 
     // Set the position of the OBB (center)
     pose.pose.position.x = obb.position.x;
@@ -180,7 +155,7 @@ bool Classifier::perform_classification()
 
     // Broadcast TF and return result
     std::string label = classification;
-    return tf(pose, latest_cluster_.header.stamp, label, obb);
+    return tf(pose, latest_cluster_->header.stamp, label, obb);
 
     // tf_buffer_->waitForTransform("map", latest_cluster_.header.frame_id, latest_cluster_.header.stamp, timeout, 
                                 // std::bind(&Classifier::tf_callback, this, std::placeholders::_1, pose, latest_cluster_.header.stamp, label, obb));
@@ -207,7 +182,7 @@ void Classifier::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
 
 void Classifier::cluster_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
 
-    latest_cluster_ = *msg;
+    latest_cluster_ = msg;
 }
 
 bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::Time &stamp, const std::string &label, const OBBData &obb)
@@ -218,29 +193,24 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
     try {
         tf_buffer_->transform(pose, transformed_pose, "map", tf2::durationFromSec(1.0));
     } catch (tf2::TransformException &ex) {
-<<<<<<< HEAD
         RCLCPP_INFO(this->get_logger(), "Transform failed: %s", ex.what());
-=======
-        RCLCPP_WARN(this->get_logger(), "Transform failed: %s", ex.what());
-        return false;
->>>>>>> origin/collection_bt
     }
 
-    // Create a transform message
-    geometry_msgs::msg::TransformStamped transform_msg;
-    transform_msg.header.stamp = stamp;
-    transform_msg.header.frame_id = "map";
-    transform_msg.child_frame_id = label;
+    // // Create a transform message
+    // geometry_msgs::msg::TransformStamped transform_msg;
+    // transform_msg.header.stamp = stamp;
+    // transform_msg.header.frame_id = "map";
+    // transform_msg.child_frame_id = label;
 
-    // Populate transform message with the transformed pose
-    transform_msg.transform.translation.x = transformed_pose.pose.position.x;
-    transform_msg.transform.translation.y = transformed_pose.pose.position.y;
-    transform_msg.transform.translation.z = transformed_pose.pose.position.z;
+    // // Populate transform message with the transformed pose
+    // transform_msg.transform.translation.x = transformed_pose.pose.position.x;
+    // transform_msg.transform.translation.y = transformed_pose.pose.position.y;
+    // transform_msg.transform.translation.z = transformed_pose.pose.position.z;
 
-    transform_msg.transform.rotation.x = transformed_pose.pose.orientation.x;
-    transform_msg.transform.rotation.y = transformed_pose.pose.orientation.y;
-    transform_msg.transform.rotation.z = transformed_pose.pose.orientation.z;
-    transform_msg.transform.rotation.w = transformed_pose.pose.orientation.w;
+    // transform_msg.transform.rotation.x = transformed_pose.pose.orientation.x;
+    // transform_msg.transform.rotation.y = transformed_pose.pose.orientation.y;
+    // transform_msg.transform.rotation.z = transformed_pose.pose.orientation.z;
+    // transform_msg.transform.rotation.w = transformed_pose.pose.orientation.w;
 
     std_msgs::msg::String detection_msg;
     std::ostringstream ss;
@@ -302,13 +272,10 @@ bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::T
     detection_msg.data = ss.str();
     class_pub_->publish(detection_msg);
 
-    // Broadcast the transform
-    tf_broadcaster_->sendTransform(transform_msg);
-<<<<<<< HEAD
+    // // Broadcast the transform
+    // tf_broadcaster_->sendTransform(transform_msg);
 
-    RCLCPP_INFO(this->get_logger(), "Classification successful");
-=======
->>>>>>> origin/collection_bt
+    // RCLCPP_INFO(this->get_logger(), "Classification successful");
     
     return true;
 }
@@ -429,6 +396,12 @@ OBBData Classifier::computeOBB(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
     obb.rotation = rotational_matrix_OBB;
 
     return obb;
+}
+
+double Classifier::interpolate(double min_val, double max_val, double dist)
+{
+    double ratio = (dist - z_filter_min_) / (z_filter_max_ - z_filter_min_);
+    return min_val + ratio * (max_val - min_val);
 }
 
 double Classifier::computeCurvature(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)

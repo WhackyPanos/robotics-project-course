@@ -14,21 +14,21 @@ class ObstacleOnPath(py_trees.behaviour.Behaviour, Node):
 
     def setup(self, **kwargs):
         """ Setup function, called once before the first update. """  
-        rclpy.get_global_executor().add_node(self.check_path)
 
     def initialise(self):
         """ Called when the behavior starts (on the first tick). """
-        self.get_logger().info("Starting to check path for obstacles.")
+        # self.get_logger().info("Starting to check path for obstacles.")
 
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
         clear_path = self.check_path.behaviour()
-        self.get_logger().info("Checking if the path is clear of obstacles.")
         if clear_path:
-            return py_trees.common.Status.SUCCESS
+            return py_trees.common.Status.RUNNING
         else:
-            return py_trees.common.Status.FAILURE
+            self.get_logger().info(f"Found obstacle on path")
+            return py_trees.common.Status.SUCCESS
+            
 
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """
-        self.get_logger().info(f"Terminating CheckPathInBT with status {new_status}")
+        
