@@ -66,7 +66,7 @@ class ExplorationBT(Node):
         fourth_sequence = py_trees.composites.Sequence(name='third_seq', memory=True)
         fourth_sequence.add_children([self.object_detected, self.classify, self.update_map_file])
 
-        short_wait = py_trees.timers.Timer("Timer", duration=5)
+        short_wait = py_trees.timers.Timer("Timer", duration=4)
 
         decorator = py_trees.decorators.Repeat(
             name='dec_repeat', 
@@ -137,7 +137,7 @@ def main(args=None):
 
     # Setup the behavior tree with a timeout for setup (10 seconds)
     node.tree.setup(timeout=10.0, node=node)
-    time.sleep(3.0)
+    time.sleep(5.0)
 
     # Continuously tick the behavior tree
     node.tree.tick_tock(period_ms=10)

@@ -83,7 +83,8 @@ private:
     double angular_z_;
     double linear_x_;
     double linear_y_;
-    std::shared_ptr<sensor_msgs::msg::PointCloud2> latest_cluster_;
+    // std::shared_ptr<sensor_msgs::msg::PointCloud2> latest_cluster_;
+    std::vector<sensor_msgs::msg::PointCloud2::SharedPtr> cluster_queue_;
 
     // Parameters
     std::string classification;

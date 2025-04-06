@@ -30,15 +30,9 @@ def generate_launch_description():
         ),
 
         # Node(
-        #     package='tf2_ros',
-        #     executable='static_transform_publisher',
-        #     arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
+        #     package='behavior_tree',
+        #     executable='exploration_BT'
         # ),
-
-        Node(
-            package='behavior_tree',
-            executable='exploration_BT'
-        ),
 
         Node(
             package='joystick_teleop',
@@ -59,7 +53,7 @@ def generate_launch_description():
                 "dist_filter_min": 0.2,
                 "dist_filter_max": 1.0,
                 "height_filter_min": -0.03,
-                "height_filter_max": 0.075,
+                "height_filter_max": 0.072,
                 "cluster_tolerance": 0.05,
                 "cluster_min_size": 100,
                 "occupancy_margin": 0,
@@ -77,15 +71,17 @@ def generate_launch_description():
                 "twist_topic": "/cmd_vel",
                 "trigger_topic_": "/classification/request",
                 "result_topic_": "/classification/result",
-                "dist_filter_min": 0.2,
+                "dist_filter_min": 0.3,
                 "dist_filter_max": 1.0,
                 "box_filter_min": -0.003,
                 "box_filter_max": -0.013,
-                "box_filter_threshold": 50,
+                "box_filter_threshold": 20,
                 "animal_filter_min": 0.045,
                 "animal_filter_max": 0.033,
                 "sphere_filter_min": 0.056,
                 "sphere_filter_max": 0.045,
+                "cube_filter_min": 0.067,
+                "cube_filter_max": 0.056,
                 "ang_vel_threshold": 0.0,
                 "lin_vel_threshold": 0.0,
                 "visualize_OBB": True

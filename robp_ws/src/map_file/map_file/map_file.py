@@ -19,7 +19,7 @@ class Map_file(Node):
         super().__init__('map_file')
 
         # Declare parameters with default values
-        self.box_threshold = self.get_parameter_or('box_threshold', 20)
+        self.box_threshold = self.get_parameter_or('box_threshold', 30)
         self.object_threshold = self.get_parameter_or('object_threshold', 5)
         self.msg_topic = self.get_parameter_or('msg_topic', '/classification/class')
 
@@ -44,7 +44,7 @@ class Map_file(Node):
         self.result_pub = self.create_publisher(Bool, "/map_file/result", 10)
 
         self.file = "map_file.txt"
-        self.data = None
+        self.data = []
         self.map = []
         self.classifications = {'Box': 'B',
                                 'Cube': '1',
@@ -63,47 +63,58 @@ class Map_file(Node):
         self.result_pub.publish(result_msg)
 
     def map_callback(self, msg: String):
-        self.data = msg.data   
-
+        self.data.append(msg.data)   
 
     def perform_map_file_update(self):
-        data = self.data.split()
-        classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 180
-        new_label = self.classifications.get(classify)
-        new_votes = [0, 0, 0, 0] 
-        classes = ['B', '1', '2', '3']
+        updated = False  # Flag to check if any map is updated
 
-        for idx, (label, x, y, a, votes) in enumerate(self.map):
-            distance = np.sqrt((x-new_x)**2+(y-new_y)**2)
-            threshold = self.box_threshold if 'B' in (new_label, label) else self.object_threshold
-            if distance < threshold:
-                votes[classes.index(new_label)] += 1
-                max_index = np.argmax(votes)
-                if 'B' in (new_label, label):
-                    avg_a = int(round((a + new_a) / 2, 0))
-                else:
-                    avg_a = 0
-                self.map[idx] = (classes[max_index], 
-                                 int(round((x + new_x) / 2, 0)),
-                                 int(round((y + new_y) / 2, 0)),
-                                 avg_a,
-                                 votes)
+        while self.data:
+            data = self.data.pop(0).split()
+            classify, new_x, new_y, new_a = data[0], 100 * float(data[1]), 100 * float(data[2]), float(data[3]) % 180
+            new_label = self.classifications.get(classify)
+            new_votes = [0, 0, 0, 0]
+            classes = ['B', '1', '2', '3']
+
+            for idx, (label, x, y, a, votes, prev) in enumerate(self.map):
+                distance = np.sqrt((x - new_x) ** 2 + (y - new_y) ** 2)
+                threshold = self.box_threshold if 'B' in (new_label, label) else self.object_threshold
+                if distance < threshold:
+                    votes[classes.index(new_label)] += 1
+                    max_index = np.argmax(votes)
+                    prev = np.vstack([prev, [new_x, new_y, new_a]])
+                    avg_x, avg_y, avg_a = np.mean(prev, axis=0)
+                    if not 'B' in (new_label, label):
+                        avg_a = 0
+                    self.map[idx] = (classes[max_index],
+                                    avg_x,
+                                    avg_y,
+                                    avg_a,
+                                    votes,
+                                    prev)
+                    updated = True  # Mark as updated
+                    break  # Move on to the next data item
+
+            if not updated:  # If no existing map was updated, append a new entry
+                new_votes[classes.index(new_label)] += 1
+                self.map.append((new_label, new_x, new_y, new_a, new_votes, np.array([new_x, new_y, new_a])))
+                updated = True  # Mark as updated
+
+            # Update the file only after processing all data
+            if updated:
                 self.update_file()
-                return True
-            
-        new_votes[classes.index(new_label)] += 1
-        self.map.append((new_label, int(round(new_x, 0)), int(round(new_y, 0)), int(round(new_a, 0)), new_votes))
-        self.update_file()
+                updated = False  # Reset flag for the next iteration
 
         return True
-
+        
     def update_file(self):
-        msg = MarkerArray()
-
+        msg = MarkerArray()        
         with open(self.file, 'w') as file:
-            for label, x, y, a, _ in self.map:
-                lenx = len(str(abs(x))) 
-                leny = len(str(abs(y))) 
+            for label, x, y, a, _, _ in self.map:
+                x_rounded = int(round(x, 0))
+                y_rounded = int(round(y, 0))
+                a_rounded = int(round(a, 0))
+                lenx = len(str(abs(x_rounded)))
+                leny = len(str(abs(y_rounded)))
                 # self.get_logger().info(f"lenx: {lenx}, x: {x}")
                 space1 = 8 - lenx
                 space2 = 8 - leny
@@ -111,21 +122,21 @@ class Map_file(Node):
                     space1 -= 1
                 if y < 0:
                     space2 -= 1
-                file.write(f"{label}       {x}{' '*space1}{y}{' '*space2}{a}\n")
-
+                file.write(f"{label}       {x_rounded}{' '*space1}{y_rounded}{' '*space2}{a_rounded}\n")                
                 marker = Marker()
                 marker.header.frame_id = label
                 marker.pose.position.x = float(x)
                 marker.pose.position.y = float(y)
                 marker.pose.position.z = float(a)
                 msg.markers.append(marker)
-        
+
+        # self.get_logger().info(f'{self.map}')
         self.publisher.publish(msg)
         self.broadcast_transforms()
 
     def broadcast_transforms(self):
         """Broadcasts transforms for each object in the map."""
-        for idx, (label, x, y, a, _) in enumerate(self.map):
+        for idx, (label, x, y, a, _,_) in enumerate(self.map):
             
             transform = TransformStamped()
             transform.header.stamp = self.get_clock().now().to_msg()

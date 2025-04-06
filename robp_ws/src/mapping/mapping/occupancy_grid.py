@@ -63,8 +63,8 @@ class OccupancyGridNode(Node):
         
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
-        self.camera_min_range = 0.2 # True value: 0.2
-        self.camera_max_range = 1.1 # True value: 3.0
+        self.camera_min_range = 0.3 # True value: 0.2
+        self.camera_max_range = 1.12 # True value: 3.0
 
         self.angular_vel = 0.0
 
@@ -342,16 +342,16 @@ class OccupancyGridNode(Node):
 
                 # Check if msg.frame_id is 'B' before marking adjacent cells
                 if marker.header.frame_id == 'B':
-                    # Define four possible directions: (dy, dx)
-                    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
+                    inflation_radius = 3  # For a 5x5 block (2 cells in all directions)
 
-                    for dy, dx in directions:
-                        for step in range(1, 3):  # Expand 1 step and 2 steps
-                            adj_y, adj_x = i_y + step * dy, i_x + step * dx
+                    for dy in range(-inflation_radius, inflation_radius + 1):
+                        for dx in range(-inflation_radius, inflation_radius + 1):
+                            adj_y = i_y + dy
+                            adj_x = i_x + dx
 
                             # Ensure we don't go out of bounds
                             if 0 <= adj_y < self.height and 0 <= adj_x < self.width:
-                                self.grid[adj_y][adj_x] = 100  # Mark adjacent cell as an object
+                                self.grid[adj_y][adj_x] = 100  # Mark as occupied
                   
         self.inflate_map()
 

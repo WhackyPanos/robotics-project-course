@@ -18,18 +18,4 @@ def generate_launch_description():
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/rs_d435i_launch.py'))
         ),
 
-        IncludeLaunchDescription(
-            AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))
-        ),
-
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            arguments=['--frame-id', 'map', '--child-frame-id', 'odom']
-        ),
-
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
-        # ),
-
     ])

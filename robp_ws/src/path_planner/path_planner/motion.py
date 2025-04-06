@@ -71,7 +71,7 @@ class MotionNode(Node):
         # Parameters
         # ==================
         self.linear_velocity = 0.1
-        self.angular_velocity = 0.35
+        self.angular_velocity = 0.4
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.2 # TODO untested, adjust this value
         self.goal_threshold = 0.05

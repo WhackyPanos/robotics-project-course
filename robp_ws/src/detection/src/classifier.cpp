@@ -67,96 +67,105 @@ Classifier::Classifier() : Node("clustering", rclcpp::NodeOptions()
 
 bool Classifier::perform_classification()
 {    
-    if (!latest_cluster_) {
-        RCLCPP_WARN(this->get_logger(), "No cloud received yet.");
+    
+    if (cluster_queue_.empty()) {
+        RCLCPP_WARN(this->get_logger(), "No clusters to classify.");
         return false;
     }
 
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::fromROSMsg(*latest_cluster_, *cloud);
+    bool any_success = false;
 
-    // Initialize variables for classification
-    pcl::PointCloud<pcl::PointXYZ>::Ptr box_filtered (new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::PointCloud<pcl::PointXYZ>::Ptr animal_filtered (new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::PointCloud<pcl::PointXYZ>::Ptr sphere_filtered (new pcl::PointCloud<pcl::PointXYZ>);
-
-    OBBData obb;
-    obb = computeOBB(cloud);
-    double dist = obb.position.z;
-
-    Eigen::Vector4f min_pt, max_pt;
-    pcl::getMinMax3D(*cloud, min_pt, max_pt);
-    
-    float max_y = min_pt[1]; // Topmost y (highest point)
-    float min_y = max_pt[1]; // Bottommost y (lowest point)
-    std::cout << "Depth: " << obb.position.z << "max_y: " << max_y << ", min_y: " << min_y << std::endl;
-
-    // Filter based on height values
-    pcl::PassThrough<pcl::PointXYZ> pass;
-    pass.setInputCloud(cloud);
-    pass.setFilterFieldName("y");
-
-    double box_filter_height = interpolate(box_filter_min_, box_filter_max_, dist);
-    pass.setFilterLimits(box_filter_height, box_filter_height + 0.01);
-    pass.filter(*box_filtered);
-
-    // RCLCPP_INFO(this->get_logger(), "start classification");
-    if (box_filtered->size() > box_filter_threshold_) 
-    {
-        classification = "Box";
-    }
-    else 
-    {
-        double animal_filter_height = interpolate(animal_filter_min_, animal_filter_max_, dist);
-        pass.setFilterLimits(animal_filter_height, animal_filter_height + 0.003);
-        pass.filter(*animal_filtered);
+    while (!cluster_queue_.empty()) {
+        auto latest_cluster_ = cluster_queue_.front();  // Access the first element
+        cluster_queue_.erase(cluster_queue_.begin());  // Remove the first element
         
-        if(animal_filtered->size()>0)
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
+        pcl::fromROSMsg(*latest_cluster_, *cloud);
+
+        // Initialize variables for classification
+        pcl::PointCloud<pcl::PointXYZ>::Ptr box_filtered (new pcl::PointCloud<pcl::PointXYZ>);
+        pcl::PointCloud<pcl::PointXYZ>::Ptr animal_filtered (new pcl::PointCloud<pcl::PointXYZ>);
+        pcl::PointCloud<pcl::PointXYZ>::Ptr sphere_filtered (new pcl::PointCloud<pcl::PointXYZ>);
+
+        OBBData obb;
+        obb = computeOBB(cloud);
+        double dist = obb.position.z;
+
+        Eigen::Vector4f min_pt, max_pt;
+        pcl::getMinMax3D(*cloud, min_pt, max_pt);
+        
+        float max_y = min_pt[1]; // Topmost y (highest point)
+        float min_y = max_pt[1]; // Bottommost y (lowest point)
+        std::cout << "Depth: " << obb.position.z << "max_y: " << max_y << ", min_y: " << min_y << std::endl;
+
+        // Filter based on height values
+        pcl::PassThrough<pcl::PointXYZ> pass;
+        pass.setInputCloud(cloud);
+        pass.setFilterFieldName("y");
+
+        double box_filter_height = interpolate(box_filter_min_, box_filter_max_, dist);
+        pass.setFilterLimits(box_filter_height, box_filter_height + 0.01);
+        pass.filter(*box_filtered);
+
+        // RCLCPP_INFO(this->get_logger(), "start classification");
+        if (box_filtered->size() > box_filter_threshold_) 
         {
-            classification = "Animal";
+            classification = "Box";
         }
-        else
-        {               
-            double sphere_filter_height = interpolate(sphere_filter_min_, sphere_filter_max_, dist);
-            pass.setFilterLimits(sphere_filter_height, sphere_filter_height + 0.003);
-            pass.filter(*sphere_filtered);
-
-            if(sphere_filtered->size()>0)
+        else 
+        {
+            double animal_filter_height = interpolate(animal_filter_min_, animal_filter_max_, dist);
+            pass.setFilterLimits(animal_filter_height, animal_filter_height + 0.005);
+            pass.filter(*animal_filtered);
+            
+            if(animal_filtered->size()>0)
             {
-                classification = "Sphere";
-
-            } 
+                classification = "Animal";
+            }
             else
-            {
-                classification = "Cube";
+            {               
+                double sphere_filter_height = interpolate(sphere_filter_min_, sphere_filter_max_, dist);
+                pass.setFilterLimits(sphere_filter_height, sphere_filter_height + 0.003);
+                pass.filter(*sphere_filtered);
+
+                if(sphere_filtered->size()>0)
+                {
+                    classification = "Sphere";
+
+                } 
+                else
+                {
+                    classification = "Cube";
+                }
             }
         }
+
+        RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
+        
+        geometry_msgs::msg::PoseStamped pose;
+        pose.header.stamp = latest_cluster_->header.stamp;
+        pose.header.frame_id = latest_cluster_->header.frame_id;
+
+        // Set the position of the OBB (center)
+        pose.pose.position.x = obb.position.x;
+        pose.pose.position.y = obb.position.y;
+        pose.pose.position.z = obb.position.z;
+
+        // Convert the Eigen rotation matrix (3x3) to a quaternion
+        Eigen::Quaternionf quat(obb.rotation);  // Eigen provides the conversion directly
+
+        // Set the orientation using the quaternion
+        pose.pose.orientation.x = quat.x();
+        pose.pose.orientation.y = quat.y();
+        pose.pose.orientation.z = quat.z();
+        pose.pose.orientation.w = quat.w();
+
+        // Broadcast TF and return result
+        std::string label = classification;
+        any_success |= tf(pose, latest_cluster_->header.stamp, label, obb);
     }
 
-    RCLCPP_INFO(this->get_logger(), "Classified as: %s", classification.c_str());
-    
-    geometry_msgs::msg::PoseStamped pose;
-    pose.header.stamp = latest_cluster_->header.stamp;
-    pose.header.frame_id = latest_cluster_->header.frame_id;
-
-    // Set the position of the OBB (center)
-    pose.pose.position.x = obb.position.x;
-    pose.pose.position.y = obb.position.y;
-    pose.pose.position.z = obb.position.z;
-
-    // Convert the Eigen rotation matrix (3x3) to a quaternion
-    Eigen::Quaternionf quat(obb.rotation);  // Eigen provides the conversion directly
-
-    // Set the orientation using the quaternion
-    pose.pose.orientation.x = quat.x();
-    pose.pose.orientation.y = quat.y();
-    pose.pose.orientation.z = quat.z();
-    pose.pose.orientation.w = quat.w();
-
-    // Broadcast TF and return result
-    std::string label = classification;
-    return tf(pose, latest_cluster_->header.stamp, label, obb);
-
+    return any_success;
     // tf_buffer_->waitForTransform("map", latest_cluster_.header.frame_id, latest_cluster_.header.stamp, timeout, 
                                 // std::bind(&Classifier::tf_callback, this, std::placeholders::_1, pose, latest_cluster_.header.stamp, label, obb));
 }
@@ -182,8 +191,8 @@ void Classifier::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
 
 void Classifier::cluster_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
 
-    latest_cluster_ = msg;
-}
+    cluster_queue_.push_back(msg);
+}   
 
 bool Classifier::tf(const geometry_msgs::msg::PoseStamped &pose, const rclcpp::Time &stamp, const std::string &label, const OBBData &obb)
 {

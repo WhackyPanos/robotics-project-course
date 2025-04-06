@@ -73,6 +73,8 @@ Clustering::Clustering() : Node("clustering", rclcpp::NodeOptions()
 
 bool Clustering::perform_clustering(bool new_req)
 {
+    bool cluster_published = false;
+
     if (!latest_cloud_) {
         RCLCPP_WARN(this->get_logger(), "No cloud received yet.");
         return false;
@@ -131,7 +133,7 @@ bool Clustering::perform_clustering(bool new_req)
         if (!obstacle->empty()) continue;
 
         // RCLCPP_INFO(this->get_logger(), "Cluster found");
-    // If new, check also for obstacle or occupation in grid
+        // If new, check also for obstacle or occupation in grid
         if(new_req)
         {
             RCLCPP_INFO(this->get_logger(), "Enter new req");
@@ -154,28 +156,29 @@ bool Clustering::perform_clustering(bool new_req)
             // RCLCPP_INFO(this->get_logger(), "Check occupation");
             if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
         }
-    
-    //Publish found cluster and stop the robot
-        cloud_cluster->width = cloud_cluster->size();
-        cloud_cluster->height = 1;
-        cloud_cluster->is_dense = true;
+        else
+        {
+            //Publish found cluster
+            cloud_cluster->width = cloud_cluster->size();
+            cloud_cluster->height = 1;
+            cloud_cluster->is_dense = true;
 
-        sensor_msgs::msg::PointCloud2 output;
-        pcl::toROSMsg(*cloud_cluster, output);
-        output.header.stamp = latest_cloud_->header.stamp;
-        output.header.frame_id = latest_cloud_->header.frame_id;
-        cluster_pub_->publish(output);
-        // RCLCPP_INFO(this->get_logger(), "Publish cluster");
+            sensor_msgs::msg::PointCloud2 output;
+            pcl::toROSMsg(*cloud_cluster, output);
+            output.header.stamp = latest_cloud_->header.stamp;
+            output.header.frame_id = latest_cloud_->header.frame_id;
+            cluster_pub_->publish(output);
+        }
 
         geometry_msgs::msg::Twist stop_msg;
         stop_msg.linear.x = stop_msg.linear.y = stop_msg.linear.z = 0.0;
         stop_msg.angular.x = stop_msg.angular.y = stop_msg.angular.z = 0.0;
         twist_pub_->publish(stop_msg);
 
-        return true;  // At least one cluster was found and published
+        cluster_published = true;  // At least one cluster was found and published
     }
 
-    return false;
+    return cluster_published;
 }
 
 void Clustering::trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)

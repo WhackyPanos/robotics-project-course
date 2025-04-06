@@ -15,7 +15,7 @@ class RandomPoint(Node):
         super().__init__('random_point')
         
         # Subscriptions
-        # self.space_subscription = self.create_subscription(OccupancyGrid, '/config_space', self.space_callback, 10)
+        self.space_subscription = self.create_subscription(OccupancyGrid, '/config_space', self.config_space_callback, 10)
         self.grid_subscription = self.create_subscription(OccupancyGrid, '/occupancy_grid', self.grid_callback, 10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
@@ -35,23 +35,26 @@ class RandomPoint(Node):
         #Robot's pose
         self.robot_x = self.robot_y = self.robot_yaw = None
         self.robot_radius = 0.35
+    
+    def config_space_callback(self, msg:OccupancyGrid):
+        self.config_space_data = np.array(msg.data).reshape((msg.info.height, msg.info.width))
 
-    def inflate_map(self):
-        binary_grid = np.zeros_like(self.map_data)
+    # def inflate_map(self):
+    #     binary_grid = np.zeros_like(self.map_data)
         
-        # Threshold for obstacles (usually >50 is considered occupied)
-        binary_grid[self.map_data > 50] = 1
-        # Robot can drive through both known and unknown space
+    #     # Threshold for obstacles (usually >50 is considered occupied)
+    #     binary_grid[self.map_data > 50] = 1
+    #     # Robot can drive through both known and unknown space
         
-        # Calculate kernel size based on robot radius and map resolution
-        kernel_radius = int(np.ceil(self.robot_radius / self.map_resolution))
+    #     # Calculate kernel size based on robot radius and map resolution
+    #     kernel_radius = int(np.ceil(self.robot_radius / self.map_resolution))
         
-        # Create circular kernel for dilation
-        y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
-        kernel = x**2 + y**2 <= kernel_radius**2
+    #     # Create circular kernel for dilation
+    #     y, x = np.ogrid[-kernel_radius:kernel_radius+1, -kernel_radius:kernel_radius+1]
+    #     kernel = x**2 + y**2 <= kernel_radius**2
         
-        # Dilate obstacles to create configuration space
-        self.config_space_data = binary_dilation(binary_grid, kernel).astype(np.int8)
+    #     # Dilate obstacles to create configuration space
+    #     self.config_space_data = binary_dilation(binary_grid, kernel).astype(np.int8)
 
 
     def grid_callback(self, msg):
@@ -109,7 +112,7 @@ class RandomPoint(Node):
             self.get_logger().warn("Robot pose not available yet!")
             return False
         
-        self.inflate_map()
+        # self.inflate_map()
         best_point = None
         best_score = -float("inf")  # We maximize this score
 
