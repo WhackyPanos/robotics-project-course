@@ -8,6 +8,7 @@ import tf2_geometry_msgs
 from geometry_msgs.msg import Point, Pose2D, Twist, PoseStamped, PointStamped
 from nav_msgs.msg import Path
 from std_msgs.msg import Bool
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 """
 This node is used to control the robot's motion to navigate to a goal position.
 PID controller was implemented to control the robot's angular velocity to reach the goal position.
@@ -43,7 +44,6 @@ class MotionNode(Node):
         self.vel_cmd.linear.z = 0.0
         self.vel_cmd.angular.x = 0.0
         self.vel_cmd.angular.y = 0.0
-        self.prev_time = self.get_clock().now().nanoseconds / 1e9
 
         self.x_map = None
         self.y_map = None
@@ -60,10 +60,12 @@ class MotionNode(Node):
 
         # Setup publishers and subscribers
         # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
-        self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 10)
+        self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 
+                                 rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
-        self.goal_publisher = self.create_publisher(PoseStamped, '/motion/goal', 10)
+        self.goal_publisher = self.create_publisher(PoseStamped, '/motion/goal', 
+                                rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.path_publisher = self.create_publisher(Path, '/motion/path', 10)
         self.path_reached_publisher = self.create_publisher(Bool, '/motion/path_reached', 10) ## TODO
         self.icp_publisher = self.create_publisher(Bool, '/icp/activate', 10)
@@ -87,7 +89,7 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        self.get_logger().info("New goal received in motion node")
+        self.get_logger().info(f"New goal received in motion node: {self.goal_position.pose.position.x, self.goal_position.pose.position.y} at {msg.header.stamp.sec}")
         #self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
@@ -110,51 +112,6 @@ class MotionNode(Node):
             pub_msg.pose.orientation.w = self.path.poses[0].pose.orientation.w
             self.goal_publisher.publish(pub_msg)
     
-    # # Checks robot's current position and its current goal, and commands the robot to move if it hasn't reached the goal
-    # def odometry_callback(self, msg: Pose2D):
-    #     """ Transform the odometry pose from 'odom' to 'map' and control robot movement. """
-    #     if not self.goal_reached_flag:
-    #         try:
-    #             # Create a PoseStamped in the odom frame
-    #             pose_odom = PoseStamped()
-    #             pose_odom.header.frame_id = "odom"
-    #             pose_odom.header.stamp = self.get_clock().now().to_msg()
-    #             pose_odom.pose.position.x = msg.x
-    #             pose_odom.pose.position.y = msg.y
-    #             pose_odom.pose.position.z = 0.0
-    #             pose_odom.pose.orientation.w = math.cos(msg.theta / 2)
-    #             pose_odom.pose.orientation.x = 0.0
-    #             pose_odom.pose.orientation.y = 0.0
-    #             pose_odom.pose.orientation.z = math.sin(msg.theta / 2)
-    #         except Exception as e:
-    #             self.get_logger().warn(f"Pose creation failed: {str(e)}")
-
-    #         try:
-    #             # Lookup transform from 'map' to 'odom'
-    #             transform = self.tf_buffer.lookup_transform(
-    #                 "map",  # Target frame
-    #                 "odom",  # Source frame
-    #                 rclpy.time.Time(),  # Get the latest available transform
-    #                 timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
-    #             )
-    #             # Transform the pose
-    #             transformed_pose = tf2_geometry_msgs.do_transform_pose(pose_odom.pose, transform)
-    #         except Exception as e:
-    #             self.get_logger().warn(f"Lookup failed: {str(e)}")
-
-    #         try:
-    #             # Extract transformed 2D position and heading
-    #             self.x_map = transformed_pose.position.x
-    #             self.y_map = transformed_pose.position.y
-    #             qz = transformed_pose.orientation.z
-    #             qw = transformed_pose.orientation.w
-    #             self.theta_map = 2 * math.atan2(qz, qw)  # Convert quaternion to yaw
-
-    #             # # Proceed with goal tracking using transformed pose
-    #             # self.navigate_to_goal(self.x_map, self.y_map, self.theta_map)
-    #         except Exception as e:
-    #             self.get_logger().warn(f"Transform failed: {str(e)}")
-
     def get_robot_position(self):
         try:
             # Lookup transform from 'map' to 'base_link'
@@ -198,7 +155,7 @@ class MotionNode(Node):
         # angle_diff = angle - theta
         cur_time = self.get_clock().now().nanoseconds / 1e9
         self.elapsed_time = cur_time - self.prev_time
-        
+        #self.get_logger().info(f"Current position is  = {x, y} and goal position is {goal_x, goal_y} ")
         if distance > self.goal_threshold:
             iError = angle_diff * self.elapsed_time
             dError = (angle_diff - self.prev_angle_diff)/self.elapsed_time
@@ -232,12 +189,12 @@ class MotionNode(Node):
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if self.do_yaw: self.adjust_yaw(self.angle_goal)
+                #if self.do_yaw: self.adjust_yaw(self.angle_goal) #TODO: uncomment when this works fine
             else:
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if self.do_yaw: self.adjust_yaw(self.angle_goal)
+                #if self.do_yaw: self.adjust_yaw(self.angle_goal) #TODO: uncomment when this works fine
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
 

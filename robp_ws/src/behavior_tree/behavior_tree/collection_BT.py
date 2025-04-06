@@ -25,7 +25,7 @@ class CollectionBT(Node):
         relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
         self.objs_list, self.box_list = self.create_lists()
-        self.get_logger().info(f"Bla {self.objs_list, self.box_list}")
+        #self.get_logger().info(f"Bla {self.objs_list, self.box_list}")
         self.tf_broadcaster = TransformBroadcaster(self)
         #self.publish_initial_transform()
   

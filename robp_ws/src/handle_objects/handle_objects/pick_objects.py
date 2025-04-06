@@ -191,7 +191,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.ik_solver = IKNode()
         self.to_frame_rel = 'arm_base_link'
         self.from_frame_rel = 'map'
-        self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
+        self.X, self.Y = None, None
         self.X_planB, self.Y_planB = None, None
         self.X_arm_cam, self.Y_arm_cam = [],  []
         self.thresholds = [10**-4,10**-3,10**-2]
@@ -268,8 +268,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.tf_listener = TransformListener(self.tf_buffer, self.node)
 
         self.servo_angles_subscriber_ = self.node.create_subscription(JointState,'/servo_pos_publisher',self.servo_angles_callback,10)   
-        self.next_goal_pub = self.node.create_subscription(PoseStamped, '/motion/goal',  self.get_next_goal_callback,10 )
-        self.next_goal_pub = self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 )
+        self.node.create_subscription(PoseStamped, '/motion/goal',  self.get_next_goal_callback,10 )
+        self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 )
         self.count_grasping_failures_sub = self.node.create_subscription(
             Int16,'/picklift/count_grasping_failures',  self.count_grasping_failures_callback,10)
 
@@ -288,7 +288,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.arm_moving = False
         self.arm_tucked = False
         self.object_grasped = False
-        self.X, self.Y,  self.x, self.y, self.z, self.target = None, None, None, None, None, None
+        #self.X, self.Y = None, None
         self.current_angles, self.desired_servo_angles = None, None
         self.timer = self.node.create_timer(1, self.init_arm_movement)
 
@@ -302,7 +302,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             # if everything fails, try a simpler approach. Transform from arm camera to arm base
             if len(self.Y_arm_cam) == 0: #arm_segmentation is shit, use other stuff
                 self.object_transform()
-                self.node.get_logger().warn(f"Using transform from map instead")
+                self.node.get_logger().warn(f"Using transform from map to arm_base_link instead")
                 self.X_arm_cam.append(-self.Y_planB + self.yy)
                 self.Y_arm_cam.append(-self.X_planB + self.xx)
             msg = self.pick_planB(-self.Y_arm_cam[0] + self.xx , -self.X_arm_cam[0] + self.yy, self.zz)
@@ -413,6 +413,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
 
     def get_next_goal_callback(self, msg):
+        self.node.get_logger().info(f"IK received object in map frame (in case arm camera does not work) -> {msg.pose.position.x, msg.pose.position.y}")
         self.X = msg.pose.position.x
         self.Y = msg.pose.position.y
 
@@ -439,7 +440,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     break
         
     def pick_planB(self, x, y, z):  
-        self.get_logger().info(f" Object is in {round(x*100, 2), round(y*100, 2), round(z*100, 2)} in arm_base link")
+        self.get_logger().info(f" For IK solver, object is in {round(x*100, 2), round(y*100, 2), round(z*100, 2)} in arm_base link")
         # we will iterate with different orientations for the 1st link. 
         count = 0
         for i in range(self.joint_5_start_angle, self.joint_5_end_angle, self.joint_5_step): #decidegrees. Before, was range(900,0,-20)
@@ -475,7 +476,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     count +=1
                     continue
                 # create the msg to publish, in case it is valid
-                self.node.get_logger().info(f"Plan B worked: in the regular domain, angles = {q}")
+                self.node.get_logger().info(f"Object is reachable: in the regular domain, angles = {q}")
 
                 msg = Int16MultiArray()
                 msg.layout = MultiArrayLayout(
@@ -515,20 +516,23 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 f'Could not transform {self.to_frame_rel} to {self.from_frame_rel}: {ex}')
             return
         
-        # do transformation   
+        # do transformation
+        self.node.get_logger().info(f'Tranform between map and arm_base_link: {t.transform.translation.x,t.transform.translation.y}') 
         object_MF = PointStamped()
+        object_MF.header.stamp = t.header.stamp
         object_MF.header.frame_id = 'map'
         object_MF.point.x = self.X
         object_MF.point.y = self.Y
-        object_MF.point.z = 0.0         
+        object_MF.point.z = 0.0           
         object_ABF = tf2_geometry_msgs.do_transform_point(object_MF, t)
         self.X_planB = object_ABF.point.x 
         self.Y_planB = object_ABF.point.y 
-        self.z = object_ABF.point.z
+
+        self.node.get_logger().info(f'Using transform between map and arm base, x = {self.X_planB}, y = {self.Y_planB}')
 
         # TODO: hardcoded now, remove later 
-        self.X_planB = self.X_test
-        self.Y_planB = self.Y_test
+        # self.X_planB = self.X_test
+        # self.Y_planB = self.Y_test
 
 class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
     def __init__(self, name="Place"):
@@ -608,9 +612,14 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 return py_trees.common.Status.RUNNING
             
             elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
-                self.publish_msg()
-                #self.get_logger().info("Publishing INITIAL tuck arm command.")
+                # Compute necessary orientation of arm base
+                desired_yaw = self.desired_arm_base_angle()
+                error = 180*(desired_yaw - self.current_yaw)/pi #TODO: wrap angles, check limits and uncomment below
+                normalized_error = max(-120, min(120, ((error + 180) % 360) - 180))
+                self.desired_servo_angles[5] += int(normalized_error*100)
+                self.get_logger().info(f'Arm base should rotate {normalized_error} degrees')
                 self.arm_moving = True
+                self.publish_msg()
                 return py_trees.common.Status.RUNNING  # Keep running while the arm moves
             
             elif self.arm_started and self.arm_moving and not self.arm_tucked:
@@ -688,19 +697,13 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
     def need_next_object_callback(self, msg):
         self.next_goal = msg.data
         self.get_logger().info(f"Placing node received '{msg.data}' as next goal")
+
     def publish_msg(self):
         msg = Int16MultiArray()
         msg.layout = MultiArrayLayout(
             dim=[MultiArrayDimension(label="joint_cmds", size=6, stride=1)],
             data_offset=0)    
           
-        # Compute necessary orientation of arm base
-        desired_yaw = self.desired_arm_base_angle()
-        error = 180*(desired_yaw - self.current_yaw)/pi #TODO: wrap angles, check limits and uncomment below
-        normalized_error = max(-120, min(120, ((error + 180) % 360) - 180))
-        #self.desired_servo_angles[5] += normalized_error*100
-        self.get_logger().info(f'Arm base should rotate {normalized_error} degrees')
-
         # publish msg
         times = [self.obj_tuck_arm_time] * 6
         msg.data = self.desired_servo_angles + times
