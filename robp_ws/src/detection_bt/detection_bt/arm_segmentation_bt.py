@@ -8,6 +8,7 @@ class ArmSegmentationBT(py_trees.behaviour.Behaviour, Node):
         py_trees.behaviour.Behaviour.__init__(self, name)
         Node.__init__(self, name)
         self.object_found = None
+        self.checkout_time = 8.0
 
     def setup(self, **kwargs):
         """ Initialize ROS publishers and subscribers. """
@@ -25,10 +26,16 @@ class ArmSegmentationBT(py_trees.behaviour.Behaviour, Node):
         msg = Bool()
         msg.data = True
         self.request_pub.publish(msg)
+        # self.init_time = self.get_clock().now().nanoseconds / 1e9
 
     def update(self):
+        # curr_time = self.get_clock().now().nanoseconds / 1e9
         if self.object_found is None:
+            # if curr_time - self.init_time < self.checkout_time:
             return py_trees.common.Status.RUNNING
+            # else:
+            #     self.node.get_logger().warn(f"Arm camera did not work, using transforms")
+            #     return py_trees.common.Status.SUCCESS 
         return py_trees.common.Status.SUCCESS if self.object_found else py_trees.common.Status.FAILURE
 
     def terminate(self, new_status: py_trees.common.Status):
@@ -36,3 +43,4 @@ class ArmSegmentationBT(py_trees.behaviour.Behaviour, Node):
 
     def result_callback(self, msg):
         self.object_found = msg.data
+

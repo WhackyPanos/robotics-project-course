@@ -16,6 +16,10 @@ from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped, Pose2D
 from sensor_msgs.msg import Imu, MagneticField # MagneticField is msg for /imu_mag
 from collections import deque 
+from tf2_ros.buffer import Buffer
+from tf2_ros.transform_listener import TransformListener
+from std_msgs.msg import String
+from sensor_msgs.msg import PointCloud2
 
 
 class Odometry(Node):
@@ -41,6 +45,9 @@ class Odometry(Node):
         self.create_subscription(
             Imu, '/imu/data_raw', self.imu_callback, 10)
         
+        #self.localization_transform_trigger = self.create_subscription(
+        #   PointCloud2, "/icp/global_point_cloud", self.localization_transform_trigger, qos_profile = 10)
+        
         
         self.init_imu_yaw = None
         self.prev_imu_yaw = None
@@ -57,6 +64,62 @@ class Odometry(Node):
         self.past_ticks_right = 0
         self.current_ticks_left = 0
         self.current_ticks_right = 0
+
+        # publish initial transform between map and odom
+        self.tf_broadcaster_init = TransformBroadcaster(self)
+        self.tf_buffer = Buffer()
+        self.tf_listener = TransformListener(self.tf_buffer, self)
+
+        self.parent = 'odom'
+        self.child = 'map'
+        
+        #self.publish_initial_transform()
+        #self.count = 0
+
+        # Retrieve transform and if it's null, publish a new one
+        #self.transform_timer = self.create_timer(0.25, self.publish_transform_until_localization)
+
+    def publish_initial_transform(self):
+        t = TransformStamped()
+        t.header.stamp = self.get_clock().now().to_msg() #rclpy.time.Time(seconds=0).to_msg()
+        t.header.frame_id = self.parent
+        t.child_frame_id = self.child
+
+        # Set translation to zero
+        t.transform.translation.x = 0.0
+        t.transform.translation.y = 0.0
+        t.transform.translation.z = 0.0
+
+        # Set rotation to zero (identity quaternion)
+        t.transform.rotation.x = 0.0
+        t.transform.rotation.y = 0.0
+        t.transform.rotation.z = 0.0
+        t.transform.rotation.w = 1.0  # Identity rotation
+
+        self.get_logger().info('Publishing initial map to odom frame (in odom node)')
+        self.get_logger().info('Sending transform (odom node)')
+        self.tf_broadcaster_init.sendTransform(t)
+
+
+    def publish_transform_until_localization(self):
+        #self.get_logger().info('Checking if localization published transform')
+        transform = self.tf_buffer.lookup_transform(
+            self.child,  # Target frame
+            self.parent,  # Source frame
+            rclpy.time.Time(seconds=0.0),  # Get the latest available transform
+            timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
+        )
+        if transform.transform.translation.x != 0.0 or transform.transform.translation.y != 0.0:
+            pass
+        else:
+            self.publish_initial_transform()
+        return
+
+    def localization_transform_trigger(self, msg):
+        if self.count == 0:
+            self.get_logger().info('Killing map -> odom "static" transformn')
+            self.transform_timer.cancel()
+            self.count = 1            
 
 
     def imu_callback(self, msg: Imu):
@@ -135,10 +198,10 @@ class Odometry(Node):
         # self._yaw = self._yaw + delta_theta # TODO: Fill in
         
         #stamp = self.get_clock().now() # TODO: Fill in
-        stamp = msg.header.stamp
+        self.stamp = msg.header.stamp
 
-        self.broadcast_transform(stamp, self._x, self._y, self._yaw)
-        self.publish_path(stamp, self._x, self._y, self._yaw)
+        self.broadcast_transform(self.stamp, self._x, self._y, self._yaw)
+        self.publish_path(self.stamp, self._x, self._y, self._yaw)
 
         # publishing 2D pose
         self.pose_msg.x = self._x
@@ -229,3 +292,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

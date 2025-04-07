@@ -40,10 +40,6 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
             else:
                 return py_trees.common.Status.RUNNING if self.motion_node.navigate_to_goal() else py_trees.common.Status.FAILURE
         else: return py_trees.common.Status.FAILURE
-
-    # def timer_callback(self):
-    #     """ Callback function for the watchdog timer """
-    #     return py_trees.common.Status.FAILURE
     
     def terminate(self, new_status: py_trees.common.Status):
         """

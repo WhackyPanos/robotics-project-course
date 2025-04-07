@@ -27,8 +27,6 @@ class IKNode(Node):
         # --- Example FK
         self.fk_solver = kdl.ChainFkSolverPos_recursive(self.chain) 
         #self.solve_fk([-15.706226190621685, -58.89322565161596, 89.19116421034657, -83.70501671216269, -6.281438203134586, -15.707868506470371])
-        self.solve_fk([0.0,90,0.0,0.0,0.0,0.0])
-        self.solve_fk([0.0,90*pi/180,0.0,0.0,0.0,0.0])
 
     def create_arm_chain(self):
         """

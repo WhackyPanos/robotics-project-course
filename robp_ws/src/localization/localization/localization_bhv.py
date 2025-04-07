@@ -7,8 +7,9 @@ from std_msgs.msg import Bool
 
 
 class Localization_bhv(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
-    def __init__(self, name="NavigateToGoal"):
-        super().__init__(name=name)
+    def __init__(self, name="Localization"):
+        py_trees.behaviour.Behaviour.__init__(self, name=name)
+        Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         self.localization_node = Localization()
 
     def setup(self, **kwargs):
@@ -24,7 +25,8 @@ class Localization_bhv(py_trees.behaviour.Behaviour, Node): # this class is a py
 
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
-        status is not RUNNING thereafter."""  
+        status is not RUNNING thereafter."""
+        pass  
 
 
     def update(self):
@@ -47,6 +49,7 @@ class Localization_bhv(py_trees.behaviour.Behaviour, Node): # this class is a py
             - SUCCESS || FAILURE : your behaviour's work cycle has finished
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
+        pass
 
     def localization_activate_callback(self, msg):
         self.localization_activate = msg.data

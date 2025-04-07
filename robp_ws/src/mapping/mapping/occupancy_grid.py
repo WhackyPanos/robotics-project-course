@@ -395,6 +395,68 @@ class OccupancyGridNode(Node):
     #                     nr_lone += 1
     #     self.get_logger().info(f'jjjjjjjjjjjjjjjjjjj{nr_occupied_by_lidar}, {nr_lone}')
 
+    #TODO: Might want to remove old detections first
+    def obj_callback(self, msg:MarkerArray):
+        for marker in msg.markers:
+            i_x, i_y = self.world_to_grid(marker.pose.position.x*0.01, marker.pose.position.y*0.01)
+
+            # Ensure x, y are within the grid bounds
+            if 0 <= i_x < self.width and 0 <= i_y < self.height:
+                # Mark the main cell as an object
+                self.grid[i_y][i_x] = 100
+
+                # Check if msg.frame_id is 'B' before marking adjacent cells
+                if marker.header.frame_id == 'B':
+                    # Define four possible directions: (dy, dx)
+                    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
+
+                    for dy, dx in directions:
+                        for step in range(1, 3):  # Expand 1 step and 2 steps
+                            adj_y, adj_x = i_y + step * dy, i_x + step * dx
+
+                            # Ensure we don't go out of bounds
+                            if 0 <= adj_y < self.height and 0 <= adj_x < self.width:
+                                self.grid[adj_y][adj_x] = 100  # Mark adjacent cell as an object
+                  
+        self.inflate_map()
+
+    def rm_loners(self):
+        """Removes lidar occupied cells (0<=(cell value)<=99) without any neighbors"""
+        mask = (self.grid > 0) & (self.grid < 100)
+        kernel = np.array([[0, 1, 0],
+                           [1, 0, 1],
+                           [0, 1, 0]])
+        nr_neighbors = convolve(mask, kernel)
+        new_grid = self.grid.copy()
+        new_grid[mask & (nr_neighbors == 0)] = -1
+        self.grid = new_grid
+
+    # def rm_loners(self):
+    #     nr_occupied_by_lidar = 0
+    #     nr_lone = 0
+    #     for y in range(self.height):
+    #         for x in range(self.width):
+    #             if self.grid[y, x] >= 50 and self.grid[y, x] <= 99:
+    #                 nr_occupied_by_lidar += 1
+    #                 nr_neighbors = 0
+    #                 if x-1 >= 0:
+    #                     if self.grid[y,x-1] >= 50 and self.grid[y,x-1] >= 99:
+    #                         nr_neighbors += 1
+    #                 if x+1 <= self.width-1:
+    #                     if self.grid[y,x+1] >= 50 and self.grid[y,x+1] <= 99:
+    #                         nr_neighbors += 1
+    #                 if y-1 >= 0:
+    #                     if self.grid[y-1,x] >= 50 and self.grid[y-1,x] <= 99:
+    #                         nr_neighbors += 1
+    #                 if y+1 <= self.height-1:
+    #                     if self.grid[y+1,x] >= 50 and self.grid[y+1,x] <= 99:
+    #                         nr_neighbors += 1
+    #                 #self.get_logger().info(f'nr neighbors {nr_neighbors}')
+    #                 if nr_neighbors == 0:
+    #                     self.grid[y,x] = -1
+    #                     nr_lone += 1
+    #     self.get_logger().info(f'jjjjjjjjjjjjjjjjjjj{nr_occupied_by_lidar}, {nr_lone}')
+
 
 def main():
     rclpy.init()
