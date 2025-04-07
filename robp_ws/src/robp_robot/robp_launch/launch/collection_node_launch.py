@@ -53,9 +53,10 @@ def generate_launch_description():
             executable='twist2duty'
         ),
 
-
-
-
+        Node(
+            package='mapping',
+            executable='occupancy_grid_collection'
+        ),
 
 
 

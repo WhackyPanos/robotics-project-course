@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
         'mapping = mapping.mapping:main',
         'occupancy_grid = mapping.occupancy_grid:main',
+        'occupancy_grid_collection = mapping.occupancy_grid_collection:main',
         ],
     },
 )

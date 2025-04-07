@@ -19,16 +19,29 @@ from sensor_msgs.msg import LaserScan, PointCloud2
 from laser_geometry import LaserProjection
 from nav_msgs.msg import OccupancyGrid
 from std_msgs.msg import Header
+from geometry_msgs.msg import Twist, PoseStamped, PointStamped
+from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
-from scipy.ndimage import binary_dilation, binary_fill_holes
+from scipy.ndimage import binary_dilation, binary_fill_holes, convolve
+from nav_msgs.msg import Path
+
+# free space from lidar: not marked
+# free space from camera: 0 
+# Occupied by lidar: 99
+# Occupied by camera: 100
 
 class OccupancyGridNode(Node):
-    def __init__(self):
+    def __init__(self): 
 
         # Initializes
         super().__init__('update_occupancy_grid')
-        self.publisher = self.create_publisher(OccupancyGrid, '/occupancy_grid', 10) 
+        self.publisher = self.create_publisher(OccupancyGrid, '/occupancy_grid', 10)
+        self.config_space_pub = self.create_publisher(OccupancyGrid, '/config_space', 10)
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
+        self.vel_subscription = self.create_subscription(Twist, '/cmd_vel', self.vel_callback, 10)
+        self.object_sub = self.create_subscription(MarkerArray, '/object_positions', self.obj_callback, 10)
+        self.current_object_goal_sub = self.create_subscription(PoseStamped, '/goal_point', self.current_object_goal, 10)
+        self.object_list_subscription = self.create_subscription(Path,'/object_path', self.add_objects,10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection()
@@ -37,30 +50,39 @@ class OccupancyGridNode(Node):
         vertices, min_x, max_x, min_y, max_y = self.read_workspace()
         
         # Grid parameters
-        self.resolution = 0.02 # Grid cell size (m)
-        self.width = int((max_x - min_x)/self.resolution + 0.5)
-        self.height = int((max_y - min_y)/self.resolution + 0.5)      
-        self.origin_x = min_x  # - self.resolution  
-        self.origin_y = min_y # - self.resolution
+        self.resolution = 0.04 # Grid cell size (m)
+        self.width = math.ceil((max_x - min_x)/self.resolution)+2
+        self.height = math.ceil((max_y - min_y)/self.resolution)+2      
+        self.origin_x = min_x- self.resolution  
+        self.origin_y = min_y- self.resolution
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
+        self.config_space = self.grid # Config space
+        self.goal_object_grid_inflated = np.ones_like(self.grid)
         self.grid.fill(-1) # Sets all cells to unknown
+        self.geofence_mask = None # Geofence mask to check if lidar points are inside the workspace
         self.geofence(vertices) # Sets a boundry for the workspace
-        # free space from lidar: not marked
-        # free space from camera: 0
-        # Occupied by lidar: 100
-        # Occupied by camera: 99
+
+        # Inflation parameter
+        self.robot_radius = 0.3
         
         # Camera paramters
-        self.camera_FOV = 45 # np.pi/2 # Mapping should run all the time but how?
-        self.camera_min_range = 0.3 # True value: 0.2
-        self.camera_max_range = 0.8 # True value: 3.0
+        self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
+        self.camera_min_range = 0.2 # True value: 0.2
+        self.camera_max_range = 1.05 # True value: 3.0
+
+        self.angular_vel = 0.0
+
+        # Obstacle tracking dictionary
+        self.lidar_obstacles = {}  # {(x, y): timestamp}
+
+        self.publish_current_grid()
 
     def read_workspace(self):
         min_x = float('inf')
         max_x = float('-inf')
         min_y = float('inf')
         max_y = float('-inf')
-        tsv_file_path = '/home/group3-robot/robp_group3/robp_ws/src/mapping/mapping/workspace_2.tsv'
+        tsv_file_path = '/home/group3-robot/robp_group3/robp_ws/src/mapping/mapping/workspace_3.tsv'
         vertices = [] # Stores verticies as (x, y) tuples
         with open(tsv_file_path, newline='') as tsvfile:
             reader = csv.reader(tsvfile, delimiter='\t') # List of lists  
@@ -76,18 +98,9 @@ class OccupancyGridNode(Node):
 
     def geofence(self, vertices):
 
-        # for i in range(len(vertices)):
-        #     x0, y0 = vertices[i]
-        #     x1, y1 = vertices[ (i+1) % len(vertices)] 
-        #     start = self.world_to_grid(x0, y0)
-        #     end = self.world_to_grid(x1, y1)
-        #     cells = self.raytrace(start, end)
-        #     for cell in cells:
-        #         (i_x, i_y) = cell
-        #         self.grid[i_y, i_x] = 100
-
         # Create an empty mask
         mask = np.zeros((self.height, self.width), dtype=bool)
+        self.geofence_mask = np.zeros((self.height, self.width), dtype=bool)
         
         # Rasterize the geofence boundary
         for i in range(len(vertices)):
@@ -102,11 +115,33 @@ class OccupancyGridNode(Node):
         
         # Fill inside the geofence
         filled_mask = binary_fill_holes(mask)
-        #self.grid[filled_mask] = -1  # Mark inside as unknown (-1)
 
-        # Fill outside the geofence
-        self.grid[mask] = 100 # Mark border fence as occupied (100)
-        self.grid[~filled_mask] = 100 # Mark outside as occupied (100)
+        # Mask with both border and outside of border
+        self.geofence_mask[mask] = True
+        self.geofence_mask[~filled_mask] = True
+        # Marks the occupancy grid 
+        self.grid[self.geofence_mask] = 100 
+    
+    def add_objects(self, msg:Path):
+        for pose in msg.poses:
+            i_x, i_y = self.world_to_grid(pose.position.x, pose.position.y)
+            if 0 <= i_x < self.width and 0 <= i_y < self.height:
+                # Mark the main cell as an object
+                self.grid[i_y][i_x] = 100
+
+                # Check if msg.frame_id is 'B' before marking adjacent cells
+                if pose.header.frame_id == 'B':
+                    inflation_radius = 3  # For a 5x5 block (2 cells in all directions)
+
+                    for dy in range(-inflation_radius, inflation_radius + 1):
+                        for dx in range(-inflation_radius, inflation_radius + 1):
+                            adj_y = i_y + dy
+                            adj_x = i_x + dx
+
+                            # Ensure we don't go out of bounds
+                            if 0 <= adj_y < self.height and 0 <= adj_x < self.width:
+                                self.grid[adj_y][adj_x] = 100  # Mark as occupied
+        self.inflate_map()
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''
@@ -134,6 +169,53 @@ class OccupancyGridNode(Node):
                 y0 += sy        
         return traversed # returns a lsit of cell indexes from start to one cell before end
 
+
+    def inflate_map(self):
+        self.rm_loners()   # We might need this for path planning. The config space updates quicker than the map gets published and doesn't take loners into account. 
+        
+        binary_grid = np.zeros_like(self.grid)
+        border_grid = np.zeros_like(self.grid)
+
+        # Threshold for obstacles (usually >50 is considered occupied)
+        binary_grid[(self.grid > 50) & (~self.geofence_mask)] = 1
+        border_grid[self.geofence_mask] = 1
+        
+        # Define different kernel sizes
+        large_radius = int(np.ceil(self.robot_radius / self.resolution))  # Larger for workspace
+        small_radius = large_radius // 3  # Smaller for borders
+
+        # Create circular kernels
+        y_large, x_large = np.ogrid[-large_radius:large_radius+1, -large_radius:large_radius+1]
+        kernel_large = x_large**2 + y_large**2 <= large_radius**2
+
+        y_small, x_small = np.ogrid[-small_radius:small_radius+1, -small_radius:small_radius+1]
+        kernel_small = x_small**2 + y_small**2 <= small_radius**2
+
+        # Apply dilation to the entire grid
+        inflated_grid = binary_dilation(binary_grid, kernel_large)
+        inflated_border = binary_dilation(border_grid, kernel_small)
+
+        # Combine the two results
+        config_space = ((inflated_grid | inflated_border) * 99).astype(np.int8)
+
+        self.config_space = ((self.goal_object_grid_inflated & config_space))*99
+
+
+        # Create an OccupancyGrid message
+        config_grid_msg = OccupancyGrid()
+        config_grid_msg.header = Header()
+        config_grid_msg.header.stamp = self.get_clock().now().to_msg()
+        config_grid_msg.header.frame_id = "map"
+        config_grid_msg.info.resolution = self.resolution
+        config_grid_msg.info.width = self.width
+        config_grid_msg.info.height = self.height
+        config_grid_msg.info.origin.position.x = self.origin_x
+        config_grid_msg.info.origin.position.y = self.origin_y
+        config_grid_msg.info.origin.orientation.w = 1.0
+        config_grid_msg.data = self.config_space.flatten().tolist()
+
+        self.config_space_pub.publish(config_grid_msg)
+
     def publish_current_grid(self):
         """Publish the occupancy grid using the current grid data."""
         occupancy_grid_msg = OccupancyGrid() 
@@ -150,14 +232,20 @@ class OccupancyGridNode(Node):
         self.publisher.publish(occupancy_grid_msg)
         # self.get_logger().info("Published occupancy grid")
     
+    def vel_callback(self, msg):
+        self.angular_vel = msg.angular.z
+
     def listener_callback(self, msg):
         # Looks up transform from lidar link to map
         to_frame_rel = 'map'
         time = rclpy.time.Time().from_msg(msg.header.stamp)
 
-        lidar_from_frame_rel = msg.header.frame_id # Lidar link
-        lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
-        lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
+        if abs(self.angular_vel) < 0.2:
+            lidar_from_frame_rel = msg.header.frame_id # Lidar link
+            lidar_tf_future = self.tf_buffer.wait_for_transform_async(to_frame_rel, lidar_from_frame_rel, time)
+            lidar_tf_future.add_done_callback(lambda future: self.lidar_transform_callback(future, msg))
+
+        self.inflate_map()
 
     def lidar_transform_callback(self, future, msg):
         try:    
@@ -171,37 +259,115 @@ class OccupancyGridNode(Node):
         robot_y = t_lidar.transform.translation.y 
         robot_index = self.world_to_grid(robot_x, robot_y)
 
+        # Clone the LaserScan message
+        filtered_scan = LaserScan()
+        filtered_scan.header = msg.header
+        filtered_scan.angle_min = msg.angle_min
+        filtered_scan.angle_max = msg.angle_max
+        filtered_scan.angle_increment = msg.angle_increment
+        filtered_scan.time_increment = msg.time_increment
+        filtered_scan.scan_time = msg.scan_time
+        filtered_scan.range_min = max(msg.range_min, 0.2)
+        filtered_scan.range_max = min(msg.range_max, 2.0)  # Limit max range to 2m
+        filtered_scan.intensities = msg.intensities
+
+        # Filter out points beyond 5 meters
+        filtered_scan.ranges = [r if r <= 2.0 and r >= 0.2 else float('inf') for r in msg.ranges]
+                    
+
         # Project LaserScan to PointCloud2
-        cloud = self.proj.projectLaser(msg)
+        cloud = self.proj.projectLaser(filtered_scan)
         cloud_map = do_transform_cloud(cloud, t_lidar)
+        
+        now = self.get_clock().now()
+        current_time = now.seconds_nanoseconds()[0] + now.seconds_nanoseconds()[1] / 1e9 
+        
 
         for point in sensor_msgs_py.point_cloud2.read_points(cloud_map, field_names=("x", "y"), skip_nans=True):
-            object_index = self.world_to_grid(point[0], point[1])
-            
-            # # Lidar raytracing
-            # cells = self.raytrace(robot_index, object_index)msg
-            # for cell in cells:
-            #     i_x, i_y = cell
-            #     if 0 <= i_x < self.width and 0 <= i_y < self.height:
-            #         self.grid[i_y, i_x] = 0 # Mark as unoccupied
-            
-            # Mark endpoint as occupied (if within bounds)
-            if 0 <= object_index[0] < self.width and 0 <= object_index[1] < self.height:
-                self.grid[object_index[1], object_index[0]] = 100  # occupied
+            x, y = self.world_to_grid(point[0], point[1])
+            if 0 <= x < self.width and 0 <= y < self.height:
+                if not self.geofence_mask[y, x]:  # Only add points if its not part of the geofence mask
+                    self.lidar_obstacles[(x, y)] = current_time
 
-            # self.publish_current_grid(msg) # Will be replaced by behavior
-    
-    
-# def main():
-#     rclpy.init()
-#     node = OccupancyGridNode()
-    
-#     try:
-#         rclpy.spin(node)
-#     except KeyboardInterrupt:
-#         pass
-#     rclpy.shutdown()
+        to_remove = []
+        for (x, y), timestamp in self.lidar_obstacles.items():
+            elapsed_time = (current_time - timestamp) # Elapsed time will be 0.1 seconds since the lidar updates at 10hz 
+            new_value = max(0, int(99 - 10*elapsed_time))
 
-# if __name__ == "__main__":
-#     main()
+            if new_value == 0:
+                to_remove.append((x, y))
+                self.grid[y, x] = -1
+            else:
+                self.grid[y, x] = new_value  # Update the grid with decayed value
+        
+        for key in to_remove:
+            del self.lidar_obstacles[key]
+
+        self.publish_current_grid() 
+
+    #TODO: Might want to remove old detections first
+    def obj_callback(self, msg:MarkerArray):
+        for marker in msg.markers:
+            i_x, i_y = self.world_to_grid(marker.pose.position.x*0.01, marker.pose.position.y*0.01)
+
+            # Ensure x, y are within the grid bounds
+            if 0 <= i_x < self.width and 0 <= i_y < self.height:
+                # Mark the main cell as an object
+                self.grid[i_y][i_x] = 100
+
+                # Check if msg.frame_id is 'B' before marking adjacent cells
+                if marker.header.frame_id == 'B':
+                    inflation_radius = 3  # For a 5x5 block (2 cells in all directions)
+
+                    for dy in range(-inflation_radius, inflation_radius + 1):
+                        for dx in range(-inflation_radius, inflation_radius + 1):
+                            adj_y = i_y + dy
+                            adj_x = i_x + dx
+
+                            # Ensure we don't go out of bounds
+                            if 0 <= adj_y < self.height and 0 <= adj_x < self.width:
+                                self.grid[adj_y][adj_x] = 100  # Mark as occupied
+        self.inflate_map()
+
+    def rm_loners(self):
+        """Removes lidar occupied cells (0<=(cell value)<=99) without any neighbors"""
+        mask = (self.grid > 0) & (self.grid < 100)
+        kernel = np.array([[0, 1, 0],
+                           [1, 0, 1],
+                           [0, 1, 0]])
+        nr_neighbors = convolve(mask, kernel)
+        new_grid = self.grid.copy()
+        new_grid[mask & (nr_neighbors == 0)] = -1
+        self.grid = new_grid
+
+    
+    def current_object_goal(self, msg:PointStamped):
+        reverse = np.zeros_like(self.grid)
+        x_w, y_w = msg.point.x, msg.point.y
+        x_g, y_g = self.world_to_grid(x_w, y_w)
+        reverse[x_g, y_g] = 1
+        r = int(np.ceil(self.robot_radius / self.resolution)) 
+
+        y_inflate, x_inflate = np.ogrid[-r:r+1, -r:r+1]
+        kernel = x_inflate**2 + y_inflate**2 <= r**2
+
+        reverse = binary_dilation(reverse, kernel)
+
+        self.goal_object_grid_inflated = (reverse == 0)
+
+
+
+
+def main():
+    rclpy.init()
+    node = OccupancyGridNode()
+    
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    rclpy.shutdown()
+
+if __name__ == "__main__":
+    main()
     
