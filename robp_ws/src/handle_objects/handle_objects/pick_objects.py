@@ -50,6 +50,13 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                 10
             )  
 
+            """ === Panos: added goal publisher for adjusting yaw """
+            self.motion_goal_publisher_ = self.node.create_publisher(
+                PoseStamped,
+                '/motion/goal',
+                10
+            )
+            """ === """
 
             self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
@@ -58,7 +65,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.picklift_pub = self.node.create_publisher(Bool, '/picklift/succeded', 10)
             
             self.obj_tuck_arm_time = 2000 # in ms            
-             
+
             self.current_angles = None
             self.gripper_threshold = 400 # threshold to detect if something was grasped
             self.desired_servo_angles = [12000]*6
@@ -86,7 +93,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                     break
         #print(f'Current angles position: {current_angles[1]}')
 
-         
+
     def publish_msg(self):
         msg = Int16MultiArray()
         msg.layout = MultiArrayLayout(
@@ -109,7 +116,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         self.arm_started = True
         self.timer.cancel()
         print(f"delay completed")
-         
+
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
 
@@ -140,8 +147,8 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             return py_trees.common.Status.SUCCESS
 
         else:
-             print("ERROR")
-             
+            print("ERROR")
+
     def terminate(self, new_status: py_trees.common.Status):
         """
         Minimal termination implementation.
@@ -170,7 +177,7 @@ class SearchObjectArm(py_trees.behaviour.Behaviour, Node): # this class is a py_
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
           status is not RUNNING thereafter."""    
-         
+
     def update(self):
             """ Behavior Tree execution step. Called whenever the node is ticked """
 
@@ -277,7 +284,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 msg_type = Int16MultiArray,
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = 10) # ota = object_tuck_arm
-              
+
         
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
@@ -292,7 +299,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.current_angles, self.desired_servo_angles = None, None
         self.timer = self.node.create_timer(1, self.init_arm_movement)
 
-         
+
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
         #self.node.get_logger().info(f"Objects in arm camera frame {[self.X_arm_cam, self.Y_arm_cam]}")
@@ -300,6 +307,9 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             return py_trees.common.Status.SUCCESS
         elif self.ready2move and not self.arm_moving and not self.arm_tucked : # if necessary, self.x is not None and self.y is not None and self.z is not None and 
             # if everything fails, try a simpler approach. Transform from arm camera to arm base
+            
+            # TODO: include adjust yaw routine!
+            
             if len(self.Y_arm_cam) == 0: #arm_segmentation is shit, use other stuff
                 self.object_transform()
                 self.node.get_logger().warn(f"Using transform from map to arm_base_link instead")
@@ -438,7 +448,27 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     self.arm_tucked = False
                     self.arm_moving = True
                     break
-        
+    
+    # adjust the robot position to favor the grasping of the object
+    def do_adjust_yaw(self, object_x, object_y):
+        transform = self.tf_buffer.lookup_transform(
+        'map', 'base_link', rclpy.time.Time(), timeout=rclpy.duration.Duration(seconds=1.0)
+        )
+        current_yaw = 2 * atan2(transform.transform.rotation.z, transform.transform.rotation.w)
+        desired_yaw = atan2(object_y, object_x)
+        yaw_diff = desired_yaw - current_yaw
+
+        pose = PoseStamped()
+        pose.header.stamp = self.get_clock().now().to_msg()
+        pose.header.frame_id = 'map'
+        pose.pose.position.x = transform.transform.translation.x
+        pose.pose.position.y = transform.transform.translation.y
+        pose.pose.position.z = transform.transform.translation.z
+        pose.pose.orientation.z = sin(yaw_diff / 2)
+        pose.pose.orientation.w = cos(yaw_diff / 2)
+
+        self.motion_goal_publisher_.publish(pose)
+
     def pick_planB(self, x, y, z):  
         self.get_logger().info(f" For IK solver, object is in {round(x*100, 2), round(y*100, 2), round(z*100, 2)} in arm_base link")
         # we will iterate with different orientations for the 1st link. 
