@@ -63,8 +63,8 @@ class OccupancyGridNode(Node):
         
         # Camera paramters
         self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
-        self.camera_min_range = 0.3 # True value: 0.2
-        self.camera_max_range = 1.12 # True value: 3.0
+        self.camera_min_range = 0.2 # True value: 0.2
+        self.camera_max_range = 1.05 # True value: 3.0
 
         self.angular_vel = 0.0
 
@@ -329,6 +329,9 @@ class OccupancyGridNode(Node):
                     # Mark as known by camera (free) if not already a fence/occupied by lidar
                     if self.grid[i_y, i_x] < 50:
                         self.grid[i_y, i_x] = 0
+                    else:
+                        break
+            
 
     #TODO: Might want to remove old detections first
     def obj_callback(self, msg:MarkerArray):

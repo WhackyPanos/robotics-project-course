@@ -244,7 +244,7 @@ bool Clustering::is_occupied(float x, float y)
 
             // Prevent out-of-bounds access
             if (nx < 0 || nx >= width || ny < 0 || ny >= height) {
-                continue;
+                return true;
             }
 
             int index = ny * width + nx;

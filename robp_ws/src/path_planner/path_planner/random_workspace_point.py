@@ -104,7 +104,7 @@ class RandomPoint(Node):
 
     def generate_new_point(self):
         """ Generates a random valid point in unexplored free space and publishes it. """
-        if self.map_data is None:
+        if self.map_data is None or self.config_space_data is None:
             self.get_logger().warn("Map or config space data not available yet!")
             return False
         self.get_robot_pose()

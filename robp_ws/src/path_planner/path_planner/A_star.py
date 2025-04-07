@@ -29,8 +29,9 @@ class Nodes:
                 self.y < 0 or self.y >= config_space.info.height):
                 return False
             
-            # if self.parent == None: # All children of the start node will be ok to avoid getting stuck when starting
-            #     return True
+            if self.parent == None: # All children of the start node will be ok to avoid getting stuck when starting
+                 print('Node has no parent')
+                 return True
 
             config_space_data = np.array(config_space.data).reshape((config_space.info.height, config_space.info.width))
             
@@ -44,11 +45,11 @@ class Nodes:
 
             children_list = [Nodes(self.x + dx * step_size, self.y + dy * step_size) for dx, dy in directions]
             for node_child in children_list:
+                node_child.parent = self
                 if node_child.is_ok(config_space):
                     node_child.g = self.g + ((self.x - node_child.x)**2 + (self.y - node_child.y)**2)**0.5 
                     node_child.h = ((node_goal.x - node_child.x)**2 + (node_goal.y - node_child.y)**2)**0.5
                     node_child.f = cost_ratio*node_child.h + node_child.g
-                    node_child.parent = self
                     ok_children_list.append(node_child)
             return ok_children_list
 
@@ -64,7 +65,7 @@ class Planner_A_star(Node):
 
         # Initizialize
         # self.robot_radius = 0.20
-        self.cost_ratio = 5
+        self.cost_ratio = 1
         self.config_space = None
         self.goal_msg = None
     

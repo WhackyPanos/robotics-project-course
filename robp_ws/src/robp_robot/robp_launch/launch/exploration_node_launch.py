@@ -71,7 +71,7 @@ def generate_launch_description():
                 "twist_topic": "/cmd_vel",
                 "trigger_topic_": "/classification/request",
                 "result_topic_": "/classification/result",
-                "dist_filter_min": 0.3,
+                "dist_filter_min": 0.2,
                 "dist_filter_max": 1.0,
                 "box_filter_min": -0.003,
                 "box_filter_max": -0.013,
