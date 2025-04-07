@@ -70,12 +70,17 @@ void ObjectSegmentation::trigger_callback(const std_msgs::msg::Bool::SharedPtr m
 
 bool ObjectSegmentation::perform_segmentation(){
 
+    if (!latest_img_) {
+        RCLCPP_WARN(this->get_logger(), "No image received yet!");
+        return false;
+    }
+
     // Convert ROS Image to OpenCV format
     cv::Mat image = cv_bridge::toCvCopy(latest_img_, "bgr8")->image;
 
     // Get image dimensions
     int y_max = image.rows;  
-    int cutoff = static_cast<int>(0.7 * y_max);
+    int cutoff = static_cast<int>(0.8 * y_max);
 
     // Set pixels above the cutoff to gray
     for (int y = cutoff; y < y_max; ++y) {
@@ -128,18 +133,21 @@ bool ObjectSegmentation::perform_segmentation(){
     }
 
     // Compute cluster positions and sizes
+    std::vector<std::vector<cv::Point>> cluster_pixels(best_k);
     std::vector<cv::Point> sum_cluster_positions(best_k, cv::Point(0, 0));
     std::vector<int> cluster_sizes(best_k, 0);
 
     for (int y = 0; y < image.rows; y++) {
         for (int x = 0; x < image.cols; x++) {
             int cluster_idx = labels.at<int>(y, x);
+            cluster_pixels[cluster_idx].push_back(cv::Point(x, y));
             sum_cluster_positions[cluster_idx] += cv::Point(x, y);
             cluster_sizes[cluster_idx]++;
         }
     }
 
     // Filter out clusters larger than max_obj_size_ (background pixels)
+    std::vector<std::vector<cv::Point>> obj_pixels;
     std::vector<cv::Point> sum_obj_positions, obj_positions, merged_obj_positions;
     std::vector<int> obj_sizes;
 
@@ -148,6 +156,7 @@ bool ObjectSegmentation::perform_segmentation(){
         if (cluster_sizes[i] <= max_obj_size_) {
             sum_obj_positions.push_back(sum_cluster_positions[i]);
             obj_sizes.push_back(cluster_sizes[i]);
+            obj_pixels.push_back(cluster_pixels[i]);
         }
     }
 
@@ -163,12 +172,14 @@ bool ObjectSegmentation::perform_segmentation(){
     }
 
     // Merge object clusters that are closer than min_obj_distance
+    std::vector<std::vector<cv::Point>> merged_obj_pixels;
     std::vector<bool> merged(obj_positions.size(), false); // Track if a center is merged
 
     for (size_t i = 0; i < obj_positions.size(); i++) {
         if (merged[i]) continue; // Skip already merged clusters
 
         cv::Point merge = obj_positions[i];
+        std::vector<cv::Point> merged_pixels = obj_pixels[i];
         int count = 1;
 
         // Merge close centers
@@ -179,6 +190,7 @@ bool ObjectSegmentation::perform_segmentation(){
             RCLCPP_INFO(this->get_logger(), "Dist: %f", dist);
             if (dist < min_obj_distance_) {
                 merge += obj_positions[j];
+                merged_pixels.insert(merged_pixels.end(), obj_pixels[j].begin(), obj_pixels[j].end());
                 count++;
                 merged[j] = true; // Mark as merged
             }
@@ -189,17 +201,34 @@ bool ObjectSegmentation::perform_segmentation(){
         merge.y /= count;
 
         merged_obj_positions.push_back(merge);
+        merged_obj_pixels.push_back(merged_pixels);
     }
 
-    if(merged_obj_positions.size()==0) return false;
+    if(merged_obj_pixels.size()==0) return false;
     // RCLCPP_INFO(this->get_logger(), "Number of cluster: %ld", merged_obj_positions.size());
+
+    std::vector<std::pair<cv::Point, float>> merged_obj(merged_obj_positions.size());
+    for (size_t i = 0; i < merged_obj_positions.size(); i++) {
+
+        cv::RotatedRect box = cv::minAreaRect(merged_obj_pixels[i]);
+        cv::Point2f vertices[4];
+        box.points(vertices);
+
+        merged_obj.push_back(std::pair(merged_obj_positions[i], box.angle));
+
+        if(visualization_){
+            for (int i = 0; i < 4; ++i){
+                cv::line(image, vertices[i], vertices[(i + 1) % 4], cv::Scalar(0, 255, 0), 2);
+            }
+            RCLCPP_INFO(this->get_logger(), "Object at (%d, %d) angle: %0.2f",
+                    merged_obj_positions[i].x, merged_obj_positions[i].y, box.angle);
+        }
+    }
 
     if (visualization_) {
         for (const auto &pos : merged_obj_positions) {
             // Draw the markers
             cv::drawMarker(image, pos, cv::Scalar(0, 0, 255), cv::MARKER_CROSS, 10, 2);
-            
-            RCLCPP_INFO(this->get_logger(), "Cluster Center at pixels (%d, %d)", pos.x, pos.y);
         }
 
         // Create uniform L channel
@@ -217,23 +246,23 @@ bool ObjectSegmentation::perform_segmentation(){
         image_lab_pub_->publish(*lab_msg);
     }
 
-    image_to_camera(merged_obj_positions);
+    image_to_camera(merged_obj);
     
     return true;
 }
 
 
-void ObjectSegmentation::image_to_camera(std::vector<cv::Point>& obj_positions)
+void ObjectSegmentation::image_to_camera(std::vector<std::pair<cv::Point, float>>& objects_2d)
 {  
     // Publish pose array
     geometry_msgs::msg::PoseArray pose_array_msg;
     pose_array_msg.header.stamp = latest_img_->header.stamp;
     pose_array_msg.header.frame_id = latest_img_->header.frame_id;
 
-    for (const auto &pos : obj_positions) {
+    for (const auto& [center, angle] : objects_2d) {
 
         // Convert image coordinates (u, v) to camera coordinates (X_c, Y_c, Z_c)
-        cv::Mat pixel_homogeneous = (cv::Mat_<double>(3, 1) << pos.x, pos.y, 1.0);
+        cv::Mat pixel_homogeneous = (cv::Mat_<double>(3, 1) << center.x, center.y, 1.0);
         cv::Mat camera_coords = camera_matrix_.inv() * pixel_homogeneous * Zc_;
 
         geometry_msgs::msg::Pose pose;
@@ -241,7 +270,11 @@ void ObjectSegmentation::image_to_camera(std::vector<cv::Point>& obj_positions)
         pose.position.y = camera_coords.at<double>(1, 0);
         pose.position.z = Zc_;
 
-        // Add camera point to suitable message array
+        // Orientation (around Z axis for planar rotation)
+        tf2::Quaternion q;
+        q.setRPY(0, 0, angle * CV_PI / 180.0);  // degrees to radians
+        pose.orientation = tf2::toMsg(q);
+
         pose_array_msg.poses.push_back(pose);
     }
 

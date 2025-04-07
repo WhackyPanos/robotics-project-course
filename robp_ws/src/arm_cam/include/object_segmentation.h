@@ -28,7 +28,7 @@ private:
     void image_callback(const sensor_msgs::msg::Image::SharedPtr msg);
     void trigger_callback(const std_msgs::msg::Bool::SharedPtr msg);
 
-    void image_to_camera(std::vector<cv::Point>& obj_positions);
+    void image_to_camera(std::vector<std::pair<cv::Point, float>>& objects_2d);
     int find_k(cv::Mat& ab_channel);
 
     // ROS interfaces
