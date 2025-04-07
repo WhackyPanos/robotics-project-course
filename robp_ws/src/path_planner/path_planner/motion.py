@@ -80,6 +80,7 @@ class MotionNode(Node):
         self.kp = 1.5
         self.ki = 0.015
         self.kd = 0.5
+        self.mode = 0 # 0: exploration, 1: collection
         # ==================
 
     # Checks when new goal is received
@@ -112,10 +113,11 @@ class MotionNode(Node):
     
     def get_robot_position(self):
         try:
-            # Lookup transform from 'map' to 'base_link'
+            # Lookup transform from 'map' to 'base_link' or 'arm_link'
+            # Depending on the mode, we want to get the transform from 'map' to 'base_link' or 'arm_link'
             transform = self.tf_buffer.lookup_transform(
                 'map',  # Target frame
-                'base_link',  # Source frame
+                'base_link' if self.mode == 0 else 'arm_base_link',  # Source frame, depending on the mode
                 rclpy.time.Time(),  # Get the latest available transform
                 timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
             )
@@ -148,11 +150,14 @@ class MotionNode(Node):
 
         distance = math.sqrt((goal_x - x)**2 + (goal_y - y)**2)
         angle = math.atan2(goal_y - y, goal_x - x)
+
         # Normalize angle difference to range [-pi, pi]
         angle_diff = math.atan2(math.sin(angle - theta), math.cos(angle - theta))
         # angle_diff = angle - theta
+        
         cur_time = self.get_clock().now().nanoseconds / 1e9
         self.elapsed_time = cur_time - self.prev_time
+        
         #self.get_logger().info(f"Current position is  = {x, y} and goal position is {goal_x, goal_y} ")
         if distance > self.goal_threshold:
             iError = angle_diff * self.elapsed_time
@@ -168,6 +173,7 @@ class MotionNode(Node):
             else:
                 self.vel_cmd.linear.x = self.linear_velocity if not fine else self.linear_velocity_fine
             self.cmd_vel_publisher.publish(self.vel_cmd)
+
         else:
             self.goal_reached_publisher.publish(Bool(data=True))
             self.goal_reached_flag = True
@@ -180,46 +186,61 @@ class MotionNode(Node):
             
             elif self.is_path and len(self.path.poses) == 0:
                 # self.get_logger().info('Path execution completed.')
-                self.path_reached_publisher.publish(Bool(data=True))
-                self.path_reached = True
+                
                 # self.is_path = False
                 self.icp_publisher.publish(Bool(data=False))
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                #if do_yaw: self.adjust_yaw(self.angle_goal) #TODO: uncomment when this works fine
+                if do_yaw: adjust_yaw = True
+
             else:
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                #if do_yaw: self.adjust_yaw(self.angle_goal) #TODO: uncomment when this works fine
+                if do_yaw: adjust_yaw = True
+
+        # save state for next iteration
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
 
+        # handle yaw adjustment
+        if adjust_yaw:
+            if self.adjust_yaw(self.angle_goal):
+                self.vel_cmd.angular.z = 0.0
+                self.vel_cmd.linear.x = 0.0
+                self.cmd_vel_publisher.publish(self.vel_cmd)
+                
+                if self.is_path:
+                    self.path_reached_publisher.publish(Bool(data=True))
+                    self.path_reached = True
+                elif self.is_goal:
+                    self.goal_reached_publisher.publish(Bool(data=True))
+                    self.goal_reached_flag = True
+        
         return True
     
     def adjust_yaw(self, angle):
-        while True:
-            rclpy.spin_once(self)
-            if not self.get_robot_position():
-                continue
-            x = self.x_map
-            y = self.y_map
-            theta = self.theta_map
 
-            angle_diff = angle - theta
-            if abs(angle_diff) < 10: #TODO: change threshold
-                break
-            if angle_diff > 0:
-                self.vel_cmd.angular.z = self.angular_velocity_fine
-            else:
-                self.vel_cmd.angular.z = -self.angular_velocity_fine
-            self.vel_cmd.linear.x = 0.0
+        self.get_robot_position()
+        x = self.x_map
+        y = self.y_map
+        theta = self.theta_map
+
+        angle_diff = angle - theta
+        if abs(angle_diff) < 0.05: #TODO: change threshold
+            self.vel_cmd.angular.z = 0.0
             self.cmd_vel_publisher.publish(self.vel_cmd)
-            self.get_logger().info(f"Angle difference = {angle_diff}")
-        self.vel_cmd.angular.z = 0.0
+            return True
+        
+        if angle_diff > 0:
+            self.vel_cmd.angular.z = self.angular_velocity_fine
+        else:
+            self.vel_cmd.angular.z = -self.angular_velocity_fine
+        self.vel_cmd.linear.x = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
-    
+        self.get_logger().info(f"Angle difference = {angle_diff}")
+
     """
     Reverse the robot for a given distance.
     The robot will move backward at the "fine" linear velocity.
