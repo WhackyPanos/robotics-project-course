@@ -53,12 +53,14 @@ class MotionNode(Node):
         self.is_path = False
         self.is_goal = False
 
+        self.do_adjust_yaw = False
+
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
 
         # Setup publishers and subscribers
-        # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10)
+        # self.create_subscription(Pose2D, '/odom_pose', self.odometry_callback, 10) # for DEBUG only
         self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 
                                  rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
@@ -75,13 +77,18 @@ class MotionNode(Node):
         self.linear_velocity = 0.1
         self.angular_velocity = 0.4
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
-        self.angular_velocity_fine = 0.2 # TODO untested, adjust this value
+        self.angular_velocity_fine = 0.4 # TODO untested, adjust this value
         self.goal_threshold = 0.05  
         self.kp = 1.5
         self.ki = 0.015
         self.kd = 0.5
         self.mode = 0 # 0: exploration, 1: collection
         # ==================
+
+    # for DEBUG only
+    # def odometry_callback(self, msg: Pose2D):
+    #     if not self.goal_reached_flag:
+    #         self.navigate_to_goal(do_yaw=True)
 
     # Checks when new goal is received
     def goal_callback(self, msg:PoseStamped):
@@ -159,7 +166,7 @@ class MotionNode(Node):
         self.elapsed_time = cur_time - self.prev_time
         
         #self.get_logger().info(f"Current position is  = {x, y} and goal position is {goal_x, goal_y} ")
-        if distance > self.goal_threshold:
+        if distance > self.goal_threshold and not self.do_adjust_yaw:
             iError = angle_diff * self.elapsed_time
             dError = (angle_diff - self.prev_angle_diff)/self.elapsed_time
             output = self.kp*angle_diff + self.ki*iError + self.kd*dError
@@ -192,20 +199,20 @@ class MotionNode(Node):
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if do_yaw: adjust_yaw = True
+                if do_yaw: self.do_adjust_yaw = True
 
             else:
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if do_yaw: adjust_yaw = True
+                if do_yaw: self.do_adjust_yaw = True
 
         # save state for next iteration
         self.prev_angle_diff = angle_diff
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
 
         # handle yaw adjustment
-        if adjust_yaw:
+        if self.do_adjust_yaw:
             if self.adjust_yaw(self.angle_goal):
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
@@ -214,9 +221,11 @@ class MotionNode(Node):
                 if self.is_path:
                     self.path_reached_publisher.publish(Bool(data=True))
                     self.path_reached = True
+                    self.do_adjust_yaw = False
                 elif self.is_goal:
                     self.goal_reached_publisher.publish(Bool(data=True))
                     self.goal_reached_flag = True
+                    self.do_adjust_yaw = False
         
         return True
     
@@ -228,9 +237,10 @@ class MotionNode(Node):
         theta = self.theta_map
 
         angle_diff = angle - theta
-        if abs(angle_diff) < 0.05: #TODO: change threshold
+        if abs(angle_diff) < 0.1: #TODO: change threshold
             self.vel_cmd.angular.z = 0.0
             self.cmd_vel_publisher.publish(self.vel_cmd)
+            # self.get_logger().info(f"REACHED Angle difference = {angle_diff}")
             return True
         
         if angle_diff > 0:
@@ -239,7 +249,8 @@ class MotionNode(Node):
             self.vel_cmd.angular.z = -self.angular_velocity_fine
         self.vel_cmd.linear.x = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
-        self.get_logger().info(f"Angle difference = {angle_diff}")
+        # self.get_logger().info(f"Angle difference = {angle_diff}")
+        return False
 
     """
     Reverse the robot for a given distance.
@@ -280,3 +291,4 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+    
