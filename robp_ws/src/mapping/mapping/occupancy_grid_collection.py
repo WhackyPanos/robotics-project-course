@@ -40,7 +40,7 @@ class OccupancyGridNode(Node):
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
         self.vel_subscription = self.create_subscription(Twist, '/cmd_vel', self.vel_callback, 10)
         self.object_sub = self.create_subscription(MarkerArray, '/object_positions', self.obj_callback, 10)
-        self.current_object_goal_sub = self.create_subscription(PoseStamped, '/goal_point', self.current_object_goal, 10)
+        self.current_object_goal_sub = self.create_subscription(PointStamped, '/goal_point', self.current_object_goal, 10)
         self.object_list_subscription = self.create_subscription(Path,'/object_path', self.add_objects,10)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
@@ -57,7 +57,7 @@ class OccupancyGridNode(Node):
         self.origin_y = min_y- self.resolution
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.config_space = self.grid # Config space
-        self.goal_object_grid_inflated = np.ones_like(self.grid)
+        self.goal_object_mask_inflated = np.zeros_like(self.grid)
         self.grid.fill(-1) # Sets all cells to unknown
         self.geofence_mask = None # Geofence mask to check if lidar points are inside the workspace
         self.geofence(vertices) # Sets a boundry for the workspace
@@ -196,9 +196,9 @@ class OccupancyGridNode(Node):
         inflated_border = binary_dilation(border_grid, kernel_small)
 
         # Combine the two results
-        config_space = ((inflated_grid | inflated_border) * 99).astype(np.int8)
+        self.config_space = ((inflated_grid | inflated_border) * 99).astype(np.int8)
 
-        self.config_space = ((self.goal_object_grid_inflated & config_space))*99
+        self.config_space[self.goal_object_mask_inflated] = 0
 
 
         # Create an OccupancyGrid message
@@ -342,18 +342,18 @@ class OccupancyGridNode(Node):
 
     
     def current_object_goal(self, msg:PointStamped):
-        reverse = np.zeros_like(self.grid)
+        mask = np.zeros_like(self.grid)
         x_w, y_w = msg.point.x, msg.point.y
         x_g, y_g = self.world_to_grid(x_w, y_w)
-        reverse[x_g, y_g] = 1
+        mask[y_g, x_g] = 1
         r = int(np.ceil(self.robot_radius / self.resolution)) 
 
         y_inflate, x_inflate = np.ogrid[-r:r+1, -r:r+1]
         kernel = x_inflate**2 + y_inflate**2 <= r**2
 
-        reverse = binary_dilation(reverse, kernel)
+        mask = binary_dilation(mask, kernel)
 
-        self.goal_object_grid_inflated = (reverse == 0)
+        self.goal_object_mask_inflated =  mask
 
 
 
