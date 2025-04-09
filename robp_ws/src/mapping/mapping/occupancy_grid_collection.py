@@ -123,6 +123,7 @@ class OccupancyGridNode(Node):
         self.grid[self.geofence_mask] = 100 
     
     def add_objects(self, msg:Path):
+        self.get_logger().info("Inside add function")
         for pose in msg.poses:
             i_x, i_y = self.world_to_grid(pose.position.x, pose.position.y)
             # Mark the main cell as an object
