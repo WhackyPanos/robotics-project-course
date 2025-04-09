@@ -75,7 +75,7 @@ class Planner_A_star(Node):
     def map_callback(self, config_space_msg): # Create the configurations space
         self.config_space = config_space_msg
 
-    def path_plan(self): # Called from the behavior   
+    def path_plan(self, goal_threash=None): # Called from the behavior   
         # Get current position
         try:
             t = self.tf_buffer.lookup_transform('map', 'base_link', rclpy.time.Time(), timeout=rclpy.duration.Duration(seconds=5.0))  # I want the latest possible transform      
@@ -102,7 +102,7 @@ class Planner_A_star(Node):
         node_start.f = self.cost_ratio*node_start.h + node_start.g
         
         # Publish path
-        simplified_path, full_path = self.a_star(node_start, node_goal)
+        simplified_path, full_path = self.a_star(node_start, node_goal, goal_threash)
         if full_path is None: return False
 
         self.simple_publisher.publish(simplified_path)
@@ -164,7 +164,7 @@ class Planner_A_star(Node):
 
         return simplified_path_msg, full_path_msg
 
-    def a_star(self, node_start, node_goal):
+    def a_star(self, node_start, node_goal, goal_threash):
         
         # self.get_logger().warn("Enters A*")
         open_dict = {}
@@ -176,7 +176,12 @@ class Planner_A_star(Node):
             node_current_key = min(open_dict.keys(), key=lambda k: open_dict[k].f)
             node_current = open_dict.pop(node_current_key)
             closed_dict[node_current.x, node_current.y] = node_current
-            if node_current.x == node_goal.x and node_current.y == node_goal.y: 
+
+            if goal_threash == None: # Exploration
+                if node_current.x == node_goal.x and node_current.y == node_goal.y:
+                    return self.construct_path(node_current)
+
+            elif node_current.h < goal_threash: # Collection
                 return self.construct_path(node_current)
 
             for node_child in node_current.get_children(node_goal, self.config_space, self.cost_ratio):

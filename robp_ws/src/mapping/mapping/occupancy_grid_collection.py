@@ -125,22 +125,21 @@ class OccupancyGridNode(Node):
     def add_objects(self, msg:Path):
         for pose in msg.poses:
             i_x, i_y = self.world_to_grid(pose.position.x, pose.position.y)
-            if 0 <= i_x < self.width and 0 <= i_y < self.height:
-                # Mark the main cell as an object
-                self.grid[i_y][i_x] = 100
+            # Mark the main cell as an object
+            self.grid[i_y][i_x] = 100
 
-                # Check if msg.frame_id is 'B' before marking adjacent cells
-                if pose.header.frame_id == 'B':
-                    inflation_radius = 3  # For a 5x5 block (2 cells in all directions)
+            # Check if msg.frame_id is 'B' before marking adjacent cells
+            if pose.header.frame_id == 'B':
+                inflation_radius = 3  # For a 5x5 block (2 cells in all directions)
 
-                    for dy in range(-inflation_radius, inflation_radius + 1):
-                        for dx in range(-inflation_radius, inflation_radius + 1):
-                            adj_y = i_y + dy
-                            adj_x = i_x + dx
+                for dy in range(-inflation_radius, inflation_radius + 1):
+                    for dx in range(-inflation_radius, inflation_radius + 1):
+                        adj_y = i_y + dy
+                        adj_x = i_x + dx
 
-                            # Ensure we don't go out of bounds
-                            if 0 <= adj_y < self.height and 0 <= adj_x < self.width:
-                                self.grid[adj_y][adj_x] = 100  # Mark as occupied
+                        # Ensure we don't go out of bounds
+                        if 0 <= adj_y < self.height and 0 <= adj_x < self.width:
+                            self.grid[adj_y][adj_x] = 100  # Mark as occupied
         self.inflate_map()
     
     def world_to_grid(self, x, y):

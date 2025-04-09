@@ -144,6 +144,7 @@ class CollectionBT(Node):
             object_path.poses.append(pose)
         
         self.object_path_publisher.publish(object_path)
+        self.get_logger().info('Publishing object path')
         return objs_list, box_list
     
     def publish_initial_transform(self):
