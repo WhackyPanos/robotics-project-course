@@ -44,11 +44,11 @@ class CollectionBT(Node):
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000], 200)
         self.adjust = Adjust()
         self.place = Place()
-        self.path_plan = PathPlan()
+        #self.path_plan = PathPlan()
         
         #self.pub_occupancy_grid = PublishOccupancyGrid()
         #self.localization = Localization_bhv()
-        #self.navigate_to_goal = NavigateToGoal()
+        self.navigate_to_goal = NavigateToGoal()
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
         self.path_planner = None #TODO
 
@@ -65,13 +65,13 @@ class CollectionBT(Node):
         executor.add_node(self.place)
     
         executor.add_node(self.next_object_bhv)
-            #executor.add_node(self.navigate_to_goal)
+        executor.add_node(self.navigate_to_goal)
         #executor.add_node(self.pub_occupancy_grid)
         #executor.add_node(self.localization)
 
 
         #executor.add_node(self.pub_occupancy_grid.occupancy_grid)
-            #executor.add_node(self.navigate_to_goal.motion_node)
+        executor.add_node(self.navigate_to_goal.motion_node)
         #executor.add_node(self.localizatio
         # n.localization_node)
 
@@ -113,7 +113,7 @@ class CollectionBT(Node):
             children = [self.place,planA], # self.repeat_picklift
             memory = False)
 
-        self.root.add_children([self.next_object_bhv, self.path_plan,self.pick_or_place, self.lift, self.arm_task_succeeded]) # self.navigate_to_goal, 
+        self.root.add_children([self.next_object_bhv, self.navigate_to_goal, self.pick_or_place, self.lift, self.arm_task_succeeded]) # self.path_plan,self.navigate_to_goal, 
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False) 
 
         return 

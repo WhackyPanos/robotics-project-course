@@ -40,7 +40,7 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         self.update_object_list_sub = self.node.create_subscription(Bool, '/next_goal/object/update', self.update_object_list_callback, 10)
 
         #self.next_goal_pub = self.node.create_publisher(PoseStamped,'/goal_point', 10 ) # TODO: uncomment when using AStar
-        self.next_goal_pub = self.node.create_publisher(PointStamped,'/goal_point',
+        self.next_goal_pub = self.node.create_publisher(PoseStamped,'/motion/goal',
                                 rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.need_next_object = 'Object' # at the beginning, we want to pick objects
 
@@ -61,10 +61,10 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             closest_obj = points_list[np.argmin(distances)]
 
             # publish goal point (object to pick) TODO: uncomment those 3 lines when using AStar
-            msg = PointStamped()
-            msg.point.x = closest_obj[1]
-            msg.point.y = closest_obj[2]
-            self.node.get_logger().info(f"Closest stuff: {msg.point.x , msg.point.y}")
+            msg = PoseStamped()
+            msg.pose.position.x = closest_obj[1]
+            msg.pose.position.y = closest_obj[2]
+            #self.node.get_logger().info(f"Closest stuff: {msg.point.x , msg.point.y}")
             # msg = PointStamped() 
             # msg.point.x = closest_obj[1]
             # msg.point.y = closest_obj[2]
