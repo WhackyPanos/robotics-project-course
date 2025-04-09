@@ -16,10 +16,10 @@ class ArmSegmentationBT(py_trees.behaviour.Behaviour, Node):
 
         # Subscribe to clustering result
         self.result_sub = self.node.create_subscription(
-            Bool, "/arm_cam/result", self.result_callback, 10)
+            Bool, "/arm_camera/result", self.result_callback, 10)
 
         # Publish to request clustering
-        self.request_pub = self.node.create_publisher(Bool, "/arm_cam/request", 10)
+        self.request_pub = self.node.create_publisher(Bool, "/arm_camera/request", 10)
 
     def initialise(self):
         self.object_found = None

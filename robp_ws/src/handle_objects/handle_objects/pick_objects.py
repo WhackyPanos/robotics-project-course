@@ -67,7 +67,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.obj_tuck_arm_time = 2000 # in ms            
 
             self.current_angles = None
-            self.gripper_threshold = 400 # threshold to detect if something was grasped
+            self.gripper_threshold = 390 # threshold to detect if something was grasped
             self.desired_servo_angles = [12000]*6
             self.desired_servo_angles[0] = 10000 # gripper is different
             
@@ -331,7 +331,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 if len(self.X_arm_cam) == 0:
                     #self.picklift_pub.publish(Bool(data=False))  # TODO: if pick and search fails, a message has to be published. That can happen here or in the arm camera
                     self.node.get_logger().warn(f"IK FAILED")
-                    self.picklift_pub.publish(Bool(data=False))
+                    #self.picklift_pub.publish(Bool(data=False))
                     return py_trees.common.Status.FAILURE
                 else:
                     self.arm_moving = False

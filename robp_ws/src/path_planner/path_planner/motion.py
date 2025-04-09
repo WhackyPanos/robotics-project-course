@@ -78,7 +78,7 @@ class MotionNode(Node):
         self.angular_velocity = 0.4
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.4 # TODO untested, adjust this value
-        self.goal_threshold = 0.15  
+        self.goal_threshold = 0.20  
         self.kp = 1.5
         self.ki = 0.015
         self.kd = 0.5
@@ -96,7 +96,7 @@ class MotionNode(Node):
         self.goal_position = msg
         self.goal_reached_publisher.publish(Bool(data=False))
         self.goal_reached_flag = False
-        # self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.x))
+        self.get_logger().info('New goal received: x={}, y={}'.format(self.goal_position.pose.position.x, self.goal_position.pose.position.y))
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
 
@@ -165,7 +165,8 @@ class MotionNode(Node):
         cur_time = self.get_clock().now().nanoseconds / 1e9
         self.elapsed_time = cur_time - self.prev_time
         
-        #self.get_logger().info(f"Current position is  = {x, y} and goal position is {goal_x, goal_y} ")
+        self.get_logger().info(f"Current position is  = {x, y} and goal position is {goal_x, goal_y} ")
+        self.get_logger().info(f"Distance = {distance}, Adjust_yaw = {self.do_adjust_yaw}")
         if distance > self.goal_threshold and not self.do_adjust_yaw:
             iError = angle_diff * self.elapsed_time
             dError = (angle_diff - self.prev_angle_diff)/self.elapsed_time
