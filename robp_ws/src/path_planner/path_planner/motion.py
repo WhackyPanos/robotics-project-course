@@ -200,13 +200,20 @@ class MotionNode(Node):
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if do_yaw: self.do_adjust_yaw = True
+                if do_yaw: 
+                    self.do_adjust_yaw = True
+                else:
+                    self.goal_reached_flag = True
+                    self.path_reached = True
 
             else:
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if do_yaw: self.do_adjust_yaw = True
+                if do_yaw: 
+                    self.do_adjust_yaw = True
+                else:
+                    self.goal_reached_flag = True
 
         # save state for next iteration
         self.prev_angle_diff = angle_diff
