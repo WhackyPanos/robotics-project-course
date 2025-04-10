@@ -24,8 +24,19 @@ find_package(OpenCV REQUIRED)
 
 include_directories(include ${OpenCV_INCLUDE_DIRS})
 add_executable(object_segmentation_node src/object_segmentation_node.cpp src/object_segmentation.cpp)
+add_executable(box_segmentation_node src/box_segmentation_node.cpp src/box_segmentation.cpp)
 
 ament_target_dependencies(object_segmentation_node 
+                        rclcpp
+                        tf2_ros
+                        tf2_geometry_msgs
+                        std_msgs
+                        geometry_msgs
+                        sensor_msgs 
+                        cv_bridge 
+                        OpenCV)
+
+ament_target_dependencies(box_segmentation_node 
                         rclcpp
                         tf2_ros
                         tf2_geometry_msgs
@@ -38,6 +49,7 @@ ament_target_dependencies(object_segmentation_node
 # Install the node
 install(TARGETS
   object_segmentation_node
+  box_segmentation_node
   DESTINATION lib/${PROJECT_NAME}
 )
 

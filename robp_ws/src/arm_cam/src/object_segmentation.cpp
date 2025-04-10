@@ -16,7 +16,7 @@ ObjectSegmentation::ObjectSegmentation() : Node("object_segmentation", rclcpp::N
     this->get_parameter_or("max_obj_size", max_obj_size_, 10000);
     this->get_parameter_or("min_obj_distance", min_obj_distance_, 45.0);
     this->get_parameter_or("max_k", max_k_, 6);
-    this->get_parameter_or("visualization", visualization_, true);
+    this->get_parameter_or("visualization", visualization_, false);
 
     // Define intrinsic matrix K
     camera_matrix_ = (cv::Mat_<double>(3, 3) << 
@@ -44,10 +44,6 @@ ObjectSegmentation::ObjectSegmentation() : Node("object_segmentation", rclcpp::N
 
     // Publisher for pose array
     world_points_pub_ = this->create_publisher<geometry_msgs::msg::PoseArray>(point_obj_topic_, 10);
-
-    tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
-    tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
-    tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
 }
 
 void ObjectSegmentation::image_callback(const sensor_msgs::msg::Image::SharedPtr msg)
@@ -80,7 +76,7 @@ bool ObjectSegmentation::perform_segmentation(){
 
     // Get image dimensions
     int y_max = image.rows;  
-    int cutoff = static_cast<int>(0.7 * y_max);
+    int cutoff = static_cast<int>(0.8 * y_max);
 
     // Set pixels above the cutoff to gray
     for (int y = cutoff; y < y_max; ++y) {
