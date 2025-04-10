@@ -80,6 +80,7 @@ class MotionNode(Node):
         self.angular_velocity_fine = 0.4 # TODO untested, adjust this value
         self.goal_threshold = 0.05  
         self.kp = 1.5
+        # self.kp = 1.0 # battery test
         self.ki = 0.015
         self.kd = 0.5
         self.mode = 0 # 0: exploration, 1: collection
@@ -200,20 +201,15 @@ class MotionNode(Node):
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if do_yaw: 
-                    self.do_adjust_yaw = True
-                else:
-                    self.goal_reached_flag = True
-                    self.path_reached = True
+                self.path_reached_publisher.publish(Bool(data=True))
+                self.path_reached = True
 
             else:
                 self.vel_cmd.angular.z = 0.0
                 self.vel_cmd.linear.x = 0.0
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                if do_yaw: 
-                    self.do_adjust_yaw = True
-                else:
-                    self.goal_reached_flag = True
+                self.goal_reached_publisher.publish(Bool(data=True))
+                self.goal_reached_flag = True
 
         # save state for next iteration
         self.prev_angle_diff = angle_diff

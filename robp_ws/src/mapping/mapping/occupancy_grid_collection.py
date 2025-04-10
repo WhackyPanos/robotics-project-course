@@ -66,6 +66,7 @@ class OccupancyGridNode(Node):
 
         # Inflation parameter
         self.robot_radius = 0.3
+        self.object_radius = 0.45
         self.goal_x, self.goal_y = None, None
 
         self.angular_vel = 0.0
@@ -330,18 +331,20 @@ class OccupancyGridNode(Node):
         x_w, y_w = msg.point.x, msg.point.y
         self.goal_x, self.goal_y = self.world_to_grid(x_w, y_w)
         mask[self.goal_y, self.goal_x] = 1
-        r = int(np.ceil(self.robot_radius / self.resolution)) 
+        r = int(np.ceil(self.object_radius / self.resolution)) 
 
         y_inflate, x_inflate = np.ogrid[-r:r+1, -r:r+1]
         kernel = x_inflate**2 + y_inflate**2 <= r**2
 
         mask = binary_dilation(mask, kernel)
-
         self.goal_object_mask_inflated =  mask
 
-    def rm_object_goal(self, msg:Bool):
-        if msg.data and self.goal_y is not None and self.goal_y is not None:
-            self.grid[self.goal_y, self.goal_x] = -1
+        # Remove object:
+        self.grid[self.goal_y, self.goal_x] = -1
+
+    # def rm_object_goal(self, msg:Bool):
+    #     if msg.data and self.goal_y is not None and self.goal_x is not None:
+    #         self.grid[self.goal_y, self.goal_x] = -1
 
 
 

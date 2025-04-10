@@ -44,13 +44,13 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
                 self.motion_node.is_path = False
                 return py_trees.common.Status.SUCCESS
             else:
-                return py_trees.common.Status.RUNNING if self.motion_node.navigate_to_goal() else py_trees.common.Status.FAILURE
+                return py_trees.common.Status.RUNNING if self.motion_node.navigate_to_goal(do_yaw=True) else py_trees.common.Status.FAILURE
         elif self.motion_node.is_goal:
             if self.motion_node.goal_reached_flag:
                 #self.motion_node.is_goal = False
                 return py_trees.common.Status.SUCCESS
             else:
-                return py_trees.common.Status.RUNNING if self.motion_node.navigate_to_goal() else py_trees.common.Status.FAILURE
+                return py_trees.common.Status.RUNNING if self.motion_node.navigate_to_goal(do_yaw=True) else py_trees.common.Status.FAILURE
         else: 
             #self.get_logger().info(f"Is goal: {self.motion_node.is_goal}, Goal reached: {self.motion_node.goal_reached_flag}")
 

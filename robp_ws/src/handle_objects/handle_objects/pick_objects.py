@@ -230,13 +230,13 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         # ----------------------- Inverse kinematics parameters -------------------------------------
         # -------------------------------------------------------------------------------------------
         self.height = 93*(10**-3)
-        self.l0 = 120*(10**-3) #101
+        self.l0 = 101*(10**-3) #101
         self.l1 = 94*(10**-3) # 95
         self.l2 = 162*(10**-3)+ 0.0  #1cm to account for object height and avoid colliding with ground  168
 
-        self.xx = 0.137 + 0.02 # compensation for the joint 3 compensation
+        self.xx = 0.135 # compensation for the joint 3 compensation
         self.yy = 0.0 # positive is to left in robot perspective
-        self.zz = -0.070
+        self.zz = -0.065
 
         # angles in decidegrees
         self.joint_5_start_angle = 300 
@@ -251,7 +251,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         # self.ub_angles = [90.0,240.0,210.0,210.0,180.0,240.0]
 
         # joint limits in normal domain
-        margin = 3
+        margin = 1
         self.lb_q = [-120.0,-60.0 + margin ,-90 + margin ,-90 + margin ,-120.0 + margin , 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
         self.ub_q = [ 120.0, 60.0 - margin , 90 - margin , 90 - margin , 120.0 - margin , 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
         # -------------------------------------------------------------------------------------------
@@ -488,7 +488,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             k = new_x**2 + y**2 + new_z**2 - self.l1**2 - self.l2**2 # Auxiliary constant
             c2 = k/(2*self.l1*self.l2)
             try:
-                q2 = atan2(sqrt(1-c2**2), c2)
+                q2 = acos(k/(2*self.l1*self.l2))
             except:
                 #print(f" x = {new_x} and z = {new_z} not reacheable")
                 continue               
@@ -503,13 +503,16 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             for j in range(len(q)):
                 if q[j] < self.lb_q[j] or q[j] > self.ub_q[j]:
                     good_flag = False
-                    #self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = {q[j+1]})")
+                    self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = {q[j+1]})")
             if good_flag == True:
                 if count == self.skipped_solutions -1: # skip  to avoid joint limits
                     count +=1
                     continue
                 # create the msg to publish, in case it is valid
-                self.node.get_logger().info(f"Object is reachable: in the regular domain, angles = {q}")
+                self.node.get_logger().info(f"Object is reachable: in the regular domain, angles = {q}")                          
+                x_calc = self.l0*cos(angle*pi/180) + self.l1*cos((angle + q[2])*pi/180) + self.l2*cos((angle + q[2] - q[3])*pi/180)
+                z_calc = self.l0*sin(angle*pi/180) + self.l1*sin((angle + q[2])*pi/180) + self.l2*sin((angle + q[2] - q[3])*pi/180) + self.height
+                print(f" Forward dynamics: x = {round(x_calc*100,2)} and z = {round(z_calc*100, 2)}")
 
                 msg = Int16MultiArray()
                 msg.layout = MultiArrayLayout(
@@ -693,7 +696,7 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
     def timer_callback(self):
         self.arm_started = True
         self.timer.cancel()
-        print(f"delay completed")
+        #print(f"delay completed")
 
     def odometry_yaw_callback(self, msg):
         self.current_yaw = msg.theta

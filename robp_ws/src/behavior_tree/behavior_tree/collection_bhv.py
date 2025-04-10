@@ -200,10 +200,13 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
             self.count_grasping_failures = 0
             self.n_fails_msg.data = self.count_grasping_failures
             self.count_grasping_failures_pub.publish(self.n_fails_msg)
-
-            self.next_goal_msg.data = 'Box' if self.arm_task == 'pick' else 'Object'
-            self.arm_task = 'place' if self.next_goal_msg.data == 'Box' else 'pick'
-            self.update_obj_list_pub.publish(Bool(data=True))
+            if self.arm_task == 'pick':
+                self.update_obj_list_pub.publish(Bool(data=True))
+                self.next_goal_msg.data = 'Box'
+                self.arm_task = 'place'
+            else:
+                self.next_goal_msg.data = 'Object'
+                self.arm_task = 'pick'
             self.pop_obj_map_pub.publish(Bool(data=True))
 
         #self.get_logger().info(f"Next stuff is {self.next_goal_msg.data} and task = {self.arm_task}")
@@ -228,7 +231,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
     def setup(self, **kwargs):
         self.node = kwargs["node"]
-        self.next_goal_pub = self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 )
+        #self.next_goal_pub = self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 ) # Change name!
 
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
             
