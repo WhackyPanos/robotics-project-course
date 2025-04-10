@@ -485,16 +485,19 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             theta = atan2(y,x) #orientation of the arm base
 
             # Compute & assign angles
-            k = (new_x)**2 + new_z**2 - self.l1**2 - self.l2**2 # Auxiliary constant
+            k = new_x**2 + y**2 + new_z**2 - self.l1**2 - self.l2**2 # Auxiliary constant
+            c2 = k/(2*self.l1*self.l2)
             try:
-                q2 = acos(k/(2*self.l1*self.l2)) # acos returns between 0 and pi
+                q2 = atan2(sqrt(1-c2**2), c2)
             except:
-               #self.node.get_logger().info(f" x = {new_x} and z = {new_z} not reacheable ({abs(new_z), self.a, self.b, l0*sin(i*pi/180)})")
-                continue           
+                #print(f" x = {new_x} and z = {new_z} not reacheable")
+                continue               
             q[0] = theta*180/pi
             q[1] = 90 - angle
-            q[2] = (atan2(new_z, new_x) - atan2(self.l2*sin(q2), self.l1 + self.l2*cos(q2)))*180/pi
+            q[2] = (atan2(new_z, new_x) + atan2(self.l2*sin(q2), self.l1 + self.l2*cos(q2)))*180/pi - angle
             q[3] = q2*180/pi
+            if q[2] > 0:
+                q[2] -= 180
 
             # check for limits and end loop if everything is ok
             for j in range(len(q)):

@@ -39,9 +39,8 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         self.need_next_object_sub = self.node.create_subscription(String, '/next_goal/object/need', self.need_next_object_callback, 10)
         self.update_object_list_sub = self.node.create_subscription(Bool, '/next_goal/object/update', self.update_object_list_callback, 10)
 
-        #self.next_goal_pub = self.node.create_publisher(PoseStamped,'/goal_point', 10 ) # TODO: uncomment when using AStar
-        self.next_goal_pub = self.node.create_publisher(PoseStamped,'/motion/goal',
-                                rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
+        self.next_goal_pub = self.node.create_publisher(PointStamped,'/goal_point',
+                                                        rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.need_next_object = 'Object' # at the beginning, we want to pick objects
 
         self.timer_finished = False
@@ -60,15 +59,10 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             distances = np.array([sqrt((self.robot_pos[0]-obj[1])**2 + (self.robot_pos[1]-obj[2])**2) for obj in points_list])
             closest_obj = points_list[np.argmin(distances)]
 
-            # publish goal point (object to pick) TODO: uncomment those 3 lines when using AStar
-            msg = PoseStamped()
-            msg.pose.position.x = closest_obj[1]
-            msg.pose.position.y = closest_obj[2]
-            #self.node.get_logger().info(f"Closest stuff: {msg.point.x , msg.point.y}")
-            # msg = PointStamped() 
-            # msg.point.x = closest_obj[1]
-            # msg.point.y = closest_obj[2]
-            # self.node.get_logger().info(f"Closest stuff: {msg.point.x , msg.point.y}")
+            msg = PointStamped() 
+            msg.point.x = closest_obj[1]
+            msg.point.y = closest_obj[2]
+            self.node.get_logger().info(f"Closest stuff: {msg.point.x , msg.point.y}")
             msg.header.stamp = self.node.get_clock().now().to_msg()
             msg.header.frame_id = 'map'
             self.next_goal_pub.publish(msg)
@@ -141,6 +135,8 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
         self.picklift_sub = self.node.create_subscription(Bool, '/picklift/succeded', self.picklift_callback, 10)
         self.next_goal = self.node.create_publisher(String, '/next_goal/object/need', 10)
         self.update_obj_list_pub = self.node.create_publisher(Bool,'/next_goal/object/update', 10)
+        self.pop_obj_map_pub = self.node.create_publisher(Bool, '/object_rm', 
+                                                          rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.next_goal_msg = String()
 
         self.count_grasping_failures_pub = self.node.create_publisher(
@@ -198,6 +194,7 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
                 self.n_fails_msg.data = self.count_grasping_failures
                 self.count_grasping_failures_pub.publish(self.n_fails_msg)
                 self.update_obj_list_pub.publish(Bool(data=True))
+                self.pop_obj_map_pub.publish(Bool(data=False))
                 self.get_logger().info(f"Giving up on this object!")
         else: # pick lift succeeded
             self.count_grasping_failures = 0
@@ -206,7 +203,8 @@ class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
 
             self.next_goal_msg.data = 'Box' if self.arm_task == 'pick' else 'Object'
             self.arm_task = 'place' if self.next_goal_msg.data == 'Box' else 'pick'
-            self.update_obj_list_pub.publish(Bool(data=True)) 
+            self.update_obj_list_pub.publish(Bool(data=True))
+            self.pop_obj_map_pub.publish(Bool(data=True))
 
         #self.get_logger().info(f"Next stuff is {self.next_goal_msg.data} and task = {self.arm_task}")
         return

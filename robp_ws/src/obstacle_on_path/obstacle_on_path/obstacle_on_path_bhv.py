@@ -26,7 +26,7 @@ class ObstacleOnPath(py_trees.behaviour.Behaviour, Node):
             return py_trees.common.Status.RUNNING
         else:
             self.get_logger().info(f"Found obstacle on path")
-            return py_trees.common.Status.SUCCESS
+            return py_trees.common.Status.FAILURE
             
 
     def terminate(self, new_status: py_trees.common.Status):

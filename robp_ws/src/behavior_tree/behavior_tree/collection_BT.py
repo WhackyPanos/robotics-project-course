@@ -4,21 +4,24 @@ import py_trees
 import py_trees_ros
 from rclpy.node import Node
 from py_trees_ros.trees import BehaviourTree
-from handle_objects.pick_objects import SetArm, SearchObjectArm, ArmIK, Place
-from behavior_tree.goCollect_bhv import goTo
 from rclpy.executors import MultiThreadedExecutor
 import os
-from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded, Adjust
-from path_planner.motion_bhv_collection import NavigateToGoal
-from localization.localization_bhv import Localization_bhv
 import time
 from tf2_ros import TransformBroadcaster
 from geometry_msgs.msg import TransformStamped
-from detection_bt.arm_segmentation_bt import ArmSegmentationBT
 from visualization_msgs.msg import Marker, MarkerArray
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
-from path_planner.pathPlanning_bhv import PathPlan
+
+from .customTimer_BT import CustomTimer
+from detection_bt.arm_segmentation_bt import ArmSegmentationBT
+from handle_objects.pick_objects import SetArm, SearchObjectArm, ArmIK, Place
+from behavior_tree.goCollect_bhv import goTo
+from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded, Adjust
+from path_planner.motion_bhv_collection import NavigateToGoal
+from localization.localization_bhv import Localization_bhv
+from path_planner.pathPlanning_bhv_collection import PathPlan
+from obstacle_on_path.obstacle_on_path_bhv import ObstacleOnPath
 
 class CollectionBT(Node):
     def __init__(self) -> None:
@@ -32,7 +35,7 @@ class CollectionBT(Node):
         #self.publish_initial_transform()
   
         # root and behaviors creation
-        self.root = py_trees.composites.Sequence(name="Root", memory= True)
+        self.root = py_trees.composites.Selector(name="Root", memory= False)
 
         # self.place_tuck_arm = SetArm('place_tuck_arm', [1000,12000,12000,12000,8000,12000], 500)
         # self.place_open_gripper = SetArm('place_open_gripper', [2600,12000,12000,12000,8000,12000], 1000)
@@ -44,14 +47,12 @@ class CollectionBT(Node):
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000], 200)
         self.adjust = Adjust()
         self.place = Place()
-        #self.path_plan = PathPlan()
+        self.path_plan = PathPlan()
+        self.obstacle_on_path = ObstacleOnPath()
         
-        #self.pub_occupancy_grid = PublishOccupancyGrid()
         #self.localization = Localization_bhv()
         self.navigate_to_goal = NavigateToGoal()
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
-        self.path_planner = None #TODO
-
         self.arm_task_succeeded = ArmTaskSucceeded()
 
     def create_executor(self, executor):
@@ -66,14 +67,13 @@ class CollectionBT(Node):
     
         executor.add_node(self.next_object_bhv)
         executor.add_node(self.navigate_to_goal)
-        #executor.add_node(self.pub_occupancy_grid)
-        #executor.add_node(self.localization)
+        executor.add_node(self.path_plan)
+        executor.add_node(self.obstacle_on_path)
 
 
-        #executor.add_node(self.pub_occupancy_grid.occupancy_grid)
         executor.add_node(self.navigate_to_goal.motion_node)
-        #executor.add_node(self.localizatio
-        # n.localization_node)
+        executor.add_node(self.path_plan.path_planner)
+        executor.add_node(self.obstacle_on_path.check_path)
 
 
     def create_tree(self): 
@@ -108,12 +108,25 @@ class CollectionBT(Node):
         #     child = self.pick_and_lift, 
         #     num_failures = 2)
             # selector between them
+
+        self.nav_and_check = py_trees.composites.Parallel(
+            name = 'Nav and Check Path',
+            policy = py_trees.common.ParallelPolicy.SuccessOnOne(),
+            children= [self.obstacle_on_path, self.navigate_to_goal]
+        )
+
         self.pick_or_place = py_trees.composites.Selector(
             name = 'Pick_or_Place', 
             children = [self.place,planA], # self.repeat_picklift
             memory = False)
+        
+        self.main_sequence = py_trees.composites.Sequence(
+            name = 'Collection bhv',
+            children = [self.next_object_bhv, self.path_plan, self.nav_and_check, self.pick_or_place, self.lift, self.arm_task_succeeded],
+            memory = True
+        )
 
-        self.root.add_children([self.next_object_bhv, self.navigate_to_goal, self.pick_or_place, self.lift, self.arm_task_succeeded]) # self.path_plan,self.navigate_to_goal, 
+        self.root.add_children([CustomTimer(name='timer', duration=300.0), self.main_sequence])
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False) 
 
         return 
@@ -166,7 +179,7 @@ def main(args=None):
     executor.add_node(node)
     node.tree.setup(timeout=10.0, node=node)
     time.sleep(2.0)
-    node.tree.tick_tock(period_ms=250)
+    node.tree.tick_tock(period_ms=50)
 
     try:
         executor.spin()

@@ -113,7 +113,7 @@ class OccupancyGridNode(Node):
         filled_mask = binary_fill_holes(mask)
 
         # Mask with both border and outside of border
-        self.geofence_mask[mask] = True
+        # self.geofence_mask[mask] = True
         self.geofence_mask[~filled_mask] = True
 
         # Marks the occupancy grid 
