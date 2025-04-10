@@ -15,6 +15,7 @@ from geometry_msgs.msg import PoseStamped
 
 from .customTimer_BT import CustomTimer
 from detection_bt.arm_segmentation_bt import ArmSegmentationBT
+from detection_bt.box_segmentation_bt import BoxSegmentationBT
 from handle_objects.pick_objects import SetArm, SearchObjectArm, ArmIK, Place
 from behavior_tree.goCollect_bhv import goTo
 from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded, Adjust
@@ -39,6 +40,7 @@ class CollectionBT(Node):
 
         self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,20000,12000,12000], 200)
         self.detect_object = ArmSegmentationBT()
+        self.detect_box = BoxSegmentationBT()
         self.pick_object = ArmIK()
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000], 200)
         self.adjust = Adjust()
@@ -57,6 +59,7 @@ class CollectionBT(Node):
         executor.add_node(self.pick_object)
         executor.add_node(self.lift)
         executor.add_node(self.detect_object)
+        executor.add_node(self.detect_box)
         executor.add_node(self.arm_task_succeeded)
         executor.add_node(self.adjust)
         executor.add_node(self.place)
