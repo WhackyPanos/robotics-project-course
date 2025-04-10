@@ -37,10 +37,6 @@ class CollectionBT(Node):
         # root and behaviors creation
         self.root = py_trees.composites.Selector(name="Root", memory= False)
 
-        # self.place_tuck_arm = SetArm('place_tuck_arm', [1000,12000,12000,12000,8000,12000], 500)
-        # self.place_open_gripper = SetArm('place_open_gripper', [2600,12000,12000,12000,8000,12000], 1000)
-        # self.place_lift = SetArm('place_lift', [2600,12000,12000,12000,12000,12000], 200)
-
         self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,20000,12000,12000], 200)
         self.detect_object = ArmSegmentationBT()
         self.pick_object = ArmIK()
@@ -91,42 +87,46 @@ class CollectionBT(Node):
         
         # Arm execution: pick or place
             # Pick and lift operations
-        self.pick_or_adjust = py_trees.composites.Selector(
-            name = 'Pick_or_Adjust', 
-            children = [self.pick_object, self.adjust], #TODO: if working fine, make this sequence with adjust first
-            memory = True)
+        detect_and_adjust = py_trees.composites.Sequence(
+            name = 'Detect_and_Adjust', 
+            children = [self.detect_object, self.adjust], #TODO: if working fine, make this sequence with adjust first
+            memory = True)       
+        repeat_detect_and_adjust = py_trees.decorators.Retry(
+            name = 'Repeat_Pick&Lift', 
+            child = detect_and_adjust, 
+            num_failures = 5)
         planA = py_trees.composites.Sequence(
             name="PlanA", 
-            children = [self.tuck_arm, py_trees.timers.Timer("Timer", duration=5), self.detect_object, self.pick_or_adjust],
+            children = [self.tuck_arm, py_trees.timers.Timer("Timer", duration=5), repeat_detect_and_adjust, self.pick_object],
             memory = True)
-        # self.pick_and_lift = py_trees.composites.Sequence(
-        #     name="Pick&Lift", 
-        #     children = [planA, self.lift],
-        #     memory = True)
-        # self.repeat_picklift = py_trees.decorators.Retry(
-        #     name = 'Repeat_Pick&Lift', 
-        #     child = self.pick_and_lift, 
-        #     num_failures = 2)
+        pick_and_lift = py_trees.composites.Sequence(
+            name="Pick&Lift", 
+            children = [planA, self.lift],
+            memory = True)
+        repeat_picklift = py_trees.decorators.Retry(
+            name = 'Repeat_Pick&Lift', 
+            child = pick_and_lift, 
+            num_failures = 5)
             # selector between them
 
-        self.nav_and_check = py_trees.composites.Parallel(
+        nav_and_check = py_trees.composites.Parallel(
             name = 'Nav and Check Path',
             policy = py_trees.common.ParallelPolicy.SuccessOnOne(),
             children= [self.obstacle_on_path, self.navigate_to_goal]
         )
 
-        self.pick_or_place = py_trees.composites.Selector(
+        pick_or_place = py_trees.composites.Selector(
             name = 'Pick_or_Place', 
-            children = [self.place,planA], # self.repeat_picklift
+            children = [self.place, repeat_picklift], # self.repeat_picklift
             memory = False)
         
-        self.main_sequence = py_trees.composites.Sequence(
+        main_sequence = py_trees.composites.Sequence(
             name = 'Collection bhv',
-            children = [self.next_object_bhv, self.path_plan, self.nav_and_check, self.pick_or_place, self.lift, self.arm_task_succeeded],
+            children = [self.next_object_bhv, self.path_plan, nav_and_check, pick_or_place, self.arm_task_succeeded],
             memory = True
         )
 
-        self.root.add_children([CustomTimer(name='timer', duration=300.0), self.main_sequence])
+        self.root.add_children([CustomTimer(name='timer', duration=300.0), main_sequence])
         self.tree = py_trees_ros.trees.BehaviourTree(root=self.root, unicode_tree_debug=False) 
 
         return 

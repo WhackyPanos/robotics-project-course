@@ -38,8 +38,8 @@ class OccupancyGridNode(Node):
         self.vel_subscription = self.create_subscription(Twist, '/cmd_vel', self.vel_callback, 10)
         self.current_object_goal_sub = self.create_subscription(PointStamped, '/goal_point', self.current_object_goal, 
                                                                 rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
-        self.pop_obj_map_sub = self.create_subscription(Bool, '/object_rm', self.rm_object_goal,
-                                                        rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
+        # self.pop_obj_map_sub = self.create_subscription(Bool, '/object_rm', self.rm_object_goal, #TODO: not sure if it should be commented
+        #                                                 rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
 
         relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file

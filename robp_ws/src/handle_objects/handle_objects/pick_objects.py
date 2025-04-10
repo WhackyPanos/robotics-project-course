@@ -110,6 +110,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         self.arm_tucked = False
         self.done = False
         self.timer = self.node.create_timer(3, self.timer_callback)
+        self.get_logger().info("Tuck arm behavior was initialized")
         return py_trees.common.Status.RUNNING
         
     def timer_callback(self):
@@ -141,9 +142,11 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                 if abs(self.desired_servo_angles[0] -self.current_angles[0]) < self.gripper_threshold:
                     self.picklift_pub.publish(Bool(data=False))
                     self.node.get_logger().warn(f"NOTHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
+                    return py_trees.common.Status.FAILURE # HACK: trying to get decorator working
                 else:
                     self.picklift_pub.publish(Bool(data=True))
                     self.node.get_logger().warn(f"SOMETHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
+                    return py_trees.common.Status.SUCCESS
             return py_trees.common.Status.SUCCESS
 
         else:

@@ -219,8 +219,8 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
         self.X_arm_cam, self.Y_arm_cam = [],  []
         self.X_obj, self.Y_obj = None, None
         self.yaw_msg_sent, self.distance_msg_sent = False, False
-        self.linear_velocity = 0.05
-        self.angular_velocity = 0.05
+        self.linear_velocity = 0.01
+        self.angular_velocity = 0.01
         self.min = None
 
         self.vel_cmd = Twist()
@@ -231,8 +231,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
     def setup(self, **kwargs):
         self.node = kwargs["node"]
-        #self.next_goal_pub = self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 ) # Change name!
-
+        self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 ) 
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
             
 
@@ -264,11 +263,11 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
         pass
 
     def adjust_yaw(self):
+        desired_theta = atan2(-self.X_obj, -self.Y_obj)
+        self.vel_cmd.angular.z = self.angular_velocity
+        delta_t = desired_theta/self.vel_cmd.angular.z
         if not self.yaw_msg_sent:
             self.init_time = self.get_clock().now().nanoseconds / 1e9
-            desired_theta = atan2(-self.X_obj, -self.Y_obj)
-            self.vel_cmd.angular.z = self.angular_velocity
-            delta_t = desired_theta/self.vel_cmd.angular.z
             self.cmd_vel_publisher.publish(self.vel_cmd)
             self.yaw_msg_sent = True
             self.node.get_logger().info(f"Sending adjust yaw message: closest object is {self.min} [m] away, angle = {desired_theta*180/pi} degrees")

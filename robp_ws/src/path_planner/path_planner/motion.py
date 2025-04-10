@@ -166,8 +166,8 @@ class MotionNode(Node):
         cur_time = self.get_clock().now().nanoseconds / 1e9
         self.elapsed_time = cur_time - self.prev_time
         
-        self.get_logger().info(f"Current position is  = {x, y} and goal position is {goal_x, goal_y} ")
-        self.get_logger().info(f"Distance = {distance}, Adjust_yaw = {self.do_adjust_yaw}")
+        #self.get_logger().info(f"Current position is  = {x, y} and goal position is {goal_x, goal_y} ")
+        #self.get_logger().info(f"Distance = {distance}, Adjust_yaw = {self.do_adjust_yaw}")
         if distance > self.goal_threshold and not self.do_adjust_yaw:
             iError = angle_diff * self.elapsed_time
             dError = (angle_diff - self.prev_angle_diff)/self.elapsed_time
