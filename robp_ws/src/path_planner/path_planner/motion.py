@@ -20,8 +20,8 @@ You may also publish a Path message to the topic '/motion/path' to set a path of
 """
 
 class MotionNode(Node):
-    def __init__(self):
-        super().__init__('motion_node')
+    def __init__(self, node_name):
+        super().__init__(node_name)
 
         # Initialize TF2 Buffer and Listener
         self.tf_buffer = tf2_ros.Buffer()
@@ -57,6 +57,7 @@ class MotionNode(Node):
 
         self.prev_time = self.get_clock().now().nanoseconds / 1e9
         self.prev_angle_diff = 0.0
+        self.start_time = 0.0
 
 
         # Setup publishers and subscribers
@@ -77,7 +78,7 @@ class MotionNode(Node):
         self.linear_velocity = 0.1
         self.angular_velocity = 0.4
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
-        self.angular_velocity_fine = 0.4 # TODO untested, adjust this value
+        self.angular_velocity_fine = 0.3 # TODO untested, adjust this value
         self.goal_threshold = 0.05  
         self.kp = 1.5
         # self.kp = 1.0 # battery test
@@ -264,22 +265,20 @@ class MotionNode(Node):
     """
     def reverse(self, distance):
         duration = distance / self.linear_velocity_fine
-        start_time = self.get_clock().now().nanoseconds / 1e9
 
-        while True:
-            rclpy.spin_once(self)
-            current_time = self.get_clock().now().nanoseconds / 1e9
-            elapsed_time = current_time - start_time
+        current_time = self.get_clock().now().nanoseconds / 1e9
+        elapsed_time = current_time - self.start_time
 
-            if elapsed_time >= duration:
-                break
-
-            self.vel_cmd.linear.x = -self.linear_velocity_fine
-            self.vel_cmd.angular.z = 0.0
+        if elapsed_time >= duration:
+            self.vel_cmd.linear.x = 0.0
             self.cmd_vel_publisher.publish(self.vel_cmd)
+            return True
 
-        self.vel_cmd.linear.x = 0.0
+        self.vel_cmd.linear.x = -self.linear_velocity_fine
+        self.vel_cmd.angular.z = 0.0
         self.cmd_vel_publisher.publish(self.vel_cmd)
+
+        return False
 
 def main(args=None):
     rclpy.init(args=args)

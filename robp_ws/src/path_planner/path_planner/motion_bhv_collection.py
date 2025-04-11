@@ -10,7 +10,7 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
         py_trees.behaviour.Behaviour.__init__(self, name=name)
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         
-        self.motion_node = MotionNode() # create a motion node object
+        self.motion_node = MotionNode("NavigateToGoal_Node") # create a motion node object
         # self.timer = None
         # self.wait_for_goal_flag = False
         self.motion_node.mode = 1

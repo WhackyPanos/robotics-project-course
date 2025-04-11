@@ -20,6 +20,7 @@ from handle_objects.pick_objects import SetArm, SearchObjectArm, ArmIK, Place
 from behavior_tree.goCollect_bhv import goTo
 from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded, Adjust
 from path_planner.motion_bhv_collection import NavigateToGoal
+from path_planner.revert_bhv import Revert
 from localization.localization_bhv import Localization_bhv
 from path_planner.pathPlanning_bhv_collection import PathPlan
 from obstacle_on_path.obstacle_on_path_bhv import ObstacleOnPath
@@ -50,6 +51,7 @@ class CollectionBT(Node):
         
         #self.localization = Localization_bhv()
         self.navigate_to_goal = NavigateToGoal()
+        self.revert = Revert()
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
         self.arm_task_succeeded = ArmTaskSucceeded()
 
@@ -66,11 +68,13 @@ class CollectionBT(Node):
     
         executor.add_node(self.next_object_bhv)
         executor.add_node(self.navigate_to_goal)
+        executor.add_node(self.revert)
         executor.add_node(self.path_plan)
         executor.add_node(self.obstacle_on_path)
 
 
         executor.add_node(self.navigate_to_goal.motion_node)
+        executor.add_node(self.revert.motion_node)
         executor.add_node(self.path_plan.path_planner)
         executor.add_node(self.obstacle_on_path.check_path)
 
@@ -92,15 +96,15 @@ class CollectionBT(Node):
             # Pick and lift operations
         detect_and_adjust = py_trees.composites.Sequence(
             name = 'Detect_and_Adjust', 
-            children = [self.detect_object, self.adjust], #TODO: if working fine, make this sequence with adjust first
+            children = [py_trees.timers.Timer("Timer", duration=3), self.detect_object, self.adjust], #TODO: if working fine, make this sequence with adjust first
             memory = True)       
         repeat_detect_and_adjust = py_trees.decorators.Retry(
-            name = 'Repeat_Pick&Lift', 
+            name = 'Repeat_Detect&Adjust', 
             child = detect_and_adjust, 
-            num_failures = 5)
+            num_failures = 3)
         planA = py_trees.composites.Sequence(
             name="PlanA", 
-            children = [self.tuck_arm, py_trees.timers.Timer("Timer", duration=5), repeat_detect_and_adjust, self.pick_object],
+            children = [self.tuck_arm, repeat_detect_and_adjust, self.pick_object],
             memory = True)
         pick_and_lift = py_trees.composites.Sequence(
             name="Pick&Lift", 
@@ -109,7 +113,7 @@ class CollectionBT(Node):
         repeat_picklift = py_trees.decorators.Retry(
             name = 'Repeat_Pick&Lift', 
             child = pick_and_lift, 
-            num_failures = 5)
+            num_failures = 3)
             # selector between them
 
         nav_and_check = py_trees.composites.Parallel(
@@ -118,14 +122,32 @@ class CollectionBT(Node):
             children= [self.obstacle_on_path, self.navigate_to_goal]
         )
 
+        nav_and_check_seq = py_trees.composites.Sequence(
+            name='Plan and Nav',
+            children=[self.path_plan, nav_and_check],
+            memory=True
+        )
+
+        repeat_navigate = py_trees.decorators.Retry(
+            name = 'Repeat Plan and Nav',
+            child=nav_and_check_seq,
+            num_failures= 30000
+        )
+
+        place_and_revert = py_trees.composites.Sequence(
+            name='Place and Revert',
+            children=[self.place, py_trees.timers.Timer(name='place_timer', duration=2), self.revert],
+            memory=True
+        )
+
         pick_or_place = py_trees.composites.Selector(
             name = 'Pick_or_Place', 
-            children = [self.place, repeat_picklift], # self.repeat_picklift
+            children = [place_and_revert, repeat_picklift], # self.repeat_picklift
             memory = False)
         
         main_sequence = py_trees.composites.Sequence(
             name = 'Collection bhv',
-            children = [self.next_object_bhv, self.path_plan, nav_and_check, pick_or_place, self.arm_task_succeeded],
+            children = [self.next_object_bhv, repeat_navigate, pick_or_place],
             memory = True
         )
 

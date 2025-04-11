@@ -18,8 +18,8 @@ from tf2_ros.transform_listener import TransformListener
 from sensor_msgs.msg import LaserScan, PointCloud2
 from laser_geometry import LaserProjection
 from nav_msgs.msg import OccupancyGrid
-from std_msgs.msg import Header, Bool
-from geometry_msgs.msg import Twist, PoseStamped, PointStamped
+from std_msgs.msg import Header, Bool, String
+from geometry_msgs.msg import Twist, PoseStamped, PointStamped, Pose2D
 from visualization_msgs.msg import MarkerArray
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
 from scipy.ndimage import binary_dilation, binary_fill_holes, convolve
@@ -36,10 +36,11 @@ class OccupancyGridNode(Node):
         self.config_space_pub = self.create_publisher(OccupancyGrid, '/config_space', 10)
         self.lidar_subscription = self.create_subscription(LaserScan,'/scan',self.listener_callback,10)
         self.vel_subscription = self.create_subscription(Twist, '/cmd_vel', self.vel_callback, 10)
-        self.current_object_goal_sub = self.create_subscription(PointStamped, '/goal_point', self.current_object_goal, 
+        self.current_object_goal_sub = self.create_subscription(PointStamped, '/goal_point', self.goal_callback, 
                                                                 rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
-        # self.pop_obj_map_sub = self.create_subscription(Bool, '/object_rm', self.rm_object_goal, #TODO: not sure if it should be commented
-        #                                                 rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
+        self.next_goal_type_sub = self.create_subscription(String,'/goal_type', self.goal_type_callback,
+                                                            rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
+        self.odom_pose_sub = self.create_subscription(Pose2D, '/odom_pose', self.check_map_pose, 10)
 
         relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
@@ -59,7 +60,7 @@ class OccupancyGridNode(Node):
         self.origin_y = min_y- self.resolution
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.config_space = self.grid # Config space
-        self.goal_object_mask_inflated = np.zeros_like(self.grid)
+        self.goal_box_mask_inflated = np.zeros_like(self.grid)
         self.grid.fill(-1) # Sets all cells to unknown
         self.geofence_mask = None # Geofence mask to check if lidar points are inside the workspace
         self.geofence(vertices) # Sets a boundry for the workspace
@@ -67,7 +68,8 @@ class OccupancyGridNode(Node):
         # Inflation parameter
         self.robot_radius = 0.3
         self.object_radius = 0.45
-        self.goal_x, self.goal_y = None, None
+        self.x_w, self.y_w = None, None
+        self.goal_type = "Object"
 
         self.angular_vel = 0.0
 
@@ -206,7 +208,7 @@ class OccupancyGridNode(Node):
         inflated_border = binary_dilation(border_grid, kernel_small)
 
         # Combine the two results
-        self.config_space = (((inflated_grid & ~(self.goal_object_mask_inflated))| inflated_border) * 99).astype(np.int8)
+        self.config_space = (((inflated_grid & ~(self.goal_box_mask_inflated))| inflated_border) * 99).astype(np.int8)
 
 
         # Create an OccupancyGrid message
@@ -326,25 +328,33 @@ class OccupancyGridNode(Node):
         self.grid = new_grid
 
     
-    def current_object_goal(self, msg:PointStamped):
-        mask = np.zeros_like(self.grid)
-        x_w, y_w = msg.point.x, msg.point.y
-        self.goal_x, self.goal_y = self.world_to_grid(x_w, y_w)
-        mask[self.goal_y, self.goal_x] = 1
-        r = int(np.ceil(self.object_radius / self.resolution)) 
+    def goal_callback(self, msg:PointStamped):
+        self.x_w, self.y_w = msg.point.x, msg.point.y
+        goal_x, goal_y = self.world_to_grid(self.x_w, self.y_w)
+        # Remove if object:
+        if self.goal_type == "Object":
+            self.grid[goal_y, goal_x] = -1
+        else:
+            mask = np.zeros_like(self.grid)
+            mask[goal_y, goal_x] = 1
+            r = int(np.ceil(self.object_radius / self.resolution)) 
 
-        y_inflate, x_inflate = np.ogrid[-r:r+1, -r:r+1]
-        kernel = x_inflate**2 + y_inflate**2 <= r**2
+            y_inflate, x_inflate = np.ogrid[-r:r+1, -r:r+1]
+            kernel = x_inflate**2 + y_inflate**2 <= r**2
 
-        mask = binary_dilation(mask, kernel)
-        self.goal_object_mask_inflated =  mask
+            mask = binary_dilation(mask, kernel)
+            self.goal_box_mask_inflated = mask
+        self.publish_current_grid()
+        self.inflate_map()  
 
-        # Remove object:
-        self.grid[self.goal_y, self.goal_x] = -1
+    def goal_type_callback(self, msg:String):
+        self.goal_type = msg.data
 
-    # def rm_object_goal(self, msg:Bool):
-    #     if msg.data and self.goal_y is not None and self.goal_x is not None:
-    #         self.grid[self.goal_y, self.goal_x] = -1
+    def check_map_pose(self, msg:Pose2D):
+        rob_x, rob_y = msg.x, msg.y
+        if self.goal_type == "Object" and self.x_w is not None and self.y_w is not None:
+            if(math.dist([rob_x, rob_y],[self.x_w, self.y_w])) >= self.object_radius:
+                self.goal_box_mask_inflated = np.zeros_like(self.grid)
 
 
 

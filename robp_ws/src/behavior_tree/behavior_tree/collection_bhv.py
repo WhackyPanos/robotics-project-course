@@ -24,41 +24,44 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         self.obj_list = obj_list
         self.box_list = box_list
         self.robot_pos = np.array([0,0])
+        self.arm_task = 'pick' # can be either 'pick' or 'place'
 
     def setup(self, **kwargs):
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
            a parallel checking for a valid policy configuration after children have been added or removed"""
         self.node = kwargs["node"]
-        # TODO: transform to map
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.to_frame_rel = 'map'
         self.from_frame_rel = 'odom'
 
         self.robot_pos_sub = self.node.create_subscription(Pose2D, '/odom_pose', self.get_robot_pos_callback, 10)
-        self.need_next_object_sub = self.node.create_subscription(String, '/next_goal/object/need', self.need_next_object_callback, 10)
-        self.update_object_list_sub = self.node.create_subscription(Bool, '/next_goal/object/update', self.update_object_list_callback, 10)
+        self.node.create_subscription(Bool, '/picklift/succeded', self.pick_place_succeeded_callback, 10)
 
         self.next_goal_pub = self.node.create_publisher(PointStamped,'/goal_point',
                                                         rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
-        self.need_next_object = 'Object' # at the beginning, we want to pick objects
-
+        self.next_goal_type_pub = self.node.create_publisher(String,'/goal_type',
+                                                        rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
+        self.next_goal_type = 'Object' # at the beginning, we want to pick objects
+        self.timer_running = False
         self.timer_finished = False
+
     def initialise(self):
         self.timer_finished = False
+        self.timer_running = False
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
         #self.node.get_logger().info(f"Objects list is now: {self.obj_list}")
-        if self.need_next_object is not None:
-            if self.need_next_object == 'Object':
+        if not self.timer_running:
+            if self.next_goal_type == 'Object':
                 points_list = self.obj_list
             else:
                 points_list = self.box_list
-            # compute closest object
+
+            # compute closest object and publish goal
             distances = np.array([sqrt((self.robot_pos[0]-obj[1])**2 + (self.robot_pos[1]-obj[2])**2) for obj in points_list])
             closest_obj = points_list[np.argmin(distances)]
-
             msg = PointStamped() 
             msg.point.x = closest_obj[1]
             msg.point.y = closest_obj[2]
@@ -67,10 +70,14 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             msg.header.frame_id = 'map'
             self.next_goal_pub.publish(msg)
 
-            self.need_next_object = None
+            # remove object from list (if we're in the picking task). Give time to return success
+            if self.next_goal_type == 'Object':
+                self.obj_list.pop(np.argmin(distances))
+            self.timer_running = True
             self.timer = self.node.create_timer(2.0, self.wait_to_return_success)
-            return py_trees.common.Status.RUNNING
 
+            return py_trees.common.Status.RUNNING
+        
         else:
             if not self.timer_finished:
                 return py_trees.common.Status.RUNNING
@@ -83,7 +90,6 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
     def get_robot_pos_callback(self, msg):
         """ Get robot position in odom frame and convert to map frame. If transform fails, use odom frame since
         we just need a rough estimate of the closest object """
-    
         try:
             t = self.tf_buffer.lookup_transform(
                 self.to_frame_rel,
@@ -105,24 +111,13 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         except TransformException as ex:
             self.robot_pos[0] = msg.x
             self.robot_pos[1] = msg.y
-
-
         return
 
-    def need_next_object_callback(self, msg):
-        self.need_next_object = msg.data
-        self.node.get_logger().info(f"Next goal ({msg.data}) request received")
-
-    def update_object_list_callback(self, msg):
-        # x = msg.point.x
-        # y = msg.point.y
-        # self.obj_list = [obj for obj in self.obj_list if obj[1] != x and obj[2] != y]
-
-        # remove the closest object
-        if msg.data:
-            distances = np.array([sqrt((self.robot_pos[0]-obj[1])**2 + (self.robot_pos[1]-obj[2])**2) for obj in self.obj_list])
-            closest_obj_idx = np.argmin(distances)
-            self.obj_list.pop(closest_obj_idx)
+    def pick_place_succeeded_callback(self, msg):
+        """ If pick/place task was succeeded, this callback will be called we should switch tasks. """
+        if msg.data: # we only switch tasks if they succeeded
+            self.next_goal_type = 'Box' if self.next_goal_type == 'Object' else 'Object'
+            self.next_goal_type_pub.publish(String(data = self.next_goal_type))
 
 
 class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
@@ -237,11 +232,12 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         # Note: hope the behavior tick is slower than the subscriber callback, might need changes
-        yaw_adjusted = self.adjust_yaw()
-        if yaw_adjusted:
-            return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
-        else:
-            return py_trees.common.Status.RUNNING
+        return py_trees.common.Status.RUNNING
+        # yaw_adjusted = self.adjust_yaw()
+        # if yaw_adjusted:
+        #     return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
+        # else:
+        #     return py_trees.common.Status.RUNNING
 
 
     def get_next_goal_arm_cam_callback(self, msg):
