@@ -36,9 +36,33 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
         ),
 
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/arm_servo_launch.py'))
+        ),
+
         Node(
             package='odometry',
             executable='odometry'
+        ),
+
+        Node(
+            package='arm_cam',
+            executable='object_segmentation_node'
+        ),
+
+        Node(
+            package='mapping',
+            executable='occupancy_grid_collection'
+        ),
+
+        # Node(
+        #     package='behavior_tree',
+        #     executable='collection_BT' #collection_BT or collection_BT_no_move, but no_move it is not working
+        # ),
+
+        Node(
+            package='joystick_teleop',
+            executable='twist2duty'
         ),
 
 

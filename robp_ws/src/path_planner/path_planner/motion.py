@@ -75,11 +75,11 @@ class MotionNode(Node):
 
         # Parameters
         # ==================
-        self.linear_velocity = 0.1
-        self.angular_velocity = 0.4
+        self.linear_velocity = 0.08
+        self.angular_velocity = 0.35
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
         self.angular_velocity_fine = 0.3 # TODO untested, adjust this value
-        self.goal_threshold = 0.05  
+        self.goal_threshold = 0.1
         self.kp = 1.5
         # self.kp = 1.0 # battery test
         self.ki = 0.015

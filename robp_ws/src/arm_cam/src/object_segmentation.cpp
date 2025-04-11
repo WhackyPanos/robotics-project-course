@@ -16,7 +16,7 @@ ObjectSegmentation::ObjectSegmentation() : Node("object_segmentation", rclcpp::N
     this->get_parameter_or("max_obj_size", max_obj_size_, 10000);
     this->get_parameter_or("min_obj_distance", min_obj_distance_, 45.0);
     this->get_parameter_or("max_k", max_k_, 6);
-    this->get_parameter_or("visualization", visualization_, false);
+    this->get_parameter_or("visualization", visualization_, true);
 
     // Define intrinsic matrix K
     camera_matrix_ = (cv::Mat_<double>(3, 3) << 
@@ -76,7 +76,7 @@ bool ObjectSegmentation::perform_segmentation(){
 
     // Get image dimensions
     int y_max = image.rows;  
-    int cutoff = static_cast<int>(0.8 * y_max);
+    int cutoff = static_cast<int>(0.7 * y_max);
 
     // Set pixels above the cutoff to gray
     for (int y = cutoff; y < y_max; ++y) {
@@ -201,7 +201,7 @@ bool ObjectSegmentation::perform_segmentation(){
     }
 
     if(merged_obj_pixels.size()==0) return false;
-    // RCLCPP_INFO(this->get_logger(), "Number of cluster: %ld", merged_obj_positions.size());
+    RCLCPP_INFO(this->get_logger(), "Number of cluster: %ld", merged_obj_positions.size());
 
     std::vector<std::pair<cv::Point, float>> merged_obj(merged_obj_positions.size());
     for (size_t i = 0; i < merged_obj_positions.size(); i++) {

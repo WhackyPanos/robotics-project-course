@@ -7,7 +7,7 @@ from py_trees_ros.trees import BehaviourTree
 from geometry_msgs.msg import Pose2D, PointStamped, PoseStamped
 from std_msgs.msg import Bool, String, Int16
 import numpy as np
-from math import sqrt, cos, sin, pi, sqrt, atan2
+from math import sqrt, cos, sin, pi, sqrt, atan2, dist
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 from tf2_ros import TransformException
@@ -213,16 +213,24 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         self.X_arm_cam, self.Y_arm_cam = [],  []
         self.X_obj, self.Y_obj = None, None
-        self.yaw_msg_sent, self.distance_msg_sent = False, False
-        self.linear_velocity = 0.01
-        self.angular_velocity = 0.01
         self.min = None
+
+        self.position_checked = False
+        self.yaw_msg_sent, self.distance_msg_sent = False, False
+        self.distance_adjusted, self.yaw_adjusted = False, False
+        self.yaw_error, self.distance_error, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
 
         self.vel_cmd = Twist()
         self.vel_cmd.linear.y = 0.0
         self.vel_cmd.linear.z = 0.0
         self.vel_cmd.angular.x = 0.0
         self.vel_cmd.angular.y = 0.0
+
+        #---------------- Adjust Parameters ---------------
+        self.lower_distance_threshold = 0.15
+        self.upper_distance_threshold = 0.20
+        self.vel_cmd.linear.x = 0.1
+        self.vel_cmd.angular.z = 0.05
 
     def setup(self, **kwargs):
         self.node = kwargs["node"]
@@ -232,13 +240,76 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         # Note: hope the behavior tick is slower than the subscriber callback, might need changes
-        return py_trees.common.Status.RUNNING
-        # yaw_adjusted = self.adjust_yaw()
-        # if yaw_adjusted:
-        #     return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
-        # else:
-        #     return py_trees.common.Status.RUNNING
+        if not self.position_checked:
+            self.yaw_error = atan2(-self.X_obj, -self.Y_obj)
+            self.distance_error = dist([self.X_obj, self.Y_obj], [0,0])
+            self.yaw_delta_t = self.yaw_error/self.vel_cmd.angular.z
+            self.distance_delta_t = self.distance_error/self.vel_cmd.linear.x
+            self.position_checked = True
+        
+        if self.distance_error < self.lower_distance_threshold: #we are too close
+            if not self.distance_adjusted:
+                self.distance_adjusted = self.adjust_distance()
+                return py_trees.common.Status.RUNNING 
+            else:
+                self.yaw_adjusted = self.adjust_yaw()
+                if self.yaw_adjusted:
+                    return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
+                else:
+                    return py_trees.common.Status.RUNNING
+                
+        elif self.distance_error > self.upper_distance_threshold: # we are too far
+            if not self.yaw_adjusted:
+                self.yaw_adjusted = self.adjust_yaw()
+                return py_trees.common.Status.RUNNING 
+            else:
+                self.distance_adjusted = self.adjust_distance()
+                if self.distance_adjusted:
+                    return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
+                else:
+                    return py_trees.common.Status.RUNNING
+        else:  # sweet spot
+            self.distance_adjusted, self.yaw_adjusted, self.position_checked, self.yaw_msg_sent, self.distance_msg_sent = False, False, False, False, False
+            self.yaw_error, self.distance_error, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
+            return py_trees.common.Status.SUCCESS
 
+    def adjust_distance(self):
+        delta_t = min(abs(self.distance_error), abs(self.distance_error) )/self.vel_cmd.linear.x 
+        self.vel_cmd.linear.x *= (self.distance_error - self.lower_distance_threshold) /abs((self.distance_error - self.lower_distance_threshold))
+        if not self.distance_msg_sent:
+            self.init_time = self.get_clock().now().nanoseconds / 1e9
+            self.cmd_vel_publisher.publish(self.vel_cmd)
+            self.distance_msg_sent = True
+            self.node.get_logger().info(f"Sending adjust distance message")
+            return False
+        else:
+            if self.get_clock().now().nanoseconds / 1e9 - self.init_time < delta_t:
+                self.node.get_logger().info(f"Adjusting distance")
+                return False
+            else:
+                self.vel_cmd.angular.x = 0.0
+                self.cmd_vel_publisher.publish(self.vel_cmd)
+                self.node.get_logger().info(f"Distance adjusted")
+                return True
+
+    def adjust_yaw(self):
+        delta_t = self.yaw_error/self.vel_cmd.angular.z
+        if not self.yaw_msg_sent:
+            self.init_time = self.get_clock().now().nanoseconds / 1e9
+            self.cmd_vel_publisher.publish(self.vel_cmd)
+            self.yaw_msg_sent = True
+            self.node.get_logger().info(f"Sending adjust yaw message: closest object is {self.min} [m] away, angle = {self.desired_theta*180/pi} degrees")
+            return False
+        else:
+            self.curr_time = self.get_clock().now().nanoseconds / 1e9
+            if self.curr_time - self.init_time < delta_t:
+                self.node.get_logger().info(f"Adjusting yaw")
+                return False
+            else:
+                self.vel_cmd.angular.z = 0.0
+                self.cmd_vel_publisher.publish(self.vel_cmd)
+                self.node.get_logger().info(f"Yaw adjusted")
+                return True
 
     def get_next_goal_arm_cam_callback(self, msg):
         if len(self.X_arm_cam) == 0:
@@ -255,26 +326,3 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
             self.Y_obj = self.Y_arm_cam[idx]
             self.node.get_logger().info(f"Closest object is at {min} [m]: ")
     
-    def adust_distance(self):
-        pass
-
-    def adjust_yaw(self):
-        desired_theta = atan2(-self.X_obj, -self.Y_obj)
-        self.vel_cmd.angular.z = self.angular_velocity
-        delta_t = desired_theta/self.vel_cmd.angular.z
-        if not self.yaw_msg_sent:
-            self.init_time = self.get_clock().now().nanoseconds / 1e9
-            self.cmd_vel_publisher.publish(self.vel_cmd)
-            self.yaw_msg_sent = True
-            self.node.get_logger().info(f"Sending adjust yaw message: closest object is {self.min} [m] away, angle = {desired_theta*180/pi} degrees")
-            return False
-        else:
-            self.curr_time = self.get_clock().now().nanoseconds / 1e9
-            if self.curr_time - self.init_time < delta_t:
-                self.node.get_logger().info(f"Adjusting yaw")
-                return False
-            else:
-                self.vel_cmd.angular.z = 0.0
-                self.cmd_vel_publisher.publish(self.vel_cmd)
-                self.node.get_logger().info(f"Yaw adjusted")
-                return True

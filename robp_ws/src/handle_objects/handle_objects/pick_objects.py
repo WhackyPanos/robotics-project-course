@@ -239,10 +239,10 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         self.xx = 0.135 # compensation for the joint 3 compensation
         self.yy = 0.0 # positive is to left in robot perspective
-        self.zz = -0.065
+        self.zz = -0.058
 
         # angles in decidegrees
-        self.joint_5_start_angle = 300 
+        self.joint_5_start_angle = 50 
         self.joint_5_end_angle = 900
         self.joint_5_step = 5
 
@@ -255,8 +255,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         # joint limits in normal domain
         margin = 1
-        self.lb_q = [-120.0,-60.0 + margin ,-90 + margin ,-90 + margin ,-120.0 + margin , 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
-        self.ub_q = [ 120.0, 60.0 - margin , 90 - margin , 90 - margin , 120.0 - margin , 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
+        self.lb_q = [-120.0,-90.0 + margin ,-90 + margin ,-90 + margin ,-120.0 + margin , 0.0] # original: [-120.0,-60.0,-90.0,-90.0,-120.0,0.0]
+        self.ub_q = [ 120.0, 90.0 - margin , 90 - margin , 90 - margin , 120.0 - margin , 0.0] #original: [120.0,60.0,90.0,90.0,120.0,0.0]
         # -------------------------------------------------------------------------------------------
         # -------------------------------------------------------------------------------------------
 
@@ -506,7 +506,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             for j in range(len(q)):
                 if q[j] < self.lb_q[j] or q[j] > self.ub_q[j]:
                     good_flag = False
-                    self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = {q[j+1]})")
+                    self.node.get_logger().info(f"Joint {j} angle is outside limits (angle = {q[j]})")
             if good_flag == True:
                 if count == self.skipped_solutions -1: # skip  to avoid joint limits
                     count +=1

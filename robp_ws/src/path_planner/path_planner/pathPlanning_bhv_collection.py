@@ -22,7 +22,7 @@ class PathPlan(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
-        return py_trees.common.Status.SUCCESS if self.path_planner.path_plan(goal_threash=4) else py_trees.common.Status.FAILURE
+        return py_trees.common.Status.SUCCESS if self.path_planner.path_plan(goal_threash=3) else py_trees.common.Status.FAILURE
 
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """
