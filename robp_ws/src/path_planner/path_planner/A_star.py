@@ -11,6 +11,7 @@ from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 #from mapping.occupancy_grid import OccupancyGridNode
 
+
 class Nodes:
         def __init__(self, x, y):
             self.x = x # Observe that these are occupancy grid indexes
@@ -134,6 +135,17 @@ class Planner_A_star(Node):
         full_path_msg.poses.append(first_pose)
         # simplified_path_msg.poses.append(first_pose)
 
+
+        simplified_nodes = self.simplify_path(node_list)
+        for j in range(len(simplified_nodes)):
+            node = simplified_nodes[j]
+            pose = PoseStamped()
+            pose.header.frame_id = "map"
+            pose.header.stamp = self.get_clock().now().to_msg()
+            pose.pose.position.x = node.x * self.config_space.info.resolution + self.config_space.info.origin.position.x
+            pose.pose.position.y = node.y * self.config_space.info.resolution + self.config_space.info.origin.position.y
+            simplified_path_msg.poses.append(pose)
+
         for i in range(1, len(node_list) - 1):  
             node = node_list[i]
             pose = PoseStamped()
@@ -143,15 +155,15 @@ class Planner_A_star(Node):
             pose.pose.position.y = node.y * self.config_space.info.resolution + self.config_space.info.origin.position.y
             full_path_msg.poses.append(pose)
 
-            prev_node = node_list[i - 1]
-            next_node = node_list[i + 1]
+            # prev_node = node_list[i - 1]
+            # next_node = node_list[i + 1]
 
-            dx1, dy1 = node.x - prev_node.x, node.y - prev_node.y
-            dx2, dy2 = next_node.x - node.x, next_node.y - node.y
+            # dx1, dy1 = node.x - prev_node.x, node.y - prev_node.y
+            # dx2, dy2 = next_node.x - node.x, next_node.y - node.y
 
-            # If direction changes, add to simplified path
-            if dx1 * dy2 != dy1 * dx2:
-                simplified_path_msg.poses.append(pose)
+            # # If direction changes, add to simplified path
+            # if dx1 * dy2 != dy1 * dx2:
+            #     simplified_path_msg.poses.append(pose)
 
         # Ensure last pose is added to simplified path
         last_pose = PoseStamped()
@@ -160,7 +172,7 @@ class Planner_A_star(Node):
         last_pose.pose.position.x = node_list[-1].x * self.config_space.info.resolution + self.config_space.info.origin.position.x
         last_pose.pose.position.y = node_list[-1].y * self.config_space.info.resolution + self.config_space.info.origin.position.y
         full_path_msg.poses.append(last_pose)
-        simplified_path_msg.poses.append(last_pose)
+        # simplified_path_msg.poses.append(last_pose)
 
         return simplified_path_msg, full_path_msg
 
@@ -207,6 +219,49 @@ class Planner_A_star(Node):
         i_x = int((x - self.config_space.info.origin.position.x) / self.config_space.info.resolution)    
         i_y = int((y - self.config_space.info.origin.position.y) / self.config_space.info.resolution)
         return i_x, i_y
+
+    def simplify_path(self, nodes):
+        if len(nodes) < 2:
+            return nodes
+        simplified = []
+        i = 0
+        while i < len(nodes) - 1:
+            j = len(nodes) - 1
+            while j > i + 1:
+                if self.raytrace(nodes[i], nodes[j]):
+                    break
+                j -= 1
+            simplified.append(nodes[j])
+            i = j
+        return simplified
+    
+
+    def raytrace(self, start, end):
+        x0, y0 = int(start.x), int(start.y)
+        x1, y1 = int(end.x), int(end.y)
+        dx, dy = abs(x1 - x0), abs(y1 - y0)
+        sx = 1 if x0 < x1 else -1
+        sy = 1 if y0 < y1 else -1
+        err = dx - dy
+        width = self.config_space.info.width
+        height = self.config_space.info.height
+        while True:
+            if 0 <= x0 < width and 0 <= y0 < height:
+                index = y0 * width + x0
+                if self.config_space.data[index] >= 99: 
+                    return False  
+            if x0 == x1 and y0 == y1:
+                break
+            e2 = 2 * err
+            if e2 > -dy:
+                err -= dy
+                x0 += sx
+            if e2 < dx:
+                err += dx
+                y0 += sy
+        return True  
+
+
                     
 # def main():
 #     rclpy.init()
