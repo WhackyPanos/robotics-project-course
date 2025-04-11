@@ -218,7 +218,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
         self.position_checked = False
         self.yaw_msg_sent, self.distance_msg_sent = False, False
         self.distance_adjusted, self.yaw_adjusted = False, False
-        self.yaw_error, self.distance_error, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
+        self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
 
         self.vel_cmd = Twist()
         self.vel_cmd.linear.y = 0.0
@@ -227,10 +227,15 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
         self.vel_cmd.angular.y = 0.0
 
         #---------------- Adjust Parameters ---------------
-        self.lower_distance_threshold = 0.15
-        self.upper_distance_threshold = 0.20
-        self.vel_cmd.linear.x = 0.1
-        self.vel_cmd.angular.z = 0.05
+        self.transformation_x =  0.135
+        self.lower_x_threshold = 0.18 - self.transformation_x
+        self.upper_x_threshold = 0.26 - self.transformation_x
+        self.yaw_threshold = 45*pi/180
+        self.linear_velocity = 0.08/2
+        self.angular_velocity = 0.35/1
+        self.time_compensation = 50*(10**-3) # [s]
+        self.yaw_time_scale = 0.1
+        #---------------------------------------------------
 
     def setup(self, **kwargs):
         self.node = kwargs["node"]
@@ -241,50 +246,56 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
     def update(self):
         # Note: hope the behavior tick is slower than the subscriber callback, might need changes
         if not self.position_checked:
-            self.yaw_error = atan2(-self.X_obj, -self.Y_obj)
-            self.distance_error = dist([self.X_obj, self.Y_obj], [0,0])
-            self.yaw_delta_t = self.yaw_error/self.vel_cmd.angular.z
-            self.distance_delta_t = self.distance_error/self.vel_cmd.linear.x
+            self.yaw = atan2(-self.X_obj + self.transformation_x, -self.Y_obj)
+            self.get_logger().info(f"Longitudinal distance = {-self.Y_obj} and Yaw = {self.yaw}")
+            self.yaw_delta_t = self.yaw_time_scale *abs(self.yaw)/self.angular_velocity
+            self.distance_delta_t =  min(abs(-self.Y_obj- self.lower_x_threshold), abs(-self.Y_obj - self.upper_x_threshold) )/self.linear_velocity 
+            self.get_logger().info(f"Distance time = {self.distance_delta_t} [s] and Yaw time = {self.yaw_delta_t} [s]")
             self.position_checked = True
         
-        if self.distance_error < self.lower_distance_threshold: #we are too close
+        if -self.Y_obj < self.lower_x_threshold or abs(self.yaw) > self.yaw_threshold: #we are too close in the longitudinal direction
             if not self.distance_adjusted:
                 self.distance_adjusted = self.adjust_distance()
                 return py_trees.common.Status.RUNNING 
             else:
                 self.yaw_adjusted = self.adjust_yaw()
                 if self.yaw_adjusted:
+                    self.distance_adjusted, self.yaw_adjusted, self.position_checked, self.yaw_msg_sent, self.distance_msg_sent = False, False, False, False, False
+                    self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
                     return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
                 else:
                     return py_trees.common.Status.RUNNING
                 
-        elif self.distance_error > self.upper_distance_threshold: # we are too far
+        elif -self.Y_obj > self.upper_x_threshold or abs(self.yaw) > self.yaw_threshold: # we are too far in the longitudinal direction
             if not self.yaw_adjusted:
                 self.yaw_adjusted = self.adjust_yaw()
                 return py_trees.common.Status.RUNNING 
             else:
                 self.distance_adjusted = self.adjust_distance()
                 if self.distance_adjusted:
+                    self.distance_adjusted, self.yaw_adjusted, self.position_checked, self.yaw_msg_sent, self.distance_msg_sent = False, False, False, False, False
+                    self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
                     return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
                 else:
                     return py_trees.common.Status.RUNNING
         else:  # sweet spot
             self.distance_adjusted, self.yaw_adjusted, self.position_checked, self.yaw_msg_sent, self.distance_msg_sent = False, False, False, False, False
-            self.yaw_error, self.distance_error, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
+            self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
             return py_trees.common.Status.SUCCESS
 
     def adjust_distance(self):
-        delta_t = min(abs(self.distance_error), abs(self.distance_error) )/self.vel_cmd.linear.x 
-        self.vel_cmd.linear.x *= (self.distance_error - self.lower_distance_threshold) /abs((self.distance_error - self.lower_distance_threshold))
+        self.vel_cmd.linear.x = self.linear_velocity * (-self.Y_obj - self.lower_x_threshold) /abs((-self.Y_obj - self.lower_x_threshold))
         if not self.distance_msg_sent:
             self.init_time = self.get_clock().now().nanoseconds / 1e9
             self.cmd_vel_publisher.publish(self.vel_cmd)
             self.distance_msg_sent = True
-            self.node.get_logger().info(f"Sending adjust distance message")
+            self.node.get_logger().info(f"Sending adjust distance message: velocity = {self.vel_cmd.linear.x}")
             return False
         else:
-            if self.get_clock().now().nanoseconds / 1e9 - self.init_time < delta_t:
-                self.node.get_logger().info(f"Adjusting distance")
+            elapsed_time = self.get_clock().now().nanoseconds / 1e9 - self.init_time
+            if self.get_clock().now().nanoseconds / 1e9 - self.init_time < self.distance_delta_t:
+                self.cmd_vel_publisher.publish(self.vel_cmd)
+                self.node.get_logger().info(f"Adjusting distance: desired time = {self.yaw_delta_t} and elapsed time = {elapsed_time}")
                 return False
             else:
                 self.vel_cmd.angular.x = 0.0
@@ -293,17 +304,18 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
                 return True
 
     def adjust_yaw(self):
-        delta_t = self.yaw_error/self.vel_cmd.angular.z
+        self.vel_cmd.linear.z = self.angular_velocity
         if not self.yaw_msg_sent:
             self.init_time = self.get_clock().now().nanoseconds / 1e9
             self.cmd_vel_publisher.publish(self.vel_cmd)
             self.yaw_msg_sent = True
-            self.node.get_logger().info(f"Sending adjust yaw message: closest object is {self.min} [m] away, angle = {self.desired_theta*180/pi} degrees")
+            self.node.get_logger().info(f"Sending adjust yaw message: closest object is {self.min}")
             return False
         else:
-            self.curr_time = self.get_clock().now().nanoseconds / 1e9
-            if self.curr_time - self.init_time < delta_t:
-                self.node.get_logger().info(f"Adjusting yaw")
+            elapsed_time = self.get_clock().now().nanoseconds / 1e9 - self.init_time
+            if elapsed_time < self.yaw_delta_t:
+                self.cmd_vel_publisher.publish(self.vel_cmd)
+                self.node.get_logger().info(f"Adjusting yaw: desired time = {self.yaw_delta_t} and elapsed time = {elapsed_time}")
                 return False
             else:
                 self.vel_cmd.angular.z = 0.0
@@ -324,5 +336,5 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
                     idx = i
             self.X_obj = self.X_arm_cam[idx]
             self.Y_obj = self.Y_arm_cam[idx]
-            self.node.get_logger().info(f"Closest object is at {min} [m]: ")
+            #self.node.get_logger().info(f"Closest object is at {min} [m]: ")
     

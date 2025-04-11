@@ -239,7 +239,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         self.xx = 0.135 # compensation for the joint 3 compensation
         self.yy = 0.0 # positive is to left in robot perspective
-        self.zz = -0.058
+        self.zz = -0.055
 
         # angles in decidegrees
         self.joint_5_start_angle = 50 
