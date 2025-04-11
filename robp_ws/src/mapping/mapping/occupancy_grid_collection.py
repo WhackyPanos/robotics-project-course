@@ -61,6 +61,7 @@ class OccupancyGridNode(Node):
         self.grid = np.zeros((self.height, self.width), dtype=np.int8)  # Occupancy grid
         self.config_space = self.grid # Config space
         self.goal_box_mask_inflated = np.zeros_like(self.grid)
+        self.goal_object_mask_inflated = np.zeros_like(self.grid)
         self.grid.fill(-1) # Sets all cells to unknown
         self.geofence_mask = None # Geofence mask to check if lidar points are inside the workspace
         self.geofence(vertices) # Sets a boundry for the workspace
@@ -187,9 +188,11 @@ class OccupancyGridNode(Node):
     def inflate_map(self):
         binary_grid = np.zeros_like(self.grid)
         border_grid = np.zeros_like(self.grid)
+        actual_grid = np.zeros_like(self.grid)
 
         # Threshold for obstacles (usually >50 is considered occupied)
         binary_grid[(self.grid > 50) & (~self.geofence_mask)] = 1
+        actual_grid[self.grid > 50] = 1
         border_grid[self.geofence_mask] = 1
         
         # Define different kernel sizes
@@ -208,7 +211,7 @@ class OccupancyGridNode(Node):
         inflated_border = binary_dilation(border_grid, kernel_small)
 
         # Combine the two results
-        self.config_space = (((inflated_grid & ~(self.goal_box_mask_inflated))| inflated_border) * 99).astype(np.int8)
+        self.config_space = ((((inflated_grid | inflated_border) & ~(self.goal_box_mask_inflated | self.goal_object_mask_inflated)) | actual_grid) * 99).astype(np.int8)
 
 
         # Create an OccupancyGrid message
@@ -294,7 +297,7 @@ class OccupancyGridNode(Node):
         to_remove = []
         for (x, y), timestamp in self.lidar_obstacles.items():
             elapsed_time = (current_time - timestamp) # Elapsed time will be 0.1 seconds since the lidar updates at 10hz 
-            new_value = max(0, int(99 - 10*elapsed_time))
+            new_value = max(0, int(99 - 5*elapsed_time))
 
             if new_value == 0:
                 to_remove.append((x, y))
@@ -326,6 +329,15 @@ class OccupancyGridNode(Node):
         # Remove if object:
         if self.goal_type == "Object":
             self.grid[goal_y, goal_x] = -1
+
+            mask = np.zeros_like(self.grid)
+            mask[goal_y, goal_x] = 1
+            
+            r = int(np.ceil(self.robot_radius / self.resolution)) 
+            y_deflate, x_deflate = np.ogrid[-r:r+1, -r:r+1]
+            kernel = x_deflate**2 + y_deflate**2 <= r**2
+            
+            self.goal_object_mask_inflated = binary_dilation(mask, kernel)
         else:
             mask = np.zeros_like(self.grid)
             mask[goal_y, goal_x] = 1
@@ -347,6 +359,9 @@ class OccupancyGridNode(Node):
         if self.goal_type == "Object" and self.x_w is not None and self.y_w is not None:
             if(math.dist([rob_x, rob_y],[self.x_w, self.y_w])) >= self.object_radius:
                 self.goal_box_mask_inflated = np.zeros_like(self.grid)
+        if self.goal_type == "Box" and self.x_w is not None and self.y_w is not None:
+            if (math.dist([rob_x, rob_y],[self.x_w, self.y_w])) >= self.robot_radius:
+                self.goal_object_mask_inflated = np.zeros_like(self.grid)
 
 def main():
     rclpy.init()
