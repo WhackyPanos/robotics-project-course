@@ -122,7 +122,7 @@ class OccupancyGridNode(Node):
         #self.geofence_mask[mask] = True
         self.geofence_mask[~filled_mask] = True
         # Marks the occupancy grid 
-        self.grid[self.geofence_mask] = 100 
+        self.grid[self.geofence_mask] = 99 
     
     def add_objects(self):
         data = []
@@ -263,11 +263,6 @@ class OccupancyGridNode(Node):
             self.get_logger().info(f'Could not transform {msg.header.frame_id} to map: {ex}')
             return
 
-        # Gets the robots position in the map frame
-        robot_x = t_lidar.transform.translation.x
-        robot_y = t_lidar.transform.translation.y 
-        robot_index = self.world_to_grid(robot_x, robot_y)
-
         # Clone the LaserScan message
         filtered_scan = LaserScan()
         filtered_scan.header = msg.header
@@ -283,7 +278,6 @@ class OccupancyGridNode(Node):
         # Filter out points beyond 5 meters
         filtered_scan.ranges = [r if r <= 2.0 and r >= 0.2 else float('inf') for r in msg.ranges]
                     
-
         # Project LaserScan to PointCloud2
         cloud = self.proj.projectLaser(filtered_scan)
         cloud_map = do_transform_cloud(cloud, t_lidar)
@@ -291,7 +285,6 @@ class OccupancyGridNode(Node):
         now = self.get_clock().now()
         current_time = now.seconds_nanoseconds()[0] + now.seconds_nanoseconds()[1] / 1e9 
         
-
         for point in sensor_msgs_py.point_cloud2.read_points(cloud_map, field_names=("x", "y"), skip_nans=True):
             x, y = self.world_to_grid(point[0], point[1])
             if 0 <= x < self.width and 0 <= y < self.height:
@@ -312,13 +305,13 @@ class OccupancyGridNode(Node):
         for key in to_remove:
             del self.lidar_obstacles[key]
 
-        self.publish_current_grid()
         self.rm_loners()
+        self.publish_current_grid()
         self.inflate_map()
 
     def rm_loners(self):
-        """Removes lidar occupied cells (0<=(cell value)<=99) without any neighbors"""
-        mask = (self.grid > 0) & (self.grid < 100)
+        """Removes lidar occupied cells without any neighbors"""
+        mask = (self.grid > 0) & (self.grid < 100) # Defines a mask with everyhting exept objects
         kernel = np.array([[0, 1, 0],
                            [1, 0, 1],
                            [0, 1, 0]])
@@ -326,7 +319,6 @@ class OccupancyGridNode(Node):
         new_grid = self.grid.copy()
         new_grid[mask & (nr_neighbors == 0)] = -1
         self.grid = new_grid
-
     
     def goal_callback(self, msg:PointStamped):
         self.x_w, self.y_w = msg.point.x, msg.point.y
@@ -337,13 +329,13 @@ class OccupancyGridNode(Node):
         else:
             mask = np.zeros_like(self.grid)
             mask[goal_y, goal_x] = 1
+            
             r = int(np.ceil(self.object_radius / self.resolution)) 
+            y_deflate, x_deflate = np.ogrid[-r:r+1, -r:r+1]
+            kernel = x_deflate**2 + y_deflate**2 <= r**2
+            
+            self.goal_box_mask_inflated = binary_dilation(mask, kernel)
 
-            y_inflate, x_inflate = np.ogrid[-r:r+1, -r:r+1]
-            kernel = x_inflate**2 + y_inflate**2 <= r**2
-
-            mask = binary_dilation(mask, kernel)
-            self.goal_box_mask_inflated = mask
         self.publish_current_grid()
         self.inflate_map()  
 
@@ -355,8 +347,6 @@ class OccupancyGridNode(Node):
         if self.goal_type == "Object" and self.x_w is not None and self.y_w is not None:
             if(math.dist([rob_x, rob_y],[self.x_w, self.y_w])) >= self.object_radius:
                 self.goal_box_mask_inflated = np.zeros_like(self.grid)
-
-
 
 def main():
     rclpy.init()
