@@ -12,6 +12,7 @@ class Rotate(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         
         self.motion_node = MotionNode("Rotate_node") # create a motion node object
+        self.blackboard = py_trees.blackboard.Blackboard()
 
     def setup(self, **kwargs):
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
@@ -20,20 +21,25 @@ class Rotate(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         self.node.create_subscription(Pose2D, '/odom_pose',  self.get_robot_yaw, 10)
         self.robot_yaw = 0.0
         self.ticks = 0
+        self.desired_angle = self.robot_yaw
+
 
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
         status is not RUNNING thereafter."""  
+        if not hasattr(self.blackboard, "pick_status") or self.blackboard.pick_status == py_trees.common.Status.SUCCESS:
+            self.ticks = 0
+        if self.ticks % 2 == 0:
+            self.desired_angle = self.robot_yaw + math.pi/4
+            self.ticks +=1
+        else: 
+            self.desired_angle = self.robot_yaw - math.pi/2
+            self.ticks = 0
+        
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
-        if self.ticks % 2 == 0:
-            desired_angle = self.robot_yaw + math.pi/4
-            self.ticks +=1
-        else: 
-            desired_angle = self.robot_yaw - math.pi/2
-            self.ticks = 0
-        return py_trees.common.Status.FAILURE if self.motion_node.adjust_yaw(desired_angle) else py_trees.common.Status.RUNNING
+        return py_trees.common.Status.FAILURE if self.motion_node.adjust_yaw(self.desired_angle) else py_trees.common.Status.RUNNING
 
     def terminate(self, new_status: py_trees.common.Status):
         """
