@@ -16,16 +16,20 @@ The transform comes from the icp package and this package is responsible for com
 | /icp/activate | Bool | (1) |  localization_bhv | The boolean message will indicate if localization is needed or not, which is managed by the behavior
 
 ---
-colcon build --symlink-install --packages-skip usb_cam 
-source install/setup.bash
-
-ros2 bag play --read-ahead-queue-size 100 -l -r 1.0 --clock 100 --start-paused ~/aREPO/robp_group3/robp_ws/bag/lidar_dynamic/lidar_dynamic.mcap 
-
-ros2 run tf2_ros tf2_echo odom map
----
 (1) Ideally, it should be published by the motion behavior when the point is reached, ie, when the robot stops completely and return SUCCESS. It should publish a FALSE message so the localization is not performed why the robot is standing still. Besides, the picking and placing behaviors should publish a TRUE message (when these behaviors return SUCCESS, the robot will start moving and localization should be re-initiated).
+---
+#### **Commands to run rosbags**
 
-Launch file:
+``` colcon build --symlink-install --packages-skip usb_cam ```
+
+``` source install/setup.bash ```
+
+``` ros2 bag play --read-ahead-queue-size 100 -l -r 1.0 --clock 100 --start-paused ~/aREPO/robp_group3/robp_ws/bag/lidar_dynamic/lidar_dynamic.mcap ```
+
+``` ros2 run tf2_ros tf2_echo odom map ```
+---
+
+#### **Commands to run when it's working**
 
 ```
 fastdds discovery -i 0 -t 192.168.128.107 -q 42100
