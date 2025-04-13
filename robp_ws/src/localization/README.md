@@ -1,19 +1,23 @@
 # Localization Package
-#### **Commands to run rosbags**
-
-``` colcon build --symlink-install --packages-skip usb_cam ```
-
-``` source install/setup.bash ```
+#### **Rosbag commands**
 
 ``` ros2 bag play --read-ahead-queue-size 100 -l -r 1.0 --clock 100 --start-paused ~/aREPO/robp_group3/robp_ws/bag/lidar_dynamic/lidar_dynamic.mcap ```
 
-``` ros2 run tf2_ros tf2_echo odom map ```
+``` ros2 launch robp_launch localization_icp_launch.py ```
 
 #### **Commands to run when it's working**
 
 ``` fastdds discovery -i 0 -t 192.168.128.107 -q 42100 ```
 
 ``` ros2 launch robp_launch localization_icp_launch.py ```
+
+#### **Build and debug Commands**
+
+``` colcon build --symlink-install --packages-skip usb_cam ```
+
+``` source install/setup.bash ```
+
+``` ros2 run tf2_ros tf2_echo odom map ```
 
 ### **Details**
 
