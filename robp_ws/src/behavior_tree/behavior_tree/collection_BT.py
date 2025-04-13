@@ -152,7 +152,7 @@ class CollectionBT(Node):
         
         main_sequence = py_trees.composites.Sequence(
             name = 'Collection bhv',
-            children = [self.next_object_bhv, repeat_navigate, pick_or_place],
+            children = [self.next_object_bhv, repeat_navigate, pick_or_place], #NOTE: add/remove repeat_navigate
             memory = True
         )
 

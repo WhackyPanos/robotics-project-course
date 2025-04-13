@@ -203,7 +203,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.from_frame_rel = 'map'
         self.X, self.Y = None, None
         self.X_planB, self.Y_planB = None, None
-        self.X_arm_cam, self.Y_arm_cam = [],  []
+        self.X_arm_cam, self.Y_arm_cam, self.wrist_angle = [],  [], []
         self.thresholds = [10**-4,10**-3,10**-2]
         self.initial_guesses = [[0,0,0,0,0,0]]
         self.current_angles, self.desired_servo_angles = None, None
@@ -331,6 +331,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 # try new objects in the list. If it is empty, it failed
                 self.X_arm_cam.pop(0)
                 self.Y_arm_cam.pop(0)
+                self.wrist_angle.pop(0)
 
                 if len(self.X_arm_cam) == 0:
                     #self.picklift_pub.publish(Bool(data=False))  # TODO: if pick and search fails, a message has to be published. That can happen here or in the arm camera
@@ -360,7 +361,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             self.desired_servo_angles[0] = self.closed_gripper_angle 
             msg.data = self.desired_servo_angles + times
             self.ota_publisher_.publish(msg)
-            self.move_timer = self.node.create_timer((self.obj_grasp_time/1000) + 4 , self.wait_for_movement)
+            self.move_timer = self.node.create_timer((self.obj_grasp_time/1000) + 2 , self.wait_for_movement)
             self.arm_moving = True
             return py_trees.common.Status.RUNNING
 
@@ -408,20 +409,12 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.fail_count = msg.data
 
     def adjust_wrist(self):
-        if self.fail_count != 0:
-            wrist_adjustments_count = 0
-            # adjust wrist rotation "randomly"
-            while True:
-                self.desired_servo_angles[1] += self.angle_step*100
-                if not(self.desired_servo_angles[1] < self.lb_q[1] or self.desired_servo_angles[1] > self.ub_q[1]):
-                    break
-                else:
-                    self.desired_servo_angles[1] = 12000
-                    self.angle_step *= -1
-                wrist_adjustments_count += 1
-                if wrist_adjustments_count > 10:
-                    self.desired_servo_angles[1] = 12000
-                    break
+        wrist_angle = self.wrist_angle[0] * 180/pi
+        self.get_logger().info(f"Wrist angle is {round(self.wrist_angle[0], 2)}")
+        wrist_angle = ((wrist_angle + 90) % 180) - 90 #map to [-90, 90]
+        wrist_angle = int(100*wrist_angle + 12000)
+
+        return wrist_angle
 
 
     def get_next_goal_callback(self, msg):
@@ -435,6 +428,11 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         for pose in msg.poses:
             self.X_arm_cam.append(pose.position.x)
             self.Y_arm_cam.append(pose.position.y)
+
+            # to transformation from quaternions to wrist angle
+            qz = pose.orientation.z
+            qw = pose.orientation.w
+            self.wrist_angle.append(2*atan2(qz, qw))
 
 
     def servo_angles_callback(self, msg):
@@ -512,7 +510,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 self.desired_servo_angles[4] = self.desired_servo_angles[4] + int(-100*q[1])  
                 self.desired_servo_angles[3] = self.desired_servo_angles[3] + int(-100*q[2])
                 self.desired_servo_angles[2] = self.desired_servo_angles[2] + int(-100*q[3]) + self.joint3_compensation 
-                self.adjust_wrist()        
+                self.desired_servo_angles[1] = self.adjust_wrist()        
                 msg.data = self.desired_servo_angles + times
                 return msg
             
