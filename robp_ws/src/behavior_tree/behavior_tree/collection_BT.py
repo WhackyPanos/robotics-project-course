@@ -21,6 +21,7 @@ from behavior_tree.goCollect_bhv import goTo
 from .collection_bhv  import UpdateObjectList, ArmTaskSucceeded, Adjust
 from path_planner.motion_bhv_collection import NavigateToGoal
 from path_planner.revert_bhv import Revert
+from path_planner.rotate_bhv import Rotate
 from localization.localization_bhv import Localization_bhv
 from path_planner.pathPlanning_bhv_collection import PathPlan
 from obstacle_on_path.obstacle_on_path_bhv import ObstacleOnPath
@@ -40,11 +41,13 @@ class CollectionBT(Node):
         self.root = py_trees.composites.Selector(name="Root", memory= False)
 
         self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,20000,12000,12000], 200)
+        self.first_detect_object = ArmSegmentationBT(name="first_arm_segmentation")
         self.detect_object = ArmSegmentationBT()
         self.final_detect_object = ArmSegmentationBT(name = "final_arm_segmentation_bt")
         self.detect_box = BoxSegmentationBT()
         self.pick_object = ArmIK()
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000], 200)
+        self.lift_after_placing = SetArm('lift_after_placing', [10000,12000,12000,12000,12000,12000], 200)
         self.adjust = Adjust()
         self.place = Place()
         self.path_plan = PathPlan()
@@ -53,6 +56,7 @@ class CollectionBT(Node):
         #self.localization = Localization_bhv()
         self.navigate_to_goal = NavigateToGoal()
         self.revert = Revert()
+        self.rotate = Rotate()
         self.next_object_bhv = UpdateObjectList(self.objs_list, self.box_list, "next_object")
         self.arm_task_succeeded = ArmTaskSucceeded()
 
@@ -70,12 +74,14 @@ class CollectionBT(Node):
         executor.add_node(self.next_object_bhv)
         executor.add_node(self.navigate_to_goal)
         executor.add_node(self.revert)
+        executor.add_node(self.rotate)
         executor.add_node(self.path_plan)
         executor.add_node(self.obstacle_on_path)
 
 
         executor.add_node(self.navigate_to_goal.motion_node)
         executor.add_node(self.revert.motion_node)
+        executor.add_node(self.rotate.motion_node)
         executor.add_node(self.path_plan.path_planner)
         executor.add_node(self.obstacle_on_path.check_path)
 
@@ -97,7 +103,7 @@ class CollectionBT(Node):
             # Pick and lift operations
         detect_and_adjust = py_trees.composites.Sequence( 
             name = 'Detect_and_Adjust', 
-            children = [py_trees.timers.Timer("Timer", duration=2), self.detect_object, py_trees.timers.Timer("Timer", duration=1), self.adjust], #TODO: if working fine, make this sequence with adjust first
+            children = [py_trees.timers.Timer("Timer", duration=1), self.adjust, py_trees.timers.Timer("Timer", duration=1.5), self.detect_object], #TODO: if working fine, make this sequence with adjust first
             memory = True)       
         repeat_detect_and_adjust = py_trees.decorators.Retry( # TODO introduce selector between retry and a behavior that return success, if needed
             name = 'Repeat_Detect&Adjust', 
@@ -109,17 +115,23 @@ class CollectionBT(Node):
         )
         planA = py_trees.composites.Sequence(
             name="PlanA", 
-            children = [self.tuck_arm, fail_is_sucess, self.final_detect_object, py_trees.timers.Timer("Timer", duration=0.5), self.pick_object],
+            children = [self.tuck_arm, py_trees.timers.Timer("Timer", duration=1.5), self.first_detect_object, fail_is_sucess, self.final_detect_object, py_trees.timers.Timer("Timer", duration=0.5), self.pick_object],
             memory = True)
+        
+        planA_or_rotate = py_trees.trees.composites.Selector(
+            name='PlanA or Rotate',
+            memory=True,
+            children=[planA, self.rotate]
+        )
+
         pick_and_lift = py_trees.composites.Sequence(
             name="Pick&Lift", 
-            children = [planA, self.lift],
+            children = [planA_or_rotate, self.lift],
             memory = True)
         repeat_picklift = py_trees.decorators.Retry(
             name = 'Repeat_Pick&Lift', 
             child = pick_and_lift, 
-            num_failures = 3)
-            # selector between them
+            num_failures = 5)
 
         nav_and_check = py_trees.composites.Parallel(
             name = 'Nav and Check Path',
@@ -141,7 +153,7 @@ class CollectionBT(Node):
 
         place_and_revert = py_trees.composites.Sequence(
             name='Place and Revert',
-            children=[self.place, py_trees.timers.Timer(name='place_timer', duration=2), self.revert],
+            children=[self.place, py_trees.timers.Timer(name='place_timer', duration=1), self.lift_after_placing, py_trees.timers.Timer(name='place_timer', duration=1), self.revert],
             memory=True
         )
 

@@ -3,6 +3,7 @@ import py_trees
 import rclpy
 from rclpy.node import Node
 from .A_star import Planner_A_star
+from std_msgs.msg import String
 
 class PathPlan(py_trees.behaviour.Behaviour, Node):
     def __init__(self, name="PathPlannerBT", node=None):
@@ -13,8 +14,9 @@ class PathPlan(py_trees.behaviour.Behaviour, Node):
 
     def setup(self, **kwargs):
         """ Setup function, called once before the first update. """
-        #self.path_planner = kwargs['node']  
-        #rclpy.get_global_executor().add_node(self.path_planner) 
+        self.node = kwargs['node']
+        self.next_goal_type_pub = self.node.create_subscription(String,'/goal_type', self.goal_type_callback, 10)
+        self.goal_type = "Object"
 
     def initialise(self):
         """ Called when the behavior starts (on the first tick). """
@@ -22,8 +24,15 @@ class PathPlan(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         """ Behavior Tree update step. Called every tick of the BT. """
-        return py_trees.common.Status.SUCCESS if self.path_planner.path_plan(goal_threash=3) else py_trees.common.Status.FAILURE
+        if self.goal_type == "Box":
+            goal_threash = 4
+        else:
+            goal_threash = 3
+        return py_trees.common.Status.SUCCESS if self.path_planner.path_plan(goal_threash) else py_trees.common.Status.FAILURE
 
     def terminate(self, new_status: py_trees.common.Status):
         """ Called when the behavior finishes or is interrupted. """
         self.get_logger().info(f"Terminating PathPlannerBT")
+
+    def goal_type_callback(self,msg:String):
+        self.goal_type = msg.data

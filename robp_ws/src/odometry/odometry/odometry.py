@@ -10,7 +10,7 @@ from rclpy.node import Node
 from tf2_ros import TransformBroadcaster
 from tf_transformations import quaternion_from_euler, euler_from_quaternion
 
-from geometry_msgs.msg import TransformStamped
+from geometry_msgs.msg import TransformStamped, Twist
 from robp_interfaces.msg import Encoders
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped, Pose2D
@@ -45,14 +45,19 @@ class Odometry(Node):
         self.create_subscription(
             Imu, '/imu/data_raw', self.imu_callback, 10)
         
+        self.create_subscription(Twist, '/cmd_vel', self.vel_callback, 10)
+        
         #self.localization_transform_trigger = self.create_subscription(
         #   PointCloud2, "/icp/global_point_cloud", self.localization_transform_trigger, qos_profile = 10)
         
+        self.angular_vel = 0.0
+        self.linear_vel_x = 0.0
+        self.linear_vel_y = 0.0
         
-        self.init_imu_yaw = None
+        # self.init_imu_yaw = None
         self.prev_imu_yaw = None
         self.imu_yaw = None
-        self.yaw_buffer = deque(maxlen=5)
+        # self.yaw_buffer = deque(maxlen=5)
 
         # 2D pose
         self._x = 0.0
@@ -119,7 +124,13 @@ class Odometry(Node):
         if self.count == 0:
             self.get_logger().info('Killing map -> odom "static" transformn')
             self.transform_timer.cancel()
-            self.count = 1            
+            self.count = 1         
+
+    def vel_callback(self, msg:Twist):
+        
+        self.angular_vel = msg.angular.z
+        self.linear_vel_x = msg.linear.x
+        self.linear_vel_y = msg.linear.y
 
 
     def imu_callback(self, msg: Imu):
@@ -191,7 +202,11 @@ class Odometry(Node):
         # TODO: Fill in
         D = wheel_radius/2 * K * (delta_ticks_right + delta_ticks_left)
         # delta_theta = wheel_radius/base * K * (delta_ticks_right - delta_ticks_left)
-        self._yaw += self.prev_imu_yaw - self.imu_yaw + math.pi/(180*500)
+
+        if self.linear_vel_x == 0 and self.linear_vel_y == 0 and self.angular_vel == 0:
+            self._yaw = self._yaw
+        else:
+            self._yaw += self.prev_imu_yaw - self.imu_yaw + math.pi/(180*500)
         self.prev_imu_yaw = self.imu_yaw
         self._x = self._x + D * np.cos(self._yaw) # TODO: Fill in
         self._y = self._y + D * np.sin(self._yaw) # TODO: Fill in

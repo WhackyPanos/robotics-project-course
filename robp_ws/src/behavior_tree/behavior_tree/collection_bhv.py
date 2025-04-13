@@ -228,8 +228,8 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
         #---------------- Adjust Parameters ---------------
         self.transformation_x =  0.135
-        self.lower_x_threshold = 0.18 - self.transformation_x
-        self.upper_x_threshold = 0.24 - self.transformation_x
+        self.lower_x_threshold = 0.20 - self.transformation_x
+        self.upper_x_threshold = 0.23 - self.transformation_x
         self.yaw_threshold = 20*pi/180
         self.linear_velocity = 0.08/2
         self.angular_velocity = 0.35/1.5
@@ -285,6 +285,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
         else:  # sweet spot
             self.get_logger().info(f"Object is in good enough position to grasp, doing IK")
+            self.X_arm_cam, self.Y_arm_cam = [],  []
             return py_trees.common.Status.SUCCESS
 
     def adjust_distance(self):
@@ -329,6 +330,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
     def get_next_goal_arm_cam_callback(self, msg):
         if len(self.X_arm_cam) == 0:
+            self.node.get_logger().info(f"len = 0")
             for pose in msg.poses:
                 self.X_arm_cam.append(pose.position.x)
                 self.Y_arm_cam.append(pose.position.y)
