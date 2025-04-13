@@ -41,6 +41,7 @@ class OccupancyGridNode(Node):
         self.next_goal_type_sub = self.create_subscription(String,'/goal_type', self.goal_type_callback,
                                                             rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.odom_pose_sub = self.create_subscription(Pose2D, '/odom_pose', self.check_map_pose, 10)
+        self.create_subscription(Bool, '/do_mapping', self.do_mapping_callback, 10)
 
         relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
@@ -48,6 +49,8 @@ class OccupancyGridNode(Node):
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True) 
         self.proj = LaserProjection()
+
+        self.do_mapping = True
         
         # Gets workspace variables from tsv file
         vertices, min_x, max_x, min_y, max_y = self.read_workspace()
@@ -260,39 +263,40 @@ class OccupancyGridNode(Node):
 
 
     def lidar_transform_callback(self, future, msg):
-        try:    
-            t_lidar = future.result()  # Get the transform when ready
-        except TransformException as ex:
-            self.get_logger().info(f'Could not transform {msg.header.frame_id} to map: {ex}')
-            return
-
-        # Clone the LaserScan message
-        filtered_scan = LaserScan()
-        filtered_scan.header = msg.header
-        filtered_scan.angle_min = msg.angle_min
-        filtered_scan.angle_max = msg.angle_max
-        filtered_scan.angle_increment = msg.angle_increment
-        filtered_scan.time_increment = msg.time_increment
-        filtered_scan.scan_time = msg.scan_time
-        filtered_scan.range_min = max(msg.range_min, 0.2)
-        filtered_scan.range_max = min(msg.range_max, 2.0)  # Limit max range to 2m
-        filtered_scan.intensities = msg.intensities
-
-        # Filter out points beyond 5 meters
-        filtered_scan.ranges = [r if r <= 2.0 and r >= 0.2 else float('inf') for r in msg.ranges]
-                    
-        # Project LaserScan to PointCloud2
-        cloud = self.proj.projectLaser(filtered_scan)
-        cloud_map = do_transform_cloud(cloud, t_lidar)
-        
         now = self.get_clock().now()
         current_time = now.seconds_nanoseconds()[0] + now.seconds_nanoseconds()[1] / 1e9 
-        
-        for point in sensor_msgs_py.point_cloud2.read_points(cloud_map, field_names=("x", "y"), skip_nans=True):
-            x, y = self.world_to_grid(point[0], point[1])
-            if 0 <= x < self.width and 0 <= y < self.height:
-                if not self.geofence_mask[y, x]:  # Only add points if its not part of the geofence mask
-                    self.lidar_obstacles[(x, y)] = current_time
+
+        if self.do_mapping:
+            try:    
+                t_lidar = future.result()  # Get the transform when ready
+            except TransformException as ex:
+                self.get_logger().info(f'Could not transform {msg.header.frame_id} to map: {ex}')
+                return
+
+            # Clone the LaserScan message
+            filtered_scan = LaserScan()
+            filtered_scan.header = msg.header
+            filtered_scan.angle_min = msg.angle_min
+            filtered_scan.angle_max = msg.angle_max
+            filtered_scan.angle_increment = msg.angle_increment
+            filtered_scan.time_increment = msg.time_increment
+            filtered_scan.scan_time = msg.scan_time
+            filtered_scan.range_min = max(msg.range_min, 0.2)
+            filtered_scan.range_max = min(msg.range_max, 2.0)  # Limit max range to 2m
+            filtered_scan.intensities = msg.intensities
+
+            # Filter out points beyond 5 meters
+            filtered_scan.ranges = [r if r <= 2.0 and r >= 0.2 else float('inf') for r in msg.ranges]
+                        
+            # Project LaserScan to PointCloud2
+            cloud = self.proj.projectLaser(filtered_scan)
+            cloud_map = do_transform_cloud(cloud, t_lidar)
+            
+            for point in sensor_msgs_py.point_cloud2.read_points(cloud_map, field_names=("x", "y"), skip_nans=True):
+                x, y = self.world_to_grid(point[0], point[1])
+                if 0 <= x < self.width and 0 <= y < self.height:
+                    if not self.geofence_mask[y, x]:  # Only add points if its not part of the geofence mask
+                        self.lidar_obstacles[(x, y)] = current_time
 
         to_remove = []
         for (x, y), timestamp in self.lidar_obstacles.items():
@@ -353,6 +357,9 @@ class OccupancyGridNode(Node):
 
     def goal_type_callback(self, msg:String):
         self.goal_type = msg.data
+
+    def do_mapping_callback(self, msg:Bool):
+        self.do_mapping = msg.data
 
     def check_map_pose(self, msg:Pose2D):
         rob_x, rob_y = msg.x, msg.y
