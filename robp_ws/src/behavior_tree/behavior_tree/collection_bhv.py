@@ -218,7 +218,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
         self.position_checked = False
         self.yaw_msg_sent, self.distance_msg_sent = False, False
         self.distance_adjusted, self.yaw_adjusted = False, False
-        self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
+        self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t, self.vel_sign = None, None, None, None, None
 
         self.vel_cmd = Twist()
         self.vel_cmd.linear.y = 0.0
@@ -229,62 +229,66 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
         #---------------- Adjust Parameters ---------------
         self.transformation_x =  0.135
         self.lower_x_threshold = 0.18 - self.transformation_x
-        self.upper_x_threshold = 0.26 - self.transformation_x
-        self.yaw_threshold = 45*pi/180
+        self.upper_x_threshold = 0.24 - self.transformation_x
+        self.yaw_threshold = 20*pi/180
         self.linear_velocity = 0.08/2
-        self.angular_velocity = 0.35/1
-        self.time_compensation = 50*(10**-3) # [s]
-        self.yaw_time_scale = 0.1
+        self.angular_velocity = 0.35/1.5
+        self.time_compensation = 0*50*(10**-3) # [s]
+        self.yaw_time_scale = 0.2
         #---------------------------------------------------
 
     def setup(self, **kwargs):
         self.node = kwargs["node"]
-        self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 ) 
+        self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 
+                                      rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE)) 
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
             
+    def initialise(self):
+        self.distance_adjusted, self.yaw_adjusted, self.position_checked, self.yaw_msg_sent, self.distance_msg_sent = False, False, False, False, False
+        self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
 
     def update(self):
         # Note: hope the behavior tick is slower than the subscriber callback, might need changes
         if not self.position_checked:
-            self.yaw = atan2(-self.X_obj + self.transformation_x, -self.Y_obj)
-            self.get_logger().info(f"Longitudinal distance = {-self.Y_obj} and Yaw = {self.yaw}")
-            self.yaw_delta_t = self.yaw_time_scale *abs(self.yaw)/self.angular_velocity
-            self.distance_delta_t =  min(abs(-self.Y_obj- self.lower_x_threshold), abs(-self.Y_obj - self.upper_x_threshold) )/self.linear_velocity 
-            self.get_logger().info(f"Distance time = {self.distance_delta_t} [s] and Yaw time = {self.yaw_delta_t} [s]")
+            self.vel_sign = (-self.Y_obj - self.lower_x_threshold) /abs((-self.Y_obj - self.lower_x_threshold))
+            self.distance =  min(abs(-self.Y_obj- self.lower_x_threshold), abs(-self.Y_obj - self.upper_x_threshold) )
+            self.distance_delta_t =  max(self.distance/self.linear_velocity - self.time_compensation,0)
+            self.yaw = atan2(-self.X_obj , -self.Y_obj + self.transformation_x)
+            self.yaw_delta_t = max(self.yaw_time_scale *abs(self.yaw)/self.angular_velocity - self.time_compensation, 0)
+            self.get_logger().info(f"Distance time = {round(self.distance_delta_t, 3)} [s] and Yaw time = {round(self.yaw_delta_t, 3)} [s]")
+            self.get_logger().info(f"Longitudinal distance = {int(self.vel_sign)} * {round(100*(self.distance), 3)} [cm] and Yaw = {round(180*self.yaw/pi, 3)} [deg]")
             self.position_checked = True
         
-        if -self.Y_obj < self.lower_x_threshold or abs(self.yaw) > self.yaw_threshold: #we are too close in the longitudinal direction
+        if -self.Y_obj < self.lower_x_threshold and self.distance_delta_t > 0: #we are too close in the longitudinal direction
             if not self.distance_adjusted:
                 self.distance_adjusted = self.adjust_distance()
                 return py_trees.common.Status.RUNNING 
             else:
-                self.yaw_adjusted = self.adjust_yaw()
-                if self.yaw_adjusted:
-                    self.distance_adjusted, self.yaw_adjusted, self.position_checked, self.yaw_msg_sent, self.distance_msg_sent = False, False, False, False, False
-                    self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
-                    return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
-                else:
-                    return py_trees.common.Status.RUNNING
-                
-        elif -self.Y_obj > self.upper_x_threshold or abs(self.yaw) > self.yaw_threshold: # we are too far in the longitudinal direction
+                self.X_arm_cam, self.Y_arm_cam = [],  []
+                return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
+            
+        elif abs(self.yaw) > self.yaw_threshold and self.yaw_delta_t > 0:
             if not self.yaw_adjusted:
                 self.yaw_adjusted = self.adjust_yaw()
                 return py_trees.common.Status.RUNNING 
             else:
+                self.X_arm_cam, self.Y_arm_cam = [],  []
+                return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
+
+        elif -self.Y_obj > self.upper_x_threshold and self.distance_delta_t > 0: # we are too far in the longitudinal direction
+            if not self.distance_adjusted:
                 self.distance_adjusted = self.adjust_distance()
-                if self.distance_adjusted:
-                    self.distance_adjusted, self.yaw_adjusted, self.position_checked, self.yaw_msg_sent, self.distance_msg_sent = False, False, False, False, False
-                    self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
-                    return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
-                else:
-                    return py_trees.common.Status.RUNNING
+                return py_trees.common.Status.RUNNING 
+            else:
+                self.X_arm_cam, self.Y_arm_cam = [],  []
+                return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
+
         else:  # sweet spot
-            self.distance_adjusted, self.yaw_adjusted, self.position_checked, self.yaw_msg_sent, self.distance_msg_sent = False, False, False, False, False
-            self.yaw, self.distance, self.yaw_delta_t, self.distance_delta_t = None, None, None, None
+            self.get_logger().info(f"Object is in good enough position to grasp, doing IK")
             return py_trees.common.Status.SUCCESS
 
     def adjust_distance(self):
-        self.vel_cmd.linear.x = self.linear_velocity * (-self.Y_obj - self.lower_x_threshold) /abs((-self.Y_obj - self.lower_x_threshold))
+        self.vel_cmd.linear.x = self.linear_velocity * self.vel_sign
         if not self.distance_msg_sent:
             self.init_time = self.get_clock().now().nanoseconds / 1e9
             self.cmd_vel_publisher.publish(self.vel_cmd)
@@ -304,7 +308,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
                 return True
 
     def adjust_yaw(self):
-        self.vel_cmd.linear.z = self.angular_velocity
+        self.vel_cmd.angular.z = self.angular_velocity * self.yaw/abs(self.yaw)
         if not self.yaw_msg_sent:
             self.init_time = self.get_clock().now().nanoseconds / 1e9
             self.cmd_vel_publisher.publish(self.vel_cmd)
@@ -336,5 +340,5 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
                     idx = i
             self.X_obj = self.X_arm_cam[idx]
             self.Y_obj = self.Y_arm_cam[idx]
-            #self.node.get_logger().info(f"Closest object is at {min} [m]: ")
+        self.node.get_logger().info(f"From camera, X = {-self.Y_obj} and Y = {-self.X_obj}")
     

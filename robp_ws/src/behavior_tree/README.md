@@ -13,17 +13,21 @@ While being on robp_group3 (not robp_ws), build, source and then launch:
 
 ``` fastdds discovery -i 0 -t 192.168.128.107 -q 42100 ```
 
-``` ros2 launch robp_launch collection_hw_tf_launch.py  ```
-
 ``` ros2 launch robp_launch arm_servo_launch.py ```
 
-``` ros2 launch robp_launch collection_node_launch.py ```
+``` ros2 launch robp_launch collection_hw_tf_launch.py ```
+
+``` ros2 run behavior_tree collection_BT ```
 
 Debug:
 
 ``` ros2 topic echo /servo_pos_publisher ```
 
 ``` ros2 topic echo /multi_servo_cmd_sub ```
+
+``` ros2 topic echo /cmd_vel ```
+
+``` ros2 topic echo /arm_camera/points  ```
 
 If build fails (which happens often), go to the reame in the main page!
 

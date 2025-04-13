@@ -41,6 +41,7 @@ class CollectionBT(Node):
 
         self.tuck_arm = SetArm('tuck_arm', [2600,12000,2000,20000,12000,12000], 200)
         self.detect_object = ArmSegmentationBT()
+        self.final_detect_object = ArmSegmentationBT(name = "final_arm_segmentation_bt")
         self.detect_box = BoxSegmentationBT()
         self.pick_object = ArmIK()
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000], 200)
@@ -96,15 +97,19 @@ class CollectionBT(Node):
             # Pick and lift operations
         detect_and_adjust = py_trees.composites.Sequence( 
             name = 'Detect_and_Adjust', 
-            children = [py_trees.timers.Timer("Timer", duration=3), self.detect_object, self.adjust], #TODO: if working fine, make this sequence with adjust first
+            children = [py_trees.timers.Timer("Timer", duration=2), self.detect_object, py_trees.timers.Timer("Timer", duration=1), self.adjust], #TODO: if working fine, make this sequence with adjust first
             memory = True)       
         repeat_detect_and_adjust = py_trees.decorators.Retry( # TODO introduce selector between retry and a behavior that return success, if needed
             name = 'Repeat_Detect&Adjust', 
             child = detect_and_adjust, 
-            num_failures = 3)
+            num_failures = 4)
+        fail_is_sucess =  py_trees.decorators.FailureIsSuccess(
+            name = " Fail is Success (Repeat_Detect&Adjust)",
+            child = repeat_detect_and_adjust
+        )
         planA = py_trees.composites.Sequence(
             name="PlanA", 
-            children = [self.tuck_arm, repeat_detect_and_adjust, self.pick_object],
+            children = [self.tuck_arm, fail_is_sucess, self.final_detect_object, py_trees.timers.Timer("Timer", duration=0.5), self.pick_object],
             memory = True)
         pick_and_lift = py_trees.composites.Sequence(
             name="Pick&Lift", 

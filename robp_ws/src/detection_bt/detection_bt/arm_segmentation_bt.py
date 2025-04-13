@@ -26,6 +26,7 @@ class ArmSegmentationBT(py_trees.behaviour.Behaviour, Node):
         msg = Bool()
         msg.data = True
         self.request_pub.publish(msg)
+        self.node.get_logger().warn(f"Resetting arm camera segmentation")
         # self.init_time = self.get_clock().now().nanoseconds / 1e9
 
     def update(self):

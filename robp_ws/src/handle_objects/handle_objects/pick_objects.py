@@ -5,7 +5,7 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Int16MultiArray, MultiArrayLayout, MultiArrayDimension, Bool, String, Int16
 from sensor_msgs.msg import JointState
-from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
+from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy, HistoryPolicy
 from handle_objects.ik_solver import IKNode
 import PyKDL as kdl
 from robp_interfaces.msg import BoxPosition, ObjectPosition
@@ -67,7 +67,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.obj_tuck_arm_time = 2000 # in ms            
 
             self.current_angles = None
-            self.gripper_threshold = 390 # threshold to detect if something was grasped
+            self.gripper_threshold = 420 # threshold to detect if something was grasped
             self.desired_servo_angles = [12000]*6
             self.desired_servo_angles[0] = 10000 # gripper is different
             
@@ -239,7 +239,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         self.xx = 0.135 # compensation for the joint 3 compensation
         self.yy = 0.0 # positive is to left in robot perspective
-        self.zz = -0.055
+        self.zz = -0.055 # TODO: this is the variable to change if the robot is too far or too close to the ground
 
         # angles in decidegrees
         self.joint_5_start_angle = 50 
@@ -279,7 +279,8 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
         self.servo_angles_subscriber_ = self.node.create_subscription(JointState,'/servo_pos_publisher',self.servo_angles_callback,10)   
         self.node.create_subscription(PoseStamped, '/motion/goal',  self.get_next_goal_callback,10 )
-        self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 10 )
+        self.node.create_subscription(PoseArray, '/arm_camera/points',  self.get_next_goal_arm_cam_callback, 
+                                      rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.count_grasping_failures_sub = self.node.create_subscription(
             Int16,'/picklift/count_grasping_failures',  self.count_grasping_failures_callback,10)
 
@@ -406,7 +407,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
     def count_grasping_failures_callback(self, msg):
         self.fail_count = msg.data
 
-    def adjust_retry(self):
+    def adjust_wrist(self):
         if self.fail_count != 0:
             wrist_adjustments_count = 0
             # adjust wrist rotation "randomly"
@@ -421,8 +422,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 if wrist_adjustments_count > 10:
                     self.desired_servo_angles[1] = 12000
                     break
-        # adjust rotation of the 3 servo (below wrist)
-        #self.desired_servo_angles[2] =
 
 
     def get_next_goal_callback(self, msg):
@@ -451,26 +450,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                     self.arm_tucked = False
                     self.arm_moving = True
                     break
-    
-    # adjust the robot position to favor the grasping of the object
-    def do_adjust_yaw(self, object_x, object_y):
-        transform = self.tf_buffer.lookup_transform(
-        'map', 'base_link', rclpy.time.Time(), timeout=rclpy.duration.Duration(seconds=1.0)
-        )
-        current_yaw = 2 * atan2(transform.transform.rotation.z, transform.transform.rotation.w)
-        desired_yaw = atan2(object_y, object_x)
-        yaw_diff = desired_yaw - current_yaw
-
-        pose = PoseStamped()
-        pose.header.stamp = self.get_clock().now().to_msg()
-        pose.header.frame_id = 'map'
-        pose.pose.position.x = transform.transform.translation.x
-        pose.pose.position.y = transform.transform.translation.y
-        pose.pose.position.z = transform.transform.translation.z
-        pose.pose.orientation.z = sin(yaw_diff / 2)
-        pose.pose.orientation.w = cos(yaw_diff / 2)
-
-        self.motion_goal_publisher_.publish(pose)
 
     def pick_planB(self, x, y, z):  
         self.get_logger().info(f" For IK solver, object is in {round(x*100, 2), round(y*100, 2), round(z*100, 2)} in arm_base link")
@@ -533,7 +512,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 self.desired_servo_angles[4] = self.desired_servo_angles[4] + int(-100*q[1])  
                 self.desired_servo_angles[3] = self.desired_servo_angles[3] + int(-100*q[2])
                 self.desired_servo_angles[2] = self.desired_servo_angles[2] + int(-100*q[3]) + self.joint3_compensation 
-                self.adjust_retry()        
+                self.adjust_wrist()        
                 msg.data = self.desired_servo_angles + times
                 return msg
             
@@ -829,3 +808,23 @@ IK
     #             final_angles[i] = ub[i]-1
     #             out_limits = True
     #     return final_angles, out_limits
+
+        # adjust the robot position to favor the grasping of the object
+    # def do_adjust_yaw(self, object_x, object_y):
+    #     transform = self.tf_buffer.lookup_transform(
+    #     'map', 'base_link', rclpy.time.Time(), timeout=rclpy.duration.Duration(seconds=1.0)
+    #     )
+    #     current_yaw = 2 * atan2(transform.transform.rotation.z, transform.transform.rotation.w)
+    #     desired_yaw = atan2(object_y, object_x)
+    #     yaw_diff = desired_yaw - current_yaw
+
+    #     pose = PoseStamped()
+    #     pose.header.stamp = self.get_clock().now().to_msg()
+    #     pose.header.frame_id = 'map'
+    #     pose.pose.position.x = transform.transform.translation.x
+    #     pose.pose.position.y = transform.transform.translation.y
+    #     pose.pose.position.z = transform.transform.translation.z
+    #     pose.pose.orientation.z = sin(yaw_diff / 2)
+    #     pose.pose.orientation.w = cos(yaw_diff / 2)
+
+    #     self.motion_goal_publisher_.publish(pose)

@@ -36,9 +36,9 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
         ),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/arm_servo_launch.py'))
-        ),
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/arm_servo_launch.py'))
+        # ),
 
         Node(
             package='odometry',
