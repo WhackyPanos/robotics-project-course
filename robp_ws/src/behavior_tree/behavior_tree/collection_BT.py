@@ -28,6 +28,7 @@ from obstacle_on_path.obstacle_on_path_bhv import ObstacleOnPath
 
 class CollectionBT(Node):
     def __init__(self) -> None:
+
         super().__init__('behavior_tree')
         relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
@@ -36,6 +37,11 @@ class CollectionBT(Node):
         #self.get_logger().info(f"Bla {self.objs_list, self.box_list}")
         self.tf_broadcaster = TransformBroadcaster(self)
         #self.publish_initial_transform()
+
+        # -------------------- Behaviors Parameters ------------------------------
+        self.detect_and_adjust_num_reps = 4
+        self.pick_and_lift_num_reps = 5
+        # ----------------------------------------------------------------------
   
         # root and behaviors creation
         self.root = py_trees.composites.Selector(name="Root", memory= False)
@@ -108,7 +114,7 @@ class CollectionBT(Node):
         repeat_detect_and_adjust = py_trees.decorators.Retry( # TODO introduce selector between retry and a behavior that return success, if needed
             name = 'Repeat_Detect&Adjust', 
             child = detect_and_adjust, 
-            num_failures = 4)
+            num_failures = self.detect_and_adjust_num_reps)
         fail_is_sucess =  py_trees.decorators.FailureIsSuccess(
             name = " Fail is Success (Repeat_Detect&Adjust)",
             child = repeat_detect_and_adjust
@@ -131,7 +137,7 @@ class CollectionBT(Node):
         repeat_picklift = py_trees.decorators.Retry(
             name = 'Repeat_Pick&Lift', 
             child = pick_and_lift, 
-            num_failures = 5)
+            num_failures = self.pick_and_lift_num_reps)
 
         nav_and_check = py_trees.composites.Parallel(
             name = 'Nav and Check Path',
@@ -164,7 +170,7 @@ class CollectionBT(Node):
         
         main_sequence = py_trees.composites.Sequence(
             name = 'Collection bhv',
-            children = [self.next_object_bhv, repeat_navigate, pick_or_place], #NOTE: add/remove repeat_navigate
+            children = [self.next_object_bhv, repeat_navigate,  pick_or_place], #NOTE: add/remove repeat_navigate
             memory = True
         )
 

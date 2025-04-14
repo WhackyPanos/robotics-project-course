@@ -89,7 +89,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.arm_moving = False
             for i in range(1, len(self.current_angles)) :
                 if abs(self.desired_servo_angles[i] - self.current_angles[i]) > self.angle_threshold:
-                    print(f"Arm still moving (hard-coded movement), error of {abs(self.desired_servo_angles[i] - self.current_angles[i])}")
+                    #print(f"Arm still moving (hard-coded movement), error of {abs(self.desired_servo_angles[i] - self.current_angles[i])}")
                     self.arm_tucked = False
                     self.arm_moving = True
                     break
@@ -281,6 +281,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.arm_tucked = False  
         self.object_grasped = False  
         self.done = False
+        self.object_type = None
         
 
         # Initialize the transform buffer and listener
@@ -293,12 +294,14 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                                       rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.count_grasping_failures_sub = self.node.create_subscription(
             Int16,'/picklift/count_grasping_failures',  self.count_grasping_failures_callback,10)
+        self.node.create_subscription(String, '/object_type', self.get_object_type_callback, 10)
 
         self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = 10) # ota = object_tuck_arm
 
+        self.blackboard = py_trees.blackboard.Blackboard()
         
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
@@ -420,12 +423,16 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
     def adjust_wrist(self):
         wrist_angle = self.wrist_angle[0] * 180/pi
-        self.get_logger().info(f"Wrist angle is {round(self.wrist_angle[0], 2)}")
+        if self.object_type == "3":
+            wrist_angle += 45
+        self.get_logger().info(f"Wrist angle is {round(self.wrist_angle[0], 2)} and object type is {self.object_type}")
         wrist_angle = ((wrist_angle + 90) % 180) - 90 #map to [-90, 90]
         wrist_angle = int(100*wrist_angle + 12000)
 
         return wrist_angle
 
+    def get_object_type_callback(self, msg):
+        self.object_type = msg.data
 
     def get_next_goal_callback(self, msg):
         self.node.get_logger().info(f"IK received object in map frame (in case arm camera does not work) -> {msg.pose.position.x, msg.pose.position.y}")
