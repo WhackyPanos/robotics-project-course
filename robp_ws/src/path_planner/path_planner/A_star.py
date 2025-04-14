@@ -59,6 +59,7 @@ class Planner_A_star(Node):
         super().__init__('planner_A_star')
         self.simple_publisher = self.create_publisher(Path ,'/motion/path' , 10)
         self.full_publisher = self.create_publisher(Path ,'/full_path' , 10)
+        self.obs_avoid_pub = self.create_publisher(Path ,'/path_obs_avoid' , 10)
         self.map_subscription = self.create_subscription(OccupancyGrid, '/config_space', self.map_callback, 10)
         self.goal_subscription = self.create_subscription(PointStamped, '/goal_point', self.goal_callback, 10)
         self.tf_buffer = Buffer()
@@ -103,11 +104,12 @@ class Planner_A_star(Node):
         node_start.f = self.cost_ratio*node_start.h + node_start.g
         
         # Publish path
-        simplified_path, full_path = self.a_star(node_start, node_goal, goal_threash)
+        simplified_path, full_path, obs_avoid_path = self.a_star(node_start, node_goal, goal_threash)
         if full_path is None: return False
 
         self.simple_publisher.publish(simplified_path)
         self.full_publisher.publish(full_path)
+        self.obs_avoid_pub.publish(obs_avoid_path)
 
         return True
         
@@ -126,6 +128,16 @@ class Planner_A_star(Node):
         simplified_path_msg.header.frame_id = "map"
         simplified_path_msg.header.stamp = self.get_clock().now().to_msg()
 
+        obs_avoid_path_msg = Path()  # Create a Path message
+        obs_avoid_path_msg.header.frame_id = "map"
+        obs_avoid_path_msg.header.stamp = self.get_clock().now().to_msg()
+        curr_pose = PoseStamped()
+        curr_pose.header.frame_id = "map"
+        curr_pose.header.stamp = self.get_clock().now().to_msg()
+        curr_pose.pose.position.x = node_current.x * self.config_space.info.resolution + self.config_space.info.origin.position.x
+        curr_pose.pose.position.y = node_current.y * self.config_space.info.resolution + self.config_space.info.origin.position.y
+        obs_avoid_path_msg.poses.append(curr_pose)
+
         # Ensure first pose is added to simplified path
         first_pose = PoseStamped()
         first_pose.header.frame_id = "map"
@@ -133,7 +145,7 @@ class Planner_A_star(Node):
         first_pose.pose.position.x = node_list[0].x * self.config_space.info.resolution + self.config_space.info.origin.position.x
         first_pose.pose.position.y = node_list[0].y * self.config_space.info.resolution + self.config_space.info.origin.position.y
         full_path_msg.poses.append(first_pose)
-        # simplified_path_msg.poses.append(first_pose)
+        # simplified_path_msg.append(first_pose)
 
 
         simplified_nodes = self.simplify_path(node_list)
@@ -145,6 +157,7 @@ class Planner_A_star(Node):
             pose.pose.position.x = node.x * self.config_space.info.resolution + self.config_space.info.origin.position.x
             pose.pose.position.y = node.y * self.config_space.info.resolution + self.config_space.info.origin.position.y
             simplified_path_msg.poses.append(pose)
+            obs_avoid_path_msg.poses.append(pose)
 
         for i in range(1, len(node_list) - 1):  
             node = node_list[i]
@@ -174,7 +187,7 @@ class Planner_A_star(Node):
         full_path_msg.poses.append(last_pose)
         # simplified_path_msg.poses.append(last_pose)
 
-        return simplified_path_msg, full_path_msg
+        return simplified_path_msg, full_path_msg, obs_avoid_path_msg
 
     def a_star(self, node_start, node_goal, goal_threash):
         
@@ -212,7 +225,7 @@ class Planner_A_star(Node):
                     open_dict[child_key] = node_child
         
         self.get_logger().warn("No valid path found (open_dict empty)")
-        return None, None
+        return None, None, None
     
     def world_to_grid(self, x, y):
         '''Converts world coordinates in [m] to grid indices.'''

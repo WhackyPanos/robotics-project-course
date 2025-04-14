@@ -15,7 +15,7 @@ class CheckPath(Node):
         # subscribe to topics
         self.create_subscription(
             Path, 
-            '/full_path',  # Change to path topic name
+            '/path_obs_avoid',  
             self.path_callback, 
             10)
 
@@ -58,15 +58,38 @@ class CheckPath(Node):
             self.get_logger().info("Waiting for path or map data.")
             return False
 
-        width = self.config_space.info.width
-        height = self.config_space.info.height
-        map_data = np.array(self.config_space.data).reshape((height, width))  
-
-        for index in self.path:
-            x, y = index
-            if map_data[y, x] >= 99: 
+        path_len = len(self.path)
+        self.get_logger().info(f'{self.path}')
+        for i in range(path_len - 1):
+            start, end = self.path[i], self.path[i+1]
+            if not self.raytrace(start, end):
                 return False
         return True
+    
+    def raytrace(self, start, end):
+        x0, y0 = start
+        x1, y1 = end
+        dx, dy = abs(x1 - x0), abs(y1 - y0)
+        sx = 1 if x0 < x1 else -1
+        sy = 1 if y0 < y1 else -1
+        err = dx - dy
+        width = self.config_space.info.width
+        height = self.config_space.info.height
+        while True:
+            if 0 <= x0 < width and 0 <= y0 < height:
+                index = y0 * width + x0
+                if self.config_space.data[index] >= 99: 
+                    return False  
+            if x0 == x1 and y0 == y1:
+                break
+            e2 = 2 * err
+            if e2 > -dy:
+                err -= dy
+                x0 += sx
+            if e2 < dx:
+                err += dx
+                y0 += sy
+        return True 
 
 
 # def main():
