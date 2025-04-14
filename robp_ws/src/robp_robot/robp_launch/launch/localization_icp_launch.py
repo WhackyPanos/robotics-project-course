@@ -15,7 +15,7 @@ def generate_launch_description():
             name='icp_node',  
             output='screen',  
             parameters=[{
-                "use_sim_time": True,
+                "use_sim_time": False,
                 "transform_lookup_timeout": 2.0,
                 "KNN_N_neighbours": 50,
                 "std_dev_mul_thresh": 10.0,
@@ -33,7 +33,7 @@ def generate_launch_description():
             name='localization_transform',  
             output='screen',  
             parameters=[{
-                "use_sim_time": True,
+                "use_sim_time": False,
                 "transform_lookup_timeout": 2.0
             }]
         ),
@@ -42,43 +42,43 @@ def generate_launch_description():
         # ros2 launch robp_launch localization_icp_launch.py 
         # ros2 bag record /tf /tf_static /rosout /scan /odom_pose /parameter_events
 
-        # IncludeLaunchDescription(
-        #     AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/lidar_launch.yaml'))
-        # ),
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/lidar_launch.yaml'))
+        ),
 
 
-        # IncludeLaunchDescription(
-        #     AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))
-        # ),
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))
+        ),
 
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
-        # ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/phidgets_launch.py'))
+        ),
 
-        # Node(
-        #     package='odometry',
-        #     executable='odometry'
-        # ),
+        Node(
+            package='odometry',
+            executable='odometry'
+        ),
 
-        # Node(
-        #     package='joystick_teleop',
-        #     executable='teleop'
+        Node(
+            package='joystick_teleop',
+            executable='teleop'
             
-        # ),
+        ),
 
-        #   Node(
-        #     package='joystick_teleop',
-        #     executable='twist2duty'
+          Node(
+            package='joystick_teleop',
+            executable='twist2duty'
             
-        # ),
-        # Node(
-        #     package='joy',
-        #     executable='joy_node'
-        # ),
-        # Node(
-        #     package='odometry',
-        #     executable='odometry'
-        # )
+        ),
+        Node(
+            package='joy',
+            executable='joy_node'
+        ),
+        Node(
+            package='odometry',
+            executable='odometry'
+        )
         
 
     ])
