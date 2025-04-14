@@ -71,7 +71,7 @@ class OccupancyGridNode(Node):
 
         # Inflation parameter
         self.robot_radius = 0.3
-        self.object_radius = 0.45
+        self.box_radius = 0.45
         self.x_w, self.y_w = None, None
         self.goal_type = "Object"
 
@@ -342,18 +342,18 @@ class OccupancyGridNode(Node):
             kernel = x_deflate**2 + y_deflate**2 <= r**2
             
             self.goal_object_mask_inflated = binary_dilation(mask, kernel)
-        else:
+        else: # Box
             mask = np.zeros_like(self.grid)
             mask[goal_y, goal_x] = 1
             
-            r = int(np.ceil(self.object_radius / self.resolution)) 
+            r = int(np.ceil(self.box_radius / self.resolution)) 
             y_deflate, x_deflate = np.ogrid[-r:r+1, -r:r+1]
             kernel = x_deflate**2 + y_deflate**2 <= r**2
             
             self.goal_box_mask_inflated = binary_dilation(mask, kernel)
 
-        self.publish_current_grid()
-        self.inflate_map()  
+        #self.publish_current_grid()
+        #self.inflate_map()  
 
     def goal_type_callback(self, msg:String):
         self.goal_type = msg.data
@@ -361,10 +361,10 @@ class OccupancyGridNode(Node):
     def do_mapping_callback(self, msg:Bool):
         self.do_mapping = msg.data
 
-    def check_map_pose(self, msg:Pose2D):
+    def check_map_pose(self, msg:Pose2D): # Calcualtes distance from robot to goal
         rob_x, rob_y = msg.x, msg.y
         if self.goal_type == "Object" and self.x_w is not None and self.y_w is not None:
-            if(math.dist([rob_x, rob_y],[self.x_w, self.y_w])) >= self.object_radius:
+            if(math.dist([rob_x, rob_y],[self.x_w, self.y_w])) >= self.box_radius: 
                 self.goal_box_mask_inflated = np.zeros_like(self.grid)
         if self.goal_type == "Box" and self.x_w is not None and self.y_w is not None:
             if (math.dist([rob_x, rob_y],[self.x_w, self.y_w])) >= self.robot_radius:

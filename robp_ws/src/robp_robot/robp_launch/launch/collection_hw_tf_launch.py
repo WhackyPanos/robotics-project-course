@@ -45,15 +45,15 @@ def generate_launch_description():
             executable='odometry'
         ),
 
-        Node(
-            package='arm_cam',
-            executable='object_segmentation_node'
-        ),
+        # Node(
+        #     package='arm_cam',
+        #     executable='object_segmentation_node'
+        # ),
 
-        Node(
-            package='mapping',
-            executable='occupancy_grid_collection'
-        ),
+        # Node(
+        #     package='mapping',
+        #     executable='occupancy_grid_collection'
+        # ),
 
         # Node(
         #     package='behavior_tree',

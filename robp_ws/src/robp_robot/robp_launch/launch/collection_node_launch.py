@@ -53,10 +53,10 @@ def generate_launch_description():
         #     executable='collection_BT' #collection_BT or collection_BT_no_move, but no_move it is not working
         # ),
 
-        Node(
-            package='joystick_teleop',
-            executable='twist2duty'
-        ),
+        # Node(
+        #     package='joystick_teleop',
+        #     executable='twist2duty'
+        # ),
 
 
 
