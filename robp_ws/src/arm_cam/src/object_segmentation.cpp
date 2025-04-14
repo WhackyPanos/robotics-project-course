@@ -13,7 +13,7 @@ ObjectSegmentation::ObjectSegmentation() : Node("object_segmentation", rclcpp::N
     this->get_parameter_or("trigger_topic", trigger_topic_, std::string("/arm_camera/request"));
     this->get_parameter_or("result_topic", result_topic_, std::string("/arm_camera/result"));   
     this->get_parameter_or("Z_camera", Zc_, 0.235);
-    this->get_parameter_or("max_obj_size", max_obj_size_, 15000);
+    this->get_parameter_or("max_obj_size", max_obj_size_, 25000);
     this->get_parameter_or("min_obj_distance", min_obj_distance_, 45.0);
     this->get_parameter_or("max_k", max_k_, 6);
     this->get_parameter_or("visualization", visualization_, true);
