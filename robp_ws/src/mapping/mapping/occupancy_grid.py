@@ -62,7 +62,7 @@ class OccupancyGridNode(Node):
         self.robot_radius = 0.3
         
         # Camera paramters
-        self.camera_FOV = 90 # np.pi/2 # Mapping should run all the time but how?
+        self.camera_FOV = 85 # np.pi/2 # Mapping should run all the time but how?
         self.camera_min_range = 0.2 # True value: 0.2
         self.camera_max_range = 1.05 # True value: 3.0
 
@@ -158,7 +158,7 @@ class OccupancyGridNode(Node):
         
         # Define different kernel sizes
         large_radius = int(np.ceil(self.robot_radius / self.resolution))  # Larger for workspace
-        small_radius = large_radius // 3  # Smaller for borders
+        small_radius = large_radius // 2  # Smaller for borders
 
         # Create circular kernels
         y_large, x_large = np.ogrid[-large_radius:large_radius+1, -large_radius:large_radius+1]

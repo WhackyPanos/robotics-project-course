@@ -203,7 +203,7 @@ class Odometry(Node):
         D = wheel_radius/2 * K * (delta_ticks_right + delta_ticks_left)
         # delta_theta = wheel_radius/base * K * (delta_ticks_right - delta_ticks_left)
 
-        if self.linear_vel_x == 0 and self.linear_vel_y == 0 and self.angular_vel == 0:
+        if self.angular_vel == 0:
             self._yaw = self._yaw
         else:
             self._yaw += self.prev_imu_yaw - self.imu_yaw + math.pi/(180*500)

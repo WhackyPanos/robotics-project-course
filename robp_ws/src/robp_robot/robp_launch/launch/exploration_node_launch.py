@@ -75,7 +75,7 @@ def generate_launch_description():
                 "dist_filter_max": 1.0,
                 "box_filter_min": -0.003,
                 "box_filter_max": -0.013,
-                "box_filter_threshold": 20,
+                "box_filter_threshold": 5,
                 "animal_filter_min": 0.045,
                 "animal_filter_max": 0.033,
                 "sphere_filter_min": 0.056,
