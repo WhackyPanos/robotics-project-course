@@ -59,7 +59,6 @@ class CheckPath(Node):
             return False
 
         path_len = len(self.path)
-        self.get_logger().info(f'{self.path}')
         for i in range(path_len - 1):
             start, end = self.path[i], self.path[i+1]
             if not self.raytrace(start, end):
