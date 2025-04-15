@@ -48,6 +48,27 @@ def generate_launch_description():
             executable='occupancy_grid_collection'
         ),
 
+        Node(
+            package='detection',
+            executable='clustering_collection_node',
+            output='screen',
+            parameters=[{
+                "cloud_topic": "/camera/camera/depth/color/points",
+                "map_topic": "/occupancy_grid",
+                "twist_topic": "/cmd_vel",
+                "trigger_topic": "/detection/request",
+                "result_topic": "/detection/result",
+                "dist_filter_min": 0.2,
+                "dist_filter_max": 1.0,
+                "height_filter_min": -0.03,
+                "height_filter_max": 0.072,
+                "cluster_tolerance": 0.05,
+                "cluster_min_size": 100,
+                "occupancy_margin": 0,
+                "occupancy_value": 0
+                }]
+            ),
+
         # Node(
         #     package='behavior_tree',
         #     executable='collection_BT' #collection_BT or collection_BT_no_move, but no_move it is not working
@@ -57,7 +78,5 @@ def generate_launch_description():
         #     package='joystick_teleop',
         #     executable='twist2duty'
         # ),
-
-
 
     ])

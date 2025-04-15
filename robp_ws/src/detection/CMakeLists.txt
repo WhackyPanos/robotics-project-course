@@ -25,6 +25,7 @@ find_package(visualization_msgs REQUIRED)
 include_directories(include)
 add_executable(clustering_node src/clustering_node.cpp src/clustering.cpp)
 add_executable(classifier_node src/classifier_node.cpp src/classifier.cpp)
+add_executable(clustering_collection_node src/clustering_collection_node.cpp src/clustering_collection.cpp)
 
 # Link dependencies
 ament_target_dependencies(clustering_node 
@@ -52,10 +53,23 @@ ament_target_dependencies(classifier_node
   pcl_ros
 )
 
+ament_target_dependencies(clustering_collection_node 
+  rclcpp 
+  sensor_msgs 
+  geometry_msgs
+  nav_msgs
+  tf2 
+  tf2_ros 
+  tf2_geometry_msgs 
+  pcl_conversions
+  pcl_ros
+)
+
 # Install the node
 install(TARGETS
   clustering_node
   classifier_node
+  clustering_collection_node
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -15,6 +15,7 @@ from geometry_msgs.msg import PoseStamped
 
 from .customTimer_BT import CustomTimer
 from detection_bt.arm_segmentation_bt import ArmSegmentationBT
+from detection_bt.cluster_collection_bt import ClusterBT
 from detection_bt.box_segmentation_bt import BoxSegmentationBT
 from handle_objects.pick_objects import SetArm, SearchObjectArm, ArmIK, Place
 from behavior_tree.goCollect_bhv import goTo
@@ -30,7 +31,7 @@ class CollectionBT(Node):
     def __init__(self) -> None:
 
         super().__init__('behavior_tree')
-        relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
+        relative_path_to_file = os.path.join("/home/robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
         self.object_path_publisher = self.create_publisher(Path, '/object_path', 10)
         self.objs_list, self.box_list = self.create_lists()
@@ -50,6 +51,8 @@ class CollectionBT(Node):
         self.first_detect_object = ArmSegmentationBT(name="first_arm_segmentation")
         self.detect_object = ArmSegmentationBT()
         self.final_detect_object = ArmSegmentationBT(name = "final_arm_segmentation_bt")
+        self.new_object_detected = ClusterBT(new_request=True)
+        self.object_detected = ClusterBT(new_request=False)
         self.detect_box = BoxSegmentationBT()
         self.pick_object = ArmIK()
         self.lift = SetArm('lift', [10000,12000,12000,12000,12000,12000], 200)
@@ -72,6 +75,9 @@ class CollectionBT(Node):
         executor.add_node(self.pick_object)
         executor.add_node(self.lift)
         executor.add_node(self.detect_object)
+        executor.add_node(self.final_detect_object)
+        executor.add_node(self.object_detected)
+        executor.add_node(self.new_object_detected)
         executor.add_node(self.detect_box)
         executor.add_node(self.arm_task_succeeded)
         executor.add_node(self.adjust)
@@ -109,7 +115,7 @@ class CollectionBT(Node):
             # Pick and lift operations
         detect_and_adjust = py_trees.composites.Sequence( 
             name = 'Detect_and_Adjust', 
-            children = [py_trees.timers.Timer("Timer", duration=1), self.adjust, py_trees.timers.Timer("Timer", duration=1.5), self.detect_object], #TODO: if working fine, make this sequence with adjust first
+            children = [py_trees.timers.Timer("Timer", duration=2), self.detect_object, py_trees.timers.Timer("Timer", duration=1), self.adjust], #TODO: if working fine, make this sequence with adjust first
             memory = True)       
         repeat_detect_and_adjust = py_trees.decorators.Retry( # TODO introduce selector between retry and a behavior that return success, if needed
             name = 'Repeat_Detect&Adjust', 
@@ -121,7 +127,7 @@ class CollectionBT(Node):
         )
         planA = py_trees.composites.Sequence(
             name="PlanA", 
-            children = [self.tuck_arm, py_trees.timers.Timer("Timer", duration=1.5), self.first_detect_object, fail_is_sucess, self.final_detect_object, py_trees.timers.Timer("Timer", duration=0.5), self.pick_object],
+            children = [self.tuck_arm, py_trees.timers.Timer("Timer", duration=2), self.first_detect_object, fail_is_sucess, self.final_detect_object, py_trees.timers.Timer("Timer", duration=0.5), self.pick_object],
             memory = True)
         
         planA_or_rotate = py_trees.trees.composites.Selector(
@@ -142,12 +148,31 @@ class CollectionBT(Node):
         nav_and_check = py_trees.composites.Parallel(
             name = 'Nav and Check Path',
             policy = py_trees.common.ParallelPolicy.SuccessOnOne(),
-            children= [self.obstacle_on_path, self.navigate_to_goal]
+            children= [self.obstacle_on_path, self.new_object_detected, self.navigate_to_goal]
+        )
+
+        update_goal = py_trees.composites.Sequence(
+            name='Update goal pos',
+            memory=True,
+            children=[py_trees.timers.Timer(name='Timer Cluster', duration=3), self.object_detected, py_trees.timers.Timer(name='New goal timeout', duration=1)]
+        )
+        
+        # EternalGuard: Ensures that the decorator only runs if new_object_detected is successful
+        object_detected_guard = py_trees.decorators.EternalGuard(
+            name="Object Detect Guard", 
+            child=update_goal,                     
+            condition=self.object_detected_condition  # Condition to check if new_object_detected was successful
+        )
+
+        nav_or_update_goal = py_trees.composites.Selector(
+            name='Nav or Update goal',
+            memory=True,
+            children=[nav_and_check, object_detected_guard]
         )
 
         nav_and_check_seq = py_trees.composites.Sequence(
             name='Plan and Nav',
-            children=[self.path_plan, nav_and_check],
+            children=[self.path_plan, nav_or_update_goal],
             memory=True
         )
 
@@ -215,6 +240,10 @@ class CollectionBT(Node):
         t.child_frame_id = 'odom'
         self.get_logger().info('Publishing initial map to odom frame (in collection_bt node)')
         self.tf_broadcaster.sendTransform(t)
+
+    # Check for eternal guard if the new_object_detected behavior has succeeded
+    def object_detected_condition(self):
+        return self.new_object_detected.status == py_trees.common.Status.FAILURE
 
 
 

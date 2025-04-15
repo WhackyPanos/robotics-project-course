@@ -122,7 +122,7 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         """ If pick/place task was succeeded, this callback will be called we should switch tasks. """
         if msg.data: # we only switch tasks if they succeeded
             self.next_goal_type = 'Box' if self.next_goal_type == 'Object' else 'Object'
-            self.next_goal_type_pub.publish(String(data = self.next_goal_type))
+        self.next_goal_type_pub.publish(String(data = self.next_goal_type))
 
 
 class ArmTaskSucceeded(py_trees.behaviour.Behaviour, Node):
