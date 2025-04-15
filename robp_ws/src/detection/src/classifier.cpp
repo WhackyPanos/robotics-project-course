@@ -96,7 +96,7 @@ bool Classifier::perform_classification()
         
         float max_y = min_pt[1]; // Topmost y (highest point)
         float min_y = max_pt[1]; // Bottommost y (lowest point)
-        std::cout << "Depth: " << obb.position.z << "max_y: " << max_y << ", min_y: " << min_y << std::endl;
+        std::cout << "Depth: " << obb.position.z << ", max_y: " << max_y << ", min_y: " << min_y << std::endl;
 
         // Filter based on height values
         pcl::PassThrough<pcl::PointXYZ> pass;

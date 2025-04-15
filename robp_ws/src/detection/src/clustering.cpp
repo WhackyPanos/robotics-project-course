@@ -133,30 +133,26 @@ bool Clustering::perform_clustering(bool new_req)
         if (!obstacle->empty()) continue;
 
         // RCLCPP_INFO(this->get_logger(), "Cluster found");
-        // If new, check also for obstacle or occupation in grid
-        if(new_req)
-        {
-            RCLCPP_INFO(this->get_logger(), "Enter new req");
 
-            pcl::PointXYZ centre = computeOBBPosition(cloud_cluster);
+        pcl::PointXYZ centre = computeOBBPosition(cloud_cluster);
 
-            geometry_msgs::msg::PointStamped centre_base, centre_map;
-            centre_base.header.frame_id = latest_cloud_->header.frame_id;
-            centre_base.header.stamp = latest_cloud_->header.stamp;
-            centre_base.point.x = centre.x;
-            centre_base.point.y = centre.y;
-            centre_base.point.z = centre.z;
+        geometry_msgs::msg::PointStamped centre_base, centre_map;
+        centre_base.header.frame_id = latest_cloud_->header.frame_id;
+        centre_base.header.stamp = latest_cloud_->header.stamp;
+        centre_base.point.x = centre.x;
+        centre_base.point.y = centre.y;
+        centre_base.point.z = centre.z;
 
-            try {
-                tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
-            } catch (tf2::TransformException &ex) {
-                RCLCPP_INFO(this->get_logger(), "Transform failed: %s", ex.what());
-                continue;
-            }
-            // RCLCPP_INFO(this->get_logger(), "Check occupation");
-            if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
+        try {
+            tf_buffer_->transform(centre_base, centre_map, "map", tf2::durationFromSec(1.0));
+        } catch (tf2::TransformException &ex) {
+            RCLCPP_INFO(this->get_logger(), "Transform failed: %s", ex.what());
+            continue;
         }
-        else
+        // RCLCPP_INFO(this->get_logger(), "Check occupation");
+        if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
+        
+        if(!new_req)
         {
             //Publish found cluster
             cloud_cluster->width = cloud_cluster->size();
