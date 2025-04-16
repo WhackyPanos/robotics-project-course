@@ -22,6 +22,7 @@ ClusteringCollection::ClusteringCollection() : Node("clustering_collection", rcl
     this->get_parameter_or("cluster_min_size", cluster_min_size_, 100);
     this->get_parameter_or("occupancy_margin", occupancy_margin_, 0);
     this->get_parameter_or("occupancy_value", occupancy_value_, 0);
+    this->get_parameter_or("clustering_runs", required_clustering_runs, 10);
 
     new_request_ = true;
     goal_type = "Object";
@@ -37,18 +38,18 @@ ClusteringCollection::ClusteringCollection() : Node("clustering_collection", rcl
     
     // Subscriber to occupancy grid
     map_sub_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>(
-        map_topic_, qos_profile, std::bind(&ClusteringCollection::map_callback, this, _1));
+        map_topic_, rclcpp::QoS(1).reliable(), std::bind(&ClusteringCollection::map_callback, this, _1));
 
     // Publisher for updated goal point
     goal_pub_ = this->create_publisher<geometry_msgs::msg::PointStamped>(
-        "/goal_point", 10);
+        "/goal_point", rclcpp::QoS(1).reliable());
 
     // Subscribe to goal point and type
     goal_sub_ = this->create_subscription<geometry_msgs::msg::PointStamped>(
-        "/goal_point", 10, std::bind(&ClusteringCollection::goal_point_callback, this, _1));
+        "/goal_point", rclcpp::QoS(1).reliable(), std::bind(&ClusteringCollection::goal_point_callback, this, _1));
 
     goal_type_sub_ = this->create_subscription<std_msgs::msg::String>(
-        "/goal_type", 10, std::bind(&ClusteringCollection::goal_type_callback, this, _1));
+        "/goal_type", rclcpp::QoS(1).reliable(), std::bind(&ClusteringCollection::goal_type_callback, this, _1));
 
     // Publisher for stopping robot
     twist_pub_ = this->create_publisher<geometry_msgs::msg::Twist>(
@@ -56,7 +57,7 @@ ClusteringCollection::ClusteringCollection() : Node("clustering_collection", rcl
 
     // Subscribe to trigger topic
     trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
-        trigger_topic_, qos_profile, std::bind(&ClusteringCollection::trigger_callback, this, _1));
+        trigger_topic_, rclcpp::QoS(1).reliable(), std::bind(&ClusteringCollection::trigger_callback, this, _1));
 
     // Subscribe to new trigger topic
     new_trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
@@ -82,8 +83,6 @@ bool ClusteringCollection::perform_clustering(bool new_req)
         return false;
     }
 
-    // RCLCPP_INFO(this->get_logger(), "Pass Filter");
-
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(*latest_cloud_, *cloud);
 
@@ -98,7 +97,11 @@ bool ClusteringCollection::perform_clustering(bool new_req)
     pass.setFilterLimits(y_filter_min_, y_filter_max_);
     pass.filter(*cloud);
 
-    if (cloud->empty()) return false;
+    if (cloud->empty()) 
+    {
+        RCLCPP_INFO(this->get_logger(), "Cloud empty after pass filter");
+        return false;
+    }
     
     // Clustering
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
@@ -122,14 +125,17 @@ bool ClusteringCollection::perform_clustering(bool new_req)
             cloud_cluster->push_back((*cloud)[idx]);
         }
 
-        // RCLCPP_INFO(this->get_logger(), "Cluster found");
         // Check for obstacle or occupation in grid
         pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle(new pcl::PointCloud<pcl::PointXYZ>);
         pass.setInputCloud(cloud_cluster);
         pass.setFilterFieldName("y");
         pass.setFilterLimits(y_filter_min_, -0.02);
         pass.filter(*obstacle);
-        if (!obstacle->empty()) continue;
+        if (!obstacle->empty()) 
+        {
+            RCLCPP_INFO(this->get_logger(), "Cloud empty after pass filter");
+            continue;
+        }   
 
         pcl::PointCloud<pcl::PointXYZ>::Ptr box(new pcl::PointCloud<pcl::PointXYZ>);
         pass.setInputCloud(cloud_cluster);
@@ -138,6 +144,7 @@ bool ClusteringCollection::perform_clustering(bool new_req)
         pass.filter(*box);
         
         if ((goal_type == "Object" && !box->empty()) || (goal_type == "Box" && box->empty())) {
+            RCLCPP_INFO(this->get_logger(), "Type does not match");
             continue;
         }
 
@@ -158,8 +165,8 @@ bool ClusteringCollection::perform_clustering(bool new_req)
         }
 
         if (is_occupied(centre_map.point.x, centre_map.point.y)) continue;
-        
-        if(!new_request_)
+
+        if(!new_req)
         {
             centers.push_back(centre_map);
         }
@@ -175,7 +182,7 @@ bool ClusteringCollection::perform_clustering(bool new_req)
 
         if (!centers.empty()){
             double min_dist = std::numeric_limits<double>::max();
-            geometry_msgs::msg::PointStamped* closest_point = nullptr;
+            geometry_msgs::msg::PointStamped closest_point;
 
             for (auto& p : centers) {
                 double dx = p.point.x - goal_point->point.x;
@@ -183,13 +190,14 @@ bool ClusteringCollection::perform_clustering(bool new_req)
                 double dist = std::sqrt(dx*dx + dy*dy);
                 if (dist < min_dist) {
                     min_dist = dist;
-                    closest_point = &p;
+                    closest_point = p;
                 }
             }
 
-            if (closest_point) {
-                goal_pub_->publish(*closest_point);
-            }
+            all_centers.push_back(closest_point);
+
+            // goal_pub_->publish(closest_point);
+            // RCLCPP_INFO(this->get_logger(), "Set new goal (%f, %f) -> (%f, %f)", goal_point->point.x, goal_point->point.y, closest_point.point.x, closest_point.point.y);
         }
     }
 
@@ -198,14 +206,38 @@ bool ClusteringCollection::perform_clustering(bool new_req)
 
 void ClusteringCollection::trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
 {   
+    RCLCPP_INFO(this->get_logger(), "Received detection request");
     std_msgs::msg::Bool result_msg;
     result_msg.data = false;
-
-    if (msg->data){
-            result_msg.data = perform_clustering(new_request_);
-    }
+    
+    if (!msg->data) clustering_runs++;
+    result_msg.data = perform_clustering(msg->data);
 
     result_pub_->publish(result_msg);
+    
+    if (clustering_runs >= required_clustering_runs) {
+        if (!all_centers.empty()) {
+            double sum_x = 0.0, sum_y = 0.0, sum_z = 0.0;
+
+            for (const auto& p : all_centers) {
+                sum_x += p.point.x;
+                sum_y += p.point.y;
+                sum_z += p.point.z;
+            }
+
+            geometry_msgs::msg::PointStamped averaged_point;
+            averaged_point.header = all_centers.front().header;
+            averaged_point.point.x = sum_x / all_centers.size();
+            averaged_point.point.y = sum_y / all_centers.size();
+            averaged_point.point.z = sum_z / all_centers.size();
+
+            goal_pub_->publish(averaged_point);
+            RCLCPP_INFO(this->get_logger(), "Set new goal (%f, %f) -> (%f, %f)", goal_point->point.x, goal_point->point.y, averaged_point.point.x, averaged_point.point.y);
+        }
+        // Reset accumulation
+        all_centers.clear();
+        clustering_runs = 0;
+    }
 }
 
 void ClusteringCollection::new_trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)

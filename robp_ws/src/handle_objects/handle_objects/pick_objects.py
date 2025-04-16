@@ -27,7 +27,6 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         self.angles = angles
         self.angle_threshold = threshold #150
-        self.blackboard = py_trees.blackboard.Blackboard()
     
     def setup(self, **kwargs):
             """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
@@ -149,13 +148,11 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                 if abs(self.desired_servo_angles[0] -self.current_angles[0]) < self.gripper_threshold:
                     self.picklift_pub.publish(Bool(data=False))
                     self.node.get_logger().warn(f"NOTHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
-                    self.blackboard.pick_status = py_trees.common.Status.FAILURE
                     return py_trees.common.Status.FAILURE # HACK: trying to get decorator working
                 else:
                     self.picklift_pub.publish(Bool(data=True))
                     self.node.get_logger().warn(f"SOMETHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
                     self.trigger_mapping.publish(Bool(data = True))
-                    self.blackboard.pick_status = py_trees.common.Status.SUCCESS
                     return py_trees.common.Status.SUCCESS
             return py_trees.common.Status.SUCCESS
 
@@ -301,7 +298,6 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = 10) # ota = object_tuck_arm
 
-        self.blackboard = py_trees.blackboard.Blackboard()
         
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the

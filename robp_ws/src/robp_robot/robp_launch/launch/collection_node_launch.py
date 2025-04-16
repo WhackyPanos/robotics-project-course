@@ -59,13 +59,14 @@ def generate_launch_description():
                 "trigger_topic": "/detection/request",
                 "result_topic": "/detection/result",
                 "dist_filter_min": 0.2,
-                "dist_filter_max": 1.0,
+                "dist_filter_max": 1.2,
                 "height_filter_min": -0.03,
                 "height_filter_max": 0.072,
                 "cluster_tolerance": 0.05,
                 "cluster_min_size": 100,
                 "occupancy_margin": 0,
-                "occupancy_value": 0
+                "occupancy_value": 0,
+                "clustering_runs": 10
                 }]
             ),
 

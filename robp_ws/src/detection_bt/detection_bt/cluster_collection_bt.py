@@ -4,6 +4,7 @@ from rclpy.node import Node
 from std_msgs.msg import Bool, String
 from geometry_msgs.msg import Pose2D, PointStamped
 import math
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 
 class ClusterBT(py_trees.behaviour.Behaviour, Node):
     def __init__(self, new_request: Bool, name="clustering_bt"):
@@ -24,7 +25,8 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
 
         # Subscribe to clustering result
         self.node.create_subscription(
-            Bool, "/detection/result", self.result_callback, 10)
+            Bool, "/detection/result", self.result_callback, 
+            rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         
         # Subscribe to odom pose
         self.node.create_subscription(
@@ -32,15 +34,17 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
         
         # Subscribe to goal point
         self.node.create_subscription(
-            PointStamped, "/goal_point", self.goal_point_callback, 10)
+            PointStamped, "/goal_point", self.goal_point_callback, 
+            rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         
         # Subscribe to goal type
         self.node.create_subscription(
-            String, "/goal_type", self.goal_type_callback, 10)
+            String, "/goal_type", self.goal_type_callback, 
+            rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
 
         # Publish to request clustering
-        self.request_pub = self.node.create_publisher(Bool, "/detection/request", 10)
-        self.new_req_pub = self.node.create_publisher(Bool, "/detection/new_request", 10)
+        self.request_pub = self.node.create_publisher(Bool, "/detection/request", 
+                                                      rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
 
     def initialise(self):
         """ Reset cluster_found before triggering clustering. """
@@ -52,12 +56,12 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
             return
 
         distance_to_goal = math.dist([self.robot_x, self.robot_y], [self.goal_x, self.goal_y])
-        if distance_to_goal < 1.0:
+        if distance_to_goal < 1.5:
+            self.get_logger().info("Distance to goal < 1.5")
             msg = Bool()
             msg.data = self.new_req
-            self.new_req_pub.publish(msg)
-            msg.data = True
             self.request_pub.publish(msg)
+            self.get_logger().info(f"Send detection request with bool {self.new_req}")
 
         
 
@@ -67,7 +71,8 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
             return py_trees.common.Status.RUNNING
         
         if self.cluster_found:
-            self.new_goal = False
+            if self.new_req:
+                self.new_goal = False
             return py_trees.common.Status.FAILURE
             
         if self.new_req:
@@ -89,4 +94,5 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
         self.goal_x, self.goal_y = msg.point.x, msg.point.y
     
     def goal_type_callback(self, msg:String):
+        self.get_logger().info("Reset new goal")
         self.new_goal = True

@@ -60,6 +60,10 @@ private:
     std::string goal_type;
     geometry_msgs::msg::PointStamped::SharedPtr goal_point;
 
+    int clustering_runs = 0;
+    std::vector<geometry_msgs::msg::PointStamped> all_centers;
+    int required_clustering_runs;
+
     // Parameters
     std::string cloud_topic_;
     std::string twist_topic_;

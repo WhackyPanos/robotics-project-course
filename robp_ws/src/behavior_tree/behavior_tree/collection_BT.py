@@ -31,13 +31,14 @@ class CollectionBT(Node):
     def __init__(self) -> None:
 
         super().__init__('behavior_tree')
-        relative_path_to_file = os.path.join("/home/robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
+        relative_path_to_file = os.path.join("/home/group3-robot/robp_group3/robp_ws/src/behavior_tree", "map_1.tsv")
         self.filename = os.path.realpath(relative_path_to_file) #introduce name of the text file
         self.object_path_publisher = self.create_publisher(Path, '/object_path', 10)
         self.objs_list, self.box_list = self.create_lists()
         #self.get_logger().info(f"Bla {self.objs_list, self.box_list}")
         self.tf_broadcaster = TransformBroadcaster(self)
         #self.publish_initial_transform()
+        self.tick_tock = True
 
         # -------------------- Behaviors Parameters ------------------------------
         self.detect_and_adjust_num_reps = 4
@@ -151,23 +152,29 @@ class CollectionBT(Node):
             children= [self.obstacle_on_path, self.new_object_detected, self.navigate_to_goal]
         )
 
+        retry_cluster = py_trees.decorators.Retry(
+            name='Retry Cluster',
+            child=self.object_detected,
+            num_failures=10
+        )
+
         update_goal = py_trees.composites.Sequence(
             name='Update goal pos',
             memory=True,
-            children=[py_trees.timers.Timer(name='Timer Cluster', duration=3), self.object_detected, py_trees.timers.Timer(name='New goal timeout', duration=1)]
+            children=[py_trees.timers.Timer(name='Timer Cluster', duration=2), retry_cluster]
         )
         
         # EternalGuard: Ensures that the decorator only runs if new_object_detected is successful
         object_detected_guard = py_trees.decorators.EternalGuard(
             name="Object Detect Guard", 
             child=update_goal,                     
-            condition=self.object_detected_condition  # Condition to check if new_object_detected was successful
+            condition=self.object_detected_condition
         )
 
         nav_or_update_goal = py_trees.composites.Selector(
             name='Nav or Update goal',
             memory=True,
-            children=[nav_and_check, object_detected_guard]
+            children=[nav_and_check, object_detected_guard] #object_detected_guard
         )
 
         nav_and_check_seq = py_trees.composites.Sequence(
@@ -243,7 +250,17 @@ class CollectionBT(Node):
 
     # Check for eternal guard if the new_object_detected behavior has succeeded
     def object_detected_condition(self):
-        return self.new_object_detected.status == py_trees.common.Status.FAILURE
+        # self.get_logger().info(f"Detect : {self.new_object_detected.status}")
+        # self.get_logger().info(f"Obstacle on Path Status: {self.obstacle_on_path.status}")
+        # self.get_logger().info(f"Condition: {self.obstacle_on_path.status == py_trees.common.Status.INVALID}")
+        # return self.new_object_detected == py_trees.common.Status.FAILURE
+        return self.obstacle_on_path.status == py_trees.common.Status.INVALID
+    
+    def init_tree_callback(self):
+        if self.tick_tock:
+            self.tree.tick_tock(period_ms=10)
+        self.tick_tock = False
+
 
 
 
@@ -255,8 +272,9 @@ def main(args=None):
     node.create_tree()
     executor.add_node(node)
     node.tree.setup(timeout=10.0, node=node)
-    time.sleep(2.0)
-    node.tree.tick_tock(period_ms=50)
+    # time.sleep(2.0)
+    # node.tree.tick_tock(period_ms=500)
+    node.create_timer(2,node.init_tree_callback)
 
     try:
         executor.spin()
