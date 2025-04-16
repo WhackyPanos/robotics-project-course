@@ -64,7 +64,7 @@ class Localization(Node):
 
     def localization_transform(self, msg):
         """ map -> odom transform update: retrieve "old" transform and update with with the PCL transform"""
-        self.get_logger().warn("Transform from ICP received!")
+        #self.get_logger().warn("Transform from ICP received!")
         if self.old_stamp is None:
             self.old_stamp = msg.header.stamp 
             return
@@ -91,30 +91,34 @@ class Localization(Node):
 
         # Correct translation composition: apply old rotation to the new translation
         delta_t = np.array([msg.transform.translation.x, msg.transform.translation.y, msg.transform.translation.z])
-        R_old = quaternion_matrix([t_old.transform.rotation.w, t_old.transform.rotation.x, t_old.transform.rotation.y, t_old.transform.rotation.z])[:3, :3]
+        R_old = quaternion_matrix([t_old.transform.rotation.x, t_old.transform.rotation.y, t_old.transform.rotation.z, t_old.transform.rotation.w])[:3, :3]
         t_old_translation = np.array([t_old.transform.translation.x, t_old.transform.translation.y, t_old.transform.translation.z])
         new_translation = t_old_translation + R_old.dot(delta_t)
         t.transform.translation.x  = new_translation[0]
         t.transform.translation.y  = new_translation[1]
         t.transform.translation.z  = new_translation[2]
 
-        q = quaternion_multiply([msg.transform.rotation.w, msg.transform.rotation.x, msg.transform.rotation.y, msg.transform.rotation.z],
-                                [t_old.transform.rotation.w, t_old.transform.rotation.x, t_old.transform.rotation.y, t_old.transform.rotation.z],
-                                    )
-        q = unit_vector(q)
-        self.get_logger().info(f"resulting quaternion = {q}")
+        q = quaternion_multiply([msg.transform.rotation.x, msg.transform.rotation.y, msg.transform.rotation.z, msg.transform.rotation.w],
+                                [t_old.transform.rotation.x, t_old.transform.rotation.y, t_old.transform.rotation.z, t_old.transform.rotation.w])
+        #q = unit_vector(q)
         if self.old_q is None:
             self.old_q = q
 
-        # if np.linalg.norm(np.array(self.old_q) - np.array(q)) > 0.1: 
-        #     #q = [-coord for coord in q]
-        #     #self.get_logger().info(f"TRANSFORMATION IS WRONG, IGNORING IT: old = {self.old_q}, new ={q}")
-        #     self.get_logger().info(f"TRANSFORMATION IS WRONG, IGNORING IT")
-        # else:
-        t.transform.rotation.w = q[0]
-        t.transform.rotation.x = q[1]
-        t.transform.rotation.y = q[2]
-        t.transform.rotation.z = q[3]
+        # check if incoming quaternion introduced ~180 of rotation
+        q = list(q)
+        for i, q_component in enumerate(q):
+            if q_component*self.old_q[i] < 0:
+                q[i] = -q_component
+
+        self.get_logger().info(f"icp quaternion = {[msg.transform.rotation.x, msg.transform.rotation.y, msg.transform.rotation.z, msg.transform.rotation.w]}")
+        self.get_logger().info(f"previous transform quaternion = {[t_old.transform.rotation.x, t_old.transform.rotation.y, t_old.transform.rotation.z, t_old.transform.rotation.w]}")
+        self.get_logger().info(f"resulting quaternion = {q}")
+
+        t.transform.rotation.x = q[0]
+        t.transform.rotation.y = q[1]
+        t.transform.rotation.z = q[2]
+        t.transform.rotation.w = q[3]
+
 
         # Send the transformation
         self.get_logger().info(f'Publishing transform between map and odom (localization node)')
@@ -125,7 +129,7 @@ class Localization(Node):
         # TODO: get odom pose and transform to map pose
 
     def publish_initial_transform(self):
-        self.get_logger().info('Publishing identity transform: ICP was not performed yet')
+        #self.get_logger().info('Publishing identity transform: ICP was not performed yet')
         t = TransformStamped()
         t.header.stamp = self.get_clock().now().to_msg() #rclpy.time.Time(seconds=0).to_msg()
         t.header.frame_id = "odom"
@@ -146,7 +150,7 @@ class Localization(Node):
 
 
     def publish_transform_until_localization(self):
-        self.get_logger().info('Checking if localization published transform')
+        #self.get_logger().info('Checking if localization published transform')
         try:
             transform = self.tf_buffer.lookup_transform(
                 "map",  # Target frame
