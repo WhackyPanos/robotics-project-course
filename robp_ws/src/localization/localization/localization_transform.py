@@ -167,7 +167,7 @@ def main():
     """ Function to be run if localization/icp is to be run all the time"""
     rclpy.init()
     node = Localization()
-    icp_time = 0.5 #every 1 s
+    icp_time = 3 #every 1 s
     node.create_timer(icp_time, node.icp_master)
     try:
         rclpy.spin(node)
@@ -177,3 +177,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

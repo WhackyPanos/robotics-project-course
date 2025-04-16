@@ -75,10 +75,10 @@ class MotionNode(Node):
 
         # Parameters
         # ==================
-        self.linear_velocity = 0.08
+        self.linear_velocity = 0.1
         self.angular_velocity = 0.35
         self.linear_velocity_fine = 0.1 # TODO untested, adjust this value
-        self.angular_velocity_fine = 0.3 # TODO untested, adjust this value
+        self.angular_velocity_fine = 0.35 # TODO untested, adjust this value
         self.goal_threshold = 0.1
         self.kp = 1.5
         # self.kp = 1.0 # battery test
@@ -241,7 +241,7 @@ class MotionNode(Node):
         y = self.y_map
         theta = self.theta_map
 
-        angle_diff = angle - theta
+        angle_diff = math.atan2(math.sin(angle - theta), math.cos(angle - theta))
         if abs(angle_diff) < 0.1: #TODO: change threshold
             self.vel_cmd.angular.z = 0.0
             self.cmd_vel_publisher.publish(self.vel_cmd)

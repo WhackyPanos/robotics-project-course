@@ -27,6 +27,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         self.angles = angles
         self.angle_threshold = threshold #150
+        self.blackboard = py_trees.blackboard.Blackboard()
     
     def setup(self, **kwargs):
             """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
@@ -63,6 +64,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = qos_profile) # ota = object_tuck_arm
             self.picklift_pub = self.node.create_publisher(Bool, '/picklift/succeded', 10)
+            self.trigger_mapping = self.node.create_publisher(Bool, '/do_mapping', 10)
             
             self.obj_tuck_arm_time = 2000 # in ms            
 
@@ -87,7 +89,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.arm_moving = False
             for i in range(1, len(self.current_angles)) :
                 if abs(self.desired_servo_angles[i] - self.current_angles[i]) > self.angle_threshold:
-                    print(f"Arm still moving (hard-coded movement), error of {abs(self.desired_servo_angles[i] - self.current_angles[i])}")
+                    #print(f"Arm still moving (hard-coded movement), error of {abs(self.desired_servo_angles[i] - self.current_angles[i])}")
                     self.arm_tucked = False
                     self.arm_moving = True
                     break
@@ -108,6 +110,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         self.arm_started = False
         self.arm_moving = False
         self.arm_tucked = False
+        self.arm_tucked_timer_counts = 0
         self.done = False
         self.timer = self.node.create_timer(3, self.timer_callback)
         self.get_logger().info("Tuck arm behavior was initialized")
@@ -133,19 +136,26 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             return py_trees.common.Status.RUNNING  # Keep running while the arm moves
         
         elif self.arm_started and self.arm_moving and not self.arm_tucked:
-            #self.publish_msg()
+            # self.publish_msg()
             return py_trees.common.Status.RUNNING # Keep running while the arm moves
         
-        elif self.arm_tucked:
+        elif self.arm_tucked and self.arm_tucked_timer_counts <= 10:
+            self.arm_tucked_timer_counts += 1
+            return py_trees.common.Status.RUNNING
+
+        elif self.arm_tucked and self.arm_tucked_timer_counts > 10:
             self.arm_started,self.arm_tucked, self.arm_moving, self.done= False, False, False, True
             if self.name == 'lift':
                 if abs(self.desired_servo_angles[0] -self.current_angles[0]) < self.gripper_threshold:
                     self.picklift_pub.publish(Bool(data=False))
                     self.node.get_logger().warn(f"NOTHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
+                    self.blackboard.pick_status = py_trees.common.Status.FAILURE
                     return py_trees.common.Status.FAILURE # HACK: trying to get decorator working
                 else:
                     self.picklift_pub.publish(Bool(data=True))
                     self.node.get_logger().warn(f"SOMETHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
+                    self.trigger_mapping.publish(Bool(data = True))
+                    self.blackboard.pick_status = py_trees.common.Status.SUCCESS
                     return py_trees.common.Status.SUCCESS
             return py_trees.common.Status.SUCCESS
 
@@ -271,6 +281,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         self.arm_tucked = False  
         self.object_grasped = False  
         self.done = False
+        self.object_type = None
         
 
         # Initialize the transform buffer and listener
@@ -283,12 +294,14 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                                       rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.count_grasping_failures_sub = self.node.create_subscription(
             Int16,'/picklift/count_grasping_failures',  self.count_grasping_failures_callback,10)
+        self.node.create_subscription(String, '/object_type', self.get_object_type_callback, 10)
 
         self.ota_publisher_ = self.node.create_publisher(
                 msg_type = Int16MultiArray,
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = 10) # ota = object_tuck_arm
 
+        self.blackboard = py_trees.blackboard.Blackboard()
         
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
@@ -410,12 +423,16 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
 
     def adjust_wrist(self):
         wrist_angle = self.wrist_angle[0] * 180/pi
-        self.get_logger().info(f"Wrist angle is {round(self.wrist_angle[0], 2)}")
+        if self.object_type == "3":
+            wrist_angle += 45
+        self.get_logger().info(f"Wrist angle is {round(self.wrist_angle[0], 2)} and object type is {self.object_type}")
         wrist_angle = ((wrist_angle + 90) % 180) - 90 #map to [-90, 90]
         wrist_angle = int(100*wrist_angle + 12000)
 
         return wrist_angle
 
+    def get_object_type_callback(self, msg):
+        self.object_type = msg.data
 
     def get_next_goal_callback(self, msg):
         self.node.get_logger().info(f"IK received object in map frame (in case arm camera does not work) -> {msg.pose.position.x, msg.pose.position.y}")
@@ -578,7 +595,7 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 self.servo_angles_callback,
                 10)  
             self.need_next_object_sub = self.node.create_subscription(
-                String, '/next_goal/object/need', 
+                String, '/goal_type', 
                 self.need_next_object_callback, 10)
             self._pose_pub = self.create_subscription(
                 Pose2D, '/odom_pose', self.odometry_yaw_callback, 10)
@@ -590,6 +607,8 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
                 topic = '/multi_servo_cmd_sub',
                 qos_profile = qos_profile) # ota = object_tuck_arm
             self.picklift_pub = self.node.create_publisher(Bool, '/picklift/succeded', 10)
+            self.trigger_mapping = self.node.create_publisher(Bool, '/do_mapping', 10)
+            
 
             self.obj_tuck_arm_time = 2000 # in ms            
              
@@ -613,6 +632,7 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
     def initialise(self):
         self.arm_moving = False
         self.arm_tucked = False
+        self.trigger_mapping.publish(Bool(data = False))
         self.timer = self.node.create_timer(3, self.timer_callback)
         
         
@@ -620,17 +640,17 @@ class Place(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
         """ Behavior Tree execution step. Called whenever the node is ticked 
             If the next goal is to place an object, the arm will be tucked. Otherwise, we want to tick the picking behavior"""
         if self.next_goal == 'Object':
+            #self.get_logger().info(f"Not the time for placing")
             return py_trees.common.Status.FAILURE
         else:
             #self.get_logger().info(f"Placing: started = {self.arm_started}, moving = {self.arm_moving}, tucked = {self.arm_tucked}")
-
             if not self.arm_started and not self.arm_tucked and not self.arm_moving: #initial condition, before the delay
                 return py_trees.common.Status.RUNNING
             
             elif self.arm_started and not self.arm_moving and not self.arm_tucked: #after the timer callback
                 # Compute necessary orientation of arm base
                 desired_yaw = self.desired_arm_base_angle()
-                error = 180*(desired_yaw - self.current_yaw)/pi #TODO: wrap angles, check limits and uncomment below
+                error = 180*(desired_yaw )/pi #TODO: wrap angles, check limits and uncomment below
                 normalized_error = max(-120, min(120, ((error + 180) % 360) - 180))
                 self.desired_servo_angles[5] += int(normalized_error*100)
                 self.get_logger().info(f'Arm base should rotate {normalized_error} degrees')

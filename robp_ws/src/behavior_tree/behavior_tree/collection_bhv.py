@@ -42,6 +42,8 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
                                                         rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.next_goal_type_pub = self.node.create_publisher(String,'/goal_type',
                                                         rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
+        self.object_type = self.node.create_publisher(String, '/object_type', 10) #TODO: change to blackboard if we have time
+        
         self.next_goal_type = 'Object' # at the beginning, we want to pick objects
         self.timer_running = False
         self.timer_finished = False
@@ -69,6 +71,9 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             msg.header.stamp = self.node.get_clock().now().to_msg()
             msg.header.frame_id = 'map'
             self.next_goal_pub.publish(msg)
+
+            # send object type 
+            self.object_type.publish(String(data = "3")) #TODO: change later on to closest_obj[0]
 
             # remove object from list (if we're in the picking task). Give time to return success
             if self.next_goal_type == 'Object':
@@ -229,7 +234,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
         #---------------- Adjust Parameters ---------------
         self.transformation_x =  0.135
         self.lower_x_threshold = 0.18 - self.transformation_x
-        self.upper_x_threshold = 0.24 - self.transformation_x
+        self.upper_x_threshold = 0.23 - self.transformation_x
         self.yaw_threshold = 20*pi/180
         self.linear_velocity = 0.08/2
         self.angular_velocity = 0.35/1.5
@@ -249,6 +254,9 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
     def update(self):
         # Note: hope the behavior tick is slower than the subscriber callback, might need changes
+        if self.X_obj is None or  self.Y_obj is None:
+            self.get_logger().info(f"Position of the object wasn't received, couldn't adjust")
+            return py_trees.common.Status.FAILURE
         if not self.position_checked:
             self.vel_sign = (-self.Y_obj - self.lower_x_threshold) /abs((-self.Y_obj - self.lower_x_threshold))
             self.distance =  min(abs(-self.Y_obj- self.lower_x_threshold), abs(-self.Y_obj - self.upper_x_threshold) )
@@ -257,6 +265,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
             self.yaw_delta_t = max(self.yaw_time_scale *abs(self.yaw)/self.angular_velocity - self.time_compensation, 0)
             self.get_logger().info(f"Distance time = {round(self.distance_delta_t, 3)} [s] and Yaw time = {round(self.yaw_delta_t, 3)} [s]")
             self.get_logger().info(f"Longitudinal distance = {int(self.vel_sign)} * {round(100*(self.distance), 3)} [cm] and Yaw = {round(180*self.yaw/pi, 3)} [deg]")
+            self.get_logger().info(f"Longitudinal position = {round(100*(-self.Y_obj +self.transformation_x), 2)} [cm]")
             self.position_checked = True
         
         if -self.Y_obj < self.lower_x_threshold and self.distance_delta_t > 0: #we are too close in the longitudinal direction
@@ -265,6 +274,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
                 return py_trees.common.Status.RUNNING 
             else:
                 self.X_arm_cam, self.Y_arm_cam = [],  []
+                self.X_obj, self.Y_obj = None, None
                 return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
             
         elif abs(self.yaw) > self.yaw_threshold and self.yaw_delta_t > 0:
@@ -273,6 +283,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
                 return py_trees.common.Status.RUNNING 
             else:
                 self.X_arm_cam, self.Y_arm_cam = [],  []
+                self.X_obj, self.Y_obj = None, None
                 return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
 
         elif -self.Y_obj > self.upper_x_threshold and self.distance_delta_t > 0: # we are too far in the longitudinal direction
@@ -281,10 +292,13 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
                 return py_trees.common.Status.RUNNING 
             else:
                 self.X_arm_cam, self.Y_arm_cam = [],  []
+                self.X_obj, self.Y_obj = None, None
                 return py_trees.common.Status.FAILURE #return failure to repeat tuck, detect and IK
 
         else:  # sweet spot
             self.get_logger().info(f"Object is in good enough position to grasp, doing IK")
+            self.X_arm_cam, self.Y_arm_cam = [],  []
+            self.X_obj, self.Y_obj = None, None
             return py_trees.common.Status.SUCCESS
 
     def adjust_distance(self):
@@ -299,7 +313,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
             elapsed_time = self.get_clock().now().nanoseconds / 1e9 - self.init_time
             if self.get_clock().now().nanoseconds / 1e9 - self.init_time < self.distance_delta_t:
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                self.node.get_logger().info(f"Adjusting distance: desired time = {self.yaw_delta_t} and elapsed time = {elapsed_time}")
+                #self.node.get_logger().info(f"Adjusting distance: desired time = {self.yaw_delta_t} and elapsed time = {elapsed_time}")
                 return False
             else:
                 self.vel_cmd.angular.x = 0.0
@@ -319,7 +333,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
             elapsed_time = self.get_clock().now().nanoseconds / 1e9 - self.init_time
             if elapsed_time < self.yaw_delta_t:
                 self.cmd_vel_publisher.publish(self.vel_cmd)
-                self.node.get_logger().info(f"Adjusting yaw: desired time = {self.yaw_delta_t} and elapsed time = {elapsed_time}")
+                #self.node.get_logger().info(f"Adjusting yaw: desired time = {self.yaw_delta_t} and elapsed time = {elapsed_time}")
                 return False
             else:
                 self.vel_cmd.angular.z = 0.0
@@ -329,6 +343,7 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
 
     def get_next_goal_arm_cam_callback(self, msg):
         if len(self.X_arm_cam) == 0:
+            self.node.get_logger().info(f"len = 0")
             for pose in msg.poses:
                 self.X_arm_cam.append(pose.position.x)
                 self.Y_arm_cam.append(pose.position.y)
@@ -341,4 +356,3 @@ class Adjust(py_trees.behaviour.Behaviour, Node):
             self.X_obj = self.X_arm_cam[idx]
             self.Y_obj = self.Y_arm_cam[idx]
         self.node.get_logger().info(f"From camera, X = {-self.Y_obj} and Y = {-self.X_obj}")
-    

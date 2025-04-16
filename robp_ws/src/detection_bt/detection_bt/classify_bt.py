@@ -29,7 +29,11 @@ class ClassifyBT(py_trees.behaviour.Behaviour, Node):
     def update(self):
         if self.class_found is None:
             return py_trees.common.Status.RUNNING
-        return py_trees.common.Status.SUCCESS if self.class_found else py_trees.common.Status.FAILURE
+        elif self.class_found:
+            return py_trees.common.Status.SUCCESS 
+        else:
+            self.node.get_logger().info("No valid cluster found")
+            return py_trees.common.Status.FAILURE
 
     def terminate(self, new_status: py_trees.common.Status):
         pass
