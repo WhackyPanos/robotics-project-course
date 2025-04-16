@@ -41,6 +41,11 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
         self.node.create_subscription(
             String, "/goal_type", self.goal_type_callback, 
             rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
+        
+        # Subscribe to retry
+        self.node.create_subscription(
+            Bool, "/detection/retry", self.retry_callback, 
+            rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
 
         # Publish to request clustering
         self.request_pub = self.node.create_publisher(Bool, "/detection/request", 
@@ -57,12 +62,11 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
 
         distance_to_goal = math.dist([self.robot_x, self.robot_y], [self.goal_x, self.goal_y])
         if distance_to_goal < 1.5:
-            self.get_logger().info("Distance to goal < 1.5")
+            # self.get_logger().info("Distance to goal < 1.5")
             msg = Bool()
             msg.data = self.new_req
             self.request_pub.publish(msg)
             self.get_logger().info(f"Send detection request with bool {self.new_req}")
-
         
 
     def update(self):
@@ -94,5 +98,7 @@ class ClusterBT(py_trees.behaviour.Behaviour, Node):
         self.goal_x, self.goal_y = msg.point.x, msg.point.y
     
     def goal_type_callback(self, msg:String):
-        self.get_logger().info("Reset new goal")
         self.new_goal = True
+
+    def retry_callback(self, msg:Bool):
+        self.new_goal = msg.data

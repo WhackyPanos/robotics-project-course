@@ -32,7 +32,6 @@ private:
     void cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg);
     void map_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg);
     void trigger_callback(const std_msgs::msg::Bool::SharedPtr msg);
-    void new_trigger_callback(const std_msgs::msg::Bool::SharedPtr msg);
     void goal_type_callback(const std_msgs::msg::String::SharedPtr msg);
     void goal_point_callback(const geometry_msgs::msg::PointStamped::SharedPtr msg);
 
@@ -41,16 +40,14 @@ private:
 
     // ROS 2 interfaces
     rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr cloud_sub_;
-    rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
     rclcpp::Subscription<nav_msgs::msg::OccupancyGrid>::SharedPtr map_sub_;
     rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr trigger_sub_;
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr new_trigger_sub_;
     rclcpp::Subscription<geometry_msgs::msg::PointStamped>::SharedPtr goal_sub_;
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr goal_type_sub_;
-    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr cluster_pub_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr twist_pub_;
     rclcpp::Publisher<geometry_msgs::msg::PointStamped>::SharedPtr goal_pub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr result_pub_;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr retry_pub_;
     std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 

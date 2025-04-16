@@ -38,7 +38,7 @@ ClusteringCollection::ClusteringCollection() : Node("clustering_collection", rcl
     
     // Subscriber to occupancy grid
     map_sub_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>(
-        map_topic_, rclcpp::QoS(1).reliable(), std::bind(&ClusteringCollection::map_callback, this, _1));
+        map_topic_, qos_profile , std::bind(&ClusteringCollection::map_callback, this, _1));
 
     // Publisher for updated goal point
     goal_pub_ = this->create_publisher<geometry_msgs::msg::PointStamped>(
@@ -59,12 +59,11 @@ ClusteringCollection::ClusteringCollection() : Node("clustering_collection", rcl
     trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
         trigger_topic_, rclcpp::QoS(1).reliable(), std::bind(&ClusteringCollection::trigger_callback, this, _1));
 
-    // Subscribe to new trigger topic
-    new_trigger_sub_ = this->create_subscription<std_msgs::msg::Bool>(
-        "/detection/new_request", qos_profile, std::bind(&ClusteringCollection::new_trigger_callback, this, _1));
-
     // Publisher for clustering result
-    result_pub_ = this->create_publisher<std_msgs::msg::Bool>(result_topic_, 10);
+    result_pub_ = this->create_publisher<std_msgs::msg::Bool>(result_topic_, rclcpp::QoS(1).reliable());
+
+    // Publisher for retry
+    retry_pub_ = this->create_publisher<std_msgs::msg::Bool>("/detection/retry", rclcpp::QoS(1).reliable());
 
     // Initialize TF2 buffer and listener
     tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
@@ -116,7 +115,11 @@ bool ClusteringCollection::perform_clustering(bool new_req)
     ec.extract(cluster_indices);
 
     // If no cluster found
-    if (cluster_indices.empty()) return false;
+    if (cluster_indices.empty()) 
+    {
+        RCLCPP_INFO(this->get_logger(), "No cluster found");
+        return false;
+    }
 
     // For each cluster 
     for (const auto& cluster : cluster_indices) {
@@ -133,7 +136,7 @@ bool ClusteringCollection::perform_clustering(bool new_req)
         pass.filter(*obstacle);
         if (!obstacle->empty()) 
         {
-            RCLCPP_INFO(this->get_logger(), "Cloud empty after pass filter");
+            RCLCPP_INFO(this->get_logger(), "Obstacle clustered");
             continue;
         }   
 
@@ -208,41 +211,40 @@ void ClusteringCollection::trigger_callback(const std_msgs::msg::Bool::SharedPtr
 {   
     RCLCPP_INFO(this->get_logger(), "Received detection request");
     std_msgs::msg::Bool result_msg;
-    result_msg.data = false;
     
     if (!msg->data) clustering_runs++;
     result_msg.data = perform_clustering(msg->data);
-
-    result_pub_->publish(result_msg);
     
     if (clustering_runs >= required_clustering_runs) {
         if (!all_centers.empty()) {
-            double sum_x = 0.0, sum_y = 0.0, sum_z = 0.0;
+            double sum_x = 0.0, sum_y = 0.0;
 
             for (const auto& p : all_centers) {
                 sum_x += p.point.x;
                 sum_y += p.point.y;
-                sum_z += p.point.z;
             }
 
             geometry_msgs::msg::PointStamped averaged_point;
             averaged_point.header = all_centers.front().header;
             averaged_point.point.x = sum_x / all_centers.size();
             averaged_point.point.y = sum_y / all_centers.size();
-            averaged_point.point.z = sum_z / all_centers.size();
+            averaged_point.point.z = 0.0;
 
             goal_pub_->publish(averaged_point);
             RCLCPP_INFO(this->get_logger(), "Set new goal (%f, %f) -> (%f, %f)", goal_point->point.x, goal_point->point.y, averaged_point.point.x, averaged_point.point.y);
+        }
+        else
+        {
+            std_msgs::msg::Bool retry_msg;
+            retry_msg.data = true;
+            retry_pub_->publish(retry_msg);
         }
         // Reset accumulation
         all_centers.clear();
         clustering_runs = 0;
     }
-}
 
-void ClusteringCollection::new_trigger_callback(const std_msgs::msg::Bool::SharedPtr msg)
-{
-    new_request_ = msg->data;
+    result_pub_->publish(result_msg);
 }
 
 void ClusteringCollection::goal_type_callback(const std_msgs::msg::String::SharedPtr msg)
