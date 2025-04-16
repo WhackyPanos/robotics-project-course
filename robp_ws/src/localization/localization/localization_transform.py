@@ -52,7 +52,7 @@ class Localization(Node):
         # publish identity transformation while ICP does not work
         # self.publish_initial_transform()
         # self.count = 0
-        # self.transform_timer = self.create_timer(0.1, self.publish_transform_until_localization)
+        self.transform_timer = self.create_timer(0.1, self.publish_transform_until_localization)
 
         
     def icp_master(self):
@@ -60,8 +60,6 @@ class Localization(Node):
         icp_stype = 'Normal' #change later
         self.icp_msg.data = icp_stype
         self.icp_master_publisher.publish(self.icp_msg)
-        self.get_logger().info('Killing map -> odom "static" transformn')
-        self.transform_timer.cancel()
             
 
     def localization_transform(self, msg):
@@ -127,6 +125,7 @@ class Localization(Node):
         # TODO: get odom pose and transform to map pose
 
     def publish_initial_transform(self):
+        self.get_logger().info('Publishing identity transform: ICP was not performed yet')
         t = TransformStamped()
         t.header.stamp = self.get_clock().now().to_msg() #rclpy.time.Time(seconds=0).to_msg()
         t.header.frame_id = "odom"
@@ -143,23 +142,26 @@ class Localization(Node):
         t.transform.rotation.z = 0.0
         t.transform.rotation.w = 1.0  # Identity rotation
 
-        self.get_logger().info('Publishing initial map to odom frame (in odom node)')
         self.tf_broadcaster.sendTransform(t)
 
 
     def publish_transform_until_localization(self):
-        #self.get_logger().info('Checking if localization published transform')
-        transform = self.tf_buffer.lookup_transform(
-            "map",  # Target frame
-            "odom",  # Source frame
-            rclpy.time.Time(seconds=0.0),  # Get the latest available transform
-            timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
-        )
-        if transform.transform.translation.x != 0.0 or transform.transform.translation.y != 0.0:
-            pass
-        else:
+        self.get_logger().info('Checking if localization published transform')
+        try:
+            transform = self.tf_buffer.lookup_transform(
+                "map",  # Target frame
+                "odom",  # Source frame
+                rclpy.time.Time(seconds=0.0),  # Get the latest available transform
+                timeout=rclpy.duration.Duration(seconds=1.0)  # Timeout for lookup
+            )
+            if transform.transform.translation.x != 0.0 or transform.transform.translation.y != 0.0 or transform.transform.rotation.z != 0.0:
+                self.get_logger().info('Killing map -> odom "static" transform')
+                self.transform_timer.cancel()
+            else:
+                self.publish_initial_transform()
+            return
+        except:
             self.publish_initial_transform()
-        return
 
 def main():
     """ Function to be run if localization/icp is to be run all the time"""

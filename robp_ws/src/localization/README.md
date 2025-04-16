@@ -1,7 +1,7 @@
 # Localization Package
-#### **Rosbag commands**
+#### **Rosbag commands (subsitute 1 by rosbag index)**
 
-``` ros2 bag play --read-ahead-queue-size 100 -l -r 1.0 --clock 100 --start-paused ~/aREPO/robp_group3/robp_ws/bag/lidar_dynamic/lidar_dynamic.mcap ```
+``` ros2 bag play --read-ahead-queue-size 100 -l -r 1.0 --clock 100 --start-paused ~/aREPO/robp_group3/robp_ws/bag/lidar_dynamic_01/lidar_dynamic_01.mcap ```
 
 ``` ros2 launch robp_launch localization_icp_launch.py ```
 
@@ -17,7 +17,10 @@
 
 ``` source install/setup.bash ```
 
+
 ``` ros2 run tf2_ros tf2_echo odom map ```
+
+``` ros2 run tf2_tools view_frames ```  
 
 ### **Details**
 

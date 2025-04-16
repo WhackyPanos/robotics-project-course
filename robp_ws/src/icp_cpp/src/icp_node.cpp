@@ -212,7 +212,7 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
         pcl::toROSMsg(*global_cloud_odom, global_msg_odom);
         global_msg_odom.header.frame_id = "odom";
         global_msg_odom.header.stamp = transform_msg.header.stamp; //this->get_clock()->now();
-        global_point_cloud_publisher_->publish(global_msg_odom);
+        global_point_cloud_publisher_odom_->publish(global_msg_odom);
         printNumberOfPoints(global_cloud_odom);
 
          incoming_cloud_->clear();
