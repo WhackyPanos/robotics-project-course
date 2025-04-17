@@ -67,13 +67,13 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
             msg = PointStamped() 
             msg.point.x = closest_obj[1]
             msg.point.y = closest_obj[2]
-            self.node.get_logger().info(f"Closest stuff: {msg.point.x , msg.point.y}")
+            self.node.get_logger().info(f"Closest stuff ({closest_obj[0]}): {msg.point.x , msg.point.y}")
             msg.header.stamp = self.node.get_clock().now().to_msg()
             msg.header.frame_id = 'map'
             self.next_goal_pub.publish(msg)
 
             # send object type 
-            self.object_type.publish(String(data = "3")) #TODO: change later on to closest_obj[0]
+            self.object_type.publish(String(data = closest_obj[0])) #TODO: change later on to closest_obj[0]
 
             # remove object from list (if we're in the picking task). Give time to return success
             if self.next_goal_type == 'Object':
@@ -122,6 +122,7 @@ class UpdateObjectList(py_trees.behaviour.Behaviour, Node):
         """ If pick/place task was succeeded, this callback will be called we should switch tasks. """
         if msg.data: # we only switch tasks if they succeeded
             self.next_goal_type = 'Box' if self.next_goal_type == 'Object' else 'Object'
+        self.get_logger().info(f'Task succeded: {msg.data}. Next goal = {self.next_goal_type} ')
         self.next_goal_type_pub.publish(String(data = self.next_goal_type))
 
 

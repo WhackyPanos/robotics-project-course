@@ -246,7 +246,6 @@ class OccupancyGridNode(Node):
         occupancy_grid_msg.info.origin.orientation.w = 1.0 # No rotation applied
         occupancy_grid_msg.data = self.grid.flatten().tolist()
         self.publisher.publish(occupancy_grid_msg)
-        # self.get_logger().info("Published occupancy grid")
     
     def vel_callback(self, msg):
         self.angular_vel = msg.angular.z
@@ -342,6 +341,7 @@ class OccupancyGridNode(Node):
             kernel = x_deflate**2 + y_deflate**2 <= r**2
             
             self.goal_object_mask_inflated = binary_dilation(mask, kernel)
+            self.get_logger().info(f'Removing object inflation')
         else: # Box
             mask = np.zeros_like(self.grid)
             mask[goal_y, goal_x] = 1
@@ -351,7 +351,9 @@ class OccupancyGridNode(Node):
             kernel = x_deflate**2 + y_deflate**2 <= r**2
             
             self.goal_box_mask_inflated = binary_dilation(mask, kernel)
+            self.get_logger().info(f'Removing box inflation')
 
+        self.get_logger().info("Publishing uninflated grid map")
         self.publish_current_grid()
         self.inflate_map()  
 

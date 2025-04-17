@@ -2,7 +2,7 @@ import py_trees
 import rclpy
 from rclpy.node import Node
 from .motion import MotionNode
-from geometry_msgs.msg import Pose2D
+from geometry_msgs.msg import Pose2D, PointStamped
 from std_msgs.msg import String
 import math
 
@@ -29,9 +29,9 @@ class Rotate(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         """ When is this called? The first time your behaviour is ticked and anytime the
         status is not RUNNING thereafter."""  
         if self.ticks % 2 == 0:
-            self.desired_angle = self.robot_yaw + math.pi/4
+            self.desired_angle = self.robot_yaw + (self.ticks+1)*math.pi/6 #changed this slightly (francisco)
         else: 
-            self.desired_angle = self.robot_yaw - math.pi/2
+            self.desired_angle = self.robot_yaw - self.ticks* 2*math.pi/6 #changed this slightly (francisco)
         self.ticks +=1
         
 
