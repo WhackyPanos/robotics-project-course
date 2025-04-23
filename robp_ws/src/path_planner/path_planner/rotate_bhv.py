@@ -39,14 +39,11 @@ class Rotate(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
         status is not RUNNING thereafter."""  
-        if not hasattr(self.blackboard, "pick_status") or self.blackboard.pick_status == py_trees.common.Status.SUCCESS:
-            self.ticks = 0
         if self.ticks % 2 == 0:
-            self.desired_angle = self.robot_yaw + math.pi/4
-            self.ticks +=1
+            self.desired_angle = self.robot_yaw + (self.ticks+1)*math.pi/6 #changed this slightly (francisco)
         else: 
-            self.desired_angle = self.robot_yaw - math.pi/2
-            self.ticks = 0
+            self.desired_angle = self.robot_yaw - self.ticks* 2*math.pi/6 #changed this slightly (francisco)
+        self.ticks +=1
         
 
     def update(self):
@@ -66,3 +63,6 @@ class Rotate(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
 
     def get_robot_yaw(self, msg:Pose2D):
         self.robot_yaw = msg.theta
+
+    def reset_ticks(self, msg:String):
+        self.ticks = 0

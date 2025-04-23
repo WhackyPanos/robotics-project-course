@@ -246,7 +246,6 @@ class OccupancyGridNode(Node):
         occupancy_grid_msg.info.origin.orientation.w = 1.0 # No rotation applied
         occupancy_grid_msg.data = self.grid.flatten().tolist()
         self.publisher.publish(occupancy_grid_msg)
-        # self.get_logger().info("Published occupancy grid")
     
     def vel_callback(self, msg):
         self.angular_vel = msg.angular.z
@@ -295,7 +294,7 @@ class OccupancyGridNode(Node):
             for point in sensor_msgs_py.point_cloud2.read_points(cloud_map, field_names=("x", "y"), skip_nans=True):
                 x, y = self.world_to_grid(point[0], point[1])
                 if 0 <= x < self.width and 0 <= y < self.height:
-                    if not self.geofence_mask[y, x]:  # Only add points if its not part of the geofence mask
+                    if not self.geofence_mask[y, x] and not self.grid[y, x] == 100:  # Only add points if its not part of the geofence mask
                         self.lidar_obstacles[(x, y)] = current_time
 
         to_remove = []
@@ -342,6 +341,7 @@ class OccupancyGridNode(Node):
             kernel = x_deflate**2 + y_deflate**2 <= r**2
             
             self.goal_object_mask_inflated = binary_dilation(mask, kernel)
+            self.get_logger().info(f'Removing object inflation')
         else: # Box
             mask = np.zeros_like(self.grid)
             mask[goal_y, goal_x] = 1
@@ -351,9 +351,11 @@ class OccupancyGridNode(Node):
             kernel = x_deflate**2 + y_deflate**2 <= r**2
             
             self.goal_box_mask_inflated = binary_dilation(mask, kernel)
+            self.get_logger().info(f'Removing box inflation')
 
-        #self.publish_current_grid()
-        #self.inflate_map()  
+        self.get_logger().info("Publishing uninflated grid map")
+        self.publish_current_grid()
+        self.inflate_map()  
 
     def goal_type_callback(self, msg:String):
         self.goal_type = msg.data

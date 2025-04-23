@@ -24,9 +24,9 @@ def generate_launch_description():
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/arm_camera_launch.yaml'))
         ),
 
-        # IncludeLaunchDescription(
-        #     AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/rs_d435i_launch.py'))
-        # ),
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/rs_d435i_launch.py'))
+        ),
 
         IncludeLaunchDescription(
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))
@@ -40,10 +40,10 @@ def generate_launch_description():
         #     PythonLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/arm_servo_launch.py'))
         # ),
 
-        Node(
-            package='odometry',
-            executable='odometry'
-        ),
+        # Node(
+        #     package='odometry',
+        #     executable='odometry'
+        # ),
 
         # Node(
         #     package='arm_cam',
@@ -60,10 +60,10 @@ def generate_launch_description():
         #     executable='collection_BT' #collection_BT or collection_BT_no_move, but no_move it is not working
         # ),
 
-        Node(
-            package='joystick_teleop',
-            executable='twist2duty'
-        ),
+        # Node(
+        #     package='joystick_teleop',
+        #     executable='twist2duty'
+        # ),
 
 
     ])

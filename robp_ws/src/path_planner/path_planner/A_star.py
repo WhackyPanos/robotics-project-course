@@ -71,6 +71,7 @@ class Planner_A_star(Node):
         self.goal_msg = None
     
     def goal_callback(self, msg):
+        self.get_logger().info("Received new goal point")
         self.goal_msg = msg
         
     def map_callback(self, config_space_msg): # Create the configurations space
