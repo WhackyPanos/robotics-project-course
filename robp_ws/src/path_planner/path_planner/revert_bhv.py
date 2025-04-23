@@ -1,7 +1,7 @@
 import py_trees
 import rclpy
 from rclpy.node import Node
-from .motion import MotionNode
+# from .motion import MotionNode
 
 
 class Revert(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node and a ros node
@@ -10,12 +10,28 @@ class Revert(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         py_trees.behaviour.Behaviour.__init__(self, name=name)
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         
-        self.motion_node = MotionNode("Revert_node") # create a motion node object
+        # self.motion_node = MotionNode("Revert_node") # create a motion node object
 
     def setup(self, **kwargs):
         """ Setup fcn to Hardware or driver initialisation, Middleware initialisation (e.g. ROS pubs/subs/services) or
         a parallel checking for a valid policy configuration after children have been added or removed"""
         #rclpy.get_global_executor().add_node(self.motion_node)
+        self.node = kwargs["node"]
+
+        self.node.reverse_publisher = self.create_publisher(Float32, '/motion/reverse', 
+                        rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, 
+                        reliability=ReliabilityPolicy.RELIABLE))
+        self.node.maneuver_done_subscriber = self.create_subscription(
+            Bool,
+            '/motion/maneuvre_done',
+            self.maneuver_done_callback,
+            rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE)
+        )
+
+    def maneuver_done_callback(self, msg):
+    """Callback function for /motion/maneuvre_done topic."""
+        self.maneuver_done = msg.data
+
 
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
@@ -25,7 +41,8 @@ class Revert(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
-        return py_trees.common.Status.SUCCESS if self.motion_node.reverse(0.3) else py_trees.common.Status.RUNNING
+        self.reverse_publisher.publish(Float32(data=0.3))
+        return py_trees.common.Status.SUCCESS if self.maneuver_done else py_trees.common.Status.RUNNING
 
     def terminate(self, new_status: py_trees.common.Status):
         """
@@ -35,4 +52,4 @@ class Revert(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
         # self.get_logger().info(f"Terminating Motion behavior")
-        pass
+        self.maneuver_done = False
