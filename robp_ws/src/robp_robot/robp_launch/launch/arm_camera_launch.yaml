@@ -14,7 +14,7 @@ launch:
         - name: 'pixel_format'
           value: 'yuyv'
         - name: 'framerate'
-          value: 5.0
+          value: 30.0
         - name: 'image_width'
           value: 640
         - name: 'image_height'
@@ -41,3 +41,13 @@ launch:
           value: false
         - name: 'focus'
           value: -1
+      # output: "screen"
+      emulate_tty: true
+  - node:
+      pkg: "topic_tools"
+      exec: "throttle"
+      name: "arm_camera_throttle"
+      namespace: "arm_camera"
+      args: "messages /arm_camera/image_raw 5 /arm_camera/filtered/image_raw"
+      # output: "screen"
+      emulate_tty: true

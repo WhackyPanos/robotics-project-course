@@ -23,8 +23,7 @@ class ArmController(Node):
             data_offset=0
         )
 
-        # Servo positions exactly as specified
-        
+        # Servo positions exactly as specified       
         msg.data = [-1, -1, 2000, 13000, 1000, -1, 1000, 1000, 1000, 1000, 1000, 1000] # go get the cube
         self.get_logger().info(f'Attempting to publish: {msg.data}')
         self.publisher_.publish(msg)

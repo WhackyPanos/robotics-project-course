@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': ['teleop = joystick_teleop.teleop:main',
+                            'twist2duty = joystick_teleop.twist2duty:main' # added this (francisco)
         ],
     },
 )

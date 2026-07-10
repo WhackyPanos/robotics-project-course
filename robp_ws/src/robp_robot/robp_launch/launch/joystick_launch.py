@@ -27,12 +27,25 @@ def generate_launch_description():
             package='odometry',
             executable='odometry'
         ),
+        
         Node(
             package='joystick_teleop',
             executable='teleop'
+            
+        ),
+        # added this node (Francisco)
+          Node(
+            package='joystick_teleop',
+            executable='twist2duty'
+            
         ),
         Node(
             package='joy',
             executable='joy_node'
         ),
+
+        
     ])
+
+        
+  

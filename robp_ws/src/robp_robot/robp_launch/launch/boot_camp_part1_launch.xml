@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- run rviz -->
+	<node pkg="rviz2" exec="rviz2" name="robp_launch" args="-d $(find-pkg-share robp_launch)/launch/boot_camp_part1.rviz" />
+</launch>

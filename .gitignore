@@ -3,4 +3,4 @@
 */install/*
 */log/*
 */bag/*
-
+**/__pycache__/*
