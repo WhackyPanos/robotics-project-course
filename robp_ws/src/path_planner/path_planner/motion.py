@@ -65,6 +65,10 @@ class MotionNode(Node):
         self.create_subscription(PoseStamped, '/motion/goal', self.goal_callback, 
                                  rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.create_subscription(Path, '/motion/path', self.path_callback, 10)
+        self.create_subscription(Float32, '/motion/adjust_yaw', self.adjust_yaw_callback, 10)
+        self.create_subscription(Float32, '/motion/reverse', self.reverse_callback, 10)
+        self.maneuvre_done_publisher = self.create_publisher(PoseStamped, '/motion/maneuvre_done', 
+                                rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
         self.goal_reached_publisher = self.create_publisher(Bool, '/motion/goal_reached', 10)
         self.goal_publisher = self.create_publisher(PoseStamped, '/motion/goal', 
                                 rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE))
@@ -120,6 +124,20 @@ class MotionNode(Node):
             pub_msg.pose.orientation.w = self.path.poses[0].pose.orientation.w
             self.goal_publisher.publish(pub_msg)
     
+    def adjust_yaw_callback(self, msg:Float32):
+        self.angle_goal = msg.data
+        if self.adjust_yaw(self.angle_goal): 
+            self.maneuvre_done_publisher.publish(Bool(data=True))
+    
+    def reverse_callback(self, msg:Float32):
+        if self.start_reverse == False:
+            self.start_reverse = True
+            self.start_time = self.get_clock().now().nanoseconds / 1e9
+        distance = msg.data
+        if self.reverse(distance):
+            self.maneuvre_done_publisher.publish(Bool(data=True))
+            self.start_reverse = False
+
     def get_robot_position(self):
         try:
             # Lookup transform from 'map' to 'base_link' or 'arm_link'

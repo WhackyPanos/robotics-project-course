@@ -69,7 +69,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             self.obj_tuck_arm_time = 2000 # in ms            
 
             self.current_angles = None
-            self.gripper_threshold = 420 # threshold to detect if something was grasped
+            self.gripper_threshold = 330 # threshold to detect if something was grasped
             self.desired_servo_angles = [12000]*6
             self.desired_servo_angles[0] = 10000 # gripper is different
             
@@ -155,7 +155,7 @@ class SetArm(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
                     self.picklift_pub.publish(Bool(data=True))
                     self.node.get_logger().warn(f"SOMETHING GRASPED, desired angle = {self.desired_servo_angles[0]} and angle = {self.current_angles[0]}")
                     self.trigger_mapping.publish(Bool(data = True))
-                    self.blackboard.pick_status = py_trees.common.Status.SUCCESS
+                     
                     return py_trees.common.Status.SUCCESS
             return py_trees.common.Status.SUCCESS
 
@@ -450,6 +450,7 @@ class ArmIK(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node 
             qz = pose.orientation.z
             qw = pose.orientation.w
             self.wrist_angle.append(2*atan2(qz, qw))
+        self.node.get_logger().warn(f"Positions from arm camera: {self.X_arm_cam, self.Y_arm_cam}")
 
 
     def servo_angles_callback(self, msg):

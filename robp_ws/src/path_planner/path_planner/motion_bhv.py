@@ -21,12 +21,14 @@ class NavigateToGoal(py_trees.behaviour.Behaviour, Node): # this class is a py_t
         """ When is this called? The first time your behaviour is ticked and anytime the
         status is not RUNNING thereafter."""  
         # self.get_logger().info("Motion behavior initialized")
-        pass
+        self.motion_node.path_reached = False
+        self.motion_node.goal_reached_flag = False
+
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
-        # self.get_logger().info(f"Is goal: {self.motion_node.is_goal}, Goal reached: {self.motion_node.goal_reached_flag}")
-        # self.get_logger().info(f"Is path: {self.motion_node.is_path}, Path reached: {self.motion_node.path_reached}")
+        self.get_logger().info(f"Is goal: {self.motion_node.is_goal}, Goal reached: {self.motion_node.goal_reached_flag}")
+        self.get_logger().info(f"Is path: {self.motion_node.is_path}, Path reached: {self.motion_node.path_reached}")
         
         if self.motion_node.is_path:
             if self.motion_node.path_reached:

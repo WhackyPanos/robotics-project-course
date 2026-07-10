@@ -1,7 +1,7 @@
 import py_trees
 import rclpy
 from rclpy.node import Node
-from .motion import MotionNode
+# from .motion import MotionNode
 from geometry_msgs.msg import Pose2D
 import math
 
@@ -11,7 +11,7 @@ class Rotate(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         py_trees.behaviour.Behaviour.__init__(self, name=name)
         Node.__init__(self, name)  # Explicitly initialize ROS2 Node
         
-        self.motion_node = MotionNode("Rotate_node") # create a motion node object
+        # self.motion_node = MotionNode("Rotate_node") # create a motion node object
         self.blackboard = py_trees.blackboard.Blackboard()
 
     def setup(self, **kwargs):
@@ -19,27 +19,37 @@ class Rotate(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
         a parallel checking for a valid policy configuration after children have been added or removed"""
         self.node = kwargs["node"]
         self.node.create_subscription(Pose2D, '/odom_pose',  self.get_robot_yaw, 10)
+        self.node.maneuver_done_subscriber = self.create_subscription(
+            Bool,
+            '/motion/maneuvre_done',
+            self.maneuver_done_callback,
+            rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, reliability=ReliabilityPolicy.RELIABLE)
+        )
+        self.node.adjust_yaw_publisher = self.node.create_publisher(Float32, '/motion/adjust_yaw',
+                        rclpy.qos.QoSProfile(history=HistoryPolicy.KEEP_LAST, depth=1, 
+                        reliability=ReliabilityPolicy.RELIABLE))
         self.robot_yaw = 0.0
         self.ticks = 0
         self.desired_angle = self.robot_yaw
 
-
+    def maneuver_done_callback(self, msg):
+    """Callback function for /motion/maneuvre_done topic."""
+        self.maneuver_done = msg.data
+    
     def initialise(self):
         """ When is this called? The first time your behaviour is ticked and anytime the
         status is not RUNNING thereafter."""  
-        if not hasattr(self.blackboard, "pick_status") or self.blackboard.pick_status == py_trees.common.Status.SUCCESS:
-            self.ticks = 0
         if self.ticks % 2 == 0:
-            self.desired_angle = self.robot_yaw + math.pi/4
-            self.ticks +=1
+            self.desired_angle = self.robot_yaw + (self.ticks+1)*math.pi/6 #changed this slightly (francisco)
         else: 
-            self.desired_angle = self.robot_yaw - math.pi/2
-            self.ticks = 0
+            self.desired_angle = self.robot_yaw - self.ticks* 2*math.pi/6 #changed this slightly (francisco)
+        self.ticks +=1
         
 
     def update(self):
         """ Behavior Tree execution step. Called whenever the node is ticked """
-        return py_trees.common.Status.FAILURE if self.motion_node.adjust_yaw(self.desired_angle) else py_trees.common.Status.RUNNING
+        self.node.adjust_yaw_publisher.publish(Float32(data=self.desired_angle))
+        return py_trees.common.Status.FAILURE if self.maneuver_done else py_trees.common.Status.RUNNING
 
     def terminate(self, new_status: py_trees.common.Status):
         """
@@ -49,6 +59,10 @@ class Rotate(py_trees.behaviour.Behaviour, Node): # this class is a py_tree node
             - INVALID : a higher priority branch has interrupted, or shutting down
         """
         # self.get_logger().info(f"Terminating Motion behavior")
-        pass
+        self.maneuver_done = False
+
     def get_robot_yaw(self, msg:Pose2D):
         self.robot_yaw = msg.theta
+
+    def reset_ticks(self, msg:String):
+        self.ticks = 0

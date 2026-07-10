@@ -1,51 +1,48 @@
-# Group 3 Project Repo (DD2419)
-This repo is subdivided into several branches. Generally, each branch corresponds to one package. When the package is terminated, the branch is merged in the development branch (devel).
+# DD2419 - Project Course in Robotics and Autonomous Systems
 
-## Steps to run any package
-1) In 2 terminals, run
-```
-ssh robot
-```
-and insert *robot* as password
+This repository contains the software implementation and project files for the **DD2419 Project Course in Robotics and Autonomous Systems** at KTH Royal Institute of Technology. 
 
-2) In one of them, run
-```
-fastdds discovery -i 0 -t 192.168.128.107 -q 42100
-```
+The course focuses on the broad, interdisciplinary field of robotics, emphasizing how methods are used in practice and integrated into a complete, autonomous system.
 
-## Issues when building
-If you encounter unforeseen issues when building, go to the root - you should have in the terminal
+## 🤖 Hardware
+The project is built to control and interact with a mobile robot equipped with:
+*   A robotic arm
+*   An RGB-D camera (depth and color sensing)
+*   A 2D laser scanner (LiDAR)
 
-```
-group3-robot@group3-robot:~/robp_group3$
-```
-Then run 
-```
-unset COLCON_PREFIX_PATH
-unset AMENT_PREFIX_PATH
-unset CMAKE_PREFIX_PATH
-source /opt/ros/jazzy/setup.bash
-sudo apt update
-rosdep update
-```
-Then install dependencies in each workspace by doing
-```
-cd arm_ws
-rosdep install --from-paths src --ignore-src -r -y
-```
-```
-cd ..
-cd robp_ws
-rosdep install --from-paths src --ignore-src -r -y
-cd ..
-```
-Remove the install, build and log folders and build
-```
-rm -rf build install log
-colcon build --symlink-install
-source install/setup.bash
-```
+## 💻 Software & Technologies
+*   **ROS (Robot Operating System):** The core framework used for robot control, simulation, and node communication.
+*   **Language:** Python / C++
+*   **Version Control:** Git & GitHub
 
-## Additional notes
-Do not forget to build each package after changing setup.py or package.xml. Use the select command.
+## 🎓 System Goals & Objectives
 
+**Primary System Goal**
+The overarching objective of the robotic system is to autonomously explore a defined workspace, locate and categorize specific items, and physically collect and transport them to designated drop-off boxes/baskets. 
+
+**Core Objectives**
+*   **Autonomous Exploration and Mapping:** The system must navigate and explore the workspace while successfully avoiding obstacles. It is required to generate a map that records the exact locations of all identified objects and drop-off boxes.
+*   **Object Detection and Classification:** During the exploration phase, the robot must accurately detect objects in its environment and classify them into four specific categories: plushie animals, spheres, cubes, and boxes. 
+*   **Collection and Placement:** During the collection phase, the system must navigate to the mapped objects, pick them up using a robotic arm, and transport them to the nearest classified box to deposit them.
+
+## Demo Videos
+
+<p align="center">
+  <img src="assets/exploration.gif" width="600" alt="Exploration phase" />
+</p>
+
+
+<p align="center">
+  <img src="assets/collection.gif" width="600" alt="Object collection phase" />
+</p>
+
+## 👥 Team Members
+*   Francisco Miranda
+*   Dominik Friedrich
+*   Sebastian Christensson
+*   Sebastian Gerreth
+*   Panos Skoulaxinos
+
+## 📜 Acknowledgements
+*   **Institution:** KTH Royal Institute of Technology
+*   **Division:** EECS / Robotics, Perception and Learning
