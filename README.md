@@ -27,11 +27,12 @@ The overarching objective of the robotic system is to autonomously explore a def
 
 ## Demo Videos
 
+### Exploration phase
 <p align="center">
   <img src="assets/exploration.gif" width="600" alt="Exploration phase" />
 </p>
 
-
+### Object collection phase
 <p align="center">
   <img src="assets/collection.gif" width="600" alt="Object collection phase" />
 </p>
