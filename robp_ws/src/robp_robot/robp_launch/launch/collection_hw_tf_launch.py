@@ -24,9 +24,9 @@ def generate_launch_description():
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/arm_camera_launch.yaml'))
         ),
 
-        IncludeLaunchDescription(
-            AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/rs_d435i_launch.py'))
-        ),
+        # IncludeLaunchDescription(
+        #     AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/rs_d435i_launch.py'))
+        # ),
 
         IncludeLaunchDescription(
             AnyLaunchDescriptionSource(os.path.join(robp_launch_dir, 'launch/frames_launch.xml'))

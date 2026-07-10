@@ -86,7 +86,7 @@ class CollectionBT(Node):
             # Pick and lift operations
         detect_and_adjust = py_trees.composites.Sequence( 
             name = 'Detect_and_Adjust', 
-            children = [py_trees.timers.Timer("Timer", duration=2), self.detect_object, py_trees.timers.Timer("Timer", duration=1), self.adjust], #TODO: if working fine, make this sequence with adjust first
+            children = [py_trees.timers.Timer("Timer", duration=1), self.adjust, py_trees.timers.Timer("Timer", duration=1.5), self.detect_object], #TODO: if working fine, make this sequence with adjust first
             memory = True)       
         repeat_detect_and_adjust = py_trees.decorators.Retry( # TODO introduce selector between retry and a behavior that return success, if needed
             name = 'Repeat_Detect&Adjust', 

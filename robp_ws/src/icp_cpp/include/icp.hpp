@@ -55,10 +55,14 @@ private:
 
     int KNN_N_neighbours_;
     double std_dev_mul_thresh_;
+
+    std::vector<double> voxel_grid_filter_leaf_size_;
+
     double max_correspondence_distance_;
     int maximum_iterations_;
     double transformation_epsilon_;
     double euclidean_fitness_epsilon_;
+
     double icp_fitness_threshold_;
 };
 

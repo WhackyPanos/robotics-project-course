@@ -5,12 +5,18 @@
 #include <iostream>
 // Voxel filter implementation using PCL's VoxelGrid filter.
 void voxel_filter(const pcl::PointCloud<pcl::PointXYZ>::Ptr& input,
-                  pcl::PointCloud<pcl::PointXYZ>::Ptr& output)
+                  pcl::PointCloud<pcl::PointXYZ>::Ptr& output,
+                  const std::vector<double>& leaf_size)
 {
     pcl::VoxelGrid<pcl::PointXYZ> vg;
     vg.setInputCloud(input);
-    vg.setLeafSize(0.1f, 0.1f, 0.1f);  // Adjust leaf size to suit your application
+    vg.setLeafSize(leaf_size[0], leaf_size[1], leaf_size[2]);  // Adjust leaf size to suit your application
     vg.filter(*output);
+
+    // Optional parameters
+    // vg.setFilterFieldName("z"); // filter only points within a Z range
+    // vg.setFilterLimits(0.0, 3.0); // Keep points between 0 and 3 meters in Z
+    // vg.setFilterLimitsNegative(false); // If true, excludes points within the limit range. Defaults to false.
 }
 void printNumberOfPoints(const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud) {
     std::cout << "PointCloud has " << cloud->points.size() << " points." << std::endl;
@@ -31,10 +37,17 @@ ICP::ICP() : Node("icp_node", rclcpp::NodeOptions()
     // Retrieve parameters with get_parameter_or()
     this->get_parameter_or("KNN_N_neighbours", KNN_N_neighbours_, 10);
     this->get_parameter_or("std_dev_mul_thresh", std_dev_mul_thresh_, 1.0);
+
+
+    if (!this->get_parameter("voxel_grid_filter_leaf_size", voxel_grid_filter_leaf_size_)) {
+        voxel_grid_filter_leaf_size_ = {1.0, 1.0, 1.0};  
+    }
+
     this->get_parameter_or("max_correspondence_distance", max_correspondence_distance_, 0.1);
     this->get_parameter_or("maximum_iterations", maximum_iterations_, 2000);
     this->get_parameter_or("transformation_epsilon", transformation_epsilon_, 1e-6);
     this->get_parameter_or("euclidean_fitness_epsilon", euclidean_fitness_epsilon_, 0.01);
+
     this->get_parameter_or("icp_fitness_threshold", icp_fitness_threshold_, 1.0);
 
 
@@ -139,8 +152,8 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
     // Downsample both the incoming scan and the global map to improve ICP performance.
     pcl::PointCloud<pcl::PointXYZ>::Ptr downsampled_incoming(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PointCloud<pcl::PointXYZ>::Ptr downsampled_global_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>);
-    voxel_filter(filtered_incoming_cloud, downsampled_incoming);
-    voxel_filter(filtered_global_cloud_odom, downsampled_global_cloud_odom);
+    voxel_filter(filtered_incoming_cloud, downsampled_incoming, voxel_grid_filter_leaf_size_);
+    voxel_filter(filtered_global_cloud_odom, downsampled_global_cloud_odom, voxel_grid_filter_leaf_size_);
 
     // Setup ICP using the downsampled incoming scan as source and the global map in odom frame as target.
     pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;
@@ -188,7 +201,7 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
         // Update global point cloud in odom frame
         *global_cloud_odom += *aligned_cloud_odom;
         pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_global_cloud_odom(new pcl::PointCloud<pcl::PointXYZ>);
-        voxel_filter(global_cloud_odom, filtered_global_cloud_odom);
+        voxel_filter(global_cloud_odom, filtered_global_cloud_odom, voxel_grid_filter_leaf_size_);
         *global_cloud_odom = *filtered_global_cloud_odom;
 
         // Transform the incoming point cloud to the map frame and add to global point cloud
@@ -197,7 +210,7 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
         pcl::transformPointCloud(*aligned_cloud_odom, *aligned_cloud_map, map_transform.matrix());
         *global_cloud_map += *aligned_cloud_map;
         pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_global_cloud_map(new pcl::PointCloud<pcl::PointXYZ>);
-        voxel_filter(global_cloud_map, filtered_global_cloud_map);
+        voxel_filter(global_cloud_map, filtered_global_cloud_map, voxel_grid_filter_leaf_size_);
         *global_cloud_map = *filtered_global_cloud_map;
 
         // Publish the updated global point cloud (in map frame) for visualization.
@@ -212,7 +225,7 @@ void ICP::perform_icp(const std_msgs::msg::String::SharedPtr msg)
         pcl::toROSMsg(*global_cloud_odom, global_msg_odom);
         global_msg_odom.header.frame_id = "odom";
         global_msg_odom.header.stamp = transform_msg.header.stamp; //this->get_clock()->now();
-        global_point_cloud_publisher_->publish(global_msg_odom);
+        global_point_cloud_publisher_odom_->publish(global_msg_odom);
         printNumberOfPoints(global_cloud_odom);
 
          incoming_cloud_->clear();
