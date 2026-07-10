@@ -13,10 +13,18 @@ find_package(std_msgs REQUIRED)
 set(msg_files
   "msg/DutyCycles.msg"
   "msg/Encoders.msg"
+  "msg/ObjectPosition.msg"
+  "msg/BoxPosition.msg"
+  )
+
+set(srv_files
+  "srv/ObjectPositionSrv.srv"
+  "srv/BoxPositionSrv.srv"
   )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
+  ${srv_files}
   DEPENDENCIES std_msgs
 )
 

@@ -1,37 +1,24 @@
 """Launch phidgets devices in a container."""
 
-import launch
-from launch_ros.actions import ComposableNodeContainer
-from launch_ros.descriptions import ComposableNode
+from launch import LaunchDescription
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    """Generate launch description with multiple components."""
-    container = ComposableNodeContainer(
-        name='robp_phidget_container',
-        namespace='',
-        package='rclcpp_components',
-        # Could also try 'component_container_mt' ('component_container' is not a good idea since it is single-threaded)
-        executable='component_container_isolated',
-        composable_node_descriptions=[
-                ComposableNode(
-                    package='robp_phidgets_encoders',
-                    plugin='robp::phidgets::Encoders',
-                    name='robp_phidgets_encoders'),
-                ComposableNode(
-                    package='robp_phidgets_motors',
-                    plugin='robp::phidgets::Motors',
-                    name='robp_phidgets_motors'),
-                ComposableNode(
-                    package='robp_phidgets_spatial',
-                    plugin='robp::phidgets::Spatial',
-                    name='robp_phidgets_spatial'),
-                ComposableNode(
-                    package='robp_phidgets_temperature',
-                    plugin='robp::phidgets::Temperature',
-                    name='robp_phidgets_temperature')
-        ],
-        output='screen',
-    )
-
-    return launch.LaunchDescription([container])
+    return LaunchDescription([
+        Node(
+            package='robp_phidgets',
+            namespace='robp_phidgets',
+            executable='robp_phidgets',
+            output='screen',
+            emulate_tty=True,
+            parameters=[{
+                'motors_acceleration': 100.0,
+                'motors_braking_strength': 1.0,
+                'motors_data_rate': 10.0,
+                'motors_failsafe_timeout_ms': 500,
+                'motors_native_failsafe': True,
+                'motors_native_failsafe_extra_timeout_ms': 100
+            }]
+        )
+    ])

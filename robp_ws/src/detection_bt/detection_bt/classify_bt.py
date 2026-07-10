@@ -1,0 +1,42 @@
+import py_trees
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Bool
+
+class ClassifyBT(py_trees.behaviour.Behaviour, Node):
+    def __init__(self, name="classifier_bt"):
+        py_trees.behaviour.Behaviour.__init__(self, name)
+        Node.__init__(self, name)
+        self.class_found = None
+
+    def setup(self, **kwargs):
+        """ Initialize ROS publishers and subscribers. """
+        self.node = kwargs['node']
+
+        # Subscribe to clustering result
+        self.result_sub = self.node.create_subscription(
+            Bool, "/classification/result", self.result_callback, 10)
+
+        # Publish to request clustering
+        self.request_pub = self.node.create_publisher(Bool, "/classification/request", 10)
+
+    def initialise(self):
+        self.class_found = None
+        msg = Bool()
+        msg.data = True
+        self.request_pub.publish(msg)
+
+    def update(self):
+        if self.class_found is None:
+            return py_trees.common.Status.RUNNING
+        elif self.class_found:
+            return py_trees.common.Status.SUCCESS 
+        else:
+            self.node.get_logger().info("No valid cluster found")
+            return py_trees.common.Status.FAILURE
+
+    def terminate(self, new_status: py_trees.common.Status):
+        pass
+
+    def result_callback(self, msg):
+        self.class_found = msg.data

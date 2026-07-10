@@ -1,7 +1,9 @@
 # Ignore build, install, and log directories
-*/build/*
-*/install/*
-*/log/*
-*/bag/*
-*.gif
+**/build/*
+**/install/*
+**/log/*
+**/bag/*
+**/__pycache__/*
 
+# Ignore some other common files
+*.gif
