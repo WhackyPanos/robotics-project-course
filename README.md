@@ -2,8 +2,6 @@
 
 This repository contains the software implementation and project files for the **DD2419 Project Course in Robotics and Autonomous Systems** at KTH Royal Institute of Technology. 
 
-The course focuses on the broad, interdisciplinary field of robotics, emphasizing how methods are used in practice and integrated into a complete, autonomous system.
-
 ## 🤖 Hardware
 The project is built to control and interact with a mobile robot equipped with:
 *   A robotic arm
@@ -18,7 +16,8 @@ The project is built to control and interact with a mobile robot equipped with:
 ## 🎓 System Goals & Objectives
 
 **Primary System Goal**
-The overarching objective of the robotic system is to autonomously explore a defined workspace, locate and categorize specific items, and physically collect and transport them to designated drop-off boxes/baskets. 
+
+The objective of the robotic system is to autonomously explore a defined workspace, locate and categorize specific items, and physically collect and transport them to designated drop-off boxes/baskets. 
 
 **Core Objectives**
 *   **Autonomous Exploration and Mapping:** The system must navigate and explore the workspace while successfully avoiding obstacles. It is required to generate a map that records the exact locations of all identified objects and drop-off boxes.
