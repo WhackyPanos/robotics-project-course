@@ -24,7 +24,7 @@ The objective of the robotic system is to autonomously explore a defined workspa
 *   **Object Detection and Classification:** During the exploration phase, the robot must accurately detect objects in its environment and classify them into four specific categories: plushie animals, spheres, cubes, and boxes. 
 *   **Collection and Placement:** During the collection phase, the system must navigate to the mapped objects, pick them up using a robotic arm, and transport them to the nearest classified box to deposit them.
 
-## Demo Videos
+## Demo Videos (click for full video)
 
 ### Exploration phase
 <p align="center">
